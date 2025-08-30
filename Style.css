@@ -1,0 +1,112 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
+    color: #333;
+}
+
+.container {
+    text-align: center;
+    max-width: 350px;
+    width: 100%;
+}
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+/* The Main Compass Container - acts as a frame */
+.compass {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: 20px auto;
+}
+
+/* The Compass Rose - This is what rotates! */
+.compass-rose {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    /* Create the degree marks */
+    background-image: 
+        radial-gradient(circle, #fff 60%, transparent 60%),
+        conic-gradient(
+            from 0deg,
+            transparent 0deg 1.5deg, #ff9990 1.5deg 3deg,
+            transparent 3deg 87deg, 
+            #ff9990 87deg 88.5deg,
+            transparent 88.5deg 88.8deg, #ff9990 88.8deg 90deg,
+            transparent 90deg 177deg, 
+            #ff9990 177deg 178.5deg,
+            transparent 178.5deg 178.8deg, #ff9990 178.8deg 180deg,
+            transparent 180deg 267deg, 
+            #ff9990 267deg 268.5deg,
+            transparent 268.5deg 268.8deg, #ff9990 268.8deg 270deg,
+            transparent 270deg 357deg, 
+            #ff9990 357deg 358.5deg,
+            transparent 358.5deg 358.8deg, #ff9990 358.8deg 360deg
+        );
+    /* This element will be rotated by JavaScript */
+    transition: transform 0.1s ease; /* Smooth rotation */
+}
+
+.direction {
+    position: absolute;
+    font-weight: bold;
+    color: #e74c3c;
+    font-size: 1.5em;
+}
+.direction:nth-child(1) { top: 15px; left: 50%; transform: translateX(-50%); } /* N */
+.direction:nth-child(2) { right: 15px; top: 50%; transform: translateY(-50%); } /* E */
+.direction:nth-child(3) { bottom: 15px; left: 50%; transform: translateX(-50%); } /* S */
+.direction:nth-child(4) { left: 15px; top: 50%; transform: translateY(-50%); } /* W */
+
+/* The Needle - This is FIXED and does not rotate with the rose! */
+.needle {
+    position: absolute;
+    width: 8px;
+    height: 120px;
+    background: linear-gradient(to top, #e74c3c 50%, #2c3e50 50%);
+    border-radius: 4px;
+    /* Center the needle in the .compass container */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -100%);
+    z-index: 10; /* Make sure it's on top of the rose */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    /* The needle itself will NOT be rotated. It points straight up to the Qibla on the rose. */
+}
+
+.info-panel {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+#status {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #7f8c8d;
+}
+
+#angle {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+#heading {
+    color: #e74c3c;
+    font-weight: bold;
+}
