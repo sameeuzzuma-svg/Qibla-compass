@@ -120,6 +120,58 @@
   </script>
 </body>
 </html>
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 11;
+    }
+
+    .degree {
+      position: absolute;
+      bottom: -40px;
+      font-size: 22px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="compass">
+    <div class="dial" id="dial">
+      <div class="direction north">N</div>
+      <div class="direction south">S</div>
+      <div class="direction east">E</div>
+      <div class="direction west">W</div>
+    </div>
+    <div class="needle"></div>
+    <div class="center"></div>
+    <div class="degree" id="degree">0°</div>
+  </div>
+
+  <script>
+    window.addEventListener("deviceorientationabsolute", updateCompass, true);
+    window.addEventListener("deviceorientation", updateCompass, true);
+
+    function updateCompass(event) {
+      let alpha = event.alpha;
+      if (typeof event.webkitCompassHeading !== "undefined") {
+        // For iOS
+        alpha = event.webkitCompassHeading;
+      } else {
+        // For Android
+        alpha = 360 - alpha;
+      }
+
+      const dial = document.getElementById("dial");
+      const degreeText = document.getElementById("degree");
+
+      if (alpha !== null) {
+        dial.style.transform = `rotate(${alpha}deg)`;
+        degreeText.textContent = `${Math.round(alpha)}°`;
+      }
+    }
+  </script>
+</body>
+</html>
     // Qibla location (Kaaba in Makkah)
     const QIBLA_LAT = 21.4225;
     const QIBLA_LON = 39.8262;
