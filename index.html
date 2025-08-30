@@ -1,33 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Qibla Compass</title>
-    <link rel="stylesheet" href="Qibla-compass/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Qibla Compass</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    #compass {
+      width: 250px;
+      height: 250px;
+      border: 8px solid white;
+      border-radius: 50%;
+      position: relative;
+      background: radial-gradient(circle, #0f2027, #203a43, #2c5364);
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+    #needle {
+      width: 6px;
+      height: 120px;
+      background: red;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-origin: bottom center;
+      transform: translate(-50%, -100%) rotate(0deg);
+      border-radius: 3px;
+    }
+    .direction {
+      position: absolute;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .north { top: 10px; left: 50%; transform: translateX(-50%); }
+    .south { bottom: 10px; left: 50%; transform: translateX(-50%); }
+    .east  { right: 10px; top: 50%; transform: translateY(-50%); }
+    .west  { left: 10px; top: 50%; transform: translateY(-50%); }
+    #info {
+      margin-top: 20px;
+      font-size: 14px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Qibla Compass</h1>
-        
-        <!-- The entire compass container which will rotate -->
-        <div class="compass">
-            <div class="compass-rose" id="compassRose">
-                <div class="direction">N</div>
-                <div class="direction">E</div>
-                <div class="direction">S</div>
-                <div class="direction">W</div>
-            </div>
-            <!-- The needle is fixed and does NOT rotate with the rose -->
-            <div class="needle" id="needle"></div>
-        </div>
+  <h2>Qibla Compass</h2>
+  <div id="compass">
+    <div id="needle"></div>
+    <div class="direction north">N</div>
+    <div class="direction south">S</div>
+    <div class="direction east">E</div>
+    <div class="direction west">W</div>
+  </div>
+  <div id="info">Rotate your phone to find Qibla</div>
 
-        <div class="info-panel">
-            <p id="status">Waiting for location...</p>
-            <p>Qibla Direction: <span id="angle">0°</span></p>
-            <p>Your Heading: <span id="heading">0°</span></p>
-        </div>
-    </div>
-    <script src="Qibla-compass/script.js"></script>
+  <script>
+    // Qibla location (Kaaba in Makkah)
+    const QIBLA_LAT = 21.4225;
+    const QIBLA_LON = 39.8262;
+
+    let userLat = null;
+    let userLon = null;
+
+    // Get user location
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        userLat = pos.coords.latitude;
+        userLon = pos.coords.longitude;
+      }, err => {
+        document.getElementById("info").innerText = "Location access denied!";
+      });
+    }
+
+    // Calculate bearing between two coordinates
+    function calculateQiblaDirection(lat1, lon1, lat2, lon2) {
+      const toRad = deg => deg * Math.PI / 180;
+      const toDeg = rad => rad * 180 / Math.PI;
+
+      const dLon = toRad(lon2 - lon1);
+      const y = Math.sin(dLon) * Math.cos(toRad(lat2));
+      const x = Math.cos(toRad(lat1)) * Math.sin(toRad(lat2)) -
+                Math.sin(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.cos(dLon);
+
+      let brng = toDeg(Math.atan2(y, x));
+      return (brng + 360) % 360;
+    }
+
+    // Compass rotation
+    window.addEventListener("deviceorientation", function(event) {
+      if (userLat && userLon) {
+        let heading = event.alpha; // device orientation
+        if (typeof event.webkitCompassHeading !== "undefined") {
+          heading = event.webkitCompassHeading; // iOS
+        }
+
+        let qiblaAngle = calculateQiblaDirection(userLat, userLon, QIBLA_LAT, QIBLA_LON);
+        let rotation = qiblaAngle - heading;
+
+        document.getElementById("needle").style.transform =
+          `translate(-50%, -100%) rotate(${rotation}deg)`;
+
+        document.getElementById("info").innerText =
+          "Qibla direction: " + Math.round(qiblaAngle) + "° from North";
+      }
+    }, true);
+  </script>
 </body>
 </html>
