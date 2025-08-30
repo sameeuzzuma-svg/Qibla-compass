@@ -3,71 +3,123 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Qibla Compass</title>
+  <title>Digital Compass</title>
   <style>
     body {
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
       height: 100vh;
-      margin: 0;
-      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      background: #2c3e50;
       color: white;
       font-family: Arial, sans-serif;
     }
-    h2 {
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    #compass {
+
+    .compass {
+      position: relative;
       width: 250px;
       height: 250px;
-      border: 8px solid white;
       border-radius: 50%;
-      position: relative;
-      background: radial-gradient(circle, #0f2027, #203a43, #2c5364);
+      border: 8px solid #fff;
+      background: #34495e;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       box-shadow: 0 0 20px rgba(0,0,0,0.5);
     }
-    #needle {
+
+    .dial {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.2s linear;
+    }
+
+    .direction {
+      position: absolute;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .north { top: 5px; left: 50%; transform: translateX(-50%); color: red; }
+    .south { bottom: 5px; left: 50%; transform: translateX(-50%); }
+    .east { right: 5px; top: 50%; transform: translateY(-50%); }
+    .west { left: 5px; top: 50%; transform: translateY(-50%); }
+
+    .needle {
+      position: absolute;
       width: 6px;
       height: 120px;
       background: red;
-      position: absolute;
       top: 50%;
       left: 50%;
-      transform-origin: bottom center;
-      transform: translate(-50%, -100%) rotate(0deg);
+      transform: translate(-50%, -100%);
       border-radius: 3px;
+      z-index: 10;
     }
-    .direction {
+
+    .center {
       position: absolute;
-      font-weight: bold;
-      font-size: 16px;
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 11;
     }
-    .north { top: 10px; left: 50%; transform: translateX(-50%); }
-    .south { bottom: 10px; left: 50%; transform: translateX(-50%); }
-    .east  { right: 10px; top: 50%; transform: translateY(-50%); }
-    .west  { left: 10px; top: 50%; transform: translateY(-50%); }
-    #info {
-      margin-top: 20px;
-      font-size: 14px;
-      text-align: center;
+
+    .degree {
+      position: absolute;
+      bottom: -40px;
+      font-size: 22px;
     }
   </style>
 </head>
 <body>
-  <h2>Qibla Compass</h2>
-  <div id="compass">
-    <div id="needle"></div>
-    <div class="direction north">N</div>
-    <div class="direction south">S</div>
-    <div class="direction east">E</div>
-    <div class="direction west">W</div>
+
+  <div class="compass">
+    <div class="dial" id="dial">
+      <div class="direction north">N</div>
+      <div class="direction south">S</div>
+      <div class="direction east">E</div>
+      <div class="direction west">W</div>
+    </div>
+    <div class="needle"></div>
+    <div class="center"></div>
+    <div class="degree" id="degree">0°</div>
   </div>
-  <div id="info">Rotate your phone to find Qibla</div>
 
   <script>
+    window.addEventListener("deviceorientationabsolute", updateCompass, true);
+    window.addEventListener("deviceorientation", updateCompass, true);
+
+    function updateCompass(event) {
+      let alpha = event.alpha;
+      if (typeof event.webkitCompassHeading !== "undefined") {
+        // For iOS
+        alpha = event.webkitCompassHeading;
+      } else {
+        // For Android
+        alpha = 360 - alpha;
+      }
+
+      const dial = document.getElementById("dial");
+      const degreeText = document.getElementById("degree");
+
+      if (alpha !== null) {
+        dial.style.transform = `rotate(${alpha}deg)`;
+        degreeText.textContent = `${Math.round(alpha)}°`;
+      }
+    }
+  </script>
+</body>
+</html>
     // Qibla location (Kaaba in Makkah)
     const QIBLA_LAT = 21.4225;
     const QIBLA_LON = 39.8262;
