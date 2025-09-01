@@ -605,7 +605,7 @@
         <div class="container">
             <a class="navbar-brand" href="#home">
                 <i class="fas fa-mosque me-2"></i>
-                <span class="arabic-font">Islamic Prayer Times</span>
+                <span class="arabic-font">إسلامي</span> Prayer Times
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -1052,19 +1052,18 @@
                 if (targetSection) {
                     targetSection.classList.add('active');
                     
-                    // Initialize map if mosque-finder section
-                    if (sectionId === 'mosque-finder' && this.userLocation && !this.map) {
-                        setTimeout(() => this.initializeMap(), 100);
-                    }
-                    
-                    // Trigger location detection if location-info section and no location yet
-                    if (sectionId === 'location-info' && !this.userLocation) {
-                        this.detectLocation();
+                    // Load section-specific content
+                    if (sectionId === 'prayer-times' && this.userLocation && !this.prayerTimes) {
+                        this.loadPrayerTimes();
+                    } else if (sectionId === 'mosque-finder' && this.userLocation) {
+                        this.loadMosques();
+                    } else if (sectionId === 'location-info') {
+                        this.loadLocationPrayerTimes();
                     }
                 }
 
                 // Update URL hash
-                window.history.pushState(null, null, `#${sectionId}`);
+                window.location.hash = sectionId;
             }
 
             updateActiveNav(activeLink) {
@@ -1081,465 +1080,446 @@
                 }
             }
 
-            convertTimeFormat(time24) {
-                if (this.is24HourFormat) {
-                    return time24.slice(0, 5);
-                }
-                
-                // Convert to 12-hour format
-                const [hours, minutes] = time24.split(':');
-                const hour24 = parseInt(hours);
-                const hour12 = hour24 === 0 ? 12 : hour24 > 12 ? hour24 - 12 : hour24;
-                const ampm = hour24 >= 12 ? 'PM' : 'AM';
-                
-                return `${hour12}:${minutes} ${ampm}`;
+            startClock() {
+                this.updateClock();
+                setInterval(() => this.updateClock(), 1000);
             }
 
-            startClock() {
-                const updateClock = () => {
-                    const now = new Date();
-                    const timeString = now.toLocaleTimeString('en-US', { 
-                        hour12: false,
+            updateClock() {
+                const now = new Date();
+                const timeElement = document.getElementById('current-time');
+                const dateElement = document.getElementById('current-date');
+                
+                if (timeElement) {
+                    timeElement.textContent = now.toLocaleTimeString('en-US', {
                         hour: '2-digit',
                         minute: '2-digit',
-                        second: '2-digit'
+                        second: '2-digit',
+                        hour12: true
                     });
-                    const dateString = now.toLocaleDateString('en-US', {
+                }
+                
+                if (dateElement) {
+                    dateElement.textContent = now.toLocaleDateString('en-US', {
                         weekday: 'long',
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric'
                     });
-
-                    document.getElementById('current-time').textContent = timeString;
-                    document.getElementById('current-date').textContent = dateString;
-                };
-
-                updateClock();
-                setInterval(updateClock, 1000);
-            }
-
-            async detectLocation() {
-                const loadingEl = document.getElementById('location-loading');
-                const infoEl = document.getElementById('location-info');
-                const errorEl = document.getElementById('location-error');
-                
-                // Also get location-info section elements
-                const locationLoadingSection = document.getElementById('location-loading-section');
-                const locationInfoSection = document.getElementById('location-info-section');
-                const locationErrorSection = document.getElementById('location-error-section');
-
-                try {
-                    if (!navigator.geolocation) {
-                        throw new Error('Geolocation is not supported by this browser');
-                    }
-
-                    const position = await new Promise((resolve, reject) => {
-                        navigator.geolocation.getCurrentPosition(resolve, reject, {
-                            enableHighAccuracy: true,
-                            timeout: 15000,
-                            maximumAge: 60000 // 1 minute for more accurate location
-                        });
-                    });
-
-                    this.userLocation = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    };
-
-                    // Update location display with higher precision
-                    document.getElementById('user-lat').textContent = this.userLocation.lat.toFixed(8);
-                    document.getElementById('user-lng').textContent = this.userLocation.lng.toFixed(8);
-                    
-                    // Also update location info section if it exists
-                    const userLatSection = document.getElementById('user-lat-section');
-                    const userLngSection = document.getElementById('user-lng-section');
-                    if (userLatSection) userLatSection.textContent = this.userLocation.lat.toFixed(8);
-                    if (userLngSection) userLngSection.textContent = this.userLocation.lng.toFixed(8);
-
-                    // Get location information
-                    await this.getLocationInfo();
-                    
-                    // Get prayer times
-                    await this.getPrayerTimes();
-
-                    // Hide loading, show info for home section
-                    if (loadingEl) loadingEl.classList.add('d-none');
-                    if (infoEl) infoEl.classList.remove('d-none');
-                    
-                    // Update the location info in the location-info section
-                    if (locationInfoSection && locationLoadingSection) {
-                        locationLoadingSection.classList.add('d-none');
-                        locationInfoSection.classList.remove('d-none');
-                        console.log('Location info section visibility updated');
-                    }
-
-                } catch (error) {
-                    console.error('Location detection failed:', error);
-                    
-                    // Hide loading and show error for home section
-                    if (loadingEl) loadingEl.classList.add('d-none');
-                    if (errorEl) errorEl.classList.remove('d-none');
-                    
-                    // Also show error in location section
-                    if (locationErrorSection && locationLoadingSection) {
-                        locationLoadingSection.classList.add('d-none');
-                        locationErrorSection.classList.remove('d-none');
-                    }
-                    
-                    // Set default location (Mecca) for demo
-                    this.userLocation = { lat: 21.4225, lng: 39.8262 };
-                    await this.getLocationInfo();
-                    await this.getPrayerTimes();
-                    
-                    // Hide error and show location info after getting default location
-                    if (locationErrorSection) {
-                        locationErrorSection.classList.add('d-none');
-                        if (locationInfoSection) locationInfoSection.classList.remove('d-none');
-                    }
                 }
             }
 
-            async getLocationInfo() {
-                if (!this.userLocation) return;
+            detectLocation() {
+                if (!navigator.geolocation) {
+                    this.showLocationError('Geolocation is not supported by this browser.');
+                    return;
+                }
 
-                try {
-                    // Direct call to OpenStreetMap Nominatim API
-                    const url = `https://nominatim.openstreetmap.org/reverse?lat=${this.userLocation.lat}&lon=${this.userLocation.lng}&format=json&addressdetails=1`;
-                    
-                    const response = await fetch(url, {
-                        headers: {
-                            'User-Agent': 'Islamic Prayer App'
-                        }
-                    });
-                    
-                    const data = await response.json();
-
-                    if (response.ok && data.address) {
-                        const city = data.address.city || data.address.town || data.address.village || 'Unknown';
-                        const country = data.address.country || 'Unknown';
-
-                        console.log('Location data:', { city, country, coordinates: this.userLocation });
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        this.userLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        this.getReverseGeocoding();
+                    },
+                    (error) => {
+                        let errorMessage = 'Unable to get your location.';
                         
-                        document.getElementById('user-city').textContent = city;
-                        document.getElementById('user-country').textContent = country;
+                        switch (error.code) {
+                            case error.PERMISSION_DENIED:
+                                errorMessage = 'Location access denied. Please enable location services.';
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                errorMessage = 'Location information is unavailable.';
+                                break;
+                            case error.TIMEOUT:
+                                errorMessage = 'Location request timed out.';
+                                break;
+                        }
                         
-                        // Also update location info section if it exists
-                        const userCitySection = document.getElementById('user-city-section');
-                        const userCountrySection = document.getElementById('user-country-section');
-                        if (userCitySection) {
-                            userCitySection.textContent = city;
-                            console.log('Updated city in location section:', city);
-                        }
-                        if (userCountrySection) {
-                            userCountrySection.textContent = country;
-                            console.log('Updated country in location section:', country);
-                        }
+                        this.showLocationError(errorMessage);
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 60000
                     }
+                );
+            }
+
+            async getReverseGeocoding() {
+                try {
+                    const response = await fetch(
+                        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${this.userLocation.lat}&longitude=${this.userLocation.lng}&localityLanguage=en`
+                    );
+                    const data = await response.json();
+                    
+                    this.userLocation.city = data.city || data.locality || 'Unknown';
+                    this.userLocation.country = data.countryName || 'Unknown';
+                    
+                    this.displayLocationInfo();
                 } catch (error) {
-                    console.error('Failed to get location info:', error);
+                    console.error('Error getting location details:', error);
+                    this.userLocation.city = 'Unknown';
+                    this.userLocation.country = 'Unknown';
+                    this.displayLocationInfo();
                 }
             }
 
-            async getPrayerTimes() {
+            displayLocationInfo() {
+                const loadingSection = document.getElementById('location-loading-section');
+                const infoSection = document.getElementById('location-info-section');
+                
+                if (loadingSection) loadingSection.classList.add('d-none');
+                if (infoSection) infoSection.classList.remove('d-none');
+                
+                // Update location info
+                this.updateElementText('user-city-section', this.userLocation.city);
+                this.updateElementText('user-country-section', this.userLocation.country);
+                this.updateElementText('user-lat-section', this.userLocation.lat.toFixed(6));
+                this.updateElementText('user-lng-section', this.userLocation.lng.toFixed(6));
+            }
+
+            showLocationError(message) {
+                const loadingSection = document.getElementById('location-loading-section');
+                const errorSection = document.getElementById('location-error-section');
+                
+                if (loadingSection) loadingSection.classList.add('d-none');
+                if (errorSection) {
+                    errorSection.classList.remove('d-none');
+                    errorSection.querySelector('i').nextSibling.textContent = message;
+                }
+            }
+
+            async loadPrayerTimes() {
                 if (!this.userLocation) return;
 
-                const loadingEl = document.getElementById('prayer-loading');
-                const gridEl = document.getElementById('prayer-times-grid');
-                const errorEl = document.getElementById('prayer-error');
-                
-                console.log('Prayer elements found:', { loadingEl: !!loadingEl, gridEl: !!gridEl, errorEl: !!errorEl });
-
                 try {
-                    // Get current date
-                    const today = new Date().toLocaleDateString('en-GB').split('/').reverse().join('-');
-                    
-                    // Direct call to Aladhan API
-                    const url = `https://api.aladhan.com/v1/timings/${today}?latitude=${this.userLocation.lat}&longitude=${this.userLocation.lng}&method=2`;
-                    
-                    const response = await fetch(url);
-                    const data = await response.json();
+                    const today = new Date();
+                    const day = today.getDate();
+                    const month = today.getMonth() + 1;
+                    const year = today.getFullYear();
 
-                    if (response.ok && data.data) {
-                        this.prayerTimes = data.data.timings;
-                        console.log('Prayer times data:', this.prayerTimes);
-                        this.displayPrayerTimes();
-                        
-                        loadingEl.classList.add('d-none');
-                        gridEl.classList.remove('d-none');
-                    } else {
-                        console.error('API response error:', data);
-                        throw new Error(data.error || 'Failed to fetch prayer times');
+                    const response = await fetch(
+                        `https://api.aladhan.com/v1/timings/${day}-${month}-${year}?latitude=${this.userLocation.lat}&longitude=${this.userLocation.lng}&method=2`
+                    );
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch prayer times');
                     }
+                    
+                    const data = await response.json();
+                    this.prayerTimes = data.data.timings;
+                    
+                    this.displayPrayerTimes();
                 } catch (error) {
-                    console.error('Failed to get prayer times:', error);
-                    loadingEl.classList.add('d-none');
-                    errorEl.classList.remove('d-none');
+                    console.error('Error loading prayer times:', error);
+                    this.showPrayerError();
                 }
             }
 
             displayPrayerTimes() {
-                if (!this.prayerTimes) return;
+                const loadingElement = document.getElementById('prayer-loading');
+                const gridElement = document.getElementById('prayer-times-grid');
+                
+                if (loadingElement) loadingElement.classList.add('d-none');
+                if (gridElement) gridElement.classList.remove('d-none');
 
                 const prayers = [
                     { name: 'Fajr', time: this.prayerTimes.Fajr, icon: 'fas fa-sun' },
                     { name: 'Dhuhr', time: this.prayerTimes.Dhuhr, icon: 'fas fa-sun' },
-                    { name: 'Asr', time: this.prayerTimes.Asr, icon: 'fas fa-cloud-sun' },
+                    { name: 'Asr', time: this.prayerTimes.Asr, icon: 'fas fa-sun' },
                     { name: 'Maghrib', time: this.prayerTimes.Maghrib, icon: 'fas fa-moon' },
                     { name: 'Isha', time: this.prayerTimes.Isha, icon: 'fas fa-star' }
                 ];
 
-                const currentTime = new Date();
-                const currentTimeStr = currentTime.toTimeString().slice(0, 5);
-
-                // Display in both home and prayer times sections
-                const containers = ['home-prayer-times', 'prayer-times-grid'];
-                
-                containers.forEach(containerId => {
-                    const container = document.getElementById(containerId);
-                    if (!container) return;
-
-                    container.innerHTML = prayers.map(prayer => {
-                        const prayerTime = this.convertTimeFormat(prayer.time);
-                        const isCurrentPrayer = this.isCurrentPrayer(prayer.name, currentTimeStr);
-                        
-                        return `
-                            <div class="col-md-4 col-lg-2">
-                                <div class="prayer-card ${isCurrentPrayer ? 'current-prayer pulse' : ''}">
-                                    <div class="prayer-icon">
-                                        <i class="${prayer.icon}"></i>
-                                    </div>
-                                    <div class="prayer-name">${prayer.name}</div>
-                                    <div class="prayer-time">${prayerTime}</div>
-                                </div>
+                gridElement.innerHTML = prayers.map(prayer => `
+                    <div class="col-md-6 col-lg-2">
+                        <div class="prayer-card ${this.getCurrentPrayer() === prayer.name ? 'current-prayer' : ''}">
+                            <div class="prayer-icon">
+                                <i class="${prayer.icon}"></i>
                             </div>
-                        `;
-                    }).join('');
-                });
-            }
-
-            isCurrentPrayer(prayerName, currentTime) {
-                if (!this.prayerTimes) return false;
-
-                const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
-                const prayerIndex = prayers.indexOf(prayerName);
-                
-                if (prayerIndex === -1) return false;
-
-                const prayerTime = this.prayerTimes[prayerName].slice(0, 5);
-                const nextPrayerIndex = (prayerIndex + 1) % prayers.length;
-                const nextPrayerTime = this.prayerTimes[prayers[nextPrayerIndex]].slice(0, 5);
-
-                // Simple time comparison (this could be more sophisticated)
-                return currentTime >= prayerTime && (nextPrayerIndex === 0 || currentTime < nextPrayerTime);
-            }
-
-            async initializeMap() {
-                if (!this.userLocation) return;
-
-                const mapContainer = document.getElementById('mosque-map');
-                const loadingEl = document.getElementById('mosque-loading');
-                const errorEl = document.getElementById('mosque-error');
-
-                try {
-                    // Initialize Leaflet map
-                    this.map = L.map('mosque-map').setView([this.userLocation.lat, this.userLocation.lng], 13);
-
-                    // Add OpenStreetMap tiles
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        attribution: '© OpenStreetMap contributors'
-                    }).addTo(this.map);
-
-                    // Add user location marker
-                    const userIcon = L.divIcon({
-                        html: '<i class="fas fa-user-circle" style="color: #d4af37; font-size: 24px;"></i>',
-                        iconSize: [30, 30],
-                        className: 'user-location-marker'
-                    });
-
-                    L.marker([this.userLocation.lat, this.userLocation.lng], { icon: userIcon })
-                        .addTo(this.map)
-                        .bindPopup('<strong>Your Location</strong>')
-                        .openPopup();
-
-                    // Load nearby mosques
-                    await this.loadNearbyMosques();
-
-                    loadingEl.classList.add('d-none');
-                    mapContainer.classList.remove('d-none');
-
-                } catch (error) {
-                    console.error('Failed to initialize map:', error);
-                    loadingEl.classList.add('d-none');
-                    errorEl.classList.remove('d-none');
-                }
-            }
-
-            async loadNearbyMosques() {
-                if (!this.map || !this.userLocation) return;
-
-                try {
-                    const radius = 5000; // 5km radius
-                    
-                    // Direct call to Overpass API
-                    const overpassUrl = "https://overpass-api.de/api/interpreter";
-                    const query = `
-                    [out:json][timeout:25];
-                    (
-                      node["amenity"="place_of_worship"]["religion"="muslim"](around:${radius},${this.userLocation.lat},${this.userLocation.lng});
-                      way["amenity"="place_of_worship"]["religion"="muslim"](around:${radius},${this.userLocation.lat},${this.userLocation.lng});
-                      relation["amenity"="place_of_worship"]["religion"="muslim"](around:${radius},${this.userLocation.lat},${this.userLocation.lng});
-                    );
-                    out center meta;
-                    `;
-                    
-                    const response = await fetch(overpassUrl, {
-                        method: 'POST',
-                        body: query,
-                        headers: {
-                            'Content-Type': 'text/plain'
-                        }
-                    });
-                    
-                    const data = await response.json();
-
-                    if (response.ok && data.elements) {
-                        this.displayMosques(data.elements);
-                    } else {
-                        throw new Error('Failed to fetch mosque data');
-                    }
-                } catch (error) {
-                    console.error('Failed to load mosques:', error);
-                }
-            }
-
-            displayMosques(mosques) {
-                const mosqueList = document.getElementById('mosque-items');
-                
-                // Clear existing markers
-                this.mosqueMarkers.forEach(marker => {
-                    this.map.removeLayer(marker);
-                });
-                this.mosqueMarkers = [];
-
-                const mosqueItems = [];
-
-                mosques.forEach(mosque => {
-                    if (!mosque.lat || !mosque.lon) return;
-
-                    const name = mosque.tags?.name || 'Unnamed Mosque';
-                    const address = this.formatAddress(mosque.tags);
-                    const distance = this.calculateDistance(
-                        this.userLocation.lat, 
-                        this.userLocation.lng, 
-                        mosque.lat, 
-                        mosque.lon
-                    );
-
-                    // Create map marker
-                    const mosqueIcon = L.divIcon({
-                        html: '<i class="fas fa-mosque" style="color: #2d5a3d; font-size: 20px;"></i>',
-                        iconSize: [25, 25],
-                        className: 'mosque-marker'
-                    });
-
-                    const marker = L.marker([mosque.lat, mosque.lon], { icon: mosqueIcon })
-                        .addTo(this.map)
-                        .bindPopup(`
-                            <div class="mosque-popup-title">${name}</div>
-                            <div class="mosque-popup-address">${address}</div>
-                            <div class="mosque-popup-distance">${distance.toFixed(1)} km away</div>
-                        `);
-
-                    this.mosqueMarkers.push(marker);
-
-                    // Add to list
-                    mosqueItems.push({
-                        name,
-                        address,
-                        distance,
-                        lat: mosque.lat,
-                        lon: mosque.lon,
-                        marker
-                    });
-                });
-
-                // Sort by distance and display
-                mosqueItems.sort((a, b) => a.distance - b.distance);
-                
-                mosqueList.innerHTML = mosqueItems.slice(0, 10).map(mosque => `
-                    <div class="col-md-6 col-lg-4">
-                        <div class="mosque-item" onclick="app.focusOnMosque(${mosque.lat}, ${mosque.lon})">
-                            <div class="mosque-name">
-                                <i class="fas fa-mosque me-2"></i>${mosque.name}
-                            </div>
-                            <div class="mosque-address">${mosque.address}</div>
-                            <div class="mosque-distance">${mosque.distance.toFixed(1)} km away</div>
-                            <div class="mosque-actions mt-2">
-                                <button class="btn btn-sm btn-outline-primary me-2" onclick="event.stopPropagation(); app.focusOnMosque(${mosque.lat}, ${mosque.lon})">
-                                    <i class="fas fa-map-marked-alt me-1"></i>View on Map
-                                </button>
-                                <a href="https://www.google.com/maps/dir/?api=1&destination=${mosque.lat},${mosque.lon}" 
-                                   target="_blank" 
-                                   class="btn btn-sm btn-primary"
-                                   onclick="event.stopPropagation()">
-                                    <i class="fas fa-directions me-1"></i>Get Directions
-                                </a>
-                            </div>
+                            <div class="prayer-name">${prayer.name}</div>
+                            <div class="prayer-time">${this.formatTime(prayer.time)}</div>
                         </div>
                     </div>
                 `).join('');
             }
 
-            focusOnMosque(lat, lon) {
-                if (this.map) {
-                    this.map.setView([lat, lon], 16);
+            loadLocationPrayerTimes() {
+                if (!this.userLocation) return;
+                
+                this.loadPrayerTimes().then(() => {
+                    if (this.prayerTimes) {
+                        this.displayHomePrayerTimes();
+                    }
+                });
+            }
+
+            displayHomePrayerTimes() {
+                const homeContainer = document.getElementById('home-prayer-times');
+                if (!homeContainer || !this.prayerTimes) return;
+
+                const prayers = [
+                    { name: 'Fajr', time: this.prayerTimes.Fajr, icon: 'fas fa-sun' },
+                    { name: 'Dhuhr', time: this.prayerTimes.Dhuhr, icon: 'fas fa-sun' },
+                    { name: 'Asr', time: this.prayerTimes.Asr, icon: 'fas fa-sun' },
+                    { name: 'Maghrib', time: this.prayerTimes.Maghrib, icon: 'fas fa-moon' },
+                    { name: 'Isha', time: this.prayerTimes.Isha, icon: 'fas fa-star' }
+                ];
+
+                homeContainer.innerHTML = prayers.map(prayer => `
+                    <div class="col-md-6 col-lg-2">
+                        <div class="prayer-card ${this.getCurrentPrayer() === prayer.name ? 'current-prayer' : ''}">
+                            <div class="prayer-icon">
+                                <i class="${prayer.icon}"></i>
+                            </div>
+                            <div class="prayer-name">${prayer.name}</div>
+                            <div class="prayer-time">${this.formatTime(prayer.time)}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            showPrayerError() {
+                const loadingElement = document.getElementById('prayer-loading');
+                const errorElement = document.getElementById('prayer-error');
+                
+                if (loadingElement) loadingElement.classList.add('d-none');
+                if (errorElement) errorElement.classList.remove('d-none');
+            }
+
+            getCurrentPrayer() {
+                if (!this.prayerTimes) return null;
+
+                const now = new Date();
+                const currentTime = now.getHours() * 60 + now.getMinutes();
+
+                const prayers = [
+                    { name: 'Fajr', time: this.prayerTimes.Fajr },
+                    { name: 'Dhuhr', time: this.prayerTimes.Dhuhr },
+                    { name: 'Asr', time: this.prayerTimes.Asr },
+                    { name: 'Maghrib', time: this.prayerTimes.Maghrib },
+                    { name: 'Isha', time: this.prayerTimes.Isha }
+                ];
+
+                for (let i = 0; i < prayers.length; i++) {
+                    const prayer = prayers[i];
+                    const [hours, minutes] = prayer.time.split(':').map(Number);
+                    const prayerTime = hours * 60 + minutes;
                     
-                    // Find and open popup for this mosque
-                    this.mosqueMarkers.forEach(marker => {
-                        if (marker.getLatLng().lat === lat && marker.getLatLng().lng === lon) {
-                            marker.openPopup();
+                    const nextPrayer = prayers[i + 1];
+                    if (nextPrayer) {
+                        const [nextHours, nextMinutes] = nextPrayer.time.split(':').map(Number);
+                        const nextPrayerTime = nextHours * 60 + nextMinutes;
+                        
+                        if (currentTime >= prayerTime && currentTime < nextPrayerTime) {
+                            return prayer.name;
                         }
+                    } else {
+                        // Last prayer of the day
+                        if (currentTime >= prayerTime) {
+                            return prayer.name;
+                        }
+                    }
+                }
+                
+                return null;
+            }
+
+            formatTime(time24) {
+                if (this.is24HourFormat) {
+                    return time24;
+                }
+                
+                const [hours, minutes] = time24.split(':').map(Number);
+                const date = new Date();
+                date.setHours(hours, minutes, 0, 0);
+                
+                return date.toLocaleTimeString('en-US', {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true
+                });
+            }
+
+            async loadMosques() {
+                if (!this.userLocation) return;
+
+                const loadingElement = document.getElementById('mosque-loading');
+                const mapElement = document.getElementById('mosque-map');
+                
+                try {
+                    // Show loading
+                    if (loadingElement) loadingElement.classList.remove('d-none');
+                    if (mapElement) mapElement.classList.add('d-none');
+
+                    // Initialize map first
+                    this.initializeMap();
+
+                    // Using Overpass API to find mosques
+                    const radius = 5000; // 5km
+                    const query = `
+                        [out:json][timeout:25];
+                        (
+                            node["amenity"="place_of_worship"]["religion"="muslim"](around:${radius},${this.userLocation.lat},${this.userLocation.lng});
+                            way["amenity"="place_of_worship"]["religion"="muslim"](around:${radius},${this.userLocation.lat},${this.userLocation.lng});
+                            relation["amenity"="place_of_worship"]["religion"="muslim"](around:${radius},${this.userLocation.lat},${this.userLocation.lng});
+                        );
+                        out center;
+                    `;
+
+                    const response = await fetch('https://overpass-api.de/api/interpreter', {
+                        method: 'POST',
+                        body: query,
                     });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch mosque data');
+                    }
+
+                    const data = await response.json();
+                    
+                    const mosques = data.elements
+                        .filter(element => element.tags?.name)
+                        .map(element => {
+                            const lat = element.lat || element.center?.lat;
+                            const lng = element.lon || element.center?.lon;
+                            
+                            if (!lat || !lng) return null;
+                            
+                            const distance = this.calculateDistance(
+                                this.userLocation.lat, 
+                                this.userLocation.lng, 
+                                lat, 
+                                lng
+                            );
+                            
+                            return {
+                                id: element.id,
+                                name: element.tags.name,
+                                address: element.tags['addr:full'] || 
+                                        `${element.tags['addr:housenumber'] || ''} ${element.tags['addr:street'] || ''}, ${element.tags['addr:city'] || ''}`.trim() ||
+                                        'Address not available',
+                                lat: lat,
+                                lng: lng,
+                                distance: distance
+                            };
+                        })
+                        .filter(Boolean)
+                        .sort((a, b) => a.distance - b.distance)
+                        .slice(0, 10);
+
+                    this.displayMosques(mosques);
+                    
+                    // Hide loading and show map
+                    if (loadingElement) loadingElement.classList.add('d-none');
+                    if (mapElement) mapElement.classList.remove('d-none');
+                    
+                } catch (error) {
+                    console.error('Error loading mosques:', error);
+                    this.showMosqueError();
                 }
             }
 
-            formatAddress(tags) {
-                if (!tags) return 'Address not available';
+            initializeMap() {
+                const mapElement = document.getElementById('mosque-map');
+                if (!mapElement || !window.L) return;
+
+                // Remove existing map if any
+                if (this.map) {
+                    this.map.remove();
+                }
+
+                // Initialize new map
+                this.map = L.map('mosque-map').setView([this.userLocation.lat, this.userLocation.lng], 13);
+
+                // Add tile layer
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(this.map);
+
+                // Add user location marker
+                L.marker([this.userLocation.lat, this.userLocation.lng])
+                    .addTo(this.map)
+                    .bindPopup('<div class="text-center"><strong>Your Location</strong></div>');
+            }
+
+            displayMosques(mosques) {
+                // Clear existing markers
+                this.mosqueMarkers.forEach(marker => this.map.removeLayer(marker));
+                this.mosqueMarkers = [];
+
+                // Add mosque markers to map
+                mosques.forEach(mosque => {
+                    const marker = L.marker([mosque.lat, mosque.lng]).addTo(this.map);
+                    marker.bindPopup(`
+                        <div class="p-2">
+                            <div class="mosque-popup-title">${mosque.name}</div>
+                            <div class="mosque-popup-address">${mosque.address}</div>
+                            <div class="mosque-popup-distance">${mosque.distance.toFixed(1)} miles away</div>
+                        </div>
+                    `);
+                    this.mosqueMarkers.push(marker);
+                });
+
+                // Display mosque list
+                const mosqueContainer = document.getElementById('mosque-items');
+                if (mosqueContainer) {
+                    mosqueContainer.innerHTML = mosques.map(mosque => `
+                        <div class="col-lg-4 col-md-6">
+                            <div class="mosque-item" onclick="window.islamicApp.openDirections(${mosque.lat}, ${mosque.lng})">
+                                <div class="mosque-name">${mosque.name}</div>
+                                <div class="mosque-address">${mosque.address}</div>
+                                <div class="mosque-distance">${mosque.distance.toFixed(1)} miles away</div>
+                                <div class="mosque-actions mt-2">
+                                    <button class="btn btn-sm btn-primary">
+                                        <i class="fas fa-directions me-1"></i>Directions
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }
+
+            showMosqueError() {
+                const loadingElement = document.getElementById('mosque-loading');
+                const errorElement = document.getElementById('mosque-error');
                 
-                const parts = [];
-                if (tags['addr:street']) parts.push(tags['addr:street']);
-                if (tags['addr:city']) parts.push(tags['addr:city']);
-                if (tags['addr:postcode']) parts.push(tags['addr:postcode']);
-                
-                return parts.length > 0 ? parts.join(', ') : 'Address not available';
+                if (loadingElement) loadingElement.classList.add('d-none');
+                if (errorElement) errorElement.classList.remove('d-none');
+            }
+
+            openDirections(lat, lng) {
+                const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+                window.open(url, '_blank');
             }
 
             calculateDistance(lat1, lon1, lat2, lon2) {
-                const R = 6371; // Earth's radius in kilometers
-                const dLat = this.toRadians(lat2 - lat1);
-                const dLon = this.toRadians(lon2 - lon1);
-                const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                          Math.cos(this.toRadians(lat1)) * Math.cos(this.toRadians(lat2)) *
-                          Math.sin(dLon / 2) * Math.sin(dLon / 2);
-                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                const R = 3959; // Earth's radius in miles
+                const dLat = (lat2 - lat1) * Math.PI / 180;
+                const dLon = (lon2 - lon1) * Math.PI / 180;
+                const a = 
+                    Math.sin(dLat/2) * Math.sin(dLat/2) +
+                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+                    Math.sin(dLon/2) * Math.sin(dLon/2);
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
                 return R * c;
             }
 
-            toRadians(degrees) {
-                return degrees * (Math.PI / 180);
+            updateElementText(elementId, text) {
+                const element = document.getElementById(elementId);
+                if (element) {
+                    element.textContent = text;
+                }
             }
         }
 
-        // Initialize app when DOM is loaded
+        // Initialize the app when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
-            window.app = new IslamicApp();
-        });
-
-        // Handle browser back/forward buttons
-        window.addEventListener('popstate', () => {
-            const sectionId = window.location.hash.substring(1) || 'landing';
-            window.app.showSection(sectionId);
+            window.islamicApp = new IslamicApp();
         });
     </script>
 </body>
