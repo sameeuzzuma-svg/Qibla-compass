@@ -436,98 +436,6 @@
             background: var(--gradient-gold) !important;
         }
 
-        /* Tool Cards */
-        .tool-card {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem 1.5rem;
-            text-align: center;
-            box-shadow: 0 10px 30px var(--shadow-light);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 2px solid transparent;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .tool-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--islamic-gold);
-            box-shadow: 0 20px 40px var(--shadow-medium);
-        }
-
-        .tool-icon {
-            font-size: 3rem;
-            color: var(--islamic-green);
-            margin-bottom: 1.5rem;
-        }
-
-        .tool-title {
-            color: var(--islamic-green);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .tool-description {
-            color: #6c757d;
-            margin-bottom: 2rem;
-            flex-grow: 1;
-        }
-
-        .tool-button {
-            color: var(--islamic-gold);
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .tool-card:hover .tool-button {
-            transform: translateX(5px);
-        }
-
-        /* Quick Stats */
-        .quick-stats {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px var(--shadow-light);
-        }
-
-        .stat-item {
-            padding: 1rem;
-        }
-
-        .stat-icon {
-            font-size: 2rem;
-            color: var(--islamic-green);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--islamic-gold);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: #6c757d;
-            font-weight: 500;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-        }
-
-        /* Mosque Actions */
-        .mosque-actions {
-            padding-top: 0.5rem;
-            border-top: 1px solid #eee;
-        }
-
-        .mosque-actions .btn {
-            font-size: 0.85rem;
-        }
-
         /* Responsive Design */
         @media (max-width: 768px) {
             body {
@@ -613,16 +521,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#landing" data-section="landing">Home</a>
+                        <a class="nav-link active" href="#home" data-section="home">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#prayer-times" data-section="prayer-times">Prayer Times</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#mosque-finder" data-section="mosque-finder">Mosque Finder</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#location-info" data-section="location-info">Location Info</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#about" data-section="about">About</a>
@@ -649,181 +554,69 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        <!-- Landing Page Section -->
-        <section id="landing" class="section active">
+        <!-- Home Section -->
+        <section id="home" class="section active">
             <div class="container">
                 <div class="row justify-content-center text-center mb-5">
-                    <div class="col-lg-10">
+                    <div class="col-lg-8">
                         <div class="islamic-welcome">
                             <h1 class="arabic-font mb-3">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</h1>
-                            <h2 class="mb-4">Islamic Prayer Times & Mosque Finder</h2>
-                            <p class="lead">Your complete Islamic companion for prayer times, mosque locations, and location-based services. Stay connected with your faith wherever you are.</p>
+                            <h2 class="mb-4">Welcome to Islamic Prayer Times</h2>
+                            <p class="lead">Find accurate prayer timings and nearby mosques based on your location. Stay connected with your faith wherever you are.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tools Grid -->
-                <div class="row g-4">
-                    <div class="col-md-6 col-lg-3">
-                        <div class="tool-card" data-section="prayer-times">
-                            <div class="tool-icon">
-                                <i class="fas fa-pray"></i>
+                <!-- Location Status -->
+                <div class="row justify-content-center mb-5">
+                    <div class="col-lg-6">
+                        <div class="location-card">
+                            <div class="card-header">
+                                <i class="fas fa-map-marker-alt me-2"></i>
+                                Your Location
                             </div>
-                            <h4 class="tool-title">Prayer Times</h4>
-                            <p class="tool-description">Get accurate Namaz timings for your location with 12/24-hour format options</p>
-                            <div class="tool-button">
-                                <i class="fas fa-arrow-right"></i>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6 col-lg-3">
-                        <div class="tool-card" data-section="mosque-finder">
-                            <div class="tool-icon">
-                                <i class="fas fa-mosque"></i>
-                            </div>
-                            <h4 class="tool-title">Mosque Finder</h4>
-                            <p class="tool-description">Find nearby mosques with interactive map and Google Maps directions</p>
-                            <div class="tool-button">
-                                <i class="fas fa-arrow-right"></i>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6 col-lg-3">
-                        <div class="tool-card" data-section="location-info">
-                            <div class="tool-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <h4 class="tool-title">Location Info</h4>
-                            <p class="tool-description">View your current location details with high-precision coordinates</p>
-                            <div class="tool-button">
-                                <i class="fas fa-arrow-right"></i>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6 col-lg-3">
-                        <div class="tool-card" data-section="about">
-                            <div class="tool-icon">
-                                <i class="fas fa-info-circle"></i>
-                            </div>
-                            <h4 class="tool-title">About</h4>
-                            <p class="tool-description">Learn more about this app and its features</p>
-                            <div class="tool-button">
-                                <i class="fas fa-arrow-right"></i>
+                            <div class="card-body">
+                                <div id="location-loading" class="text-center">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading location...</span>
+                                    </div>
+                                    <p class="mt-2">Detecting your location...</p>
+                                </div>
+                                <div id="location-info" class="d-none">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <strong>City:</strong>
+                                            <span id="user-city">--</span>
+                                        </div>
+                                        <div class="col-6">
+                                            <strong>Country:</strong>
+                                            <span id="user-country">--</span>
+                                        </div>
+                                        <div class="col-6 mt-2">
+                                            <strong>Latitude:</strong>
+                                            <span id="user-lat">--</span>
+                                        </div>
+                                        <div class="col-6 mt-2">
+                                            <strong>Longitude:</strong>
+                                            <span id="user-lng">--</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="location-error" class="d-none alert alert-warning">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                    Unable to detect location. Please enable location services and refresh the page.
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Quick Stats -->
-                <div class="row justify-content-center mt-5">
-                    <div class="col-lg-8">
-                        <div class="quick-stats">
-                            <div class="row text-center">
-                                <div class="col-6 col-md-3">
-                                    <div class="stat-item">
-                                        <i class="fas fa-clock stat-icon"></i>
-                                        <div class="stat-number">5</div>
-                                        <div class="stat-label">Daily Prayers</div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-3">
-                                    <div class="stat-item">
-                                        <i class="fas fa-globe stat-icon"></i>
-                                        <div class="stat-number">200+</div>
-                                        <div class="stat-label">Countries</div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-3">
-                                    <div class="stat-item">
-                                        <i class="fas fa-map stat-icon"></i>
-                                        <div class="stat-number">Live</div>
-                                        <div class="stat-label">Location</div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-3">
-                                    <div class="stat-item">
-                                        <i class="fas fa-mobile-alt stat-icon"></i>
-                                        <div class="stat-number">100%</div>
-                                        <div class="stat-label">Responsive</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Location Info Section -->
-        <section id="location-info" class="section">
-            <div class="container">
+                <!-- Today's Prayer Times Preview -->
                 <div class="row justify-content-center">
                     <div class="col-lg-10">
-                        <div class="section-header text-center mb-5">
-                            <h2><i class="fas fa-map-marker-alt me-3"></i>Location Information</h2>
-                            <p class="lead">View your current location details with high-precision coordinates</p>
-                        </div>
-                        
-                        <!-- Location Status -->
-                        <div class="row justify-content-center mb-5">
-                            <div class="col-lg-8">
-                                <div class="location-card">
-                                    <div class="card-header">
-                                        <i class="fas fa-map-marker-alt me-2"></i>
-                                        Your Current Location
-                                    </div>
-                                    <div class="card-body">
-                                        <div id="location-loading-section" class="text-center">
-                                            <div class="spinner-border text-primary" role="status">
-                                                <span class="visually-hidden">Loading location...</span>
-                                            </div>
-                                            <p class="mt-2">Detecting your location...</p>
-                                        </div>
-                                        <div id="location-info-section" class="d-none">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <strong>City:</strong>
-                                                    <span id="user-city-section">--</span>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <strong>Country:</strong>
-                                                    <span id="user-country-section">--</span>
-                                                </div>
-                                                <div class="col-md-6 mt-2">
-                                                    <strong>Latitude:</strong>
-                                                    <span id="user-lat-section">--</span>
-                                                </div>
-                                                <div class="col-md-6 mt-2">
-                                                    <strong>Longitude:</strong>
-                                                    <span id="user-lng-section">--</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="location-error-section" class="d-none alert alert-warning">
-                                            <i class="fas fa-exclamation-triangle me-2"></i>
-                                            Unable to detect location. Please enable location services and refresh the page.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Today's Prayer Times Preview -->
-                        <div class="row justify-content-center">
-                            <div class="col-lg-10">
-                                <h3 class="text-center mb-4">Today's Prayer Times Preview</h3>
-                                <div id="home-prayer-times" class="row g-3">
-                                    <!-- Prayer cards will be inserted here -->
-                                </div>
-                                <div class="text-center mt-4">
-                                    <a href="#prayer-times" class="btn btn-primary" data-section="prayer-times">
-                                        View Full Prayer Times <i class="fas fa-arrow-right ms-2"></i>
-                                    </a>
-                                </div>
-                            </div>
+                        <h3 class="text-center mb-4">Today's Prayer Times</h3>
+                        <div id="home-prayer-times" class="row g-3">
+                            <!-- Prayer cards will be inserted here -->
                         </div>
                     </div>
                 </div>
@@ -996,19 +789,9 @@
                 document.querySelectorAll('[data-section]').forEach(link => {
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
-                        const sectionId = e.target.getAttribute('data-section') || e.target.closest('[data-section]').getAttribute('data-section');
+                        const sectionId = e.target.getAttribute('data-section');
                         this.showSection(sectionId);
-                        
-                        // Update active nav only for nav links
-                        if (e.target.classList.contains('nav-link')) {
-                            this.updateActiveNav(e.target);
-                        } else {
-                            // Update nav for tool cards
-                            const navLink = document.querySelector(`[data-section="${sectionId}"].nav-link`);
-                            if (navLink) {
-                                this.updateActiveNav(navLink);
-                            }
-                        }
+                        this.updateActiveNav(e.target);
                     });
                 });
 
@@ -1035,9 +818,6 @@
                 if (window.location.hash) {
                     const sectionId = window.location.hash.substring(1);
                     this.showSection(sectionId);
-                } else {
-                    // Default to landing page
-                    this.showSection('landing');
                 }
             }
 
@@ -1055,11 +835,6 @@
                     // Initialize map if mosque-finder section
                     if (sectionId === 'mosque-finder' && this.userLocation && !this.map) {
                         setTimeout(() => this.initializeMap(), 100);
-                    }
-                    
-                    // Trigger location detection if location-info section and no location yet
-                    if (sectionId === 'location-info' && !this.userLocation) {
-                        this.detectLocation();
                     }
                 }
 
@@ -1123,11 +898,6 @@
                 const loadingEl = document.getElementById('location-loading');
                 const infoEl = document.getElementById('location-info');
                 const errorEl = document.getElementById('location-error');
-                
-                // Also get location-info section elements
-                const locationLoadingSection = document.getElementById('location-loading-section');
-                const locationInfoSection = document.getElementById('location-info-section');
-                const locationErrorSection = document.getElementById('location-error-section');
 
                 try {
                     if (!navigator.geolocation) {
@@ -1150,12 +920,6 @@
                     // Update location display with higher precision
                     document.getElementById('user-lat').textContent = this.userLocation.lat.toFixed(8);
                     document.getElementById('user-lng').textContent = this.userLocation.lng.toFixed(8);
-                    
-                    // Also update location info section if it exists
-                    const userLatSection = document.getElementById('user-lat-section');
-                    const userLngSection = document.getElementById('user-lng-section');
-                    if (userLatSection) userLatSection.textContent = this.userLocation.lat.toFixed(8);
-                    if (userLngSection) userLngSection.textContent = this.userLocation.lng.toFixed(8);
 
                     // Get location information
                     await this.getLocationInfo();
@@ -1163,40 +927,19 @@
                     // Get prayer times
                     await this.getPrayerTimes();
 
-                    // Hide loading, show info for home section
-                    if (loadingEl) loadingEl.classList.add('d-none');
-                    if (infoEl) infoEl.classList.remove('d-none');
-                    
-                    // Update the location info in the location-info section
-                    if (locationInfoSection && locationLoadingSection) {
-                        locationLoadingSection.classList.add('d-none');
-                        locationInfoSection.classList.remove('d-none');
-                        console.log('Location info section visibility updated');
-                    }
+                    // Hide loading, show info
+                    loadingEl.classList.add('d-none');
+                    infoEl.classList.remove('d-none');
 
                 } catch (error) {
                     console.error('Location detection failed:', error);
-                    
-                    // Hide loading and show error for home section
-                    if (loadingEl) loadingEl.classList.add('d-none');
-                    if (errorEl) errorEl.classList.remove('d-none');
-                    
-                    // Also show error in location section
-                    if (locationErrorSection && locationLoadingSection) {
-                        locationLoadingSection.classList.add('d-none');
-                        locationErrorSection.classList.remove('d-none');
-                    }
+                    loadingEl.classList.add('d-none');
+                    errorEl.classList.remove('d-none');
                     
                     // Set default location (Mecca) for demo
                     this.userLocation = { lat: 21.4225, lng: 39.8262 };
                     await this.getLocationInfo();
                     await this.getPrayerTimes();
-                    
-                    // Hide error and show location info after getting default location
-                    if (locationErrorSection) {
-                        locationErrorSection.classList.add('d-none');
-                        if (locationInfoSection) locationInfoSection.classList.remove('d-none');
-                    }
                 }
             }
 
@@ -1219,22 +962,8 @@
                         const city = data.address.city || data.address.town || data.address.village || 'Unknown';
                         const country = data.address.country || 'Unknown';
 
-                        console.log('Location data:', { city, country, coordinates: this.userLocation });
-                        
                         document.getElementById('user-city').textContent = city;
                         document.getElementById('user-country').textContent = country;
-                        
-                        // Also update location info section if it exists
-                        const userCitySection = document.getElementById('user-city-section');
-                        const userCountrySection = document.getElementById('user-country-section');
-                        if (userCitySection) {
-                            userCitySection.textContent = city;
-                            console.log('Updated city in location section:', city);
-                        }
-                        if (userCountrySection) {
-                            userCountrySection.textContent = country;
-                            console.log('Updated country in location section:', country);
-                        }
                     }
                 } catch (error) {
                     console.error('Failed to get location info:', error);
@@ -1247,8 +976,6 @@
                 const loadingEl = document.getElementById('prayer-loading');
                 const gridEl = document.getElementById('prayer-times-grid');
                 const errorEl = document.getElementById('prayer-error');
-                
-                console.log('Prayer elements found:', { loadingEl: !!loadingEl, gridEl: !!gridEl, errorEl: !!errorEl });
 
                 try {
                     // Get current date
@@ -1262,13 +989,11 @@
 
                     if (response.ok && data.data) {
                         this.prayerTimes = data.data.timings;
-                        console.log('Prayer times data:', this.prayerTimes);
                         this.displayPrayerTimes();
                         
                         loadingEl.classList.add('d-none');
                         gridEl.classList.remove('d-none');
                     } else {
-                        console.error('API response error:', data);
                         throw new Error(data.error || 'Failed to fetch prayer times');
                     }
                 } catch (error) {
@@ -1475,17 +1200,6 @@
                             </div>
                             <div class="mosque-address">${mosque.address}</div>
                             <div class="mosque-distance">${mosque.distance.toFixed(1)} km away</div>
-                            <div class="mosque-actions mt-2">
-                                <button class="btn btn-sm btn-outline-primary me-2" onclick="event.stopPropagation(); app.focusOnMosque(${mosque.lat}, ${mosque.lon})">
-                                    <i class="fas fa-map-marked-alt me-1"></i>View on Map
-                                </button>
-                                <a href="https://www.google.com/maps/dir/?api=1&destination=${mosque.lat},${mosque.lon}" 
-                                   target="_blank" 
-                                   class="btn btn-sm btn-primary"
-                                   onclick="event.stopPropagation()">
-                                    <i class="fas fa-directions me-1"></i>Get Directions
-                                </a>
-                            </div>
                         </div>
                     </div>
                 `).join('');
@@ -1538,9 +1252,47 @@
 
         // Handle browser back/forward buttons
         window.addEventListener('popstate', () => {
-            const sectionId = window.location.hash.substring(1) || 'landing';
+            const sectionId = window.location.hash.substring(1) || 'home';
             window.app.showSection(sectionId);
         });
     </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
 </body>
 </html>
