@@ -704,312 +704,6 @@
                             <div class="tool-button">
                                 <i class="fas fa-arrow-right"></i>
                             </div>
-                        </dilateX(0);
-                opacity: 1;
-            }
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        /* Custom Leaflet Popup Styles */
-        .leaflet-popup-content-wrapper {
-            border-radius: 10px;
-            box-shadow: 0 4px 15px var(--shadow-medium);
-        }
-
-        .leaflet-popup-content {
-            margin: 1rem;
-            font-family: 'Roboto', sans-serif;
-        }
-
-        .mosque-popup-title {
-            font-weight: 700;
-            color: var(--islamic-green);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        .mosque-popup-address {
-            color: #6c757d;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .mosque-popup-distance {
-            color: var(--islamic-gold);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        /* Utility Classes */
-        .text-islamic-green {
-            color: var(--islamic-green) !important;
-        }
-
-        .text-islamic-gold {
-            color: var(--islamic-gold) !important;
-        }
-
-        .bg-islamic-green {
-            background: var(--gradient-green) !important;
-        }
-
-        .bg-islamic-gold {
-            background: var(--gradient-gold) !important;
-        }
-
-        /* Tool Cards */
-        .tool-card {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem 1.5rem;
-            text-align: center;
-            box-shadow: 0 10px 30px var(--shadow-light);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 2px solid transparent;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .tool-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--islamic-gold);
-            box-shadow: 0 20px 40px var(--shadow-medium);
-        }
-
-        .tool-icon {
-            font-size: 3rem;
-            color: var(--islamic-green);
-            margin-bottom: 1.5rem;
-        }
-
-        .tool-title {
-            color: var(--islamic-green);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .tool-description {
-            color: #6c757d;
-            margin-bottom: 2rem;
-            flex-grow: 1;
-        }
-
-        .tool-button {
-            color: var(--islamic-gold);
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .tool-card:hover .tool-button {
-            transform: translateX(5px);
-        }
-
-        /* Quick Stats */
-        .quick-stats {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px var(--shadow-light);
-        }
-
-        .stat-item {
-            padding: 1rem;
-        }
-
-        .stat-icon {
-            font-size: 2rem;
-            color: var(--islamic-green);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--islamic-gold);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: #6c757d;
-            font-weight: 500;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-        }
-
-        /* Mosque Actions */
-        .mosque-actions {
-            padding-top: 0.5rem;
-            border-top: 1px solid #eee;
-        }
-
-        .mosque-actions .btn {
-            font-size: 0.85rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            body {
-                padding-top: 140px;
-            }
-            
-            .main-content {
-                margin-top: 54px;
-            }
-            
-            .islamic-welcome {
-                padding: 2rem;
-            }
-            
-            .islamic-welcome h1 {
-                font-size: 1.5rem;
-            }
-            
-            .prayer-card {
-                margin-bottom: 1rem;
-            }
-            
-            .clock-display {
-                padding: 0.5rem 1rem;
-            }
-            
-            #current-time {
-                font-size: 1rem;
-            }
-            
-            #current-date {
-                display: block;
-                margin-top: 0.25rem;
-            }
-            
-            .navbar-brand {
-                font-size: 1.2rem;
-            }
-            
-            .section {
-                padding: 2rem 0;
-            }
-            
-            .map-container {
-                height: 400px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .islamic-welcome h1 {
-                font-size: 1.2rem;
-            }
-            
-            .islamic-welcome h2 {
-                font-size: 1.3rem;
-            }
-            
-            .prayer-card .prayer-icon {
-                font-size: 2rem;
-            }
-            
-            .prayer-card .prayer-name {
-                font-size: 1rem;
-            }
-            
-            .prayer-card .prayer-time {
-                font-size: 1.2rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-islamic-green fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#home">
-                <i class="fas fa-mosque me-2"></i>
-                <span class="arabic-font">إسلامي</span> Prayer Times
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#landing" data-section="landing">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#prayer-times" data-section="prayer-times">Prayer Times</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#mosque-finder" data-section="mosque-finder">Mosque Finder</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#location-info" data-section="location-info">Location Info</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about" data-section="about">About</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Digital Clock -->
-    <div class="digital-clock">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-auto">
-                    <div class="clock-display">
-                        <i class="fas fa-clock me-2"></i>
-                        <span id="current-time">--:--:--</span>
-                        <span id="current-date" class="ms-3">-- -- ----</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Landing Page Section -->
-        <section id="landing" class="section active">
-            <div class="container">
-                <div class="row justify-content-center text-center mb-5">
-                    <div class="col-lg-10">
-                        <div class="islamic-welcome">
-                            <h1 class="arabic-font mb-3">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</h1>
-                            <h2 class="mb-4">Islamic Prayer Times & Mosque Finder</h2>
-                            <p class="lead">Your complete Islamic companion for prayer times, mosque locations, and location-based services. Stay connected with your faith wherever you are.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tools Grid -->
-                <div class="row g-4">
-                    <div class="col-md-6 col-lg-3">
-                        <div class="tool-card" data-section="prayer-times">
-                            <div class="tool-icon">
-                                <i class="fas fa-pray"></i>
-                            </div>
-                            <h4 class="tool-title">Prayer Times</h4>
-                            <p class="tool-description">Get accurate Namaz timings for your location with 12/24-hour format options</p>
-                            <div class="tool-button">
-                                <i class="fas fa-arrow-right"></i>
-                            </div>
                         </div>
                     </div>
                     
@@ -1040,12 +734,12 @@
                     </div>
                     
                     <div class="col-md-6 col-lg-3">
-                        <div class="tool-card" data-section="about">
+                        <div class="tool-card" data-section="settings">
                             <div class="tool-icon">
-                                <i class="fas fa-info-circle"></i>
+                                <i class="fas fa-cog"></i>
                             </div>
-                            <h4 class="tool-title">About</h4>
-                            <p class="tool-description">Learn more about this app and its features</p>
+                            <h4 class="tool-title">Settings</h4>
+                            <p class="tool-description">Customize your experience with notification and location settings</p>
                             <div class="tool-button">
                                 <i class="fas fa-arrow-right"></i>
                             </div>
@@ -1216,6 +910,21 @@
                             <p class="lead">Find mosques in your area</p>
                         </div>
                         
+                        <!-- Mosque Filter -->
+                        <div class="mosque-filter mb-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <label for="search-radius" class="form-label">Search Radius: <span id="radius-value">5</span> km</label>
+                                    <input type="range" class="form-range" id="search-radius" min="1" max="20" value="5">
+                                </div>
+                                <div class="col-md-6 text-md-end">
+                                    <button id="refresh-mosques" class="btn btn-primary">
+                                        <i class="fas fa-sync-alt me-2"></i>Refresh
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="map-container">
                             <div id="mosque-loading" class="text-center">
                                 <div class="spinner-border text-primary" role="status">
@@ -1237,6 +946,95 @@
                             <div id="mosque-items" class="row g-3">
                                 <!-- Mosque items will be inserted here -->
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings" class="section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="section-header text-center mb-5">
+                            <h2><i class="fas fa-cog me-3"></i>Settings</h2>
+                            <p class="lead">Customize your prayer experience</p>
+                        </div>
+                        
+                        <!-- Notification Settings -->
+                        <div class="notification-settings">
+                            <h4 class="mb-4"><i class="fas fa-bell me-2"></i>Prayer Time Notifications</h4>
+                            
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="notifications-enabled">
+                                <label class="form-check-label" for="notifications-enabled">
+                                    Enable Prayer Time Notifications
+                                </label>
+                            </div>
+                            
+                            <div id="notification-settings" class="d-none">
+                                <div class="mb-3">
+                                    <label class="form-label">Notification Time Before Prayer</label>
+                                    <select class="form-select" id="notification-time">
+                                        <option value="5">5 minutes</option>
+                                        <option value="10" selected>10 minutes</option>
+                                        <option value="15">15 minutes</option>
+                                        <option value="20">20 minutes</option>
+                                        <option value="30">30 minutes</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Select Prayers to Notify</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input prayer-notification" type="checkbox" value="Fajr" id="notify-fajr" checked>
+                                        <label class="form-check-label" for="notify-fajr">Fajr</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input prayer-notification" type="checkbox" value="Dhuhr" id="notify-dhuhr" checked>
+                                        <label class="form-check-label" for="notify-dhuhr">Dhuhr</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input prayer-notification" type="checkbox" value="Asr" id="notify-asr" checked>
+                                        <label class="form-check-label" for="notify-asr">Asr</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input prayer-notification" type="checkbox" value="Maghrib" id="notify-maghrib" checked>
+                                        <label class="form-check-label" for="notify-maghrib">Maghrib</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input prayer-notification" type="checkbox" value="Isha" id="notify-isha" checked>
+                                        <label class="form-check-label" for="notify-isha">Isha</label>
+                                    </div>
+                                </div>
+                                
+                                <button id="save-notification-settings" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>Save Settings
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Manual Location Input -->
+                        <div class="manual-location-form">
+                            <h4 class="mb-4"><i class="fas fa-map-pin me-2"></i>Manual Location Input</h4>
+                            <p class="text-muted">Use this if automatic location detection isn't working</p>
+                            
+                            <form id="manual-location-form">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="manual-latitude" class="form-label">Latitude</label>
+                                        <input type="number" step="any" class="form-control" id="manual-latitude" placeholder="e.g., 40.7128" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="manual-longitude" class="form-label">Longitude</label>
+                                        <input type="number" step="any" class="form-control" id="manual-longitude" placeholder="e.g., -74.0060" required>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-check me-2"></i>Use This Location
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -1269,6 +1067,8 @@
                                         <li><i class="fas fa-check text-success me-2"></i>Responsive design for all devices</li>
                                         <li><i class="fas fa-check text-success me-2"></i>Real-time digital clock</li>
                                         <li><i class="fas fa-check text-success me-2"></i>12/24-hour time format toggle</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Prayer time notifications</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Manual location input option</li>
                                     </ul>
                                     
                                     <h5 class="mt-4">Data Sources:</h5>
@@ -1317,6 +1117,12 @@
                 this.mosqueMarkers = [];
                 this.prayerTimes = null;
                 this.is24HourFormat = true;
+                this.notificationSettings = {
+                    enabled: false,
+                    timeBefore: 10,
+                    prayers: ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha']
+                };
+                this.searchRadius = 5; // Default search radius in km
                 
                 this.init();
             }
@@ -1324,6 +1130,7 @@
             init() {
                 this.setupEventListeners();
                 this.startClock();
+                this.loadSettings();
                 this.detectLocation();
             }
 
@@ -1364,6 +1171,52 @@
                         if (this.prayerTimes) {
                             this.displayPrayerTimes();
                         }
+                    });
+                }
+
+                // Notification settings
+                const notificationsEnabled = document.getElementById('notifications-enabled');
+                if (notificationsEnabled) {
+                    notificationsEnabled.checked = this.notificationSettings.enabled;
+                    this.toggleNotificationSettings();
+                    
+                    notificationsEnabled.addEventListener('change', (e) => {
+                        this.notificationSettings.enabled = e.target.checked;
+                        this.toggleNotificationSettings();
+                    });
+                }
+
+                // Save notification settings
+                const saveNotificationSettings = document.getElementById('save-notification-settings');
+                if (saveNotificationSettings) {
+                    saveNotificationSettings.addEventListener('click', () => {
+                        this.saveNotificationSettings();
+                    });
+                }
+
+                // Manual location form
+                const manualLocationForm = document.getElementById('manual-location-form');
+                if (manualLocationForm) {
+                    manualLocationForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.setManualLocation();
+                    });
+                }
+
+                // Search radius slider
+                const searchRadius = document.getElementById('search-radius');
+                if (searchRadius) {
+                    searchRadius.addEventListener('input', (e) => {
+                        this.searchRadius = parseInt(e.target.value);
+                        document.getElementById('radius-value').textContent = this.searchRadius;
+                    });
+                }
+
+                // Refresh mosques button
+                const refreshMosques = document.getElementById('refresh-mosques');
+                if (refreshMosques) {
+                    refreshMosques.addEventListener('click', () => {
+                        this.loadMosques();
                     });
                 }
 
@@ -1414,6 +1267,87 @@
                 if (label) {
                     label.textContent = this.is24HourFormat ? '24-hour format' : '12-hour format';
                 }
+            }
+
+            toggleNotificationSettings() {
+                const notificationSettings = document.getElementById('notification-settings');
+                if (notificationSettings) {
+                    if (this.notificationSettings.enabled) {
+                        notificationSettings.classList.remove('d-none');
+                    } else {
+                        notificationSettings.classList.add('d-none');
+                    }
+                }
+            }
+
+            saveNotificationSettings() {
+                // Get notification time
+                const notificationTime = document.getElementById('notification-time');
+                if (notificationTime) {
+                    this.notificationSettings.timeBefore = parseInt(notificationTime.value);
+                }
+
+                // Get selected prayers
+                this.notificationSettings.prayers = [];
+                document.querySelectorAll('.prayer-notification:checked').forEach(checkbox => {
+                    this.notificationSettings.prayers.push(checkbox.value);
+                });
+
+                // Save to localStorage
+                localStorage.setItem('notificationSettings', JSON.stringify(this.notificationSettings));
+
+                // Show success message
+                alert('Notification settings saved successfully!');
+            }
+
+            loadSettings() {
+                // Load notification settings
+                const savedNotificationSettings = localStorage.getItem('notificationSettings');
+                if (savedNotificationSettings) {
+                    this.notificationSettings = JSON.parse(savedNotificationSettings);
+                }
+
+                // Update UI with saved settings
+                if (this.notificationSettings.enabled) {
+                    const notificationsEnabled = document.getElementById('notifications-enabled');
+                    if (notificationsEnabled) {
+                        notificationsEnabled.checked = true;
+                    }
+                    
+                    const notificationTime = document.getElementById('notification-time');
+                    if (notificationTime) {
+                        notificationTime.value = this.notificationSettings.timeBefore;
+                    }
+                    
+                    // Check prayer checkboxes
+                    this.notificationSettings.prayers.forEach(prayer => {
+                        const checkbox = document.getElementById(`notify-${prayer.toLowerCase()}`);
+                        if (checkbox) {
+                            checkbox.checked = true;
+                        }
+                    });
+                    
+                    this.toggleNotificationSettings();
+                }
+            }
+
+            setManualLocation() {
+                const lat = parseFloat(document.getElementById('manual-latitude').value);
+                const lng = parseFloat(document.getElementById('manual-longitude').value);
+                
+                if (isNaN(lat) || isNaN(lng)) {
+                    alert('Please enter valid latitude and longitude values.');
+                    return;
+                }
+                
+                if (lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+                    alert('Please enter valid latitude (-90 to 90) and longitude (-180 to 180) values.');
+                    return;
+                }
+                
+                this.userLocation = { lat, lng };
+                this.getReverseGeocoding();
+                alert('Location updated successfully!');
             }
 
             startClock() {
@@ -1695,7 +1629,7 @@
                     this.initializeMap();
 
                     // Using Overpass API to find mosques
-                    const radius = 5000; // 5km
+                    const radius = this.searchRadius * 1000; // Convert km to meters
                     const query = `
                         [out:json][timeout:25];
                         (
