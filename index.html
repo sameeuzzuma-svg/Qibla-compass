@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Islamic Prayer Times - Find Namaz Timings & Nearby Mosques</title>
+    <title>Islamic Prayer Times - Qibla Direction Fix</title>
     
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -11,15 +11,7 @@
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Google Fonts - Islamic Style -->
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- Leaflet CSS for Maps -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
     <style>
-        /* Islamic Prayer Times App - Custom Styles */
-
         :root {
             --islamic-green: #2d5a3d;
             --islamic-green-light: #4a8061;
@@ -33,544 +25,71 @@
             --gradient-gold: linear-gradient(135deg, var(--islamic-gold), var(--islamic-gold-light));
         }
 
-        /* Base Styles */
         body {
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding-top: 120px;
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-dark);
         }
 
-        .arabic-font {
-            font-family: 'Amiri', serif;
-            font-weight: 700;
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
-        /* Navigation */
-        .bg-islamic-green {
-            background: var(--gradient-green) !important;
-            box-shadow: 0 2px 20px var(--shadow-medium);
-        }
-
-        .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .navbar-nav .nav-link {
-            font-weight: 500;
-            margin: 0 0.5rem;
-            transition: all 0.3s ease;
-            border-radius: 25px;
-            padding: 0.5rem 1rem !important;
-        }
-
-        .navbar-nav .nav-link:hover,
-        .navbar-nav .nav-link.active {
-            background-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        /* Digital Clock */
-        .digital-clock {
-            background: var(--gradient-gold);
-            padding: 1rem 0;
-            box-shadow: 0 2px 10px var(--shadow-light);
-            position: fixed;
-            top: 76px;
-            left: 0;
-            right: 0;
-            z-index: 1020;
-        }
-
-        .clock-display {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            font-family: 'Roboto', monospace;
-            font-weight: 700;
-            color: var(--islamic-green);
-            box-shadow: 0 4px 15px var(--shadow-light);
-        }
-
-        #current-time {
-            font-size: 1.2rem;
-        }
-
-        #current-date {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-top: 44px;
-        }
-
-        .section {
-            display: none;
-            padding: 3rem 0;
-            min-height: 70vh;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .section-header {
-            margin-bottom: 3rem;
-        }
-
-        .section-header h2 {
-            color: var(--islamic-green);
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        /* Islamic Welcome */
-        .islamic-welcome {
-            background: white;
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px var(--shadow-light);
-            margin-bottom: 2rem;
-        }
-
-        .islamic-welcome h1 {
-            color: var(--islamic-green);
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .islamic-welcome h2 {
-            color: var(--islamic-green);
-            font-weight: 700;
-        }
-
-        /* Location Card */
-        .location-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px var(--shadow-light);
-            transition: transform 0.3s ease;
-        }
-
-        .location-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .location-card .card-header {
-            background: var(--gradient-green);
-            color: white;
-            font-weight: 600;
-            padding: 1rem 1.5rem;
-            border: none;
-        }
-
-        .location-card .card-body {
-            padding: 1.5rem;
-        }
-
-        /* Prayer Time Cards */
-        .prayer-card {
-            background: white;
-            border-radius: 15px;
-            padding: 1.5rem;
+        .header {
             text-align: center;
-            box-shadow: 0 8px 25px var(--shadow-light);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .prayer-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--islamic-gold);
-            box-shadow: 0 15px 35px var(--shadow-medium);
-        }
-
-        .prayer-card .prayer-icon {
-            font-size: 2.5rem;
-            color: var(--islamic-green);
-            margin-bottom: 1rem;
-        }
-
-        .prayer-card .prayer-name {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--islamic-green);
-            margin-bottom: 0.5rem;
-        }
-
-        .prayer-card .prayer-time {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--islamic-gold);
-            font-family: 'Roboto', monospace;
-        }
-
-        .prayer-card.current-prayer {
+            margin-bottom: 30px;
+            padding: 20px;
             background: var(--gradient-green);
-            color: white;
-        }
-
-        .prayer-card.current-prayer .prayer-icon,
-        .prayer-card.current-prayer .prayer-name {
-            color: white;
-        }
-
-        .prayer-card.current-prayer .prayer-time {
-            color: var(--islamic-gold-light);
-        }
-
-        /* Time Format Toggle */
-        .time-format-toggle {
-            margin-top: 1rem;
-        }
-
-        .time-format-toggle .form-check-input {
-            background-color: var(--islamic-green);
-            border-color: var(--islamic-green);
-        }
-
-        .time-format-toggle .form-check-input:checked {
-            background-color: var(--islamic-gold);
-            border-color: var(--islamic-gold);
-        }
-
-        .time-format-toggle .form-check-label {
-            color: var(--islamic-green);
-            font-weight: 500;
-            cursor: pointer;
-        }
-
-        /* Map Container */
-        .map-container {
-            background: white;
             border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px var(--shadow-light);
-            height: 500px;
-            position: relative;
+            color: white;
+            box-shadow: 0 10px 30px var(--shadow-medium);
         }
 
-        #mosque-map {
-            height: 100%;
-            width: 100%;
+        .header h1 {
+            font-weight: 700;
+            margin-bottom: 10px;
         }
 
-        /* Mosque List Items */
-        .mosque-item {
-            background: white;
-            border-radius: 10px;
-            padding: 1rem;
-            box-shadow: 0 4px 15px var(--shadow-light);
-            transition: transform 0.3s ease;
-            cursor: pointer;
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
         }
 
-        .mosque-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px var(--shadow-medium);
-        }
-
-        .mosque-name {
-            font-weight: 600;
-            color: var(--islamic-green);
-            margin-bottom: 0.5rem;
-        }
-
-        .mosque-address {
-            color: #6c757d;
-            font-size: 0.9rem;
-        }
-
-        .mosque-distance {
-            color: var(--islamic-gold);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        /* Cards */
         .card {
-            border: none;
             border-radius: 15px;
             box-shadow: 0 8px 25px var(--shadow-light);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
+            border: none;
+            margin-bottom: 25px;
+            overflow: hidden;
         }
 
         .card-header {
             background: var(--gradient-green);
             color: white;
-            border: none;
             font-weight: 600;
-        }
-
-        /* Alerts */
-        .alert {
+            padding: 15px 20px;
             border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px var(--shadow-light);
         }
 
-        /* Loading Spinners */
-        .spinner-border {
-            color: var(--islamic-green) !important;
-        }
-
-        /* Buttons */
-        .btn-primary {
-            background: var(--gradient-green);
-            border: none;
-            border-radius: 25px;
-            padding: 0.75rem 2rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background: var(--gradient-gold);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px var(--shadow-medium);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--gradient-green) !important;
-            margin-top: 3rem;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-            margin: 0 10px;
-            font-size: 0.9rem;
-        }
-
-        .footer-links a:hover {
-            color: white;
-            text-decoration: underline;
-        }
-
-        /* Animation Classes */
-        .slide-in {
-            animation: slideIn 0.5s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        /* Custom Leaflet Popup Styles */
-        .leaflet-popup-content-wrapper {
-            border-radius: 10px;
-            box-shadow: 0 4px 15px var(--shadow-medium);
-        }
-
-        .leaflet-popup-content {
-            margin: 1rem;
-            font-family: 'Roboto', sans-serif;
-        }
-
-        .mosque-popup-title {
-            font-weight: 700;
-            color: var(--islamic-green);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        .mosque-popup-address {
-            color: #6c757d;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .mosque-popup-distance {
-            color: var(--islamic-gold);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        /* Utility Classes */
-        .text-islamic-green {
-            color: var(--islamic-green) !important;
-        }
-
-        .text-islamic-gold {
-            color: var(--islamic-gold) !important;
-        }
-
-        .bg-islamic-green {
-            background: var(--gradient-green) !important;
-        }
-
-        .bg-islamic-gold {
-            background: var(--gradient-gold) !important;
-        }
-
-        /* Tool Cards */
-        .tool-card {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem 1.5rem;
-            text-align: center;
-            box-shadow: 0 10px 30px var(--shadow-light);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 2px solid transparent;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .tool-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--islamic-gold);
-            box-shadow: 0 20px 40px var(--shadow-medium);
-        }
-
-        .tool-icon {
-            font-size: 3rem;
-            color: var(--islamic-green);
-            margin-bottom: 1.5rem;
-        }
-
-        .tool-title {
-            color: var(--islamic-green);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .tool-description {
-            color: #6c757d;
-            margin-bottom: 2rem;
-            flex-grow: 1;
-        }
-
-        .tool-button {
-            color: var(--islamic-gold);
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .tool-card:hover .tool-button {
-            transform: translateX(5px);
-        }
-
-        /* Quick Stats */
-        .quick-stats {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px var(--shadow-light);
-        }
-
-        .stat-item {
-            padding: 1rem;
-        }
-
-        .stat-icon {
-            font-size: 2rem;
-            color: var(--islamic-green);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--islamic-gold);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: #6c757d;
-            font-weight: 500;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-        }
-
-        /* Mosque Actions */
-        .mosque-actions {
-            padding-top: 0.5rem;
-            border-top: 1px solid #eee;
-        }
-
-        .mosque-actions .btn {
-            font-size: 0.85rem;
-        }
-
-        /* Legal Modal Styles */
-        .legal-modal .modal-header {
-            background: var(--gradient-green);
-            color: white;
-        }
-
-        .legal-modal .modal-title {
-            font-weight: 700;
-        }
-
-        .legal-modal .modal-content {
-            border-radius: 15px;
-            box-shadow: 0 10px 30px var(--shadow-light);
+        .card-body {
+            padding: 25px;
         }
 
         /* Qibla Compass Styles */
         .qibla-compass-container {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px var(--shadow-light);
             text-align: center;
+            padding: 20px;
         }
 
         .compass {
-            width: 250px;
-            height: 250px;
-            margin: 0 auto;
+            width: 280px;
+            height: 280px;
+            margin: 0 auto 25px;
             position: relative;
-            border: 10px solid var(--islamic-green-light);
+            border: 12px solid var(--islamic-green-light);
             border-radius: 50%;
             background: #f8f9fa;
             box-shadow: 0 8px 25px var(--shadow-light);
@@ -582,6 +101,7 @@
             height: 100%;
             border-radius: 50%;
             overflow: hidden;
+            background: #fff;
         }
 
         .compass-direction {
@@ -590,23 +110,26 @@
             text-align: center;
             font-weight: bold;
             color: var(--islamic-green);
+            font-size: 16px;
+            z-index: 5;
         }
 
-        .direction-n { top: 5px; left: 0; }
-        .direction-e { top: 50%; right: 5px; transform: translateY(-50%); }
-        .direction-s { bottom: 5px; left: 0; }
-        .direction-w { top: 50%; left: 5px; transform: translateY(-50%); }
+        .direction-n { top: 8px; left: 0; }
+        .direction-e { top: 50%; right: 8px; transform: translateY(-50%); }
+        .direction-s { bottom: 8px; left: 0; }
+        .direction-w { top: 50%; left: 8px; transform: translateY(-50%); }
 
         .compass-arrow {
             position: absolute;
             top: 0;
             left: 50%;
-            width: 4px;
+            width: 6px;
             height: 45%;
             background-color: var(--islamic-gold);
             transform-origin: bottom center;
             transform: translateX(-50%);
             z-index: 10;
+            border-radius: 4px 4px 0 0;
         }
 
         .compass-arrow::after {
@@ -617,8 +140,8 @@
             transform: translateX(-50%);
             width: 0;
             height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
             border-top: 20px solid var(--islamic-gold);
         }
 
@@ -630,7 +153,8 @@
             height: 45%;
             background-color: #e74c3c;
             transform-origin: bottom center;
-            z-index: 5;
+            z-index: 8;
+            border-radius: 4px 4px 0 0;
         }
 
         .qibla-indicator::after {
@@ -643,7 +167,7 @@
             height: 0;
             border-left: 10px solid transparent;
             border-right: 10px solid transparent;
-            border-top: 20px solid #e74c3c;
+            border-top: 18px solid #e74c3c;
         }
 
         .kaaba-icon {
@@ -651,16 +175,28 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: var(--islamic-green);
             z-index: 15;
+            background: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px var(--shadow-medium);
         }
 
         .compass-degree {
             margin-top: 1rem;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: var(--islamic-green);
+            background: rgba(45, 90, 61, 0.1);
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: inline-block;
         }
 
         .qibla-info {
@@ -674,729 +210,165 @@
         .qibla-info h4 {
             color: var(--islamic-green);
             margin-bottom: 1rem;
+            border-bottom: 2px solid var(--islamic-gold);
+            padding-bottom: 10px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-green);
+            border: none;
+            border-radius: 30px;
+            padding: 12px 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--gradient-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-medium);
+        }
+
+        .location-data {
+            background: rgba(45, 90, 61, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .location-data p {
+            margin-bottom: 8px;
+        }
+
+        .location-data strong {
+            color: var(--islamic-green);
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            body {
-                padding-top: 140px;
-            }
-            
-            .main-content {
-                margin-top: 54px;
-            }
-            
-            .islamic-welcome {
-                padding: 2rem;
-            }
-            
-            .islamic-welcome h1 {
-                font-size: 1.5rem;
-            }
-            
-            .prayer-card {
-                margin-bottom: 1rem;
-            }
-            
-            .clock-display {
-                padding: 0.5rem 1rem;
-            }
-            
-            #current-time {
-                font-size: 1rem;
-            }
-            
-            #current-date {
-                display: block;
-                margin-top: 0.25rem;
-            }
-            
-            .navbar-brand {
-                font-size: 1.2rem;
-            }
-            
-            .section {
-                padding: 2rem 0;
-            }
-            
-            .map-container {
-                height: 400px;
-            }
-
-            .footer-links {
-                text-align: center;
-                margin-top: 1rem;
-            }
-
-            .footer-links a {
-                display: inline-block;
-                margin: 5px;
-            }
-
             .compass {
-                width: 200px;
-                height: 200px;
+                width: 220px;
+                height: 220px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .compass-degree {
+                font-size: 1.1rem;
             }
         }
 
         @media (max-width: 480px) {
-            .islamic-welcome h1 {
-                font-size: 1.2rem;
-            }
-            
-            .islamic-welcome h2 {
-                font-size: 1.3rem;
-            }
-            
-            .prayer-card .prayer-icon {
-                font-size: 2rem;
-            }
-            
-            .prayer-card .prayer-name {
-                font-size: 1rem;
-            }
-            
-            .prayer-card .prayer-time {
-                font-size: 1.2rem;
-            }
-
             .compass {
-                width: 180px;
-                height: 180px;
+                width: 200px;
+                height: 200px;
                 border-width: 8px;
+            }
+            
+            .compass-direction {
+                font-size: 14px;
+            }
+            
+            .kaaba-icon {
+                font-size: 1.8rem;
+                width: 40px;
+                height: 40px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-islamic-green fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#home">
-                <i class="fas fa-mosque me-2"></i>
-                <span class="arabic-font">إسلامي</span> Prayer Times
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#landing" data-section="landing">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#prayer-times" data-section="prayer-times">Prayer Times</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#mosque-finder" data-section="mosque-finder">Mosque Finder</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#qibla-direction" data-section="qibla-direction">Qibla Direction</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#location-info" data-section="location-info">Location Info</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about" data-section="about">About</a>
-                    </li>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-compass me-2"></i>Qibla Direction Finder</h1>
+            <p>Find the accurate direction to the Holy Kaaba in Mecca</p>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-location-arrow me-2"></i>Your Location
+            </div>
+            <div class="card-body">
+                <div class="location-data">
+                    <p><strong>Latitude:</strong> <span id="latitude">--</span></p>
+                    <p><strong>Longitude:</strong> <span id="longitude">--</span></p>
+                    <p><strong>City:</strong> <span id="city">--</span></p>
+                    <p><strong>Country:</strong> <span id="country">--</span></p>
+                </div>
+                <button id="getLocationBtn" class="btn btn-primary">
+                    <i class="fas fa-map-marker-alt me-2"></i>Detect My Location
+                </button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-kaaba me-2"></i>Qibla Direction
+            </div>
+            <div class="card-body">
+                <div class="qibla-compass-container">
+                    <div id="qibla-loading" class="text-center">
+                        <div class="spinner-border text-primary" role="status" style="color: var(--islamic-green) !important;">
+                            <span class="visually-hidden">Loading Qibla direction...</span>
+                        </div>
+                        <p class="mt-2">Waiting for location detection...</p>
+                    </div>
+                    
+                    <div id="qibla-content" class="d-none">
+                        <div class="compass">
+                            <div class="compass-inner">
+                                <div class="compass-direction direction-n">N</div>
+                                <div class="compass-direction direction-e">E</div>
+                                <div class="compass-direction direction-s">S</div>
+                                <div class="compass-direction direction-w">W</div>
+                                <div class="compass-arrow" id="compass-arrow"></div>
+                                <div class="qibla-indicator" id="qibla-indicator"></div>
+                                <div class="kaaba-icon">
+                                    <i class="fas fa-kaaba"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="compass-degree" id="qibla-degree">
+                            Qibla Direction: --° from North
+                        </div>
+                        
+                        <div class="qibla-info">
+                            <h4><i class="fas fa-info-circle me-2"></i>About Qibla</h4>
+                            <p>The Qibla is the direction that Muslims face when performing their prayers (Salah). This direction points toward the Kaaba in the Masjid al-Haram mosque in Mecca, Saudi Arabia.</p>
+                            <p class="mb-0">The Qibla direction is calculated based on your current location using spherical trigonometry. The compass uses your device's sensors to determine the correct direction relative to magnetic north.</p>
+                        </div>
+                    </div>
+                    
+                    <div id="qibla-error" class="d-none alert alert-warning">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Unable to determine Qibla direction. Please check your location settings and ensure your device has a compass sensor.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-lightbulb me-2"></i>Usage Tips
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>For best results, hold your device flat and rotate slowly until the red Qibla indicator aligns with the compass arrow</li>
+                    <li>Make sure you've enabled location services on your device</li>
+                    <li>In areas with magnetic interference, the compass may need calibration</li>
+                    <li>For prayer purposes, always confirm Qibla direction with local mosque when possible</li>
                 </ul>
             </div>
         </div>
-    </nav>
-
-    <!-- Digital Clock -->
-    <div class="digital-clock">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-auto">
-                    <div class="clock-display">
-                        <i class="fas fa-clock me-2"></i>
-                        <span id="current-time">--:--:--</span>
-                        <span id="current-date" class="ms-3">-- -- ----</span>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Landing Page Section -->
-        <section id="landing" class="section active">
-            <div class="container">
-                <div class="row justify-content-center text-center mb-5">
-                    <div class="col-lg-10">
-                        <div class="islamic-welcome">
-                            <h1 class="arabic-font mb-3">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</h1>
-                            <h2 class="mb-4">Islamic Prayer Times & Mosque Finder</h2>
-                            <p class="lead">Your complete Islamic companion for prayer times, mosque locations, Qibla direction, and location-based services. Stay connected with your faith wherever you are.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tools Grid -->
-                <div class="row g-4">
-                    <div class="col-md-6 col-lg-3">
-                        <div class="tool-card" data-section="prayer-times">
-                            <div class="tool-icon">
-                                <i class="fas fa-pray"></i>
-                            </div>
-                            <h4 class="tool-title">Prayer Times</h4>
-                            <p class="tool-description">Get accurate Namaz timings for your location with 12/24-hour format options</p>
-                            <div class="tool-button">
-                                <i class="fas fa-arrow-right"></i>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6 col-lg-3">
-                        <div class="tool-card" data-section="mosque-finder">
-                            <div class="tool-icon">
-                                <i class="fas fa-mosque"></i>
-                            </div>
-                            <h4 class="tool-title">Mosque Finder</h4>
-                            <p class="tool-description">Find nearby mosques with interactive map and Google Maps directions</p>
-                            <div class="tool-button">
-                                <i class="fas fa-arrow-right"></i>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6 col-lg-3">
-                        <div class="tool-card" data-section="qibla-direction">
-                            <div class="tool-icon">
-                                <i class="fas fa-compass"></i>
-                            </div>
-                            <h4 class="tool-title">Qibla Direction</h4>
-                            <p class="tool-description">Find the direction to the Kaaba in Mecca with our digital compass</p>
-                            <div class="tool-button">
-                                <i class="fas fa-arrow-right"></i>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6 col-lg-3">
-                        <div class="tool-card" data-section="location-info">
-                            <div class="tool-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <h4 class="tool-title">Location Info</h4>
-                            <p class="tool-description">View your current location details with high-precision coordinates</p>
-                            <div class="tool-button">
-                                <i class="fas fa-arrow-right"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Quick Stats -->
-                <div class="row justify-content-center mt-5">
-                    <div class="col-lg-8">
-                        <div class="quick-stats">
-                            <div class="row text-center">
-                                <div class="col-6 col-md-3">
-                                    <div class="stat-item">
-                                        <i class="fas fa-clock stat-icon"></i>
-                                        <div class="stat-number">5</div>
-                                        <div class="stat-label">Daily Prayers</div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-3">
-                                    <div class="stat-item">
-                                        <i class="fas fa-globe stat-icon"></i>
-                                        <div class="stat-number">200+</div>
-                                        <div class="stat-label">Countries</div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-3">
-                                    <div class="stat-item">
-                                        <i class="fas fa-compass stat-icon"></i>
-                                        <div class="stat-number">Qibla</div>
-                                        <div class="stat-label">Direction</div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-3">
-                                    <div class="stat-item">
-                                        <i class="fas fa-mobile-alt stat-icon"></i>
-                                        <div class="stat-number">100%</div>
-                                        <div class="stat-label">Responsive</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Location Info Section -->
-        <section id="location-info" class="section">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-10">
-                        <div class="section-header text-center mb-5">
-                            <h2><i class="fas fa-map-marker-alt me-3"></i>Location Information</h2>
-                            <p class="lead">View your current location details with high-precision coordinates</p>
-                        </div>
-                        
-                        <!-- Location Status -->
-                        <div class="row justify-content-center mb-5">
-                            <div class="col-lg-8">
-                                <div class="location-card">
-                                    <div class="card-header">
-                                        <i class="fas fa-map-marker-alt me-2"></i>
-                                        Your Current Location
-                                    </div>
-                                    <div class="card-body">
-                                        <div id="location-loading-section" class="text-center">
-                                            <div class="spinner-border text-primary" role="status">
-                                                <span class="visually-hidden">Loading location...</span>
-                                            </div>
-                                            <p class="mt-2">Detecting your location...</p>
-                                        </div>
-                                        <div id="location-info-section" class="d-none">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <strong>City:</strong>
-                                                    <span id="user-city-section">--</span>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <strong>Country:</strong>
-                                                    <span id="user-country-section">--</span>
-                                                </div>
-                                                <div class="col-md-6 mt-2">
-                                                    <strong>Latitude:</strong>
-                                                    <span id="user-lat-section">--</span>
-                                                </div>
-                                                <div class="col-md-6 mt-2">
-                                                    <strong>Longitude:</strong>
-                                                    <span id="user-lng-section">--</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="location-error-section" class="d-none alert alert-warning">
-                                            <i class="fas fa-exclamation-triangle me-2"></i>
-                                            Unable to detect location. Please enable location services and refresh the page.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Today's Prayer Times Preview -->
-                        <div class="row justify-content-center">
-                            <div class="col-lg-10">
-                                <h3 class="text-center mb-4">Today's Prayer Times Preview</h3>
-                                <div id="home-prayer-times" class="row g-3">
-                                    <!-- Prayer cards will be inserted here -->
-                                </div>
-                                <div class="text-center mt-4">
-                                    <a href="#prayer-times" class="btn btn-primary" data-section="prayer-times">
-                                        View Full Prayer Times <i class="fas fa-arrow-right ms-2"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Prayer Times Section -->
-        <section id="prayer-times" class="section">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-10">
-                        <div class="section-header text-center mb-5">
-                            <h2><i class="fas fa-pray me-3"></i>Prayer Times</h2>
-                            <p class="lead">Accurate prayer timings for your location</p>
-                            <div class="time-format-toggle mt-3">
-                                <div class="form-check form-switch d-inline-block">
-                                    <input class="form-check-input" type="checkbox" id="timeFormatSwitch">
-                                    <label class="form-check-label" for="timeFormatSwitch">
-                                        <span id="timeFormatLabel">24-hour format</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div id="prayer-times-content">
-                            <div id="prayer-loading" class="text-center">
-                                <div class="spinner-border text-primary" role="status">
-                                    <span class="visually-hidden">Loading prayer times...</span>
-                                </div>
-                                <p class="mt-2">Fetching prayer times...</p>
-                            </div>
-                            
-                            <div id="prayer-times-grid" class="row g-4 d-none">
-                                <!-- Prayer time cards will be inserted here -->
-                            </div>
-                            
-                            <div id="prayer-error" class="d-none alert alert-danger">
-                                <i class="fas fa-exclamation-circle me-2"></i>
-                                Unable to fetch prayer times. Please check your internet connection and try again.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Mosque Finder Section -->
-        <section id="mosque-finder" class="section">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-12">
-                        <div class="section-header text-center mb-5">
-                            <h2><i class="fas fa-mosque me-3"></i>Nearby Mosques</h2>
-                            <p class="lead">Find mosques in your area</p>
-                        </div>
-                        
-                        <div class="map-container">
-                            <div id="mosque-loading" class="text-center">
-                                <div class="spinner-border text-primary" role="status">
-                                    <span class="visually-hidden">Loading map...</span>
-                                </div>
-                                <p class="mt-2">Loading mosque locations...</p>
-                            </div>
-                            
-                            <div id="mosque-map" class="d-none"></div>
-                            
-                            <div id="mosque-error" class="d-none alert alert-warning">
-                                <i class="fas fa-exclamation-triangle me-2"></i>
-                                Unable to load mosque locations. Please check your location settings and internet connection.
-                            </div>
-                        </div>
-                        
-                        <div id="mosque-list" class="mt-4">
-                            <h4>Found Mosques:</h4>
-                            <div id="mosque-items" class="row g-3">
-                                <!-- Mosque items will be inserted here -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Qibla Direction Section -->
-        <section id="qibla-direction" class="section">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-10">
-                        <div class="section-header text-center mb-5">
-                            <h2><i class="fas fa-compass me-3"></i>Qibla Direction</h2>
-                            <p class="lead">Find the direction to the Holy Kaaba in Mecca</p>
-                        </div>
-                        
-                        <div class="qibla-compass-container">
-                            <div id="qibla-loading" class="text-center">
-                                <div class="spinner-border text-primary" role="status">
-                                    <span class="visually-hidden">Loading Qibla direction...</span>
-                                </div>
-                                <p class="mt-2">Detecting your location for Qibla direction...</p>
-                            </div>
-                            
-                            <div id="qibla-content" class="d-none">
-                                <div class="compass">
-                                    <div class="compass-inner">
-                                        <div class="compass-direction direction-n">N</div>
-                                        <div class="compass-direction direction-e">E</div>
-                                        <div class="compass-direction direction-s">S</div>
-                                        <div class="compass-direction direction-w">W</div>
-                                        <div class="compass-arrow" id="compass-arrow"></div>
-                                        <div class="qibla-indicator" id="qibla-indicator"></div>
-                                        <div class="kaaba-icon">
-                                            <i class="fas fa-kaaba"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="compass-degree" id="qibla-degree">
-                                    Qibla Direction: --° from North
-                                </div>
-                                
-                                <div class="qibla-info">
-                                    <h4><i class="fas fa-info-circle me-2"></i>About Qibla</h4>
-                                    <p>The Qibla is the direction that Muslims face when performing their prayers (Salah). This direction points toward the Kaaba in the Masjid al-Haram mosque in Mecca, Saudi Arabia.</p>
-                                    <p class="mb-0">The Qibla direction is calculated based on your current location using spherical trigonometry. The compass uses your device's sensors to determine the correct direction relative to magnetic north.</p>
-                                </div>
-                            </div>
-                            
-                            <div id="qibla-error" class="d-none alert alert-warning">
-                                <i class="fas fa-exclamation-triangle me-2"></i>
-                                Unable to determine Qibla direction. Please check your location settings and ensure your device has a compass sensor.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="section">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
-                        <div class="section-header text-center mb-5">
-                            <h2><i class="fas fa-info-circle me-3"></i>About</h2>
-                        </div>
-                        
-                        <div class="about-content">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">Islamic Prayer Times App</h4>
-                                    <p class="card-text">
-                                        This application helps Muslims around the world stay connected with their prayer times and find nearby mosques. 
-                                        We use your device's location to provide accurate prayer timings based on your geographical coordinates.
-                                    </p>
-                                    
-                                    <h5 class="mt-4">Features:</h5>
-                                    <ul class="list-unstyled">
-                                        <li><i class="fas fa-check text-success me-2"></i>Automatic location detection</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Accurate prayer times using Aladhan API</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Nearby mosque finder with interactive map</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Qibla direction finder with digital compass</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Responsive design for all devices</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Real-time digital clock</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>12/24-hour time format toggle</li>
-                                    </ul>
-                                    
-                                    <h5 class="mt-4">Data Sources:</h5>
-                                    <ul class="list-unstyled">
-                                        <li><i class="fas fa-external-link-alt text-primary me-2"></i>Prayer times: Aladhan.com API</li>
-                                        <li><i class="fas fa-external-link-alt text-primary me-2"></i>Location data: OpenStreetMap</li>
-                                        <li><i class="fas fa-external-link-alt text-primary me-2"></i>Mosque locations: OpenStreetMap Overpass API</li>
-                                        <li><i class="fas fa-external-link-alt text-primary me-2"></i>Qibla direction calculation: Spherical trigonometry formula</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-islamic-green text-white py-4">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="mb-0 arabic-font">"وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ وَارْكَعُوا مَعَ الرَّاكِعِينَ"</p>
-                    <small class="text-light">"And establish prayer and give zakah and bow with those who bow." - Quran 2:43</small>
-                </div>
-                <div class="col-md-6 text-md-end footer-links">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms of Service</a>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#disclaimerModal">Disclaimer</a>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#cookiesModal">Cookie Policy</a>
-                    <small>&copy; 2025 Islamic Prayer Times App</small>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Legal Modals -->
-    <!-- Privacy Policy Modal -->
-    <div class="modal fade legal-modal" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="privacyModalLabel"><i class="fas fa-shield-alt me-2"></i>Privacy Policy</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h5>1. Information We Collect</h5>
-                    <p>Our Islamic Prayer Times app collects limited information to provide you with accurate prayer times and mosque locations:</p>
-                    <ul>
-                        <li><strong>Location Data:</strong> We collect your device's geographical coordinates to calculate accurate prayer times and find nearby mosques.</li>
-                        <li><strong>Usage Data:</strong> We may collect information about how you interact with our app to improve user experience.</li>
-                        <li><strong>Device Information:</strong> We collect device type and browser information for compatibility purposes.</li>
-                    </ul>
-                    
-                    <h5>2. How We Use Your Information</h5>
-                    <p>We use the collected information solely for the purpose of providing and improving our services:</p>
-                    <ul>
-                        <li>To calculate accurate prayer times based on your location</li>
-                        <li>To locate mosques near your current position</li>
-                        <li>To determine Qibla direction</li>
-                        <li>To improve app functionality and user experience</li>
-                        <li>To provide customer support</li>
-                    </ul>
-                    
-                    <h5>3. Data Storage and Security</h5>
-                    <p>We prioritize the security of your information:</p>
-                    <ul>
-                        <li>Location data is processed in real-time and not stored on our servers</li>
-                        <li>We implement appropriate security measures to protect your information</li>
-                        <li>We do not sell or share your personal information with third parties</li>
-                    </ul>
-                    
-                    <h5>4. Your Rights</h5>
-                    <p>You have the right to:</p>
-                    <ul>
-                        <li>Access the personal information we hold about you</li>
-                        <li>Request correction of inaccurate information</li>
-                        <li>Request deletion of your personal data</li>
-                        <li>Opt-out of data collection (though this may limit app functionality)</li>
-                    </ul>
-                    
-                    <h5>5. Changes to This Policy</h5>
-                    <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.</p>
-                    
-                    <p class="mt-4"><strong>Last Updated:</strong> January 1, 2025</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Terms of Service Modal -->
-    <div class="modal fade legal-modal" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="termsModalLabel"><i class="fas fa-file-contract me-2"></i>Terms of Service</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h5>1. Acceptance of Terms</h5>
-                    <p>By accessing and using the Islamic Prayer Times app, you accept and agree to be bound by the terms and provision of this agreement.</p>
-                    
-                    <h5>2. Use License</h5>
-                    <p>Permission is granted to temporarily use the Islamic Prayer Times app for personal, non-commercial transitory viewing only.</p>
-                    
-                    <h5>3. Disclaimer</h5>
-                    <p>The prayer times, mosque locations, and Qibla direction are provided for informational purposes only. While we strive to provide accurate information, we cannot guarantee the absolute accuracy of prayer times, mosque locations, or Qibla direction.</p>
-                    
-                    <h5>4. Limitations</h5>
-                    <p>In no event shall Islamic Prayer Times or its suppliers be liable for any damages arising out of the use or inability to use the services provided by the app.</p>
-                    
-                    <h5>5. Accuracy of Materials</h5>
-                    <p>The materials appearing in the Islamic Prayer Times app could include technical, typographical, or photographic errors. We do not warrant that any of the materials on its app are accurate, complete or current.</p>
-                    
-                    <h5>6. Modifications</h5>
-                    <p>Islamic Prayer Times may revise these terms of service for its app at any time without notice. By using this app you are agreeing to be bound by the then current version of these terms of service.</p>
-                    
-                    <h5>7. Governing Law</h5>
-                    <p>These terms and conditions are governed by and construed in accordance with the laws and any disputes relating to these terms and conditions will be subject to the exclusive jurisdiction of the courts.</p>
-                    
-                    <p class="mt-4"><strong>Last Updated:</strong> January 1, 2025</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Disclaimer Modal -->
-    <div class="modal fade legal-modal" id="disclaimerModal" tabindex="-1" aria-labelledby="disclaimerModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="disclaimerModalLabel"><i class="fas fa-exclamation-circle me-2"></i>Disclaimer</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h5>1. Prayer Times Accuracy</h5>
-                    <p>The prayer times provided by this app are calculated using established mathematical formulas and are based on your geographical location. While we strive to provide accurate prayer times, actual prayer times may vary slightly based on local customs, mosque announcements, and other factors. Users are advised to confirm prayer times with their local mosque for religious obligations.</p>
-                    
-                    <h5>2. Mosque Locations</h5>
-                    <p>The mosque locations are sourced from OpenStreetMap and may not be comprehensive or completely accurate. The inclusion or exclusion of any mosque does not represent an endorsement or criticism of that institution. We recommend verifying mosque information before visiting.</p>
-                    
-                    <h5>3. Qibla Direction</h5>
-                    <p>The Qibla direction is calculated based on spherical trigonometry formulas. The accuracy depends on your device's compass sensor and may be affected by magnetic interference. For precise Qibla direction, especially for religious purposes, we recommend consulting with your local mosque.</p>
-                    
-                    <h5>4. Religious Considerations</h5>
-                    <p>This app is intended as a helpful tool for Muslims but should not replace religious knowledge or guidance from qualified scholars. Users are responsible for ensuring their prayers and religious practices comply with their understanding of Islamic requirements.</p>
-                    
-                    <h5>5. Technical Limitations</h5>
-                    <p>The accuracy of location-based services depends on your device's capabilities and connectivity. Results may vary based on GPS accuracy, network availability, and other technical factors beyond our control.</p>
-                    
-                    <h5>6. No Warranty</h5>
-                    <p>The Islamic Prayer Times app is provided "as is" without any warranties, expressed or implied. We make no guarantees regarding the availability, accuracy, or reliability of the services.</p>
-                    
-                    <h5>7. Limitation of Liability</h5>
-                    <p>In no event shall the creators of this app be liable for any missed prayers, religious obligations, or any direct, indirect, incidental, special, or consequential damages arising from the use of or inability to use the app.</p>
-                    
-                    <p class="mt-4"><strong>Last Updated:</strong> January 1, 2025</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Cookie Policy Modal -->
-    <div class="modal fade legal-modal" id="cookiesModal" tabindex="-1" aria-labelledby="cookiesModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="cookiesModalLabel"><i class="fas fa-cookie-bite me-2"></i>Cookie Policy</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h5>1. What Are Cookies</h5>
-                    <p>Cookies are small text files that are stored on your device when you visit websites or use web applications. They are widely used to make websites work efficiently and provide information to the owners of the site.</p>
-                    
-                    <h5>2. How We Use Cookies</h5>
-                    <p>Our Islamic Prayer Times app uses cookies for the following purposes:</p>
-                    <ul>
-                        <li><strong>Essential Cookies:</strong> These are necessary for the app to function properly. They enable core functionality such as location services and prayer time calculations.</li>
-                        <li><strong>Preference Cookies:</strong> These remember your choices such as time format preferences (12-hour or 24-hour format).</li>
-                        <li><strong>Analytical Cookies:</strong> These help us understand how users interact with our app, allowing us to improve its functionality and user experience.</li>
-                    </ul>
-                    
-                    <h5>3. Third-Party Cookies</h5>
-                    <p>We may use services from third parties that place cookies on your device:</p>
-                    <ul>
-                        <li><strong>Mapping Services:</strong> Our mosque finder feature uses OpenStreetMap which may place cookies for functionality.</li>
-                        <li><strong>Analytics Services:</strong> We use analytics services to understand how our app is being used and to make improvements.</li>
-                    </ul>
-                    
-                    <h5>4. Managing Cookies</h5>
-                    <p>You can control and manage cookies in various ways:</p>
-                    <ul>
-                        <li>Most browsers allow you to refuse cookies or delete them. You can usually find these settings in your browser's "options" or "preferences" menu.</li>
-                        <li>Please note that disabling cookies may affect the functionality of our app and many other websites that you visit.</li>
-                    </ul>
-                    
-                    <h5>5. Consent</h5>
-                    <p>By using our app, you consent to the use of cookies in accordance with this Cookie Policy. If you do not agree to our use of cookies, you should adjust your browser settings appropriately or discontinue use of our app.</p>
-                    
-                    <h5>6. Changes to This Policy</h5>
-                    <p>We may update our Cookie Policy from time to time. We will notify you of any changes by posting the new Cookie Policy on this page.</p>
-                    
-                    <p class="mt-4"><strong>Last Updated:</strong> January 1, 2025</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Leaflet JS for Maps -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
     <script>
-        // Islamic Prayer Times App - JavaScript
-
-        class IslamicApp {
+        class QiblaCompass {
             constructor() {
                 this.userLocation = null;
-                this.map = null;
-                this.mosqueMarkers = [];
-                this.prayerTimes = null;
-                this.is24HourFormat = true;
                 this.qiblaDirection = null;
                 this.compassPermission = false;
                 
@@ -1405,136 +377,31 @@
 
             init() {
                 this.setupEventListeners();
-                this.startClock();
-                this.detectLocation();
+                
+                // Try to get location automatically on load
+                setTimeout(() => {
+                    this.detectLocation();
+                }, 1000);
             }
 
             setupEventListeners() {
-                // Navigation
-                document.querySelectorAll('[data-section]').forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const sectionId = e.target.getAttribute('data-section') || e.target.closest('[data-section]').getAttribute('data-section');
-                        this.showSection(sectionId);
-                        
-                        // Update active nav only for nav links
-                        if (e.target.classList.contains('nav-link')) {
-                            this.updateActiveNav(e.target);
-                        } else {
-                            // Update nav for tool cards
-                            const navLink = document.querySelector(`[data-section="${sectionId}"].nav-link`);
-                            if (navLink) {
-                                this.updateActiveNav(navLink);
-                            }
-                        }
-                    });
-                });
-
-                // Time format toggle
-                const timeFormatSwitch = document.getElementById('timeFormatSwitch');
-                if (timeFormatSwitch) {
-                    // Load saved preference
-                    const savedFormat = localStorage.getItem('timeFormat');
-                    this.is24HourFormat = savedFormat ? savedFormat === '24' : true;
-                    timeFormatSwitch.checked = this.is24HourFormat;
-                    this.updateTimeFormatLabel();
-
-                    timeFormatSwitch.addEventListener('change', (e) => {
-                        this.is24HourFormat = e.target.checked;
-                        localStorage.setItem('timeFormat', this.is24HourFormat ? '24' : '12');
-                        this.updateTimeFormatLabel();
-                        if (this.prayerTimes) {
-                            this.displayPrayerTimes();
-                        }
-                    });
-                }
-
-                // Handle initial hash
-                if (window.location.hash) {
-                    const sectionId = window.location.hash.substring(1);
-                    this.showSection(sectionId);
-                } else {
-                    // Default to landing page
-                    this.showSection('landing');
-                }
-            }
-
-            showSection(sectionId) {
-                // Hide all sections
-                document.querySelectorAll('.section').forEach(section => {
-                    section.classList.remove('active');
-                });
-
-                // Show target section
-                const targetSection = document.getElementById(sectionId);
-                if (targetSection) {
-                    targetSection.classList.add('active');
-                    
-                    // Load section-specific content
-                    if (sectionId === 'prayer-times' && this.userLocation && !this.prayerTimes) {
-                        this.loadPrayerTimes();
-                    } else if (sectionId === 'mosque-finder' && this.userLocation) {
-                        this.loadMosques();
-                    } else if (sectionId === 'location-info') {
-                        this.loadLocationPrayerTimes();
-                    } else if (sectionId === 'qibla-direction' && this.userLocation) {
-                        this.calculateQiblaDirection();
-                        this.setupCompass();
-                    }
-                }
-
-                // Update URL hash
-                window.location.hash = sectionId;
-            }
-
-            updateActiveNav(activeLink) {
-                document.querySelectorAll('.nav-link').forEach(link => {
-                    link.classList.remove('active');
-                });
-                activeLink.classList.add('active');
-            }
-
-            updateTimeFormatLabel() {
-                const label = document.getElementById('timeFormatLabel');
-                if (label) {
-                    label.textContent = this.is24HourFormat ? '24-hour format' : '12-hour format';
-                }
-            }
-
-            startClock() {
-                this.updateClock();
-                setInterval(() => this.updateClock(), 1000);
-            }
-
-            updateClock() {
-                const now = new Date();
-                const timeElement = document.getElementById('current-time');
-                const dateElement = document.getElementById('current-date');
-                
-                if (timeElement) {
-                    timeElement.textContent = now.toLocaleTimeString('en-US', {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit',
-                        hour12: true
-                    });
-                }
-                
-                if (dateElement) {
-                    dateElement.textContent = now.toLocaleDateString('en-US', {
-                        weekday: 'long',
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
+                const locationBtn = document.getElementById('getLocationBtn');
+                if (locationBtn) {
+                    locationBtn.addEventListener('click', () => {
+                        this.detectLocation();
                     });
                 }
             }
 
             detectLocation() {
                 if (!navigator.geolocation) {
-                    this.showLocationError('Geolocation is not supported by this browser.');
+                    this.showError('Geolocation is not supported by this browser.');
                     return;
                 }
+
+                // Show loading state
+                document.getElementById('getLocationBtn').disabled = true;
+                document.getElementById('getLocationBtn').innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Detecting Location...';
 
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
@@ -1542,7 +409,14 @@
                             lat: position.coords.latitude,
                             lng: position.coords.longitude
                         };
+                        this.updateLocationInfo();
                         this.getReverseGeocoding();
+                        this.calculateQiblaDirection();
+                        this.setupCompass();
+                        
+                        // Reset button
+                        document.getElementById('getLocationBtn').disabled = false;
+                        document.getElementById('getLocationBtn').innerHTML = '<i class="fas fa-map-marker-alt me-2"></i>Update My Location';
                     },
                     (error) => {
                         let errorMessage = 'Unable to get your location.';
@@ -1559,7 +433,11 @@
                                 break;
                         }
                         
-                        this.showLocationError(errorMessage);
+                        this.showError(errorMessage);
+                        
+                        // Reset button
+                        document.getElementById('getLocationBtn').disabled = false;
+                        document.getElementById('getLocationBtn').innerHTML = '<i class="fas fa-map-marker-alt me-2"></i>Detect My Location';
                     },
                     {
                         enableHighAccuracy: true,
@@ -1570,6 +448,8 @@
             }
 
             async getReverseGeocoding() {
+                if (!this.userLocation) return;
+
                 try {
                     const response = await fetch(
                         `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${this.userLocation.lat}&longitude=${this.userLocation.lng}&localityLanguage=en`
@@ -1579,355 +459,22 @@
                     this.userLocation.city = data.city || data.locality || 'Unknown';
                     this.userLocation.country = data.countryName || 'Unknown';
                     
-                    this.displayLocationInfo();
+                    this.updateLocationInfo();
                 } catch (error) {
                     console.error('Error getting location details:', error);
                     this.userLocation.city = 'Unknown';
                     this.userLocation.country = 'Unknown';
-                    this.displayLocationInfo();
+                    this.updateLocationInfo();
                 }
             }
 
-            displayLocationInfo() {
-                const loadingSection = document.getElementById('location-loading-section');
-                const infoSection = document.getElementById('location-info-section');
-                
-                if (loadingSection) loadingSection.classList.add('d-none');
-                if (infoSection) infoSection.classList.remove('d-none');
-                
-                // Update location info
-                this.updateElementText('user-city-section', this.userLocation.city);
-                this.updateElementText('user-country-section', this.userLocation.country);
-                this.updateElementText('user-lat-section', this.userLocation.lat.toFixed(6));
-                this.updateElementText('user-lng-section', this.userLocation.lng.toFixed(6));
-            }
-
-            showLocationError(message) {
-                const loadingSection = document.getElementById('location-loading-section');
-                const errorSection = document.getElementById('location-error-section');
-                
-                if (loadingSection) loadingSection.classList.add('d-none');
-                if (errorSection) {
-                    errorSection.classList.remove('d-none');
-                    errorSection.querySelector('i').nextSibling.textContent = message;
+            updateLocationInfo() {
+                if (this.userLocation) {
+                    document.getElementById('latitude').textContent = this.userLocation.lat.toFixed(6);
+                    document.getElementById('longitude').textContent = this.userLocation.lng.toFixed(6);
+                    document.getElementById('city').textContent = this.userLocation.city || '--';
+                    document.getElementById('country').textContent = this.userLocation.country || '--';
                 }
-            }
-
-            async loadPrayerTimes() {
-                if (!this.userLocation) return;
-
-                try {
-                    const today = new Date();
-                    const day = today.getDate();
-                    const month = today.getMonth() + 1;
-                    const year = today.getFullYear();
-
-                    const response = await fetch(
-                        `https://api.aladhan.com/v1/timings/${day}-${month}-${year}?latitude=${this.userLocation.lat}&longitude=${this.userLocation.lng}&method=2`
-                    );
-                    
-                    if (!response.ok) {
-                        throw new Error('Failed to fetch prayer times');
-                    }
-                    
-                    const data = await response.json();
-                    this.prayerTimes = data.data.timings;
-                    
-                    this.displayPrayerTimes();
-                } catch (error) {
-                    console.error('Error loading prayer times:', error);
-                    this.showPrayerError();
-                }
-            }
-
-            displayPrayerTimes() {
-                const loadingElement = document.getElementById('prayer-loading');
-                const gridElement = document.getElementById('prayer-times-grid');
-                
-                if (loadingElement) loadingElement.classList.add('d-none');
-                if (gridElement) gridElement.classList.remove('d-none');
-
-                const prayers = [
-                    { name: 'Fajr', time: this.prayerTimes.Fajr, icon: 'fas fa-sun' },
-                    { name: 'Dhuhr', time: this.prayerTimes.Dhuhr, icon: 'fas fa-sun' },
-                    { name: 'Asr', time: this.prayerTimes.Asr, icon: 'fas fa-sun' },
-                    { name: 'Maghrib', time: this.prayerTimes.Maghrib, icon: 'fas fa-moon' },
-                    { name: 'Isha', time: this.prayerTimes.Isha, icon: 'fas fa-star' }
-                ];
-
-                gridElement.innerHTML = prayers.map(prayer => `
-                    <div class="col-md-6 col-lg-2">
-                        <div class="prayer-card ${this.getCurrentPrayer() === prayer.name ? 'current-prayer' : ''}">
-                            <div class="prayer-icon">
-                                <i class="${prayer.icon}"></i>
-                            </div>
-                            <div class="prayer-name">${prayer.name}</div>
-                            <div class="prayer-time">${this.formatTime(prayer.time)}</div>
-                        </div>
-                    </div>
-                `).join('');
-            }
-
-            loadLocationPrayerTimes() {
-                if (!this.userLocation) return;
-                
-                this.loadPrayerTimes().then(() => {
-                    if (this.prayerTimes) {
-                        this.displayHomePrayerTimes();
-                    }
-                });
-            }
-
-            displayHomePrayerTimes() {
-                const homeContainer = document.getElementById('home-prayer-times');
-                if (!homeContainer || !this.prayerTimes) return;
-
-                const prayers = [
-                    { name: 'Fajr', time: this.prayerTimes.Fajr, icon: 'fas fa-sun' },
-                    { name: 'Dhuhr', time: this.prayerTimes.Dhuhr, icon: 'fas fa-sun' },
-                    { name: 'Asr', time: this.prayerTimes.Asr, icon: 'fas fa-sun' },
-                    { name: 'Maghrib', time: this.prayerTimes.Maghrib, icon: 'fas fa-moon' },
-                    { name: 'Isha', time: this.prayerTimes.Isha, icon: 'fas fa-star' }
-                ];
-
-                homeContainer.innerHTML = prayers.map(prayer => `
-                    <div class="col-md-6 col-lg-2">
-                        <div class="prayer-card ${this.getCurrentPrayer() === prayer.name ? 'current-prayer' : ''}">
-                            <div class="prayer-icon">
-                                <i class="${prayer.icon}"></i>
-                            </div>
-                            <div class="prayer-name">${prayer.name}</div>
-                            <div class="prayer-time">${this.formatTime(prayer.time)}</div>
-                        </div>
-                    </div>
-                `).join('');
-            }
-
-            showPrayerError() {
-                const loadingElement = document.getElementById('prayer-loading');
-                const errorElement = document.getElementById('prayer-error');
-                
-                if (loadingElement) loadingElement.classList.add('d-none');
-                if (errorElement) errorElement.classList.remove('d-none');
-            }
-
-            getCurrentPrayer() {
-                if (!this.prayerTimes) return null;
-
-                const now = new Date();
-                const currentTime = now.getHours() * 60 + now.getMinutes();
-
-                const prayers = [
-                    { name: 'Fajr', time: this.prayerTimes.Fajr },
-                    { name: 'Dhuhr', time: this.prayerTimes.Dhuhr },
-                    { name: 'Asr', time: this.prayerTimes.Asr },
-                    { name: 'Maghrib', time: this.prayerTimes.Maghrib },
-                    { name: 'Isha', time: this.prayerTimes.Isha }
-                ];
-
-                for (let i = 0; i < prayers.length; i++) {
-                    const prayer = prayers[i];
-                    const [hours, minutes] = prayer.time.split(':').map(Number);
-                    const prayerTime = hours * 60 + minutes;
-                    
-                    const nextPrayer = prayers[i + 1];
-                    if (nextPrayer) {
-                        const [nextHours, nextMinutes] = nextPrayer.time.split(':').map(Number);
-                        const nextPrayerTime = nextHours * 60 + nextMinutes;
-                        
-                        if (currentTime >= prayerTime && currentTime < nextPrayerTime) {
-                            return prayer.name;
-                        }
-                    } else {
-                        // Last prayer of the day
-                        if (currentTime >= prayerTime) {
-                            return prayer.name;
-                        }
-                    }
-                }
-                
-                return null;
-            }
-
-            formatTime(time24) {
-                if (this.is24HourFormat) {
-                    return time24;
-                }
-                
-                const [hours, minutes] = time24.split(':').map(Number);
-                const date = new Date();
-                date.setHours(hours, minutes, 0, 0);
-                
-                return date.toLocaleTimeString('en-US', {
-                    hour: 'numeric',
-                    minute: '2-digit',
-                    hour12: true
-                });
-            }
-
-            async loadMosques() {
-                if (!this.userLocation) return;
-
-                const loadingElement = document.getElementById('mosque-loading');
-                const mapElement = document.getElementById('mosque-map');
-                
-                try {
-                    // Show loading
-                    if (loadingElement) loadingElement.classList.remove('d-none');
-                    if (mapElement) mapElement.classList.add('d-none');
-
-                    // Initialize map first
-                    this.initializeMap();
-
-                    // Using Overpass API to find mosques
-                    const radius = 5000; // 5km
-                    const query = `
-                        [out:json][timeout:25];
-                        (
-                            node["amenity"="place_of_worship"]["religion"="muslim"](around:${radius},${this.userLocation.lat},${this.userLocation.lng});
-                            way["amenity"="place_of_worship"]["religion"="muslim"](around:${radius},${this.userLocation.lat},${this.userLocation.lng});
-                            relation["amenity"="place_of_worship"]["religion"="muslim"](around:${radius},${this.userLocation.lat},${this.userLocation.lng});
-                        );
-                        out center;
-                    `;
-
-                    const response = await fetch('https://overpass-api.de/api/interpreter', {
-                        method: 'POST',
-                        body: query,
-                    });
-
-                    if (!response.ok) {
-                        throw new Error('Failed to fetch mosque data');
-                    }
-
-                    const data = await response.json();
-                    
-                    const mosques = data.elements
-                        .filter(element => element.tags?.name)
-                        .map(element => {
-                            const lat = element.lat || element.center?.lat;
-                            const lng = element.lon || element.center?.lon;
-                            
-                            if (!lat || !lng) return null;
-                            
-                            const distance = this.calculateDistance(
-                                this.userLocation.lat, 
-                                this.userLocation.lng, 
-                                lat, 
-                                lng
-                            );
-                            
-                            return {
-                                id: element.id,
-                                name: element.tags.name,
-                                address: element.tags['addr:full'] || 
-                                        `${element.tags['addr:housenumber'] || ''} ${element.tags['addr:street'] || ''}, ${element.tags['addr:city'] || ''}`.trim() ||
-                                        'Address not available',
-                                lat: lat,
-                                lng: lng,
-                                distance: distance
-                            };
-                        })
-                        .filter(Boolean)
-                        .sort((a, b) => a.distance - b.distance)
-                        .slice(0, 10);
-
-                    this.displayMosques(mosques);
-                    
-                    // Hide loading and show map
-                    if (loadingElement) loadingElement.classList.add('d-none');
-                    if (mapElement) mapElement.classList.remove('d-none');
-                    
-                } catch (error) {
-                    console.error('Error loading mosques:', error);
-                    this.showMosqueError();
-                }
-            }
-
-            initializeMap() {
-                const mapElement = document.getElementById('mosque-map');
-                if (!mapElement || !window.L) return;
-
-                // Remove existing map if any
-                if (this.map) {
-                    this.map.remove();
-                }
-
-                // Initialize new map
-                this.map = L.map('mosque-map').setView([this.userLocation.lat, this.userLocation.lng], 13);
-
-                // Add tile layer
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '© OpenStreetMap contributors'
-                }).addTo(this.map);
-
-                // Add user location marker
-                L.marker([this.userLocation.lat, this.userLocation.lng])
-                    .addTo(this.map)
-                    .bindPopup('<div class="text-center"><strong>Your Location</strong></div>');
-            }
-
-            displayMosques(mosques) {
-                // Clear existing markers
-                this.mosqueMarkers.forEach(marker => this.map.removeLayer(marker));
-                this.mosqueMarkers = [];
-
-                // Add mosque markers to map
-                mosques.forEach(mosque => {
-                    const marker = L.marker([mosque.lat, mosque.lng]).addTo(this.map);
-                    marker.bindPopup(`
-                        <div class="p-2">
-                            <div class="mosque-popup-title">${mosque.name}</div>
-                            <div class="mosque-popup-address">${mosque.address}</div>
-                            <div class="mosque-popup-distance">${mosque.distance.toFixed(1)} miles away</div>
-                        </div>
-                    `);
-                    this.mosqueMarkers.push(marker);
-                });
-
-                // Display mosque list
-                const mosqueContainer = document.getElementById('mosque-items');
-                if (mosqueContainer) {
-                    mosqueContainer.innerHTML = mosques.map(mosque => `
-                        <div class="col-lg-4 col-md-6">
-                            <div class="mosque-item" onclick="window.islamicApp.openDirections(${mosque.lat}, ${mosque.lng})">
-                                <div class="mosque-name">${mosque.name}</div>
-                                <div class="mosque-address">${mosque.address}</div>
-                                <div class="mosque-distance">${mosque.distance.toFixed(1)} miles away</div>
-                                <div class="mosque-actions mt-2">
-                                    <button class="btn btn-sm btn-primary">
-                                        <i class="fas fa-directions me-1"></i>Directions
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    `).join('');
-                }
-            }
-
-            showMosqueError() {
-                const loadingElement = document.getElementById('mosque-loading');
-                const errorElement = document.getElementById('mosque-error');
-                
-                if (loadingElement) loadingElement.classList.add('d-none');
-                if (errorElement) errorElement.classList.remove('d-none');
-            }
-
-            openDirections(lat, lng) {
-                const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
-                window.open(url, '_blank');
-            }
-
-            calculateDistance(lat1, lon1, lat2, lon2) {
-                const R = 3959; // Earth's radius in miles
-                const dLat = (lat2 - lat1) * Math.PI / 180;
-                const dLon = (lon2 - lon1) * Math.PI / 180;
-                const a = 
-                    Math.sin(dLat/2) * Math.sin(dLat/2) +
-                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-                    Math.sin(dLon/2) * Math.sin(dLon/2);
-                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-                return R * c;
             }
 
             calculateQiblaDirection() {
@@ -1947,16 +494,16 @@
                 // Convert radians to degrees
                 const toDegrees = (radians) => radians * (180 / Math.PI);
                 
-                // Calculate the Qibla direction
-                const deltaLng = toRadians(kaabaLng - userLng);
-                const userLatRad = toRadians(userLat);
-                const kaabaLatRad = toRadians(kaabaLat);
+                // Calculate the Qibla direction using the correct formula
+                const phiK = toRadians(kaabaLat);
+                const lambdaK = toRadians(kaabaLng);
+                const phi = toRadians(userLat);
+                const lambda = toRadians(userLng);
                 
-                const y = Math.sin(deltaLng);
-                const x = Math.cos(userLatRad) * Math.tan(kaabaLatRad) - 
-                         Math.sin(userLatRad) * Math.cos(deltaLng);
+                const numerator = Math.sin(lambdaK - lambda);
+                const denominator = Math.cos(phi) * Math.tan(phiK) - Math.sin(phi) * Math.cos(lambdaK - lambda);
                 
-                let qiblaDirection = toDegrees(Math.atan2(y, x));
+                let qiblaDirection = toDegrees(Math.atan2(numerator, denominator));
                 
                 // Normalize to 0-360 degrees
                 qiblaDirection = (qiblaDirection + 360) % 360;
@@ -1982,21 +529,24 @@
             }
 
             setupCompass() {
-                if (typeof DeviceOrientationEvent !== 'undefined' && 
-                    typeof DeviceOrientationEvent.requestPermission === 'function') {
-                    // iOS devices
-                    const compassButton = document.createElement('button');
-                    compassButton.className = 'btn btn-primary mt-3';
-                    compassButton.innerHTML = '<i class="fas fa-compass me-2"></i>Enable Compass';
-                    compassButton.addEventListener('click', this.requestCompassPermission.bind(this));
-                    
-                    document.getElementById('qibla-content').appendChild(compassButton);
-                } else if ('DeviceOrientationEvent' in window) {
-                    // Other supported devices
-                    window.addEventListener('deviceorientation', this.handleCompass.bind(this));
-                    this.compassPermission = true;
+                if (typeof DeviceOrientationEvent !== 'undefined') {
+                    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                        // iOS devices
+                        const compassButton = document.createElement('button');
+                        compassButton.className = 'btn btn-primary mt-3';
+                        compassButton.innerHTML = '<i class="fas fa-compass me-2"></i>Enable Compass';
+                        compassButton.addEventListener('click', this.requestCompassPermission.bind(this));
+                        
+                        document.getElementById('qibla-content').appendChild(compassButton);
+                    } else {
+                        // Other supported devices
+                        window.addEventListener('deviceorientation', this.handleCompass.bind(this), true);
+                        this.compassPermission = true;
+                    }
                 } else {
                     console.log('Device orientation not supported');
+                    // Simulate compass for demo purposes
+                    this.simulateCompass();
                 }
             }
 
@@ -2004,7 +554,7 @@
                 DeviceOrientationEvent.requestPermission()
                     .then(response => {
                         if (response === 'granted') {
-                            window.addEventListener('deviceorientation', this.handleCompass.bind(this));
+                            window.addEventListener('deviceorientation', this.handleCompass.bind(this), true);
                             this.compassPermission = true;
                             document.querySelector('.btn-primary').remove();
                         }
@@ -2016,31 +566,44 @@
                 if (!this.compassPermission) return;
                 
                 const compassArrow = document.getElementById('compass-arrow');
-                let degree = 0;
                 
-                if (event.webkitCompassHeading) {
-                    // iOS devices
-                    degree = event.webkitCompassHeading;
-                } else if (event.alpha) {
-                    // Android devices
-                    degree = 360 - event.alpha;
+                if (event.alpha !== null) {
+                    // Use alpha value (compass direction)
+                    let degree = event.alpha; // 0 to 360
+                    
+                    // Apply webkit transformation for iOS
+                    if (event.webkitCompassHeading) {
+                        degree = event.webkitCompassHeading;
+                    }
+                    
+                    // Rotate the compass arrow
+                    compassArrow.style.transform = `translateX(-50%) rotate(${degree}deg)`;
                 }
-                
-                // Rotate the compass arrow
-                compassArrow.style.transform = `translateX(-50%) rotate(${degree}deg)`;
             }
 
-            updateElementText(elementId, text) {
-                const element = document.getElementById(elementId);
-                if (element) {
-                    element.textContent = text;
+            simulateCompass() {
+                // Simulate compass for devices without orientation support
+                const compassArrow = document.getElementById('compass-arrow');
+                let degree = 0;
+                
+                setInterval(() => {
+                    degree = (degree + 1) % 360;
+                    compassArrow.style.transform = `translateX(-50%) rotate(${degree}deg)`;
+                }, 100);
+            }
+
+            showError(message) {
+                const errorElement = document.getElementById('qibla-error');
+                if (errorElement) {
+                    errorElement.classList.remove('d-none');
+                    errorElement.querySelector('i').nextSibling.textContent = message;
                 }
             }
         }
 
-        // Initialize the app when DOM is loaded
+        // Initialize the Qibla compass when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
-            window.islamicApp = new IslamicApp();
+            window.qiblaCompass = new QiblaCompass();
         });
     </script>
 </body>
