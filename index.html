@@ -357,19 +357,14 @@
             margin-top: 3rem;
         }
 
-        /* Footer Links */
-        .footer-links {
-            margin-top: 1rem;
-        }
-        
         .footer-links a {
             color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
-            margin-right: 1rem;
-            font-size: 0.9rem;
             transition: color 0.3s ease;
+            margin: 0 10px;
+            font-size: 0.9rem;
         }
-        
+
         .footer-links a:hover {
             color: white;
             text-decoration: underline;
@@ -546,31 +541,19 @@
             font-size: 0.85rem;
         }
 
-        /* Manual Location Input */
-        .manual-location-form {
-            background: white;
-            border-radius: 15px;
-            padding: 1.5rem;
-            box-shadow: 0 8px 25px var(--shadow-light);
-            margin-top: 2rem;
+        /* Legal Modal Styles */
+        .legal-modal .modal-header {
+            background: var(--gradient-green);
+            color: white;
         }
 
-        /* Notification Settings */
-        .notification-settings {
-            background: white;
-            border-radius: 15px;
-            padding: 1.5rem;
-            box-shadow: 0 8px 25px var(--shadow-light);
-            margin-top: 2rem;
+        .legal-modal .modal-title {
+            font-weight: 700;
         }
 
-        /* Mosque Filter */
-        .mosque-filter {
-            background: white;
+        .legal-modal .modal-content {
             border-radius: 15px;
-            padding: 1rem;
-            box-shadow: 0 8px 25px var(--shadow-light);
-            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px var(--shadow-light);
         }
 
         /* Responsive Design */
@@ -618,6 +601,16 @@
             
             .map-container {
                 height: 400px;
+            }
+
+            .footer-links {
+                text-align: center;
+                margin-top: 1rem;
+            }
+
+            .footer-links a {
+                display: inline-block;
+                margin: 5px;
             }
         }
 
@@ -668,9 +661,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#location-info" data-section="location-info">Location Info</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#settings" data-section="settings">Settings</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#about" data-section="about">About</a>
@@ -752,12 +742,12 @@
                     </div>
                     
                     <div class="col-md-6 col-lg-3">
-                        <div class="tool-card" data-section="settings">
+                        <div class="tool-card" data-section="about">
                             <div class="tool-icon">
-                                <i class="fas fa-cog"></i>
+                                <i class="fas fa-info-circle"></i>
                             </div>
-                            <h4 class="tool-title">Settings</h4>
-                            <p class="tool-description">Customize your experience with notification and location settings</p>
+                            <h4 class="tool-title">About</h4>
+                            <p class="tool-description">Learn more about this app and its features</p>
                             <div class="tool-button">
                                 <i class="fas fa-arrow-right"></i>
                             </div>
@@ -928,21 +918,6 @@
                             <p class="lead">Find mosques in your area</p>
                         </div>
                         
-                        <!-- Mosque Filter -->
-                        <div class="mosque-filter mb-4">
-                            <div class="row align-items-center">
-                                <div class="col-md-6 mb-3 mb-md-0">
-                                    <label for="search-radius" class="form-label">Search Radius: <span id="radius-value">5</span> km</label>
-                                    <input type="range" class="form-range" id="search-radius" min="1" max="20" value="5">
-                                </div>
-                                <div class="col-md-6 text-md-end">
-                                    <button id="refresh-mosques" class="btn btn-primary">
-                                        <i class="fas fa-sync-alt me-2"></i>Refresh
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
                         <div class="map-container">
                             <div id="mosque-loading" class="text-center">
                                 <div class="spinner-border text-primary" role="status">
@@ -964,95 +939,6 @@
                             <div id="mosque-items" class="row g-3">
                                 <!-- Mosque items will be inserted here -->
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Settings Section -->
-        <section id="settings" class="section">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
-                        <div class="section-header text-center mb-5">
-                            <h2><i class="fas fa-cog me-3"></i>Settings</h2>
-                            <p class="lead">Customize your prayer experience</p>
-                        </div>
-                        
-                        <!-- Notification Settings -->
-                        <div class="notification-settings">
-                            <h4 class="mb-4"><i class="fas fa-bell me-2"></i>Prayer Time Notifications</h4>
-                            
-                            <div class="form-check form-switch mb-3">
-                                <input class="form-check-input" type="checkbox" id="notifications-enabled">
-                                <label class="form-check-label" for="notifications-enabled">
-                                    Enable Prayer Time Notifications
-                                </label>
-                            </div>
-                            
-                            <div id="notification-settings" class="d-none">
-                                <div class="mb-3">
-                                    <label class="form-label">Notification Time Before Prayer</label>
-                                    <select class="form-select" id="notification-time">
-                                        <option value="5">5 minutes</option>
-                                        <option value="10" selected>10 minutes</option>
-                                        <option value="15">15 minutes</option>
-                                        <option value="20">20 minutes</option>
-                                        <option value="30">30 minutes</option>
-                                    </select>
-                                </div>
-                                
-                                <div class="mb-3">
-                                    <label class="form-label">Select Prayers to Notify</label>
-                                    <div class="form-check">
-                                        <input class="form-check-input prayer-notification" type="checkbox" value="Fajr" id="notify-fajr" checked>
-                                        <label class="form-check-label" for="notify-fajr">Fajr</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input prayer-notification" type="checkbox" value="Dhuhr" id="notify-dhuhr" checked>
-                                        <label class="form-check-label" for="notify-dhuhr">Dhuhr</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input prayer-notification" type="checkbox" value="Asr" id="notify-asr" checked>
-                                        <label class="form-check-label" for="notify-asr">Asr</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input prayer-notification" type="checkbox" value="Maghrib" id="notify-maghrib" checked>
-                                        <label class="form-check-label" for="notify-maghrib">Maghrib</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input prayer-notification" type="checkbox" value="Isha" id="notify-isha" checked>
-                                        <label class="form-check-label" for="notify-isha">Isha</label>
-                                    </div>
-                                </div>
-                                
-                                <button id="save-notification-settings" class="btn btn-primary">
-                                    <i class="fas fa-save me-2"></i>Save Settings
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <!-- Manual Location Input -->
-                        <div class="manual-location-form">
-                            <h4 class="mb-4"><i class="fas fa-map-pin me-2"></i>Manual Location Input</h4>
-                            <p class="text-muted">Use this if automatic location detection isn't working</p>
-                            
-                            <form id="manual-location-form">
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="manual-latitude" class="form-label">Latitude</label>
-                                        <input type="number" step="any" class="form-control" id="manual-latitude" placeholder="e.g., 40.7128" required>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="manual-longitude" class="form-label">Longitude</label>
-                                        <input type="number" step="any" class="form-control" id="manual-longitude" placeholder="e.g., -74.0060" required>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-check me-2"></i>Use This Location
-                                </button>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -1085,8 +971,6 @@
                                         <li><i class="fas fa-check text-success me-2"></i>Responsive design for all devices</li>
                                         <li><i class="fas fa-check text-success me-2"></i>Real-time digital clock</li>
                                         <li><i class="fas fa-check text-success me-2"></i>12/24-hour time format toggle</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Prayer time notifications</li>
-                                        <li><i class="fas fa-check text-success me-2"></i>Manual location input option</li>
                                     </ul>
                                     
                                     <h5 class="mt-4">Data Sources:</h5>
@@ -1107,18 +991,16 @@
     <!-- Footer -->
     <footer class="bg-islamic-green text-white py-4">
         <div class="container">
-            <div class="row">
-                <div class="col-md-8">
+            <div class="row align-items-center">
+                <div class="col-md-6">
                     <p class="mb-0 arabic-font">"وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ وَارْكَعُوا مَعَ الرَّاكِعِينَ"</p>
                     <small class="text-light">"And establish prayer and give zakah and bow with those who bow." - Quran 2:43</small>
-                    <div class="footer-links mt-2">
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms of Service</a>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#disclaimerModal">Disclaimer</a>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#contactModal">Contact Us</a>
-                    </div>
                 </div>
-                <div class="col-md-4 text-md-end">
+                <div class="col-md-6 text-md-end footer-links">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms of Service</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#disclaimerModal">Disclaimer</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#cookiesModal">Cookie Policy</a>
                     <small>&copy; 2025 Islamic Prayer Times App</small>
                 </div>
             </div>
@@ -1127,28 +1009,52 @@
 
     <!-- Legal Modals -->
     <!-- Privacy Policy Modal -->
-    <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+    <div class="modal fade legal-modal" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="privacyModalLabel">Privacy Policy</h5>
+                    <h5 class="modal-title" id="privacyModalLabel"><i class="fas fa-shield-alt me-2"></i>Privacy Policy</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h6>1. Information We Collect</h6>
-                    <p>Our application collects your location data to provide accurate prayer times and mosque locations. This data is processed locally on your device and is not stored on our servers.</p>
+                    <h5>1. Information We Collect</h5>
+                    <p>Our Islamic Prayer Times app collects limited information to provide you with accurate prayer times and mosque locations:</p>
+                    <ul>
+                        <li><strong>Location Data:</strong> We collect your device's geographical coordinates to calculate accurate prayer times and find nearby mosques.</li>
+                        <li><strong>Usage Data:</strong> We may collect information about how you interact with our app to improve user experience.</li>
+                        <li><strong>Device Information:</strong> We collect device type and browser information for compatibility purposes.</li>
+                    </ul>
                     
-                    <h6>2. How We Use Your Information</h6>
-                    <p>We use your location information solely to calculate prayer times and find nearby mosques. We do not share, sell, or transmit this information to third parties.</p>
+                    <h5>2. How We Use Your Information</h5>
+                    <p>We use the collected information solely for the purpose of providing and improving our services:</p>
+                    <ul>
+                        <li>To calculate accurate prayer times based on your location</li>
+                        <li>To locate mosques near your current position</li>
+                        <li>To improve app functionality and user experience</li>
+                        <li>To provide customer support</li>
+                    </ul>
                     
-                    <h6>3. Data Storage</h6>
-                    <p>Your preferences and settings are stored locally on your device using browser storage mechanisms. You can clear this data at any time by clearing your browser cache.</p>
+                    <h5>3. Data Storage and Security</h5>
+                    <p>We prioritize the security of your information:</p>
+                    <ul>
+                        <li>Location data is processed in real-time and not stored on our servers</li>
+                        <li>We implement appropriate security measures to protect your information</li>
+                        <li>We do not sell or share your personal information with third parties</li>
+                    </ul>
                     
-                    <h6>4. Third-Party Services</h6>
-                    <p>We use third-party APIs (Aladhan, OpenStreetMap) to fetch prayer times and location data. These services may have their own privacy policies.</p>
+                    <h5>4. Your Rights</h5>
+                    <p>You have the right to:</p>
+                    <ul>
+                        <li>Access the personal information we hold about you</li>
+                        <li>Request correction of inaccurate information</li>
+                        <li>Request deletion of your personal data</li>
+                        <li>Opt-out of data collection (though this may limit app functionality)</li>
+                    </ul>
                     
-                    <h6>5. Your Consent</h6>
-                    <p>By using our application, you consent to our privacy policy.</p>
+                    <h5>5. Changes to This Policy</h5>
+                    <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.</p>
+                    
+                    <p class="mt-4"><strong>Last Updated:</strong> January 1, 2025</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
@@ -1158,28 +1064,36 @@
     </div>
 
     <!-- Terms of Service Modal -->
-    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+    <div class="modal fade legal-modal" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="termsModalLabel">Terms of Service</h5>
+                    <h5 class="modal-title" id="termsModalLabel"><i class="fas fa-file-contract me-2"></i>Terms of Service</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h6>1. Acceptance of Terms</h6>
-                    <p>By accessing and using this application, you accept and agree to be bound by the terms and provision of this agreement.</p>
+                    <h5>1. Acceptance of Terms</h5>
+                    <p>By accessing and using the Islamic Prayer Times app, you accept and agree to be bound by the terms and provision of this agreement.</p>
                     
-                    <h6>2. Use License</h6>
-                    <p>Permission is granted to temporarily use this application for personal, non-commercial purposes only.</p>
+                    <h5>2. Use License</h5>
+                    <p>Permission is granted to temporarily use the Islamic Prayer Times app for personal, non-commercial transitory viewing only.</p>
                     
-                    <h6>3. Disclaimer</h6>
-                    <p>The prayer times and mosque locations provided by this application are for informational purposes only. While we strive to provide accurate information, we cannot guarantee the complete accuracy of the data.</p>
+                    <h5>3. Disclaimer</h5>
+                    <p>The prayer times and mosque locations are provided for informational purposes only. While we strive to provide accurate information, we cannot guarantee the absolute accuracy of prayer times or mosque locations.</p>
                     
-                    <h6>4. Limitations</h6>
-                    <p>In no event shall Islamic Prayer Times App or its suppliers be liable for any damages arising out of the use or inability to use the application.</p>
+                    <h5>4. Limitations</h5>
+                    <p>In no event shall Islamic Prayer Times or its suppliers be liable for any damages arising out of the use or inability to use the services provided by the app.</p>
                     
-                    <h6>5. Revisions and Errata</h6>
-                    <p>The materials appearing on the application could include technical, typographical, or photographic errors.</p>
+                    <h5>5. Accuracy of Materials</h5>
+                    <p>The materials appearing in the Islamic Prayer Times app could include technical, typographical, or photographic errors. We do not warrant that any of the materials on its app are accurate, complete or current.</p>
+                    
+                    <h5>6. Modifications</h5>
+                    <p>Islamic Prayer Times may revise these terms of service for its app at any time without notice. By using this app you are agreeing to be bound by the then current version of these terms of service.</p>
+                    
+                    <h5>7. Governing Law</h5>
+                    <p>These terms and conditions are governed by and construed in accordance with the laws and any disputes relating to these terms and conditions will be subject to the exclusive jurisdiction of the courts.</p>
+                    
+                    <p class="mt-4"><strong>Last Updated:</strong> January 1, 2025</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
@@ -1189,25 +1103,33 @@
     </div>
 
     <!-- Disclaimer Modal -->
-    <div class="modal fade" id="disclaimerModal" tabindex="-1" aria-labelledby="disclaimerModalLabel" aria-hidden="true">
+    <div class="modal fade legal-modal" id="disclaimerModal" tabindex="-1" aria-labelledby="disclaimerModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="disclaimerModalLabel">Disclaimer</h5>
+                    <h5 class="modal-title" id="disclaimerModalLabel"><i class="fas fa-exclamation-circle me-2"></i>Disclaimer</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h6>Accuracy of Information</h6>
-                    <p>The prayer times provided by this application are calculated based on established algorithms and your geographical location. While we strive to provide accurate prayer times, we cannot guarantee their absolute accuracy. Users are advised to confirm prayer times with their local mosque, especially during Ramadan and other significant Islamic events.</p>
+                    <h5>1. Prayer Times Accuracy</h5>
+                    <p>The prayer times provided by this app are calculated using established mathematical formulas and are based on your geographical location. While we strive to provide accurate prayer times, actual prayer times may vary slightly based on local customs, mosque announcements, and other factors. Users are advised to confirm prayer times with their local mosque for religious obligations.</p>
                     
-                    <h6>Mosque Locations</h6>
-                    <p>The mosque locations are sourced from OpenStreetMap data. We cannot guarantee that all mosques in your area will be listed, or that all listed locations are currently operational mosques.</p>
+                    <h5>2. Mosque Locations</h5>
+                    <p>The mosque locations are sourced from OpenStreetMap and may not be comprehensive or completely accurate. The inclusion or exclusion of any mosque does not represent an endorsement or criticism of that institution. We recommend verifying mosque information before visiting.</p>
                     
-                    <h6>Religious Observance</h6>
-                    <p>This application is intended as a helpful tool for Muslims but should not replace religious knowledge or the guidance of local Islamic authorities. Users are responsible for ensuring their prayer times align with their specific madhhab (school of thought) and local customs.</p>
+                    <h5>3. Religious Considerations</h5>
+                    <p>This app is intended as a helpful tool for Muslims but should not replace religious knowledge or guidance from qualified scholars. Users are responsible for ensuring their prayers and religious practices comply with their understanding of Islamic requirements.</p>
                     
-                    <h6>Technical Limitations</h6>
-                    <p>The application's functionality depends on your device's capabilities and internet connectivity. We are not responsible for any missed prayers due to technical issues with the application.</p>
+                    <h5>4. Technical Limitations</h5>
+                    <p>The accuracy of location-based services depends on your device's capabilities and connectivity. Results may vary based on GPS accuracy, network availability, and other technical factors beyond our control.</p>
+                    
+                    <h5>5. No Warranty</h5>
+                    <p>The Islamic Prayer Times app is provided "as is" without any warranties, expressed or implied. We make no guarantees regarding the availability, accuracy, or reliability of the services.</p>
+                    
+                    <h5>6. Limitation of Liability</h5>
+                    <p>In no event shall the creators of this app be liable for any missed prayers, religious obligations, or any direct, indirect, incidental, special, or consequential damages arising from the use of or inability to use the app.</p>
+                    
+                    <p class="mt-4"><strong>Last Updated:</strong> January 1, 2025</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
@@ -1216,21 +1138,47 @@
         </div>
     </div>
 
-    <!-- Contact Modal -->
-    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <!-- Cookie Policy Modal -->
+    <div class="modal fade legal-modal" id="cookiesModal" tabindex="-1" aria-labelledby="cookiesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="contactModalLabel">Contact Us</h5>
+                    <h5 class="modal-title" id="cookiesModalLabel"><i class="fas fa-cookie-bite me-2"></i>Cookie Policy</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>If you have any questions about these terms, please contact us:</p>
-                    <ul class="list-unstyled">
-                        <li><i class="fas fa-envelope me-2"></i> Email: support@islamicprayertimes.app</li>
-                        <li><i class="fas fa-bug me-2"></i> Report Issues: github.com/username/issues</li>
+                    <h5>1. What Are Cookies</h5>
+                    <p>Cookies are small text files that are stored on your device when you visit websites or use web applications. They are widely used to make websites work efficiently and provide information to the owners of the site.</p>
+                    
+                    <h5>2. How We Use Cookies</h5>
+                    <p>Our Islamic Prayer Times app uses cookies for the following purposes:</p>
+                    <ul>
+                        <li><strong>Essential Cookies:</strong> These are necessary for the app to function properly. They enable core functionality such as location services and prayer time calculations.</li>
+                        <li><strong>Preference Cookies:</strong> These remember your choices such as time format preferences (12-hour or 24-hour format).</li>
+                        <li><strong>Analytical Cookies:</strong> These help us understand how users interact with our app, allowing us to improve its functionality and user experience.</li>
                     </ul>
-                    <p>We appreciate your feedback and suggestions for improving our application.</p>
+                    
+                    <h5>3. Third-Party Cookies</h5>
+                    <p>We may use services from third parties that place cookies on your device:</p>
+                    <ul>
+                        <li><strong>Mapping Services:</strong> Our mosque finder feature uses OpenStreetMap which may place cookies for functionality.</li>
+                        <li><strong>Analytics Services:</strong> We use analytics services to understand how our app is being used and to make improvements.</li>
+                    </ul>
+                    
+                    <h5>4. Managing Cookies</h5>
+                    <p>You can control and manage cookies in various ways:</p>
+                    <ul>
+                        <li>Most browsers allow you to refuse cookies or delete them. You can usually find these settings in your browser's "options" or "preferences" menu.</li>
+                        <li>Please note that disabling cookies may affect the functionality of our app and many other websites that you visit.</li>
+                    </ul>
+                    
+                    <h5>5. Consent</h5>
+                    <p>By using our app, you consent to the use of cookies in accordance with this Cookie Policy. If you do not agree to our use of cookies, you should adjust your browser settings appropriately or discontinue use of our app.</p>
+                    
+                    <h5>6. Changes to This Policy</h5>
+                    <p>We may update our Cookie Policy from time to time. We will notify you of any changes by posting the new Cookie Policy on this page.</p>
+                    
+                    <p class="mt-4"><strong>Last Updated:</strong> January 1, 2025</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
@@ -1255,12 +1203,6 @@
                 this.mosqueMarkers = [];
                 this.prayerTimes = null;
                 this.is24HourFormat = true;
-                this.notificationSettings = {
-                    enabled: false,
-                    timeBefore: 10,
-                    prayers: ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha']
-                };
-                this.searchRadius = 5; // Default search radius in km
                 
                 this.init();
             }
@@ -1268,24 +1210,7 @@
             init() {
                 this.setupEventListeners();
                 this.startClock();
-                this.loadSettings();
                 this.detectLocation();
-                
-                // Handle initial section based on URL hash
-                this.handleInitialSection();
-            }
-
-            handleInitialSection() {
-                // Check if there's a hash in the URL
-                const hash = window.location.hash.substring(1);
-                const validSections = ['landing', 'prayer-times', 'mosque-finder', 'location-info', 'settings', 'about'];
-                
-                if (hash && validSections.includes(hash)) {
-                    this.showSection(hash);
-                } else {
-                    // Default to landing page
-                    this.showSection('landing');
-                }
             }
 
             setupEventListeners() {
@@ -1328,50 +1253,13 @@
                     });
                 }
 
-                // Notification settings
-                const notificationsEnabled = document.getElementById('notifications-enabled');
-                if (notificationsEnabled) {
-                    notificationsEnabled.checked = this.notificationSettings.enabled;
-                    this.toggleNotificationSettings();
-                    
-                    notificationsEnabled.addEventListener('change', (e) => {
-                        this.notificationSettings.enabled = e.target.checked;
-                        this.toggleNotificationSettings();
-                    });
-                }
-
-                // Save notification settings
-                const saveNotificationSettings = document.getElementById('save-notification-settings');
-                if (saveNotificationSettings) {
-                    saveNotificationSettings.addEventListener('click', () => {
-                        this.saveNotificationSettings();
-                    });
-                }
-
-                // Manual location form
-                const manualLocationForm = document.getElementById('manual-location-form');
-                if (manualLocationForm) {
-                    manualLocationForm.addEventListener('submit', (e) => {
-                        e.preventDefault();
-                        this.setManualLocation();
-                    });
-                }
-
-                // Search radius slider
-                const searchRadius = document.getElementById('search-radius');
-                if (searchRadius) {
-                    searchRadius.addEventListener('input', (e) => {
-                        this.searchRadius = parseInt(e.target.value);
-                        document.getElementById('radius-value').textContent = this.searchRadius;
-                    });
-                }
-
-                // Refresh mosques button
-                const refreshMosques = document.getElementById('refresh-mosques');
-                if (refreshMosques) {
-                    refreshMosques.addEventListener('click', () => {
-                        this.loadMosques();
-                    });
+                // Handle initial hash
+                if (window.location.hash) {
+                    const sectionId = window.location.hash.substring(1);
+                    this.showSection(sectionId);
+                } else {
+                    // Default to landing page
+                    this.showSection('landing');
                 }
             }
 
@@ -1398,9 +1286,6 @@
 
                 // Update URL hash
                 window.location.hash = sectionId;
-                
-                // Scroll to top
-                window.scrollTo(0, 0);
             }
 
             updateActiveNav(activeLink) {
@@ -1415,87 +1300,6 @@
                 if (label) {
                     label.textContent = this.is24HourFormat ? '24-hour format' : '12-hour format';
                 }
-            }
-
-            toggleNotificationSettings() {
-                const notificationSettings = document.getElementById('notification-settings');
-                if (notificationSettings) {
-                    if (this.notificationSettings.enabled) {
-                        notificationSettings.classList.remove('d-none');
-                    } else {
-                        notificationSettings.classList.add('d-none');
-                    }
-                }
-            }
-
-            saveNotificationSettings() {
-                // Get notification time
-                const notificationTime = document.getElementById('notification-time');
-                if (notificationTime) {
-                    this.notificationSettings.timeBefore = parseInt(notificationTime.value);
-                }
-
-                // Get selected prayers
-                this.notificationSettings.prayers = [];
-                document.querySelectorAll('.prayer-notification:checked').forEach(checkbox => {
-                    this.notificationSettings.prayers.push(checkbox.value);
-                });
-
-                // Save to localStorage
-                localStorage.setItem('notificationSettings', JSON.stringify(this.notificationSettings));
-
-                // Show success message
-                alert('Notification settings saved successfully!');
-            }
-
-            loadSettings() {
-                // Load notification settings
-                const savedNotificationSettings = localStorage.getItem('notificationSettings');
-                if (savedNotificationSettings) {
-                    this.notificationSettings = JSON.parse(savedNotificationSettings);
-                }
-
-                // Update UI with saved settings
-                if (this.notificationSettings.enabled) {
-                    const notificationsEnabled = document.getElementById('notifications-enabled');
-                    if (notificationsEnabled) {
-                        notificationsEnabled.checked = true;
-                    }
-                    
-                    const notificationTime = document.getElementById('notification-time');
-                    if (notificationTime) {
-                        notificationTime.value = this.notificationSettings.timeBefore;
-                    }
-                    
-                    // Check prayer checkboxes
-                    this.notificationSettings.prayers.forEach(prayer => {
-                        const checkbox = document.getElementById(`notify-${prayer.toLowerCase()}`);
-                        if (checkbox) {
-                            checkbox.checked = true;
-                        }
-                    });
-                    
-                    this.toggleNotificationSettings();
-                }
-            }
-
-            setManualLocation() {
-                const lat = parseFloat(document.getElementById('manual-latitude').value);
-                const lng = parseFloat(document.getElementById('manual-longitude').value);
-                
-                if (isNaN(lat) || isNaN(lng)) {
-                    alert('Please enter valid latitude and longitude values.');
-                    return;
-                }
-                
-                if (lat < -90 || lat > 90 || lng < -180 || lng > 180) {
-                    alert('Please enter valid latitude (-90 to 90) and longitude (-180 to 180) values.');
-                    return;
-                }
-                
-                this.userLocation = { lat, lng };
-                this.getReverseGeocoding();
-                alert('Location updated successfully!');
             }
 
             startClock() {
@@ -1777,7 +1581,7 @@
                     this.initializeMap();
 
                     // Using Overpass API to find mosques
-                    const radius = this.searchRadius * 1000; // Convert km to meters
+                    const radius = 5000; // 5km
                     const query = `
                         [out:json][timeout:25];
                         (
