@@ -504,7 +504,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-islamic-green fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#home">
+            <a class="navbar-brand" href="#landing">
                 <i class="fas fa-mosque me-2"></i>
                 Islamic Prayer Times
             </a>
@@ -514,7 +514,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#landing" data-section="landing">Home</a>
+                        <a class="nav-link" href="#landing" data-section="landing">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#prayer-times" data-section="prayer-times">Prayer Times</a>
@@ -535,6 +535,7 @@
             </div>
         </div>
     </nav>
+
     <!-- Main Content -->
     <main class="main-content">
         <!-- Landing Page Section -->
@@ -549,6 +550,7 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- Next Prayer Countdown -->
                 <div id="next-prayer-section" class="next-prayer-countdown d-none">
                     <h4><i class="fas fa-clock me-2"></i>Next Prayer</h4>
@@ -556,11 +558,13 @@
                     <div class="countdown-time" id="countdown-timer">02:34:15</div>
                     <p class="mb-0">Time remaining</p>
                 </div>
+
                 <!-- Islamic Date -->
                 <div class="islamic-date d-none" id="islamic-date">
                     <h6 class="mb-1">Today's Islamic Date</h6>
                     <div id="hijri-date">Loading...</div>
                 </div>
+
                 <!-- Tools Grid -->
                 <div class="row g-4">
                     <div class="col-md-6 col-lg-3">
@@ -617,6 +621,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Prayer Times Section -->
         <section id="prayer-times" class="section">
             <div class="container">
@@ -624,6 +629,7 @@
                     <h2><i class="fas fa-pray me-3"></i>Prayer Times</h2>
                     <p class="lead">Accurate Namaz timings with advanced features</p>
                 </div>
+
                 <!-- Location Loading -->
                 <div id="prayer-loading" class="text-center mb-4">
                     <div class="spinner-border" role="status">
@@ -631,11 +637,13 @@
                     </div>
                     <p class="mt-2">Loading prayer times for your location...</p>
                 </div>
+
                 <!-- Location Error -->
                 <div id="prayer-error" class="alert alert-warning text-center d-none" role="alert">
                     <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Unable to get your location</h5>
                     <p class="mb-0">Please allow location access to view accurate prayer times for your area.</p>
                 </div>
+
                 <!-- Prayer Calculation Method -->
                 <div id="calculation-method" class="card mb-4 d-none">
                     <div class="card-header">
@@ -651,6 +659,7 @@
                         </select>
                     </div>
                 </div>
+
                 <!-- Location Card -->
                 <div id="prayer-location-card" class="location-card mb-4 d-none">
                     <div class="card-header">
@@ -666,6 +675,7 @@
                         </small>
                     </div>
                 </div>
+
                 <!-- Time Format Toggle -->
                 <div id="prayer-format-toggle" class="text-center mb-4 d-none">
                     <div class="form-check form-switch d-inline-block">
@@ -675,6 +685,7 @@
                         </label>
                     </div>
                 </div>
+
                 <!-- Prayer Times Grid -->
                 <div id="prayer-times-grid" class="row g-4 d-none">
                     <div class="col-lg-4 col-md-6">
@@ -698,7 +709,7 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="prayer-card" id="asr-card">
                             <div class="prayer-icon">
-                                <i class="fas fa-sun"></i>
+                                <i class="fas fa-cloud-sun"></i>
                             </div>
                             <div class="prayer-name">Asr</div>
                             <div class="prayer-time" id="asr-time">--:--</div>
@@ -716,96 +727,77 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="prayer-card" id="isha-card">
                             <div class="prayer-icon">
-                                <i class="fas fa-moon"></i>
+                                <i class="fas fa-star"></i>
                             </div>
                             <div class="prayer-name">Isha</div>
                             <div class="prayer-time" id="isha-time">--:--</div>
                         </div>
                     </div>
-                </div>
-                <!-- Prayer Notifications -->
-                <div id="prayer-notifications" class="card mt-4 d-none">
-                    <div class="card-header">
-                        <i class="fas fa-bell me-2"></i>Prayer Notifications
-                    </div>
-                    <div class="card-body">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="notificationSwitch">
-                            <label class="form-check-label" for="notificationSwitch">
-                                Enable prayer time notifications
-                            </label>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="prayer-card" id="sunrise-card">
+                            <div class="prayer-icon">
+                                <i class="fas fa-sun"></i>
+                            </div>
+                            <div class="prayer-name">Sunrise</div>
+                            <div class="prayer-time" id="sunrise-time">--:--</div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
         <!-- Mosque Finder Section -->
         <section id="mosque-finder" class="section">
             <div class="container">
                 <div class="section-header text-center">
-                    <h2><i class="fas fa-mosque me-3"></i>Find Nearby Mosques</h2>
-                    <p class="lead">Discover mosques sorted by distance with advanced filtering</p>
+                    <h2><i class="fas fa-mosque me-3"></i>Mosque Finder</h2>
+                    <p class="lead">Find nearby mosques with directions and details</p>
                 </div>
-                <!-- Filter Controls -->
-                <div class="filter-controls">
-                    <div class="row g-3">
-                        <div class="col-md-4">
-                            <label class="form-label">Search Radius</label>
-                            <select class="form-select" id="radiusSelect">
-                                <option value="1000">1 km</option>
-                                <option value="2000">2 km</option>
-                                <option value="5000" selected>5 km</option>
-                                <option value="10000">10 km</option>
-                                <option value="20000">20 km</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label">Sort By</label>
-                            <select class="form-select" id="sortSelect">
-                                <option value="distance">Distance (Nearest First)</option>
-                                <option value="name">Name (A-Z)</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label">Show Only</label>
-                            <select class="form-select" id="filterSelect">
-                                <option value="all">All Mosques</option>
-                                <option value="named">Named Mosques Only</option>
-                                <option value="nearby">Within 2km</option>
-                            </select>
+
+                <!-- Map and Mosque List -->
+                <div class="row">
+                    <div class="col-lg-8 mb-4">
+                        <div class="map-container">
+                            <div id="mosque-map"></div>
                         </div>
                     </div>
-                </div>
-                <!-- Map Container -->
-                <div class="map-container mb-4">
-                    <div id="mosque-map" class="position-relative">
-                        <div class="position-absolute top-50 start-50 translate-middle text-center" style="z-index: 1000;">
-                            <div class="spinner-border text-islamic-green" role="status">
-                                <span class="visually-hidden">Loading map...</span>
+                    <div class="col-lg-4">
+                        <!-- Location Loading -->
+                        <div id="mosque-loading" class="text-center mb-4">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Finding mosques...</span>
                             </div>
-                            <p class="mt-2">Loading map...</p>
+                            <p class="mt-2">Finding nearby mosques...</p>
+                        </div>
+
+                        <!-- Location Error -->
+                        <div id="mosque-error" class="alert alert-warning d-none" role="alert">
+                            <h6 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Location required</h6>
+                            <p class="mb-0">Please allow location access to find nearby mosques.</p>
+                        </div>
+
+                        <!-- Mosque List -->
+                        <div id="mosque-list" class="d-none">
+                            <h5 class="mb-3">Nearby Mosques</h5>
+                            <div id="mosques-container">
+                                <!-- Mosque items will be populated here -->
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Mosque Count -->
-                <div id="mosque-count" class="text-center mb-3 d-none">
-                    <span class="badge bg-primary fs-6">Found <span id="mosque-total">0</span> mosques nearby</span>
-                </div>
-                <!-- Mosque List -->
-                <div id="mosque-list" class="row g-3">
-                    <!-- Mosque items will be populated here -->
                 </div>
             </div>
         </section>
+
         <!-- Qibla Finder Section -->
         <section id="qibla" class="section">
             <div class="container">
                 <div class="section-header text-center">
                     <h2><i class="fas fa-compass me-3"></i>Qibla Finder</h2>
-                    <p class="lead">Find the accurate direction to Mecca (Qibla) from your location</p>
+                    <p class="lead">Find the accurate direction to Mecca</p>
                 </div>
+
                 <div class="row justify-content-center">
-                    <div class="col-md-6">
+                    <div class="col-lg-6">
                         <div class="qibla-compass">
                             <h4 class="mb-4">Qibla Direction</h4>
                             <div class="compass-circle">
@@ -813,45 +805,45 @@
                                     <i class="fas fa-location-arrow"></i>
                                 </div>
                             </div>
-                            <div id="qibla-info" class="mt-4">
-                                <p id="qibla-degree" class="h5 text-islamic-gold">Calculating...</p>
-                                <p id="qibla-distance" class="text-muted">Distance to Mecca: Calculating...</p>
+                            <div id="qibla-status" class="mt-3">
+                                <p class="mb-1">Calculating direction...</p>
+                                <small class="text-muted">Allow location access for accurate direction</small>
                             </div>
-                            <button class="btn btn-gold mt-3" onclick="islamicApp.calibrateCompass()">
-                                <i class="fas fa-sync me-2"></i>Recalibrate
-                            </button>
+                            <div id="qibla-info" class="mt-3 d-none">
+                                <p class="mb-1">Direction: <strong id="qibla-degree">--°</strong></p>
+                                <small class="text-muted">Point your device towards this direction</small>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
         <!-- Dhikr Counter Section -->
         <section id="dhikr" class="section">
             <div class="container">
                 <div class="section-header text-center">
-                    <h2><i class="fas fa-hands me-3"></i>Digital Tasbih</h2>
-                    <p class="lead">Keep track of your dhikr with this digital counter</p>
+                    <h2><i class="fas fa-hands me-3"></i>Dhikr Counter</h2>
+                    <p class="lead">Digital Tasbih for your daily remembrance of Allah</p>
                 </div>
+
                 <div class="row justify-content-center">
-                    <div class="col-md-6">
+                    <div class="col-lg-6">
                         <div class="dhikr-counter">
-                            <h4 class="mb-4">Dhikr Counter</h4>
+                            <h4 class="mb-4">Tasbih Counter</h4>
                             <div class="dhikr-count" id="dhikr-count">0</div>
                             <button class="dhikr-button" id="dhikr-btn">
                                 <i class="fas fa-plus"></i>
                             </button>
-                            <div class="mt-3">
-                                <button class="btn btn-primary me-2" onclick="islamicApp.resetDhikr()">
+                            <div class="mt-4">
+                                <button class="btn btn-gold me-2" id="reset-dhikr">
                                     <i class="fas fa-redo me-2"></i>Reset
                                 </button>
-                                <button class="btn btn-gold" onclick="islamicApp.setDhikrGoal()">
-                                    <i class="fas fa-target me-2"></i>Set Goal
-                                </button>
-                            </div>
-                            <div id="dhikr-goal" class="mt-3 d-none">
-                                <p class="text-muted">Goal: <span id="goal-target">100</span></p>
-                                <div class="progress">
-                                    <div class="progress-bar" id="dhikr-progress" style="width: 0%"></div>
+                                <div class="mt-3">
+                                    <p class="mb-1">Common Dhikr:</p>
+                                    <small class="text-muted">
+                                        SubhanAllah (33) • Alhamdulillah (33) • Allahu Akbar (34)
+                                    </small>
                                 </div>
                             </div>
                         </div>
@@ -859,80 +851,45 @@
                 </div>
             </div>
         </section>
+
         <!-- About Section -->
         <section id="about" class="section">
             <div class="container">
                 <div class="section-header text-center">
-                    <h2><i class="fas fa-info-circle me-3"></i>About This App</h2>
-                    <p class="lead">Your comprehensive Islamic companion with advanced features</p>
+                    <h2><i class="fas fa-info-circle me-3"></i>About</h2>
+                    <p class="lead">Learn more about this Islamic companion app</p>
                 </div>
-                <div class="row g-4">
+
+                <div class="row justify-content-center">
                     <div class="col-lg-8">
                         <div class="card">
-                            <div class="card-header">
-                                <i class="fas fa-heart me-2"></i>Enhanced Features & Mission
-                            </div>
                             <div class="card-body">
-                                <p>This advanced Islamic Prayer Times app provides comprehensive tools for Muslims worldwide, featuring accurate prayer times, intelligent mosque finder, Qibla direction, and spiritual counters.</p>
+                                <h4 class="card-title mb-4">Islamic Prayer Times & Tools</h4>
+                                <p class="card-text">
+                                    This comprehensive Islamic companion application provides Muslims with essential tools for their daily spiritual practice. Our mission is to help the Muslim community stay connected with their faith through accurate prayer times, mosque locations, and spiritual guidance.
+                                </p>
                                 
-                                <h5 class="mt-4">Advanced Features:</h5>
+                                <h5 class="mt-4 mb-3">Features:</h5>
                                 <ul class="list-unstyled">
-                                    <li><i class="fas fa-check-circle text-success me-2"></i>Real-time prayer countdown with notifications</li>
-                                    <li><i class="fas fa-check-circle text-success me-2"></i>Intelligent mosque finder sorted by distance</li>
-                                    <li><i class="fas fa-check-circle text-success me-2"></i>Accurate Qibla direction with compass</li>
-                                    <li><i class="fas fa-check-circle text-success me-2"></i>Digital Tasbih counter with goals</li>
-                                    <li><i class="fas fa-check-circle text-success me-2"></i>Multiple prayer calculation methods</li>
-                                    <li><i class="fas fa-check-circle text-success me-2"></i>Islamic calendar integration</li>
-                                    <li><i class="fas fa-check-circle text-success me-2"></i>Advanced filtering and sorting options</li>
-                                    <li><i class="fas fa-check-circle text-success me-2"></i>Responsive design for all devices</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Accurate prayer times based on your location</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Nearby mosque finder with directions</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Qibla direction compass</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Digital Tasbih counter</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Multiple calculation methods</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Responsive design for all devices</li>
                                 </ul>
-                                <h5 class="mt-4">Prayer Calculation Methods:</h5>
-                                <p>Choose from 5 internationally recognized calculation methods including ISNA, Muslim World League, and Umm Al-Qura University standards for maximum accuracy in your region.</p>
-                                <h5 class="mt-4">Data Sources:</h5>
-                                <ul class="list-unstyled">
-                                    <li><i class="fas fa-external-link-alt text-primary me-2"></i>Prayer times: Aladhan.com API</li>
-                                    <li><i class="fas fa-external-link-alt text-primary me-2"></i>Location data: BigDataCloud API</li>
-                                    <li><i class="fas fa-external-link-alt text-primary me-2"></i>Mosque locations: OpenStreetMap Overpass API</li>
-                                    <li><i class="fas fa-external-link-alt text-primary me-2"></i>Qibla calculations: Astronomical formulas</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <i class="fas fa-chart-bar me-2"></i>App Statistics
-                            </div>
-                            <div class="card-body text-center">
-                                <div class="row">
-                                    <div class="col-6 mb-3">
-                                        <div class="h4 text-islamic-gold">5</div>
-                                        <small class="text-muted">Daily Prayers</small>
-                                    </div>
-                                    <div class="col-6 mb-3">
-                                        <div class="h4 text-islamic-gold">5</div>
-                                        <small class="text-muted">Calculation Methods</small>
-                                    </div>
-                                    <div class="col-6 mb-3">
-                                        <div class="h4 text-islamic-gold">360°</div>
-                                        <small class="text-muted">Qibla Accuracy</small>
-                                    </div>
-                                    <div class="col-6 mb-3">
-                                        <div class="h4 text-islamic-gold">∞</div>
-                                        <small class="text-muted">Dhikr Count</small>
-                                    </div>
+
+                                <h5 class="mt-4 mb-3">Prayer Time Calculation Methods:</h5>
+                                <p class="card-text">
+                                    We support multiple internationally recognized calculation methods including ISNA, Muslim World League, and others to ensure accuracy across different regions and scholarly opinions.
+                                </p>
+
+                                <div class="text-center mt-4">
+                                    <p class="text-muted">
+                                        <em>"And establish prayer and give zakah and bow with those who bow."</em><br>
+                                        <small>- Quran 2:43</small>
+                                    </p>
                                 </div>
-                            </div>
-                        </div>
-                        <!-- Islamic Quote -->
-                        <div class="card mt-4">
-                            <div class="card-header">
-                                <i class="fas fa-quote-right me-2"></i>Islamic Wisdom
-                            </div>
-                            <div class="card-body text-center">
-                                <p class="arabic-font h6 text-islamic-green">"وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ"</p>
-                                <small class="text-muted">"And establish prayer and give zakah" - Quran 2:110</small>
                             </div>
                         </div>
                     </div>
@@ -940,744 +897,658 @@
             </div>
         </section>
     </main>
+
     <!-- Footer -->
     <footer class="bg-islamic-green text-white py-4">
         <div class="container">
-            <div class="row align-items-center">
+            <div class="row">
                 <div class="col-md-6">
-                    <p class="mb-0 arabic-font">"وَاذْكُرُوا اللَّهَ كَثِيرًا لَعَلَّكُمْ تُفْلِحُونَ"</p>
-                    <small class="text-light">"And remember Allah often that you may succeed." - Quran 62:10</small>
+                    <h5><i class="fas fa-mosque me-2"></i>Islamic Prayer Times</h5>
+                    <p class="mb-0">Your complete Islamic companion for prayer, mosques, and spiritual guidance.</p>
                 </div>
-                <div class="col-md-6 text-md-end footer-links">
-                    <small>&copy; 2025 Enhanced Islamic Prayer Times App</small>
+                <div class="col-md-6 text-md-end">
+                    <div class="footer-links">
+                        <a href="#about">About</a>
+                        <a href="#prayer-times">Prayer Times</a>
+                        <a href="#mosque-finder">Mosques</a>
+                        <a href="#qibla">Qibla</a>
+                    </div>
+                    <p class="mt-2 mb-0">
+                        <small>&copy; 2024 Islamic Prayer Times. Made with ❤️ for the Muslim community.</small>
+                    </p>
                 </div>
             </div>
         </div>
     </footer>
+
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <!-- Leaflet JS for Maps -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
+
     <script>
-        // Enhanced Islamic Prayer Times App - JavaScript
-        class IslamicApp {
-            constructor() {
-                this.userLocation = null;
-                this.map = null;
-                this.mosqueMarkers = [];
-                this.mosqueData = [];
-                this.prayerTimes = null;
-                this.is24HourFormat = true;
-                this.calculationMethod = 2;
-                this.dhikrCount = parseInt(localStorage.getItem('dhikrCount')) || 0;
-                this.dhikrGoal = parseInt(localStorage.getItem('dhikrGoal')) || 100;
-                this.qiblaDirection = 0;
-                this.nextPrayerTimer = null;
+        // Global variables
+        let userLocation = { lat: null, lng: null };
+        let currentSection = 'landing';
+        let prayerTimes = {};
+        let nextPrayerInterval;
+        let dhikrCount = 0;
+        let mosqueMap;
+        let is24HourFormat = true;
+        let currentCalculationMethod = 2;
+        let prayerTimesInitialized = false;
+        let mosqueFinderInitialized = false;
+        let qiblaInitialized = false;
+
+        // Initialize app when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        // Initialize the application
+        function initializeApp() {
+            // Handle initial page load and routing
+            handleRouting();
+            
+            // Set up navigation event listeners
+            setupNavigation();
+            
+            // Set up other event listeners
+            setupEventListeners();
+        }
+
+        // Fixed routing function to handle page refresh correctly
+        function handleRouting() {
+            const hash = window.location.hash.substring(1) || 'landing';
+            
+            // Update current section
+            currentSection = hash;
+            
+            // Show the correct section
+            showSection(hash);
+            
+            // Update navbar highlighting
+            updateNavbarHighlight(hash);
+        }
+
+        // Setup navigation event listeners
+        function setupNavigation() {
+            // Handle hash changes (back/forward buttons)
+            window.addEventListener('hashchange', handleRouting);
+            
+            // Handle navigation clicks
+            document.querySelectorAll('[data-section]').forEach(element => {
+                element.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.getAttribute('data-section');
+                    navigateToSection(section);
+                });
+            });
+        }
+
+        // Navigate to a specific section
+        function navigateToSection(sectionId) {
+            // Update URL hash
+            window.location.hash = sectionId;
+            
+            // Don't need to call showSection here as hashchange event will handle it
+        }
+
+        // Show specific section with proper initialization
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show target section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                currentSection = sectionId;
                 
-                this.init();
+                // Initialize section-specific functionality
+                initializeSectionFeatures(sectionId);
             }
-            init() {
-                this.setupEventListeners();
-                this.detectLocation();
-                this.initDhikrCounter();
-                this.requestNotificationPermission();
-                this.loadIslamicDate();
-            }
-            setupEventListeners() {
-                // Navigation
-                document.querySelectorAll('[data-section]').forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const sectionId = e.target.getAttribute('data-section') || e.target.closest('[data-section]').getAttribute('data-section');
-                        this.showSection(sectionId);
-                        
-                        if (e.target.classList.contains('nav-link')) {
-                            this.updateActiveNav(e.target);
-                        } else {
-                            const navLink = document.querySelector(`[data-section="${sectionId}"].nav-link`);
-                            if (navLink) {
-                                this.updateActiveNav(navLink);
-                            }
-                        }
-                    });
-                });
-                // Time format toggle
-                const timeFormatSwitch = document.getElementById('timeFormatSwitch');
-                if (timeFormatSwitch) {
-                    const savedFormat = localStorage.getItem('timeFormat');
-                    this.is24HourFormat = savedFormat ? savedFormat === '24' : true;
-                    timeFormatSwitch.checked = this.is24HourFormat;
-                    this.updateTimeFormatLabel();
-                    timeFormatSwitch.addEventListener('change', (e) => {
-                        this.is24HourFormat = e.target.checked;
-                        localStorage.setItem('timeFormat', this.is24HourFormat ? '24' : '12');
-                        this.updateTimeFormatLabel();
-                        if (this.prayerTimes) {
-                            this.displayPrayerTimes();
-                        }
-                    });
-                }
-                // Calculation method selector
-                const methodSelect = document.getElementById('methodSelect');
-                if (methodSelect) {
-                    methodSelect.value = this.calculationMethod;
-                    methodSelect.addEventListener('change', (e) => {
-                        this.calculationMethod = parseInt(e.target.value);
-                        if (this.userLocation) {
-                            this.loadPrayerTimes();
-                        }
-                    });
-                }
-                // Filter controls for mosques
-                document.getElementById('radiusSelect')?.addEventListener('change', () => this.filterMosques());
-                document.getElementById('sortSelect')?.addEventListener('change', () => this.sortAndDisplayMosques());
-                document.getElementById('filterSelect')?.addEventListener('change', () => this.filterMosques());
-                // Notification toggle
-                const notificationSwitch = document.getElementById('notificationSwitch');
-                if (notificationSwitch) {
-                    notificationSwitch.checked = localStorage.getItem('notificationsEnabled') === 'true';
-                    notificationSwitch.addEventListener('change', (e) => {
-                        localStorage.setItem('notificationsEnabled', e.target.checked);
-                    });
-                }
-                // Handle initial hash
-                if (window.location.hash) {
-                    const sectionId = window.location.hash.substring(1);
-                    this.showSection(sectionId);
-                } else {
-                    this.showSection('landing');
-                }
-            }
-            showSection(sectionId) {
-                document.querySelectorAll('.section').forEach(section => {
-                    section.classList.remove('active');
-                });
-                const targetSection = document.getElementById(sectionId);
-                if (targetSection) {
-                    targetSection.classList.add('active');
-                    
-                    if (sectionId === 'prayer-times' && this.userLocation && !this.prayerTimes) {
-                        this.loadPrayerTimes();
-                    } else if (sectionId === 'mosque-finder' && this.userLocation) {
-                        this.loadMosques();
-                    } else if (sectionId === 'qibla' && this.userLocation) {
-                        this.calculateQibla();
-                    }
-                }
-                window.location.hash = sectionId;
-            }
-            updateActiveNav(activeLink) {
-                document.querySelectorAll('.nav-link').forEach(link => {
-                    link.classList.remove('active');
-                });
+        }
+
+        // Fixed navbar highlighting function
+        function updateNavbarHighlight(activeSection) {
+            // Remove active class from all nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Add active class to current section's nav link
+            const activeLink = document.querySelector(`[data-section="${activeSection}"]`);
+            if (activeLink) {
                 activeLink.classList.add('active');
             }
-            updateTimeFormatLabel() {
-                const label = document.getElementById('timeFormatLabel');
-                if (label) {
-                    label.textContent = this.is24HourFormat ? '24-hour format' : '12-hour format';
-                }
+        }
+
+        // Initialize section-specific features to prevent infinite loading
+        function initializeSectionFeatures(sectionId) {
+            switch(sectionId) {
+                case 'landing':
+                    // Initialize landing page features if needed
+                    break;
+                    
+                case 'prayer-times':
+                    if (!prayerTimesInitialized) {
+                        initializePrayerTimes();
+                        prayerTimesInitialized = true;
+                    }
+                    break;
+                    
+                case 'mosque-finder':
+                    if (!mosqueFinderInitialized) {
+                        initializeMosqueFinder();
+                        mosqueFinderInitialized = true;
+                    }
+                    break;
+                    
+                case 'qibla':
+                    if (!qiblaInitialized) {
+                        initializeQiblaFinder();
+                        qiblaInitialized = true;
+                    }
+                    break;
+                    
+                case 'dhikr':
+                    // Dhikr counter doesn't need special initialization
+                    break;
+                    
+                case 'about':
+                    // About page doesn't need special initialization
+                    break;
             }
-            detectLocation() {
+        }
+
+        // Setup other event listeners
+        function setupEventListeners() {
+            // Dhikr counter
+            const dhikrBtn = document.getElementById('dhikr-btn');
+            const resetDhikrBtn = document.getElementById('reset-dhikr');
+            const dhikrCountDisplay = document.getElementById('dhikr-count');
+
+            if (dhikrBtn) {
+                dhikrBtn.addEventListener('click', function() {
+                    dhikrCount++;
+                    dhikrCountDisplay.textContent = dhikrCount;
+                    
+                    // Add click effect
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            }
+
+            if (resetDhikrBtn) {
+                resetDhikrBtn.addEventListener('click', function() {
+                    dhikrCount = 0;
+                    dhikrCountDisplay.textContent = dhikrCount;
+                });
+            }
+
+            // Time format toggle
+            const timeFormatSwitch = document.getElementById('timeFormatSwitch');
+            if (timeFormatSwitch) {
+                timeFormatSwitch.addEventListener('change', function() {
+                    is24HourFormat = this.checked;
+                    updateTimeFormatLabel();
+                    if (Object.keys(prayerTimes).length > 0) {
+                        displayPrayerTimes(prayerTimes);
+                    }
+                });
+            }
+
+            // Calculation method change
+            const methodSelect = document.getElementById('methodSelect');
+            if (methodSelect) {
+                methodSelect.addEventListener('change', function() {
+                    currentCalculationMethod = parseInt(this.value);
+                    if (userLocation.lat && userLocation.lng) {
+                        fetchPrayerTimes(userLocation.lat, userLocation.lng);
+                    }
+                });
+            }
+        }
+
+        // Initialize Prayer Times
+        function initializePrayerTimes() {
+            getUserLocation()
+                .then(location => {
+                    userLocation = location;
+                    return fetchPrayerTimes(location.lat, location.lng);
+                })
+                .then(times => {
+                    prayerTimes = times;
+                    displayPrayerTimes(times);
+                    hideLoadingShowContent('prayer');
+                    startNextPrayerCountdown();
+                })
+                .catch(error => {
+                    console.error('Error getting prayer times:', error);
+                    showError('prayer', 'Unable to load prayer times. Please check your internet connection and location settings.');
+                });
+        }
+
+        // Initialize Mosque Finder
+        function initializeMosqueFinder() {
+            // Show the map container first
+            const mapContainer = document.getElementById('mosque-map');
+            if (mapContainer) {
+                getUserLocation()
+                    .then(location => {
+                        userLocation = location;
+                        initializeMosqueMap(location);
+                        return findNearbyMosques(location.lat, location.lng);
+                    })
+                    .then(mosques => {
+                        displayMosqueList(mosques);
+                        hideLoadingShowContent('mosque');
+                    })
+                    .catch(error => {
+                        console.error('Error finding mosques:', error);
+                        showError('mosque', 'Unable to find nearby mosques. Please check your location settings.');
+                    });
+            }
+        }
+
+        // Initialize Qibla Finder
+        function initializeQiblaFinder() {
+            getUserLocation()
+                .then(location => {
+                    calculateQiblaDirection(location.lat, location.lng);
+                })
+                .catch(error => {
+                    console.error('Error getting location for Qibla:', error);
+                    document.getElementById('qibla-status').innerHTML = 
+                        '<p class="text-warning">Please allow location access to find Qibla direction</p>';
+                });
+        }
+
+        // Get user location
+        function getUserLocation() {
+            return new Promise((resolve, reject) => {
                 if (!navigator.geolocation) {
-                    this.showLocationError('Geolocation is not supported by this browser.');
+                    reject(new Error('Geolocation is not supported'));
                     return;
                 }
+
                 navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        this.userLocation = {
+                    position => {
+                        resolve({
                             lat: position.coords.latitude,
                             lng: position.coords.longitude
-                        };
-                        this.getReverseGeocoding();
+                        });
                     },
-                    (error) => {
-                        let errorMessage = 'Unable to get your location.';
-                        
-                        switch (error.code) {
-                            case error.PERMISSION_DENIED:
-                                errorMessage = 'Location access denied. Please enable location services.';
-                                break;
-                            case error.POSITION_UNAVAILABLE:
-                                errorMessage = 'Location information is unavailable.';
-                                break;
-                            case error.TIMEOUT:
-                                errorMessage = 'Location request timed out.';
-                                break;
-                        }
-                        
-                        this.showLocationError(errorMessage);
+                    error => {
+                        reject(error);
                     },
                     {
                         enableHighAccuracy: true,
                         timeout: 10000,
-                        maximumAge: 60000
+                        maximumAge: 600000 // 10 minutes
                     }
                 );
-            }
-            async getReverseGeocoding() {
-                try {
-                    const response = await fetch(
-                        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${this.userLocation.lat}&longitude=${this.userLocation.lng}&localityLanguage=en`
-                    );
-                    const data = await response.json();
-                    
-                    this.userLocation.city = data.city || data.locality || 'Unknown';
-                    this.userLocation.country = data.countryName || 'Unknown';
-                    
-                    this.displayLocationInfo();
-                    this.calculateQibla();
-                } catch (error) {
-                    console.error('Error getting location details:', error);
-                    this.userLocation.city = 'Unknown';
-                    this.userLocation.country = 'Unknown';
-                    this.displayLocationInfo();
-                }
-            }
-            displayLocationInfo() {
-                // Update location info elements
-                this.updateElementText('prayer-city', this.userLocation.city);
-                this.updateElementText('prayer-country', this.userLocation.country);
-                this.updateElementText('prayer-coordinates', 
-                    `${this.userLocation.lat.toFixed(4)}, ${this.userLocation.lng.toFixed(4)}`);
-            }
-            updateElementText(elementId, text) {
-                const element = document.getElementById(elementId);
-                if (element) {
-                    element.textContent = text;
-                }
-            }
-            showLocationError(message) {
-                document.getElementById('prayer-loading')?.classList.add('d-none');
-                document.getElementById('prayer-error')?.classList.remove('d-none');
-                
-                const errorElement = document.getElementById('prayer-error');
-                if (errorElement) {
-                    errorElement.innerHTML = `
-                        <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Location Error</h5>
-                        <p class="mb-0">${message}</p>
-                    `;
-                }
-            }
-            async loadPrayerTimes() {
-                if (!this.userLocation) return;
-                try {
-                    const response = await fetch(
-                        `https://api.aladhan.com/v1/timings/date-string?latitude=${this.userLocation.lat}&longitude=${this.userLocation.lng}&method=${this.calculationMethod}`
-                    );
-                    const data = await response.json();
-                    
-                    if (data.code === 200) {
-                        this.prayerTimes = data.data.timings;
-                        this.displayPrayerTimes();
-                        this.startNextPrayerCountdown();
-                    } else {
-                        throw new Error('Failed to load prayer times');
-                    }
-                } catch (error) {
-                    console.error('Error loading prayer times:', error);
-                    this.showPrayerTimesError();
-                }
-            }
-            displayPrayerTimes() {
-                if (!this.prayerTimes) return;
-                // Hide loading, show content
-                document.getElementById('prayer-loading')?.classList.add('d-none');
-                document.getElementById('prayer-location-card')?.classList.remove('d-none');
-                document.getElementById('prayer-format-toggle')?.classList.remove('d-none');
-                document.getElementById('prayer-times-grid')?.classList.remove('d-none');
-                document.getElementById('calculation-method')?.classList.remove('d-none');
-                document.getElementById('prayer-notifications')?.classList.remove('d-none');
-                // Update prayer times
-                const prayers = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
-                prayers.forEach(prayer => {
-                    const timeElement = document.getElementById(`${prayer}-time`);
-                    if (timeElement && this.prayerTimes[prayer.charAt(0).toUpperCase() + prayer.slice(1)]) {
-                        const time = this.prayerTimes[prayer.charAt(0).toUpperCase() + prayer.slice(1)];
-                        timeElement.textContent = this.formatTime(time);
-                    }
-                });
-                this.highlightCurrentPrayer();
-            }
-            formatTime(timeString) {
-                const [hours, minutes] = timeString.split(':');
-                const date = new Date();
-                date.setHours(parseInt(hours), parseInt(minutes));
-                if (this.is24HourFormat) {
-                    return timeString;
-                } else {
-                    return date.toLocaleTimeString('en-US', {
-                        hour: 'numeric',
-                        minute: '2-digit',
-                        hour12: true
-                    });
-                }
-            }
-            highlightCurrentPrayer() {
-                if (!this.prayerTimes) return;
-                const now = new Date();
-                const currentTime = now.getHours() * 60 + now.getMinutes();
-                
-                const prayers = [
-                    { name: 'fajr', time: this.prayerTimes.Fajr },
-                    { name: 'dhuhr', time: this.prayerTimes.Dhuhr },
-                    { name: 'asr', time: this.prayerTimes.Asr },
-                    { name: 'maghrib', time: this.prayerTimes.Maghrib },
-                    { name: 'isha', time: this.prayerTimes.Isha }
-                ];
-                prayers.forEach(prayer => {
-                    const [hours, minutes] = prayer.time.split(':');
-                    const prayerTime = parseInt(hours) * 60 + parseInt(minutes);
-                    const card = document.getElementById(`${prayer.name}-card`);
-                    
-                    if (card) {
-                        card.classList.remove('current-prayer');
-                    }
-                });
-                // Find next prayer
-                let nextPrayer = null;
-                for (let i = 0; i < prayers.length; i++) {
-                    const [hours, minutes] = prayers[i].time.split(':');
-                    const prayerTime = parseInt(hours) * 60 + parseInt(minutes);
-                    
-                    if (prayerTime > currentTime) {
-                        nextPrayer = prayers[i];
-                        break;
-                    }
-                }
-                if (!nextPrayer) {
-                    nextPrayer = prayers[0]; // Next day's Fajr
-                }
-                const nextCard = document.getElementById(`${nextPrayer.name}-card`);
-                if (nextCard) {
-                    nextCard.classList.add('current-prayer');
-                }
-            }
-            startNextPrayerCountdown() {
-                if (this.nextPrayerTimer) {
-                    clearInterval(this.nextPrayerTimer);
-                }
-                this.nextPrayerTimer = setInterval(() => {
-                    this.updateNextPrayerCountdown();
-                }, 1000);
-                this.updateNextPrayerCountdown();
-            }
-            updateNextPrayerCountdown() {
-                if (!this.prayerTimes) return;
-                const now = new Date();
-                const prayers = [
-                    { name: 'Fajr', time: this.prayerTimes.Fajr },
-                    { name: 'Dhuhr', time: this.prayerTimes.Dhuhr },
-                    { name: 'Asr', time: this.prayerTimes.Asr },
-                    { name: 'Maghrib', time: this.prayerTimes.Maghrib },
-                    { name: 'Isha', time: this.prayerTimes.Isha }
-                ];
-                let nextPrayer = null;
-                let nextPrayerTime = null;
-                for (let prayer of prayers) {
-                    const [hours, minutes] = prayer.time.split(':');
-                    const prayerDateTime = new Date(now);
-                    prayerDateTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
-                    if (prayerDateTime > now) {
-                        nextPrayer = prayer.name;
-                        nextPrayerTime = prayerDateTime;
-                        break;
-                    }
-                }
-                if (!nextPrayer) {
-                    // Next day's Fajr
-                    nextPrayer = 'Fajr';
-                    const [hours, minutes] = this.prayerTimes.Fajr.split(':');
-                    nextPrayerTime = new Date(now);
-                    nextPrayerTime.setDate(now.getDate() + 1);
-                    nextPrayerTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
-                }
-                const timeDiff = nextPrayerTime - now;
-                if (timeDiff > 0) {
-                    const hours = Math.floor(timeDiff / (1000 * 60 * 60));
-                    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-                    const countdownElement = document.getElementById('countdown-timer');
-                    const nextPrayerNameElement = document.getElementById('next-prayer-name');
-                    const nextPrayerSection = document.getElementById('next-prayer-section');
-                    if (countdownElement && nextPrayerNameElement && nextPrayerSection) {
-                        countdownElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                        nextPrayerNameElement.textContent = nextPrayer;
-                        nextPrayerSection.classList.remove('d-none');
-                    }
-                    // Check for prayer time notification
-                    if (timeDiff <= 60000 && localStorage.getItem('notificationsEnabled') === 'true') { // 1 minute before
-                        this.showPrayerNotification(nextPrayer);
-                    }
-                }
-            }
-            async loadMosques() {
-                if (!this.userLocation) return;
-                this.initializeMap();
-                
-                const radius = document.getElementById('radiusSelect')?.value || 5000;
-                
-                try {
-                    const overpassQuery = `
-                        [out:json][timeout:25];
-                        (
-                          node["amenity"="place_of_worship"]["religion"="muslim"](around:${radius},${this.userLocation.lat},${this.userLocation.lng});
-                          way["amenity"="place_of_worship"]["religion"="muslim"](around:${radius},${this.userLocation.lat},${this.userLocation.lng});
-                          relation["amenity"="place_of_worship"]["religion"="muslim"](around:${radius},${this.userLocation.lat},${this.userLocation.lng});
-                        );
-                        out center;
-                    `;
-                    const response = await fetch('https://overpass-api.de/api/interpreter', {
-                        method: 'POST',
-                        body: overpassQuery,
-                        headers: {
-                            'Content-Type': 'text/plain',
+            });
+        }
+
+        // Fetch prayer times from API
+        function fetchPrayerTimes(lat, lng) {
+            return new Promise((resolve, reject) => {
+                const today = new Date();
+                const dateString = today.getFullYear() + '-' + 
+                    String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+                    String(today.getDate()).padStart(2, '0');
+
+                const apiUrl = `https://api.aladhan.com/v1/timings/${dateString}?latitude=${lat}&longitude=${lng}&method=${currentCalculationMethod}`;
+
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.code === 200) {
+                            resolve(data.data.timings);
+                            // Also update location info
+                            updateLocationInfo(data.data.meta);
+                        } else {
+                            reject(new Error('API returned error'));
                         }
-                    });
-                    const data = await response.json();
-                    this.processMosqueData(data.elements);
-                } catch (error) {
-                    console.error('Error loading mosques:', error);
-                    this.showMosqueError();
-                }
-            }
-            processMosqueData(mosques) {
-                this.mosqueData = [];
-                
-                mosques.forEach((mosque) => {
-                    const lat = mosque.lat || (mosque.center ? mosque.center.lat : null);
-                    const lng = mosque.lon || (mosque.center ? mosque.center.lon : null);
-                    
-                    if (!lat || !lng) return;
-                    const name = mosque.tags?.name || 'Unnamed Mosque';
-                    const address = this.formatAddress(mosque.tags);
-                    const distance = this.calculateDistance(this.userLocation.lat, this.userLocation.lng, lat, lng);
-                    this.mosqueData.push({
-                        id: mosque.id,
-                        name,
-                        address,
-                        lat,
-                        lng,
-                        distance,
-                        tags: mosque.tags || {}
-                    });
-                });
-                this.sortAndDisplayMosques();
-            }
-            formatAddress(tags) {
-                if (!tags) return 'Address not available';
-                
-                const addressParts = [];
-                if (tags['addr:street']) addressParts.push(tags['addr:street']);
-                if (tags['addr:city']) addressParts.push(tags['addr:city']);
-                if (tags.address) addressParts.push(tags.address);
-                
-                return addressParts.length > 0 ? addressParts.join(', ') : 'Address not available';
-            }
-            sortAndDisplayMosques() {
-                if (!this.mosqueData.length) return;
-                const sortBy = document.getElementById('sortSelect')?.value || 'distance';
-                
-                // Sort mosques
-                if (sortBy === 'distance') {
-                    this.mosqueData.sort((a, b) => a.distance - b.distance);
-                } else if (sortBy === 'name') {
-                    this.mosqueData.sort((a, b) => a.name.localeCompare(b.name));
-                }
-                this.filterMosques();
-            }
-            filterMosques() {
-                const filterBy = document.getElementById('filterSelect')?.value || 'all';
-                let filteredMosques = [...this.mosqueData];
-                if (filterBy === 'named') {
-                    filteredMosques = filteredMosques.filter(mosque => !mosque.name.includes('Unnamed'));
-                } else if (filterBy === 'nearby') {
-                    filteredMosques = filteredMosques.filter(mosque => mosque.distance <= 2);
-                }
-                this.displayMosques(filteredMosques);
-            }
-            displayMosques(mosques) {
-                const mosqueList = document.getElementById('mosque-list');
-                const mosqueCount = document.getElementById('mosque-count');
-                const mosqueTotal = document.getElementById('mosque-total');
-                if (!mosqueList) return;
-                // Clear previous results
-                mosqueList.innerHTML = '';
-                this.clearMapMarkers();
-                if (mosqueCount && mosqueTotal) {
-                    mosqueTotal.textContent = mosques.length;
-                    mosqueCount.classList.remove('d-none');
-                }
-                if (mosques.length === 0) {
-                    mosqueList.innerHTML = '<div class="col-12 text-center"><p>No mosques found matching your criteria.</p></div>';
-                    return;
-                }
-                mosques.forEach((mosque, index) => {
-                    // Add marker to map
-                    this.addMosqueMarker(mosque, index);
-                    // Add to list
-                    const mosqueElement = document.createElement('div');
-                    mosqueElement.className = 'col-12';
-                    mosqueElement.innerHTML = `
-                        <div class="mosque-item" onclick="islamicApp.focusOnMosque(${index})">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div class="flex-grow-1">
-                                    <div class="mosque-name">${mosque.name}</div>
-                                    <div class="mosque-address">${mosque.address}</div>
-                                    <div class="mosque-distance mt-2">
-                                        <span class="distance-badge">${mosque.distance.toFixed(1)} km away</span>
-                                    </div>
-                                </div>
-                                <div class="ms-3">
-                                    <a href="https://www.google.com/maps/dir/?api=1&destination=${mosque.lat},${mosque.lng}" 
-                                       target="_blank" class="btn btn-sm btn-primary">
-                                        <i class="fas fa-directions me-1"></i>Directions
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    mosqueList.appendChild(mosqueElement);
-                });
-            }
-            addMosqueMarker(mosque, index) {
-                if (!this.map) return;
-                const marker = L.marker([mosque.lat, mosque.lng], {
-                    icon: L.divIcon({
-                        html: `<i class="fas fa-mosque" style="color: #2d5a3d; font-size: 20px;"></i>`,
-                        iconSize: [25, 25],
-                        className: 'custom-div-icon'
                     })
-                }).addTo(this.map);
-                marker.bindPopup(`
-                    <div class="mosque-popup-title">${mosque.name}</div>
-                    <div class="mosque-popup-address">${mosque.address}</div>
-                    <div class="mosque-popup-distance">${mosque.distance.toFixed(1)} km away</div>
-                    <div class="mt-2">
-                        <a href="https://www.google.com/maps/dir/?api=1&destination=${mosque.lat},${mosque.lng}" 
-                           target="_blank" class="btn btn-sm btn-primary">
-                            <i class="fas fa-directions me-1"></i>Get Directions
-                        </a>
-                    </div>
-                `);
-                this.mosqueMarkers.push(marker);
-            }
-            clearMapMarkers() {
-                this.mosqueMarkers.forEach(marker => {
-                    if (this.map) {
-                        this.map.removeLayer(marker);
-                    }
-                });
-                this.mosqueMarkers = [];
-            }
-            initializeMap() {
-                const mapContainer = document.getElementById('mosque-map');
-                if (!mapContainer || this.map || !this.userLocation) return;
-                // Clear loading indicator
-                mapContainer.innerHTML = '';
-                this.map = L.map('mosque-map').setView([this.userLocation.lat, this.userLocation.lng], 13);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '© OpenStreetMap contributors'
-                }).addTo(this.map);
-                // Add user location marker
-                L.marker([this.userLocation.lat, this.userLocation.lng], {
-                    icon: L.divIcon({
-                        html: '<i class="fas fa-user-circle" style="color: #d4af37; font-size: 24px;"></i>',
-                        iconSize: [30, 30],
-                        className: 'custom-div-icon'
-                    })
-                }).addTo(this.map).bindPopup('Your Location');
-            }
-            focusOnMosque(index) {
-                if (this.mosqueMarkers[index] && this.map) {
-                    this.map.setView(this.mosqueMarkers[index].getLatLng(), 16);
-                    this.mosqueMarkers[index].openPopup();
-                }
-            }
-            calculateDistance(lat1, lng1, lat2, lng2) {
-                const R = 6371; // Earth's radius in km
-                const dLat = this.deg2rad(lat2 - lat1);
-                const dLng = this.deg2rad(lng2 - lng1);
-                const a = 
-                    Math.sin(dLat/2) * Math.sin(dLat/2) +
-                    Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) * 
-                    Math.sin(dLng/2) * Math.sin(dLng/2);
-                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-                return R * c;
-            }
-            deg2rad(deg) {
-                return deg * (Math.PI/180);
-            }
-            calculateQibla() {
-                if (!this.userLocation) return;
-                // Kaaba coordinates
-                const meccaLat = 21.4225;
-                const meccaLng = 39.8262;
-                // Calculate bearing to Mecca
-                const lat1 = this.deg2rad(this.userLocation.lat);
-                const lat2 = this.deg2rad(meccaLat);
-                const dLng = this.deg2rad(meccaLng - this.userLocation.lng);
-                const y = Math.sin(dLng) * Math.cos(lat2);
-                const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLng);
-                let bearing = Math.atan2(y, x);
-                bearing = (bearing * 180 / Math.PI + 360) % 360; // Convert to degrees and normalize
-                this.qiblaDirection = bearing;
-                this.displayQiblaDirection();
-            }
-            displayQiblaDirection() {
-                const arrowElement = document.getElementById('qibla-arrow');
-                const degreeElement = document.getElementById('qibla-degree');
-                const distanceElement = document.getElementById('qibla-distance');
-                if (arrowElement) {
-                    arrowElement.style.transform = `rotate(${this.qiblaDirection}deg)`;
-                }
-                if (degreeElement) {
-                    degreeElement.textContent = `${Math.round(this.qiblaDirection)}° from North`;
-                }
-                if (distanceElement && this.userLocation) {
-                    const distance = this.calculateDistance(this.userLocation.lat, this.userLocation.lng, 21.4225, 39.8262);
-                    distanceElement.textContent = `Distance to Mecca: ${distance.toFixed(0)} km`;
-                }
-            }
-            calibrateCompass() {
-                if (this.userLocation) {
-                    this.calculateQibla();
-                    // Add visual feedback
-                    const arrowElement = document.getElementById('qibla-arrow');
-                    if (arrowElement) {
-                        arrowElement.style.animation = 'pulse 0.5s';
-                        setTimeout(() => {
-                            arrowElement.style.animation = '';
-                        }, 500);
-                    }
-                }
-            }
-            initDhikrCounter() {
-                const dhikrBtn = document.getElementById('dhikr-btn');
-                const dhikrCountElement = document.getElementById('dhikr-count');
-                if (dhikrCountElement) {
-                    dhikrCountElement.textContent = this.dhikrCount;
-                }
-                if (dhikrBtn) {
-                    dhikrBtn.addEventListener('click', () => {
-                        this.incrementDhikr();
+                    .catch(error => {
+                        reject(error);
                     });
+            });
+        }
+
+        // Display prayer times
+        function displayPrayerTimes(times) {
+            const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha', 'Sunrise'];
+            
+            prayers.forEach(prayer => {
+                const timeElement = document.getElementById(prayer.toLowerCase() + '-time');
+                if (timeElement && times[prayer]) {
+                    timeElement.textContent = formatTime(times[prayer]);
                 }
-                this.updateDhikrProgress();
+            });
+
+            // Highlight current prayer
+            highlightCurrentPrayer(times);
+        }
+
+        // Format time based on user preference
+        function formatTime(timeString) {
+            const [hours, minutes] = timeString.split(':');
+            
+            if (is24HourFormat) {
+                return `${hours}:${minutes}`;
+            } else {
+                const hour12 = hours % 12 || 12;
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                return `${hour12}:${minutes} ${ampm}`;
             }
-            incrementDhikr() {
-                this.dhikrCount++;
-                localStorage.setItem('dhikrCount', this.dhikrCount);
-                
-                const dhikrCountElement = document.getElementById('dhikr-count');
-                if (dhikrCountElement) {
-                    dhikrCountElement.textContent = this.dhikrCount;
-                    dhikrCountElement.style.animation = 'pulse 0.3s';
-                    setTimeout(() => {
-                        dhikrCountElement.style.animation = '';
-                    }, 300);
+        }
+
+        // Update time format label
+        function updateTimeFormatLabel() {
+            const label = document.getElementById('timeFormatLabel');
+            if (label) {
+                label.textContent = is24HourFormat ? '24-hour format' : '12-hour format';
+            }
+        }
+
+        // Highlight current prayer
+        function highlightCurrentPrayer(times) {
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+            
+            const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+            let currentPrayer = null;
+
+            // Remove all highlights first
+            prayers.forEach(prayer => {
+                const card = document.getElementById(prayer.toLowerCase() + '-card');
+                if (card) {
+                    card.classList.remove('current-prayer');
                 }
-                this.updateDhikrProgress();
-                // Check if goal reached
-                if (this.dhikrCount === this.dhikrGoal) {
-                    this.showDhikrGoalReached();
-                }
-            }
-            resetDhikr() {
-                this.dhikrCount = 0;
-                localStorage.setItem('dhikrCount', this.dhikrCount);
-                
-                const dhikrCountElement = document.getElementById('dhikr-count');
-                if (dhikrCountElement) {
-                    dhikrCountElement.textContent = this.dhikrCount;
-                }
-                this.updateDhikrProgress();
-            }
-            setDhikrGoal() {
-                const goal = prompt('Set your dhikr goal:', this.dhikrGoal);
-                if (goal && !isNaN(goal) && parseInt(goal) > 0) {
-                    this.dhikrGoal = parseInt(goal);
-                    localStorage.setItem('dhikrGoal', this.dhikrGoal);
-                    
-                    const goalElement = document.getElementById('goal-target');
-                    const goalSection = document.getElementById('dhikr-goal');
-                    
-                    if (goalElement) {
-                        goalElement.textContent = this.dhikrGoal;
-                    }
-                    
-                    if (goalSection) {
-                        goalSection.classList.remove('d-none');
-                    }
-                    this.updateDhikrProgress();
-                }
-            }
-            updateDhikrProgress() {
-                const progressBar = document.getElementById('dhikr-progress');
-                const goalElement = document.getElementById('goal-target');
-                
-                if (progressBar && goalElement) {
-                    const progress = Math.min((this.dhikrCount / this.dhikrGoal) * 100, 100);
-                    progressBar.style.width = `${progress}%`;
-                    goalElement.textContent = this.dhikrGoal;
-                    
-                    if (this.dhikrGoal > 0) {
-                        document.getElementById('dhikr-goal')?.classList.remove('d-none');
-                    }
-                }
-            }
-            showDhikrGoalReached() {
-                alert(`Congratulations! You've reached your dhikr goal of ${this.dhikrGoal}!`);
-            }
-            requestNotificationPermission() {
-                if ('Notification' in window && Notification.permission === 'default') {
-                    Notification.requestPermission();
+            });
+
+            // Find and highlight current prayer
+            for (let i = 0; i < prayers.length; i++) {
+                const prayer = prayers[i];
+                const prayerTime = parseTime(times[prayer]);
+                const nextPrayer = prayers[i + 1];
+                const nextPrayerTime = nextPrayer ? parseTime(times[nextPrayer]) : parseTime(times['Fajr']) + 24 * 60;
+
+                if (currentTime >= prayerTime && currentTime < nextPrayerTime) {
+                    currentPrayer = prayer;
+                    break;
                 }
             }
-            showPrayerNotification(prayerName) {
-                if ('Notification' in window && Notification.permission === 'granted') {
-                    new Notification(`${prayerName} Prayer Time`, {
-                        body: `It's time for ${prayerName} prayer.`,
-                        icon: 'https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@6.4.0/svgs/solid/mosque.svg'
-                    });
-                }
-            }
-            async loadIslamicDate() {
-                try {
-                    const response = await fetch(
-                        `https://api.aladhan.com/v1/gToH/${new Date().getDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`
-                    );
-                    const data = await response.json();
-                    
-                    if (data.code === 200) {
-                        const hijriDate = data.data.hijri;
-                        const islamicDateElement = document.getElementById('hijri-date');
-                        const islamicDateSection = document.getElementById('islamic-date');
-                        
-                        if (islamicDateElement && islamicDateSection) {
-                            islamicDateElement.textContent = `${hijriDate.day} ${hijriDate.month.en} ${hijriDate.year} AH`;
-                            islamicDateSection.classList.remove('d-none');
-                        }
-                    }
-                } catch (error) {
-                    console.error('Error loading Islamic date:', error);
-                }
-            }
-            showPrayerTimesError() {
-                document.getElementById('prayer-loading')?.classList.add('d-none');
-                document.getElementById('prayer-error')?.classList.remove('d-none');
-            }
-            showMosqueError() {
-                const mosqueList = document.getElementById('mosque-list');
-                if (mosqueList) {
-                    mosqueList.innerHTML = '<div class="col-12 text-center text-danger"><p>Error loading mosques. Please try again.</p></div>';
+
+            if (currentPrayer) {
+                const card = document.getElementById(currentPrayer.toLowerCase() + '-card');
+                if (card) {
+                    card.classList.add('current-prayer');
                 }
             }
         }
-        // Initialize the enhanced app
-        const islamicApp = new IslamicApp();
+
+        // Parse time string to minutes
+        function parseTime(timeString) {
+            const [hours, minutes] = timeString.split(':').map(Number);
+            return hours * 60 + minutes;
+        }
+
+        // Start next prayer countdown
+        function startNextPrayerCountdown() {
+            if (nextPrayerInterval) {
+                clearInterval(nextPrayerInterval);
+            }
+
+            nextPrayerInterval = setInterval(() => {
+                updateNextPrayerCountdown();
+            }, 1000);
+
+            updateNextPrayerCountdown();
+        }
+
+        // Update next prayer countdown
+        function updateNextPrayerCountdown() {
+            if (!prayerTimes || Object.keys(prayerTimes).length === 0) return;
+
+            const now = new Date();
+            const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+            let nextPrayer = null;
+            let nextPrayerTime = null;
+
+            for (let prayer of prayers) {
+                const prayerTime = new Date();
+                const [hours, minutes] = prayerTimes[prayer].split(':');
+                prayerTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+
+                if (prayerTime > now) {
+                    nextPrayer = prayer;
+                    nextPrayerTime = prayerTime;
+                    break;
+                }
+            }
+
+            // If no prayer found for today, next is Fajr tomorrow
+            if (!nextPrayer) {
+                nextPrayer = 'Fajr';
+                nextPrayerTime = new Date();
+                const [hours, minutes] = prayerTimes['Fajr'].split(':');
+                nextPrayerTime.setDate(nextPrayerTime.getDate() + 1);
+                nextPrayerTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+            }
+
+            const timeDiff = nextPrayerTime - now;
+            const hours = Math.floor(timeDiff / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+            const nextPrayerSection = document.getElementById('next-prayer-section');
+            const nextPrayerName = document.getElementById('next-prayer-name');
+            const countdownTimer = document.getElementById('countdown-timer');
+
+            if (nextPrayerSection && nextPrayerName && countdownTimer) {
+                nextPrayerSection.classList.remove('d-none');
+                nextPrayerName.textContent = nextPrayer;
+                countdownTimer.textContent = 
+                    `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }
+        }
+
+        // Update location information
+        function updateLocationInfo(meta) {
+            const cityElement = document.getElementById('prayer-city');
+            const countryElement = document.getElementById('prayer-country');
+            const coordinatesElement = document.getElementById('prayer-coordinates');
+
+            if (cityElement && meta.city) cityElement.textContent = meta.city;
+            if (countryElement && meta.country) countryElement.textContent = meta.country;
+            if (coordinatesElement && userLocation.lat && userLocation.lng) {
+                coordinatesElement.textContent = `${userLocation.lat.toFixed(4)}, ${userLocation.lng.toFixed(4)}`;
+            }
+        }
+
+        // Initialize mosque map
+        function initializeMosqueMap(location) {
+            if (mosqueMap) {
+                mosqueMap.remove();
+            }
+
+            mosqueMap = L.map('mosque-map').setView([location.lat, location.lng], 13);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(mosqueMap);
+
+            // Add user location marker
+            L.marker([location.lat, location.lng])
+                .addTo(mosqueMap)
+                .bindPopup('Your Location')
+                .openPopup();
+        }
+
+        // Find nearby mosques (mock function - replace with real API)
+        function findNearbyMosques(lat, lng) {
+            return new Promise((resolve) => {
+                // Mock mosque data - replace with real API call
+                setTimeout(() => {
+                    const mockMosques = [
+                        {
+                            name: "Central Mosque",
+                            address: "123 Main Street, City Center",
+                            distance: "0.5 km",
+                            lat: lat + 0.005,
+                            lng: lng + 0.005
+                        },
+                        {
+                            name: "Islamic Center",
+                            address: "456 Oak Avenue, Downtown",
+                            distance: "1.2 km",
+                            lat: lat - 0.008,
+                            lng: lng + 0.008
+                        },
+                        {
+                            name: "Community Mosque",
+                            address: "789 Pine Road, Suburb",
+                            distance: "2.1 km",
+                            lat: lat + 0.012,
+                            lng: lng - 0.009
+                        }
+                    ];
+                    resolve(mockMosques);
+                }, 1000);
+            });
+        }
+
+        // Display mosque list
+        function displayMosqueList(mosques) {
+            const container = document.getElementById('mosques-container');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            mosques.forEach((mosque, index) => {
+                const mosqueItem = document.createElement('div');
+                mosqueItem.className = 'mosque-item';
+                mosqueItem.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <div class="mosque-name">${mosque.name}</div>
+                            <div class="mosque-address">${mosque.address}</div>
+                        </div>
+                        <span class="distance-badge">${mosque.distance}</span>
+                    </div>
+                `;
+
+                mosqueItem.addEventListener('click', () => {
+                    if (mosqueMap) {
+                        mosqueMap.setView([mosque.lat, mosque.lng], 16);
+                    }
+                });
+
+                container.appendChild(mosqueItem);
+
+                // Add mosque marker to map
+                if (mosqueMap) {
+                    L.marker([mosque.lat, mosque.lng])
+                        .addTo(mosqueMap)
+                        .bindPopup(`<strong>${mosque.name}</strong><br>${mosque.address}`);
+                }
+            });
+        }
+
+        // Calculate Qibla direction
+        function calculateQiblaDirection(lat, lng) {
+            // Mecca coordinates
+            const meccaLat = 21.4225;
+            const meccaLng = 39.8262;
+
+            // Calculate bearing to Mecca
+            const dLng = (meccaLng - lng) * Math.PI / 180;
+            const lat1 = lat * Math.PI / 180;
+            const lat2 = meccaLat * Math.PI / 180;
+
+            const y = Math.sin(dLng) * Math.cos(lat2);
+            const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLng);
+
+            let bearing = Math.atan2(y, x) * 180 / Math.PI;
+            bearing = (bearing + 360) % 360;
+
+            // Update Qibla display
+            const qiblaArrow = document.getElementById('qibla-arrow');
+            const qiblaStatus = document.getElementById('qibla-status');
+            const qiblaInfo = document.getElementById('qibla-info');
+            const qiblaDegree = document.getElementById('qibla-degree');
+
+            if (qiblaArrow) {
+                qiblaArrow.style.transform = `rotate(${bearing}deg)`;
+            }
+
+            if (qiblaStatus) {
+                qiblaStatus.classList.add('d-none');
+            }
+
+            if (qiblaInfo && qiblaDegree) {
+                qiblaInfo.classList.remove('d-none');
+                qiblaDegree.textContent = `${Math.round(bearing)}°`;
+            }
+        }
+
+        // Hide loading and show content
+        function hideLoadingShowContent(section) {
+            const loadingElement = document.getElementById(`${section}-loading`);
+            const errorElement = document.getElementById(`${section}-error`);
+
+            if (loadingElement) {
+                loadingElement.classList.add('d-none');
+            }
+
+            if (errorElement) {
+                errorElement.classList.add('d-none');
+            }
+
+            // Show section-specific content
+            if (section === 'prayer') {
+                ['calculation-method', 'prayer-location-card', 'prayer-format-toggle', 'prayer-times-grid'].forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.classList.remove('d-none');
+                    }
+                });
+            } else if (section === 'mosque') {
+                const mosqueList = document.getElementById('mosque-list');
+                if (mosqueList) {
+                    mosqueList.classList.remove('d-none');
+                }
+            }
+        }
+
+        // Show error message
+        function showError(section, message) {
+            const loadingElement = document.getElementById(`${section}-loading`);
+            const errorElement = document.getElementById(`${section}-error`);
+
+            if (loadingElement) {
+                loadingElement.classList.add('d-none');
+            }
+
+            if (errorElement) {
+                errorElement.classList.remove('d-none');
+                // Update error message if needed
+                const messageElement = errorElement.querySelector('p');
+                if (messageElement && message) {
+                    messageElement.textContent = message;
+                }
+            }
+        }
     </script>
 </body>
 </html>
