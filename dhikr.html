@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dhikr Counter - Islamic Prayer Times</title>
+    <meta name="description" content="Digital Tasbih counter for your daily dhikr.">
+    <meta name="keywords"
+        content="dhikr, zikr, Islamic remembrance, morning dhikr, evening dhikr, tasbeeh, Muslim devotional">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Islamic Style -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* Islamic Prayer Times App - Custom Styles */
+        :root {
+            --islamic-green: #2d5a3d;
+            --islamic-green-light: #4a8061;
+            --islamic-gold: #d4af37;
+            --islamic-gold-light: #f4d03f;
+            --text-dark: #2c3e50;
+            --text-light: #ecf0f1;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --gradient-green: linear-gradient(135deg, var(--islamic-green), var(--islamic-green-light));
+            --gradient-gold: linear-gradient(135deg, var(--islamic-gold), var(--islamic-gold-light));
+        }
+
+        /* Base Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding-top: 76px;
+        }
+
+        .arabic-font {
+            font-family: 'Amiri', serif;
+            font-weight: 700;
+        }
+
+        /* Navigation */
+        .bg-islamic-green {
+            background: var(--gradient-green) !important;
+            box-shadow: 0 2px 20px var(--shadow-medium);
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            border-radius: 25px;
+            padding: 0.5rem 1rem !important;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Section Header */
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .section-header h1 {
+            color: var(--islamic-green);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        /* Dhikr Counter */
+        .dhikr-counter {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px var(--shadow-light);
+        }
+
+        .dhikr-count {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--islamic-gold);
+            margin: 1rem 0;
+        }
+
+        .dhikr-button {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--gradient-green);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem auto;
+        }
+
+        .dhikr-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px var(--shadow-medium);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--gradient-green);
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--gradient-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-medium);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gradient-green) !important;
+            margin-top: 3rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            margin: 0 10px;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 76px;
+            }
+
+            .dhikr-count {
+                font-size: 3rem;
+            }
+
+            .dhikr-button {
+                width: 120px;
+                height: 120px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-islamic-green fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-mosque me-2"></i>
+                Islamic Prayer Times
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="prayer-times.html" onclick="return addLocationToLink(this)">Prayer
+                            Times</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="mosque-finder.html" onclick="return addLocationToLink(this)">Mosque
+                            Finder</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="qibla.html" onclick="return addLocationToLink(this)">Qibla Finder</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="dhikr.html">Dhikr Counter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container py-5">
+            <div class="section-header text-center">
+                <h1><i class="fas fa-hands me-3"></i>Dhikr Counter</h1>
+                <p class="lead">Digital Tasbih counter for your daily dhikr</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="dhikr-counter">
+                        <h4 class="mb-4">Digital Tasbih</h4>
+                        <div class="dhikr-count" id="dhikr-count">0</div>
+                        <button class="dhikr-button" id="dhikr-button">
+                            <i class="fas fa-hand-paper"></i>
+                        </button>
+                        <div class="mt-4">
+                            <p class="mb-2">Goal: <span id="dhikr-goal">100</span></p>
+                            <div class="progress mb-3" style="height: 10px;">
+                                <div class="progress-bar bg-success" id="dhikr-progress" style="width: 0%"></div>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-outline-primary btn-sm" onclick="resetDhikr()">
+                                    <i class="fas fa-undo me-1"></i>Reset
+                                </button>
+                                <button class="btn btn-outline-primary btn-sm" onclick="setDhikrGoal()">
+                                    <i class="fas fa-target me-1"></i>Set Goal
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-islamic-green text-white py-4 mt-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 arabic-font">"وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ وَارْكَعُوا مَعَ
+                        الرَّاكِعِينَ"</p>
+                    <small class="text-light">"And establish prayer and give zakah and bow with those who bow." - Quran
+                        2:43</small>
+                </div>
+                <div class="col-md-6 text-md-end footer-links">
+                    <a href="about.html">About</a>
+                    <a href="prayer-times.html" onclick="return addLocationToLink(this)">Prayer Times</a>
+                    <a href="mosque-finder.html" onclick="return addLocationToLink(this)">Mosque Finder</a>
+                    <a href="qibla.html" onclick="return addLocationToLink(this)">Qibla</a>
+                    <small>&copy; 2025 Islamic Prayer Times App</small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Location Manager -->
+    <script src="location-manager.js"></script>
+
+    <script>
+        // Dhikr Counter page functionality
+        let dhikrCount = parseInt(localStorage.getItem('dhikrCount')) || 0;
+        let dhikrGoal = parseInt(localStorage.getItem('dhikrGoal')) || 100;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Update navigation active state
+            const currentPage = window.location.pathname.split('/').pop() || 'dhikr.html';
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Initialize dhikr counter
+            initDhikrCounter();
+        });
+
+        function initDhikrCounter() {
+            // Update display
+            updateDhikrDisplay();
+
+            // Add click event to button
+            const dhikrButton = document.getElementById('dhikr-button');
+            if (dhikrButton) {
+                dhikrButton.addEventListener('click', () => {
+                    incrementDhikr();
+                });
+            }
+        }
+
+        function incrementDhikr() {
+            dhikrCount++;
+            localStorage.setItem('dhikrCount', dhikrCount);
+            updateDhikrDisplay();
+
+            // Add visual feedback
+            const button = document.getElementById('dhikr-button');
+            if (button) {
+                button.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    button.style.transform = 'scale(1)';
+                }, 100);
+            }
+
+            // Check if goal is reached
+            if (dhikrCount >= dhikrGoal && dhikrCount - 1 < dhikrGoal) {
+                showDhikrCongratulations();
+            }
+        }
+
+        function updateDhikrDisplay() {
+            document.getElementById('dhikr-count').textContent = dhikrCount;
+            document.getElementById('dhikr-goal').textContent = dhikrGoal;
+
+            const progress = Math.min((dhikrCount / dhikrGoal) * 100, 100);
+            document.getElementById('dhikr-progress').style.width = progress + '%';
+        }
+
+        function resetDhikr() {
+            dhikrCount = 0;
+            localStorage.setItem('dhikrCount', dhikrCount);
+            updateDhikrDisplay();
+        }
+
+        function setDhikrGoal() {
+            const newGoal = prompt('Enter your dhikr goal:', dhikrGoal);
+            if (newGoal && !isNaN(newGoal) && parseInt(newGoal) > 0) {
+                dhikrGoal = parseInt(newGoal);
+                localStorage.setItem('dhikrGoal', dhikrGoal);
+                updateDhikrDisplay();
+            }
+        }
+
+        function showDhikrCongratulations() {
+            // Simple congratulations (you can enhance this)
+            if ('Notification' in window && Notification.permission === 'granted') {
+                new Notification('Dhikr Goal Reached!', {
+                    body: `Congratulations! You've completed ${dhikrGoal} dhikr.`,
+                    icon: '/favicon.ico'
+                });
+            } else {
+                alert(`Congratulations! You've completed ${dhikrGoal} dhikr.`);
+            }
+        }
+    </script>
+</body>
+
+</html>
