@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prayer Times - Islamic Prayer Times</title>
+    <meta name="description" content="Accurate Islamic prayer times for your location with multiple calculation methods.">
+     <meta name="keywords" content="prayer times, salah times, daily prayer, today's prayer times, Islamic prayer schedule, namaz times, Muslim prayer">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Islamic Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Islamic Prayer Times App - Custom Styles */
+        :root {
+            --islamic-green: #2d5a3d;
+            --islamic-green-light: #4a8061;
+            --islamic-gold: #d4af37;
+            --islamic-gold-light: #f4d03f;
+            --text-dark: #2c3e50;
+            --text-light: #ecf0f1;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --gradient-green: linear-gradient(135deg, var(--islamic-green), var(--islamic-green-light));
+            --gradient-gold: linear-gradient(135deg, var(--islamic-gold), var(--islamic-gold-light));
+        }
+
+        /* Base Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding-top: 76px;
+        }
+
+        .arabic-font {
+            font-family: 'Amiri', serif;
+            font-weight: 700;
+        }
+
+        /* Navigation */
+        .bg-islamic-green {
+            background: var(--gradient-green) !important;
+            box-shadow: 0 2px 20px var(--shadow-medium);
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            border-radius: 25px;
+            padding: 0.5rem 1rem !important;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Section Header */
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .section-header h1 {
+            color: var(--islamic-green);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        /* Location Card */
+        .location-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px var(--shadow-light);
+            transition: transform 0.3s ease;
+        }
+
+        .location-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .location-card .card-header {
+            background: var(--gradient-green);
+            color: white;
+            font-weight: 600;
+            padding: 1rem 1.5rem;
+            border: none;
+        }
+
+        .location-card .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Prayer Time Cards */
+        .prayer-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 8px 25px var(--shadow-light);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .prayer-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--islamic-gold);
+            box-shadow: 0 15px 35px var(--shadow-medium);
+        }
+
+        .prayer-card .prayer-icon {
+            font-size: 2.5rem;
+            color: var(--islamic-green);
+            margin-bottom: 1rem;
+        }
+
+        .prayer-card .prayer-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--islamic-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .prayer-card .prayer-time {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--islamic-gold);
+            font-family: 'Roboto', monospace;
+        }
+
+        .prayer-card.current-prayer {
+            background: var(--gradient-green);
+            color: white;
+        }
+
+        .prayer-card.current-prayer .prayer-icon,
+        .prayer-card.current-prayer .prayer-name {
+            color: white;
+        }
+
+        .prayer-card.current-prayer .prayer-time {
+            color: var(--islamic-gold-light);
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px var(--shadow-light);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            background: var(--gradient-green);
+            color: white;
+            border: none;
+            font-weight: 600;
+        }
+
+        /* Alerts */
+        .alert {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px var(--shadow-light);
+        }
+
+        /* Loading Spinners */
+        .spinner-border {
+            color: var(--islamic-green) !important;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--gradient-green);
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--gradient-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-medium);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gradient-green) !important;
+            margin-top: 3rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            margin: 0 10px;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 76px;
+            }
+            
+            .prayer-card {
+                margin-bottom: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .prayer-card .prayer-icon {
+                font-size: 2rem;
+            }
+            
+            .prayer-card .prayer-name {
+                font-size: 1rem;
+            }
+            
+            .prayer-card .prayer-time {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-islamic-green fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-mosque me-2"></i>
+                Islamic Prayer Times
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="prayer-times.html">Prayer Times</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="mosque-finder.html" onclick="return addLocationToLink(this)">Mosque Finder</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="qibla.html" onclick="return addLocationToLink(this)">Qibla Finder</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dhikr.html">Dhikr Counter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container py-5">
+            <div class="section-header text-center">
+                <h1><i class="fas fa-pray me-3"></i>Prayer Times</h1>
+                <p class="lead">Accurate Namaz timings with advanced features</p>
+            </div>
+
+            <!-- Location Loading -->
+            <div id="prayer-loading" class="text-center mb-4">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading prayer times...</span>
+                </div>
+                <p class="mt-2">Loading prayer times for your location...</p>
+            </div>
+
+            <!-- Location Error -->
+            <div id="prayer-error" class="alert alert-warning text-center d-none" role="alert">
+                <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Unable to get your location</h5>
+                <p class="mb-0">Please allow location access to view accurate prayer times for your area.</p>
+            </div>
+
+            <!-- Prayer Calculation Method -->
+            <div id="calculation-method" class="card mb-4 d-none">
+                <div class="card-header">
+                    <i class="fas fa-calculator me-2"></i>Calculation Method
+                </div>
+                <div class="card-body">
+                    <select class="form-select" id="methodSelect">
+                        <option value="2">Islamic Society of North America (ISNA)</option>
+                        <option value="1">University of Islamic Sciences, Karachi</option>
+                        <option value="3">Muslim World League</option>
+                        <option value="4">Umm Al-Qura University, Makkah</option>
+                        <option value="5">Egyptian General Authority of Survey</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Location Card -->
+            <div id="prayer-location-card" class="location-card mb-4 d-none">
+                <div class="card-header">
+                    <i class="fas fa-map-marker-alt me-2"></i>Current Location
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">
+                        <strong id="prayer-city">Loading...</strong>,
+                        <span id="prayer-country">Loading...</span>
+                    </p>
+                    <small class="text-muted">
+                        Coordinates: <span id="prayer-coordinates">---, ---</span>
+                    </small>
+                </div>
+            </div>
+
+            <!-- Time Format Toggle -->
+            <div id="prayer-format-toggle" class="text-center mb-4 d-none">
+                <div class="form-check form-switch d-inline-block">
+                    <input class="form-check-input" type="checkbox" id="timeFormatSwitch" checked>
+                    <label class="form-check-label" for="timeFormatSwitch">
+                        <span id="timeFormatLabel">24-hour format</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Prayer Times Grid -->
+            <div id="prayer-times-grid" class="row g-4 d-none">
+                <div class="col-lg-4 col-md-6">
+                    <div class="prayer-card" id="fajr-card">
+                        <div class="prayer-icon">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <div class="prayer-name">Fajr</div>
+                        <div class="prayer-time" id="fajr-time">--:--</div>
+                    </div>
+                </div>
+                 <div class="col-lg-4 col-md-6">
+                    <div class="prayer-card" id="sunrise-card">
+                        <div class="prayer-icon">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <div class="prayer-name">Sunrise</div>
+                        <div class="prayer-time" id="sunrise-time">--:--</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="prayer-card" id="dhuhr-card">
+                        <div class="prayer-icon">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <div class="prayer-name">Dhuhr</div>
+                        <div class="prayer-time" id="dhuhr-time">--:--</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="prayer-card" id="asr-card">
+                        <div class="prayer-icon">
+                            <i class="fas fa-cloud-sun"></i>
+                        </div>
+                        <div class="prayer-name">Asr</div>
+                        <div class="prayer-time" id="asr-time">--:--</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="prayer-card" id="maghrib-card">
+                        <div class="prayer-icon">
+                            <i class="fas fa-moon"></i>
+                        </div>
+                        <div class="prayer-name">Maghrib</div>
+                        <div class="prayer-time" id="maghrib-time">--:--</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="prayer-card" id="isha-card">
+                        <div class="prayer-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="prayer-name">Isha</div>
+                        <div class="prayer-time" id="isha-time">--:--</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prayer Notifications -->
+            <div id="prayer-notifications" class="card mt-4 d-none">
+                <div class="card-header">
+                    <i class="fas fa-bell me-2"></i>Prayer Notifications
+                </div>
+                <div class="card-body">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="notificationSwitch">
+                        <label class="form-check-label" for="notificationSwitch">
+                            Enable prayer time notifications
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-islamic-green text-white py-4 mt-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 arabic-font">"وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ وَارْكَعُوا مَعَ الرَّاكِعِينَ"</p>
+                    <small class="text-light">"And establish prayer and give zakah and bow with those who bow." - Quran 2:43</small>
+                </div>
+                <div class="col-md-6 text-md-end footer-links">
+                    <a href="about.html">About</a>
+                    <a href="prayer-times.html">Prayer Times</a>
+                    <a href="mosque-finder.html" onclick="return addLocationToLink(this)">Mosque Finder</a>
+                    <a href="qibla.html" onclick="return addLocationToLink(this)">Qibla</a>
+                    <small>&copy; 2025 Islamic Prayer Times App</small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Location Manager -->
+    <script src="location-manager.js"></script>
+    
+    <script>
+        // Prayer Times page functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update navigation active state
+            const currentPage = window.location.pathname.split('/').pop() || 'prayer-times.html';
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Initialize location and load prayer times
+            window.locationManager.getLocation().then(() => {
+                loadPrayerTimes();
+            }).catch((error) => {
+                document.getElementById('prayer-loading').classList.add('d-none');
+                document.getElementById('prayer-error').classList.remove('d-none');
+            });
+            
+            // Setup event listeners
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Time format toggle
+            const timeFormatSwitch = document.getElementById('timeFormatSwitch');
+            if (timeFormatSwitch) {
+                const savedFormat = localStorage.getItem('timeFormat');
+                const is24HourFormat = savedFormat ? savedFormat === '24' : true;
+                timeFormatSwitch.checked = is24HourFormat;
+                updateTimeFormatLabel(is24HourFormat);
+                
+                timeFormatSwitch.addEventListener('change', (e) => {
+                    const is24Hour = e.target.checked;
+                    localStorage.setItem('timeFormat', is24Hour ? '24' : '12');
+                    updateTimeFormatLabel(is24Hour);
+                    if (window.prayerTimes) {
+                        displayPrayerTimes(window.prayerTimes, is24Hour);
+                    }
+                });
+            }
+
+            // Calculation method selector
+            const methodSelect = document.getElementById('methodSelect');
+            if (methodSelect) {
+                methodSelect.value = localStorage.getItem('calculationMethod') || '2';
+                methodSelect.addEventListener('change', (e) => {
+                    localStorage.setItem('calculationMethod', e.target.value);
+                    if (window.locationManager.userLocation) {
+                        loadPrayerTimes();
+                    }
+                });
+            }
+
+            // Notification toggle
+            const notificationSwitch = document.getElementById('notificationSwitch');
+            if (notificationSwitch) {
+                notificationSwitch.checked = localStorage.getItem('notificationsEnabled') === 'true';
+                notificationSwitch.addEventListener('change', (e) => {
+                    localStorage.setItem('notificationsEnabled', e.target.checked);
+                });
+            }
+        }
+
+        function updateTimeFormatLabel(is24HourFormat) {
+            const label = document.getElementById('timeFormatLabel');
+            if (label) {
+                label.textContent = is24HourFormat ? '24-hour format' : '12-hour format';
+            }
+        }
+
+        async function loadPrayerTimes() {
+            const location = window.locationManager.userLocation;
+            if (!location) return;
+
+            try {
+                const method = document.getElementById('methodSelect').value || '2';
+                const response = await fetch(
+                    `https://api.aladhan.com/v1/timings/date-string?latitude=${location.lat}&longitude=${location.lng}&method=${method}`
+                );
+                const data = await response.json();
+                
+                if (data.code === 200) {
+                    window.prayerTimes = data.data.timings;
+                    displayPrayerTimes(data.data.timings);
+                    
+                    // Show content, hide loading
+                    document.getElementById('prayer-loading').classList.add('d-none');
+                    document.getElementById('prayer-location-card').classList.remove('d-none');
+                    document.getElementById('prayer-format-toggle').classList.remove('d-none');
+                    document.getElementById('prayer-times-grid').classList.remove('d-none');
+                    document.getElementById('calculation-method').classList.remove('d-none');
+                    document.getElementById('prayer-notifications').classList.remove('d-none');
+                    
+                    // Update location info
+                    document.getElementById('prayer-city').textContent = location.city || 'Unknown';
+                    document.getElementById('prayer-country').textContent = location.country || 'Unknown';
+                    document.getElementById('prayer-coordinates').textContent = 
+                        `${location.lat.toFixed(4)}, ${location.lng.toFixed(4)}`;
+                } else {
+                    throw new Error('Failed to load prayer times');
+                }
+            } catch (error) {
+                console.error('Error loading prayer times:', error);
+                document.getElementById('prayer-loading').classList.add('d-none');
+                document.getElementById('prayer-error').classList.remove('d-none');
+            }
+        }
+
+        function displayPrayerTimes(prayerTimes, is24HourFormat = null) {
+            if (!prayerTimes) return;
+            
+            const use24Hour = is24HourFormat !== null ? is24HourFormat : 
+                (localStorage.getItem('timeFormat') !== '12');
+            
+            // Update prayer times
+            const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha', 'Sunrise'];
+            prayers.forEach(prayer => {
+                const timeElement = document.getElementById(`${prayer.toLowerCase()}-time`);
+                if (timeElement && prayerTimes[prayer]) {
+                    timeElement.textContent = formatTime(prayerTimes[prayer], use24Hour);
+                }
+            });
+
+            highlightCurrentPrayer(prayerTimes);
+        }
+
+        function formatTime(timeString, is24HourFormat) {
+            const [hours, minutes] = timeString.split(':');
+            
+            if (is24HourFormat) {
+                return `${hours}:${minutes}`;
+            } else {
+                const date = new Date();
+                date.setHours(parseInt(hours), parseInt(minutes));
+                return date.toLocaleTimeString('en-US', {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true
+                });
+            }
+        }
+
+        function highlightCurrentPrayer(prayerTimes) {
+            if (!prayerTimes) return;
+
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+            
+            const prayers = [
+                { name: 'fajr', time: prayerTimes.Fajr },
+                { name: 'dhuhr', time: prayerTimes.Dhuhr },
+                { name: 'asr', time: prayerTimes.Asr },
+                { name: 'maghrib', time: prayerTimes.Maghrib },
+                { name: 'isha', time: prayerTimes.Isha }
+            ];
+
+            // Remove current prayer highlighting
+            prayers.forEach(prayer => {
+                document.getElementById(`${prayer.name}-card`)?.classList.remove('current-prayer');
+            });
+
+            // Find current prayer period
+            for (let i = 0; i < prayers.length; i++) {
+                const [hours, minutes] = prayers[i].time.split(':');
+                const prayerTime = parseInt(hours) * 60 + parseInt(minutes);
+                
+                const nextIndex = (i + 1) % prayers.length;
+                const [nextHours, nextMinutes] = prayers[nextIndex].time.split(':');
+                let nextPrayerTime = parseInt(nextHours) * 60 + parseInt(nextMinutes);
+                
+                // Handle day transition
+                if (nextPrayerTime < prayerTime) {
+                    nextPrayerTime += 24 * 60;
+                }
+                
+                if (currentTime >= prayerTime && currentTime < nextPrayerTime) {
+                    document.getElementById(`${prayers[i].name}-card`)?.classList.add('current-prayer');
+                    break;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
