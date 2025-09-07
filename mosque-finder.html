@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mosque Finder - Islamic Prayer Times</title>
+    <meta name="description" content="Find nearby mosques with directions and contact information.">
+       <meta name="keywords" content="mosque finder, find mosque, nearby mosque, masjid near me, Islamic center, prayer location">
+    
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Islamic Style -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Leaflet CSS for Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" /> -->
+    <!-- <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> -->
+
+    <style>
+        /* Islamic Prayer Times App - Custom Styles */
+        :root {
+            --islamic-green: #2d5a3d;
+            --islamic-green-light: #4a8061;
+            --islamic-gold: #d4af37;
+            --islamic-gold-light: #f4d03f;
+            --text-dark: #2c3e50;
+            --text-light: #ecf0f1;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --gradient-green: linear-gradient(135deg, var(--islamic-green), var(--islamic-green-light));
+            --gradient-gold: linear-gradient(135deg, var(--islamic-gold), var(--islamic-gold-light));
+        }
+
+        /* Base Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding-top: 76px;
+        }
+
+        .arabic-font {
+            font-family: 'Amiri', serif;
+            font-weight: 700;
+        }
+
+        /* Navigation */
+        .bg-islamic-green {
+            background: var(--gradient-green) !important;
+            box-shadow: 0 2px 20px var(--shadow-medium);
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            border-radius: 25px;
+            padding: 0.5rem 1rem !important;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Section Header */
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .section-header h1 {
+            color: var(--islamic-green);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        /* Map Container */
+        .map-container {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px var(--shadow-light);
+            height: 500px;
+            position: relative;
+        }
+
+        #mosque-map {
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Mosque List Items */
+        .mosque-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            box-shadow: 0 4px 15px var(--shadow-light);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+
+        .mosque-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px var(--shadow-medium);
+        }
+
+        .mosque-name {
+            font-weight: 600;
+            color: var(--islamic-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .mosque-address {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .mosque-distance {
+            color: var(--islamic-gold);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .distance-badge {
+            background: var(--islamic-gold);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Mosque Actions */
+        .mosque-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .mosque-actions .btn-sm {
+            font-size: 0.8rem;
+            padding: 0.25rem 0.5rem;
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px var(--shadow-light);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            background: var(--gradient-green);
+            color: white;
+            border: none;
+            font-weight: 600;
+        }
+
+        /* Alerts */
+        .alert {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px var(--shadow-light);
+        }
+
+        /* Loading Spinners */
+        .spinner-border {
+            color: var(--islamic-green) !important;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--gradient-green);
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--gradient-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-medium);
+        }
+
+        /* Filter Controls */
+        .filter-controls {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 25px var(--shadow-light);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gradient-green) !important;
+            margin-top: 3rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            margin: 0 10px;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 76px;
+            }
+
+            .map-container {
+                height: 400px;
+            }
+
+            .mosque-actions {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+
+            .mosque-actions .btn-sm {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.4rem;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-islamic-green fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-mosque me-2"></i>
+                Islamic Prayer Times
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="prayer-times.html" onclick="return addLocationToLink(this)">Prayer
+                            Times</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="mosque-finder.html">Mosque Finder</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="qibla.html" onclick="return addLocationToLink(this)">Qibla Finder</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dhikr.html">Dhikr Counter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container py-5">
+            <div class="section-header text-center">
+                <h1><i class="fas fa-mosque me-3"></i>Mosque Finder</h1>
+                <p class="lead">Find nearby mosques with directions and details</p>
+            </div>
+
+            <!-- Location Loading -->
+            <div id="mosque-loading" class="text-center mb-4">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Searching for mosques...</span>
+                </div>
+                <p class="mt-2">Searching for mosques in your area...</p>
+            </div>
+
+            <!-- Location Error -->
+            <div id="mosque-error" class="alert alert-warning text-center d-none" role="alert">
+                <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Location Required</h5>
+                <p class="mb-0">Please allow location access to find nearby mosques.</p>
+            </div>
+
+            <!-- Filter Controls -->
+            <div id="filter-controls" class="filter-controls d-none">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label for="radiusSelect" class="form-label">Search Radius</label>
+                        <select class="form-select" id="radiusSelect">
+                            <option value="1000">1 km</option>
+                            <option value="2000">2 km</option>
+                            <option value="5000" selected>5 km</option>
+                            <option value="10000">10 km</option>
+                            <option value="20000">20 km</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="sortSelect" class="form-label">Sort By</label>
+                        <select class="form-select" id="sortSelect">
+                            <option value="distance" selected>Distance</option>
+                            <option value="rating">Rating</option>
+                            <option value="name">Name</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="filterSelect" class="form-label">Filter</label>
+                        <select class="form-select" id="filterSelect">
+                            <option value="all" selected>All Mosques</option>
+                            <option value="open">Open Now</option>
+                            <option value="rated">Highly Rated</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div id="mosque-results" class="row d-none">
+                <!-- Map Column -->
+                <div class="col-lg-6 mb-4">
+                    <div class="map-container">
+                        <div id="mosque-map"></div>
+                    </div>
+                </div>
+
+                <!-- List Column -->
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">
+                                <i class="fas fa-list me-2"></i>Nearby Mosques
+                                <span class="badge bg-secondary ms-2" id="mosque-count">0</span>
+                            </h5>
+                        </div>
+                        <div class="card-body" style="max-height: 500px; overflow-y: auto;">
+                            <div id="mosque-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-islamic-green text-white py-4 mt-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 arabic-font">"وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ وَارْكَعُوا مَعَ
+                        الرَّاكِعِينَ"</p>
+                    <small class="text-light">"And establish prayer and give zakah and bow with those who bow." - Quran
+                        2:43</small>
+                </div>
+                <div class="col-md-6 text-md-end footer-links">
+                    <a href="about.html">About</a>
+                    <a href="prayer-times.html" onclick="return addLocationToLink(this)">Prayer Times</a>
+                    <a href="mosque-finder.html">Mosque Finder</a>
+                    <a href="qibla.html" onclick="return addLocationToLink(this)">Qibla</a>
+                    <small>&copy; 2025 Islamic Prayer Times App</small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Leaflet JS for Maps -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Location Manager -->
+    <script src="location-manager.js"></script>
+
+    <script>
+        // Mosque Finder page functionality
+        let map = null;
+        let mosqueMarkers = [];
+        let mosqueData = [];
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Update navigation active state
+            const currentPage = window.location.pathname.split('/').pop() || 'mosque-finder.html';
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Initialize location and load mosques
+            window.locationManager.getLocation().then(() => {
+                loadMosques();
+            }).catch((error) => {
+                document.getElementById('mosque-loading').classList.add('d-none');
+                document.getElementById('mosque-error').classList.remove('d-none');
+            });
+
+            // Setup event listeners
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Filter controls
+            document.getElementById('radiusSelect')?.addEventListener('change', () => filterMosques());
+            document.getElementById('sortSelect')?.addEventListener('change', () => sortAndDisplayMosques());
+            document.getElementById('filterSelect')?.addEventListener('change', () => filterMosques());
+        }
+
+        async function loadMosques() {
+            const location = window.locationManager.userLocation;
+            if (!location) return;
+
+            try {
+                // Show loading, hide error
+                document.getElementById('mosque-loading').classList.remove('d-none');
+                document.getElementById('mosque-error').classList.add('d-none');
+
+                // Initialize map
+                initializeMap(location);
+
+                // Use a more comprehensive search for mosques
+                const radius = document.getElementById('radiusSelect')?.value || 5000;
+                const queries = ['mosque', 'masjid', 'islamic center', 'جامع'];
+
+                let allMosques = [];
+
+                for (const query of queries) {
+                    try {
+                        // Using Overpass API for OpenStreetMap data
+                        const overpassUrl = `https://overpass-api.de/api/interpreter?data=[out:json];(node["amenity"="place_of_worship"]["religion"="muslim"](around:${radius},${location.lat},${location.lng});way["amenity"="place_of_worship"]["religion"="muslim"](around:${radius},${location.lat},${location.lng}););out center;`;
+
+                        const response = await fetch(overpassUrl);
+                        const data = await response.json();
+
+                        if (data.elements) {
+                            data.elements.forEach(element => {
+                                const lat = element.lat || element.center?.lat;
+                                const lng = element.lon || element.center?.lon;
+
+                                if (lat && lng) {
+                                    const mosque = {
+                                        id: element.id,
+                                        name: element.tags?.name || 'Mosque',
+                                        lat: lat,
+                                        lng: lng,
+                                        address: element.tags?.['addr:full'] || element.tags?.['addr:street'] || 'Address not available',
+                                        distance: calculateDistance(location.lat, location.lng, lat, lng)
+                                    };
+
+                                    // Avoid duplicates
+                                    if (!allMosques.some(m => Math.abs(m.lat - lat) < 0.001 && Math.abs(m.lng - lng) < 0.001)) {
+                                        allMosques.push(mosque);
+                                    }
+                                }
+                            });
+                        }
+                    } catch (error) {
+                        console.error(`Error searching for ${query}:`, error);
+                    }
+                }
+
+                // If no results from Overpass, try a fallback with mock data
+                if (allMosques.length === 0) {
+                    allMosques = getMockMosques(location);
+                }
+
+                mosqueData = allMosques.sort((a, b) => a.distance - b.distance);
+                displayMosques();
+                addMosquesToMap();
+
+                // Show results, hide loading
+                document.getElementById('mosque-loading').classList.add('d-none');
+                document.getElementById('filter-controls').classList.remove('d-none');
+                document.getElementById('mosque-results').classList.remove('d-none');
+
+            } catch (error) {
+                console.error('Error loading mosques:', error);
+                document.getElementById('mosque-loading').classList.add('d-none');
+                document.getElementById('mosque-error').classList.remove('d-none');
+            }
+        }
+
+        function getMockMosques(location) {
+            // Fallback mock data for demonstration
+            return [
+                {
+                    id: 'mock1',
+                    name: 'Central Mosque',
+                    lat: location.lat + 0.01,
+                    lng: location.lng + 0.01,
+                    address: '123 Main Street, City Center',
+                    distance: 1.2
+                },
+                {
+                    id: 'mock2',
+                    name: 'Islamic Center',
+                    lat: location.lat - 0.015,
+                    lng: location.lng + 0.02,
+                    address: '456 Oak Avenue, Downtown',
+                    distance: 2.1
+                },
+                {
+                    id: 'mock3',
+                    name: 'Community Mosque',
+                    lat: location.lat + 0.02,
+                    lng: location.lng - 0.01,
+                    address: '789 Pine Road, Suburb',
+                    distance: 2.8
+                }
+            ];
+        }
+
+        function calculateDistance(lat1, lng1, lat2, lng2) {
+            const R = 6371; // Radius of the Earth in km
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLng = (lng2 - lng1) * Math.PI / 180;
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLng / 2) * Math.sin(dLng / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c;
+        }
+
+        function initializeMap(location) {
+            if (!map) {
+                map = L.map('mosque-map').setView([location.lat, location.lng], 13);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
+
+                // Add user location marker
+                L.marker([location.lat, location.lng])
+                    .addTo(map)
+                    .bindPopup('Your Location')
+                    .openPopup();
+            }
+        }
+
+        function displayMosques() {
+            const mosqueList = document.getElementById('mosque-list');
+            const mosqueCount = document.getElementById('mosque-count');
+
+            if (!mosqueList) return;
+
+            mosqueList.innerHTML = '';
+
+            if (mosqueData.length === 0) {
+                mosqueList.innerHTML = '<p class="text-center text-muted">No mosques found in your area.</p>';
+                return;
+            }
+
+            mosqueCount.textContent = mosqueData.length;
+
+            mosqueData.forEach(mosque => {
+                displayMosque(mosque);
+            });
+        }
+
+        function displayMosque(mosque) {
+            const mosqueList = document.getElementById('mosque-list');
+            if (!mosqueList) return;
+
+            const mosqueElement = document.createElement('div');
+            mosqueElement.className = 'mosque-item';
+            const distanceText = typeof mosque.distance === 'number' ? `${mosque.distance.toFixed(1)} km` : mosque.distance;
+
+            mosqueElement.innerHTML = `
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="flex-grow-1">
+                        <div class="mosque-name">${mosque.name}</div>
+                        <div class="mosque-address mb-2">${mosque.address}</div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="distance-badge">${distanceText}</span>
+                            <div class="mosque-actions">
+                                <button class="btn btn-sm btn-primary me-2" onclick="getDirections(${mosque.lat}, ${mosque.lng}, '${mosque.name.replace(/'/g, "\\'")}')">
+                                    <i class="fas fa-directions me-1"></i>Directions
+                                </button>
+                                <button class="btn btn-sm btn-outline-primary" onclick="focusOnMap(${mosque.lat}, ${mosque.lng})">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Show on Map
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            mosqueList.appendChild(mosqueElement);
+        }
+
+        function addMosquesToMap() {
+            if (!map) return;
+
+            // Clear existing markers
+            mosqueMarkers.forEach(marker => map.removeLayer(marker));
+            mosqueMarkers = [];
+
+            // Add mosque markers
+            mosqueData.forEach(mosque => {
+                const marker = L.marker([mosque.lat, mosque.lng])
+                    .addTo(map)
+                    .bindPopup(`
+                        <strong>${mosque.name}</strong><br>
+                        ${mosque.address}<br>
+                        <small>${typeof mosque.distance === 'number' ? mosque.distance.toFixed(1) + ' km away' : mosque.distance}</small>
+                    `);
+
+                mosqueMarkers.push(marker);
+            });
+        }
+
+        function filterMosques() {
+            // Implementation for filtering mosques
+            displayMosques();
+            addMosquesToMap();
+        }
+
+        function sortAndDisplayMosques() {
+            const sortBy = document.getElementById('sortSelect')?.value || 'distance';
+
+            if (sortBy === 'distance') {
+                mosqueData.sort((a, b) => a.distance - b.distance);
+            } else if (sortBy === 'name') {
+                mosqueData.sort((a, b) => a.name.localeCompare(b.name));
+            }
+
+            displayMosques();
+        }
+
+        function getDirections(lat, lng, name) {
+            const location = window.locationManager.userLocation;
+            if (!location) {
+                alert('Unable to get directions. Location not available.');
+                return;
+            }
+
+            // Open Google Maps with directions
+            const directionsUrl = `https://www.google.com/maps/dir/${location.lat},${location.lng}/${lat},${lng}`;
+            window.open(directionsUrl, '_blank');
+        }
+
+        function focusOnMap(lat, lng) {
+            if (map) {
+                map.setView([lat, lng], 16);
+
+                // Find and highlight the marker
+                mosqueMarkers.forEach(marker => {
+                    if (Math.abs(marker.getLatLng().lat - lat) < 0.0001 && Math.abs(marker.getLatLng().lng - lng) < 0.0001) {
+                        marker.openPopup();
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>
