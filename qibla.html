@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#2d5a3d">
     <meta name="description" content="Find accurate Qibla direction to Mecca with modern compass technology and Islamic design.">
-    <title>Qibla Finder - Islamic Prayer Direction Compass</title>
+    <title>Qibla Finders - Islamic Prayer Direction Compass</title>
     
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -35,37 +35,69 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            color: var(--text-dark);
-            min-height: 100vh;
-            padding-top: 80px;
-        }
-
         .arabic-font {
             font-family: 'Amiri', serif;
             font-weight: 700;
         }
 
-        /* Header Styles */
+        html {
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: var(--text-dark);
+            height: 100%;
+        }
+
+        [class^="column-"] {
+            display: inline-block;
+        }
+
+        .column-33 {
+            width: 33.33333%;
+        }
+
+        .column-25 {
+            width: 25%;
+        }
+
+        .column-20 {
+            width: 20%;
+        }
+
+        .column-50 {
+            width: 50%;
+        }
+
+        .label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--islamic-green);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            background: transparent;
+        }
+
         header {
+            padding: 1rem;
             background: var(--gradient-green);
             color: white;
-            padding: 1rem;
             position: fixed;
             top: 0;
-            left: 0;
             right: 0;
+            left: 0;
+            transition: transform 0.5s ease-out 0s;
             z-index: 1000;
             box-shadow: 0 2px 20px var(--shadow-medium);
-            transition: transform 0.5s ease-out;
         }
 
         header h1 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 700;
             margin: 0;
             display: flex;
@@ -80,30 +112,21 @@
             line-height: 1.4;
         }
 
-        /* Container and Layout */
         .container {
-            padding: 2rem 1rem;
-            max-width: 1200px;
+            padding: 6rem 1rem 8rem 1rem;
+            overflow: hidden;
+            height: 100%;
+            transition: transform 0.5s ease-out 0s;
+            max-width: 600px;
             margin: 0 auto;
-            min-height: calc(100vh - 160px);
-            transition: transform 0.5s ease-out;
-        }
-
-        /* Compass Styles */
-        .compass-wrapper {
-            background: white;
-            border-radius: 25px;
-            padding: 2rem;
-            box-shadow: 0 15px 35px var(--shadow-light);
-            border: 1px solid rgba(45, 90, 61, 0.1);
-            margin: 2rem 0;
         }
 
         .compass {
             position: relative;
-            width: 320px;
+            width: 100%;
             height: 320px;
-            margin: 0 auto;
+            max-width: 320px;
+            margin: 2rem auto;
             text-align: center;
         }
 
@@ -120,8 +143,9 @@
             height: 100%;
             width: 100%;
             border-radius: 50%;
-            background: radial-gradient(circle at center, #ffffff 0%, #f8f9fa 70%, #e9ecef 100%);
-            box-shadow: inset 0 0 20px rgba(45, 90, 61, 0.1);
+            background: white;
+            box-shadow: 0 15px 35px var(--shadow-light);
+            border: 1px solid rgba(45, 90, 61, 0.1);
         }
 
         .compass__pointer {
@@ -134,84 +158,31 @@
             width: 100%;
         }
 
-        /* Status Display */
-        .status {
-            background: white;
-            border-radius: 20px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            box-shadow: 0 10px 30px var(--shadow-light);
-            border: 1px solid rgba(45, 90, 61, 0.1);
-        }
-
-        .position {
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .position:last-child {
-            margin-bottom: 0;
-        }
-
-        [class^="column-"] {
-            display: inline-block;
-            vertical-align: top;
-            padding: 0 0.5rem;
-            text-align: center;
-        }
-
-        .column-33 { width: 33.33%; }
-        .column-25 { width: 25%; }
-        .column-20 { width: 20%; }
-        .column-50 { width: 50%; }
-
-        .label {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--islamic-green);
-            margin-bottom: 0.3rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .position div:not(.label) {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
-        #position-lab {
-            font-size: 1rem;
-            color: var(--islamic-gold);
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        /* Button Styles */
-        .options {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 1.5rem;
-            flex-wrap: wrap;
-        }
-
         .btn {
             border: 2px solid var(--islamic-green);
             color: var(--islamic-green);
-            background: transparent;
             cursor: pointer;
             text-align: center;
-            padding: 0.75rem 1rem;
-            border-radius: 25px;
+            height: 4rem;
+            background: transparent;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: auto 50%;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            border-radius: 15px;
             font-weight: 600;
             transition: all 0.3s ease;
-            min-width: 120px;
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 0.2rem;
+            font-size: 0.8rem;
         }
 
-        .btn:hover, .btn.active {
+        .btn:hover,
+        .btn.active {
             background: var(--islamic-green);
             color: white;
             transform: translateY(-2px);
@@ -223,14 +194,12 @@
         }
 
         .btn--hide.show {
-            display: inline-block;
+            display: flex;
         }
 
         .btn__icon {
-            width: 24px;
             height: 24px;
-            margin-right: 0.5rem;
-            vertical-align: middle;
+            width: 24px;
         }
 
         .btn__icon--active {
@@ -238,18 +207,45 @@
         }
 
         .btn__icon--inactive {
-            display: inline-block;
+            display: block;
         }
 
         .btn.active .btn__icon--active {
-            display: inline-block;
+            display: block;
         }
 
         .btn.active .btn__icon--inactive {
             display: none;
         }
 
-        /* Popup Styles */
+        .status {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            border-radius: 20px 20px 0 0;
+            padding: 1.5rem;
+            box-shadow: 0 -10px 30px var(--shadow-light);
+        }
+
+        .position {
+            padding-bottom: 0.5rem;
+            text-transform: uppercase;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .position div:not(.label) {
+            margin-top: 0.2rem;
+        }
+
+        .options__btn {
+            border-top: 1px solid rgba(45, 90, 61, 0.1);
+        }
+
         .popup {
             display: none;
             position: fixed;
@@ -270,10 +266,12 @@
         .popup__content {
             max-width: 500px;
             width: 90%;
+            margin: 0 auto;
             background: white;
+            color: var(--text-dark);
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .popup__contents {
@@ -302,13 +300,18 @@
             text-decoration: underline;
         }
 
+        .popup__inner--hide {
+            display: none;
+        }
+
         .popup__close {
             display: block;
-            width: 100%;
             padding: 1rem 2rem;
+            text-align: center;
+            width: 100%;
+            border: none;
             background: var(--gradient-green);
             color: white;
-            border: none;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -318,13 +321,16 @@
             background: var(--gradient-gold);
         }
 
+        #position-lab {
+            font-size: 1rem;
+            color: var(--islamic-gold);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
         /* Night Mode */
         html.nightmode {
             background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
-        }
-
-        html.nightmode body {
-            background: transparent;
             color: white;
         }
 
@@ -336,15 +342,11 @@
             transform: translateY(-4rem);
         }
 
-        html.nightmode .compass-wrapper,
-        html.nightmode .status {
+        html.nightmode .status,
+        html.nightmode .compass__rose__dial {
             background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
-        }
-
-        html.nightmode .compass__rose__dial {
-            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 70%, rgba(0, 0, 0, 0.1) 100%);
         }
 
         html.nightmode .label {
@@ -369,35 +371,26 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            body {
-                padding-top: 70px;
-            }
-            
             .compass {
-                width: 280px;
                 height: 280px;
             }
-            
-            .compass-wrapper {
-                padding: 1.5rem;
-            }
-            
+
             header h1 {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
             }
-            
+
             header p {
                 font-size: 0.8rem;
             }
-            
+
             .container {
-                padding: 1rem;
+                padding: 5rem 1rem 8rem 1rem;
             }
-            
+
             [class^="column-"] {
-                margin-bottom: 1rem;
+                margin-bottom: 0.5rem;
             }
-            
+
             .column-33,
             .column-25,
             .column-20 {
@@ -407,18 +400,12 @@
 
         @media (max-width: 576px) {
             .compass {
-                width: 240px;
                 height: 240px;
             }
-            
+
             [class^="column-"] {
                 width: 100%;
-                margin-bottom: 0.5rem;
-            }
-            
-            .btn {
-                width: 100%;
-                margin-bottom: 0.5rem;
+                margin-bottom: 0.3rem;
             }
         }
 
@@ -437,102 +424,89 @@
         </h1>
         <p id="intro">Find accurate direction to Mecca using your device's compass. This Islamic compass app helps you determine the Qibla direction for prayer from your current location with precision and devotion.</p>
     </header>
-
+    
     <div class="container">
-        <div class="compass-wrapper">
-            <div class="compass">
-                <div id="rose" class="compass__rose">
-                    <svg class="compass__rose__dial" viewBox="0 0 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="65" cy="65" r="50" stroke="#2d5a3d" stroke-width="4" fill="none" />
-                        <!-- North marker -->
-                        <polyline points="62,13  68,13  65,23" fill="#2d5a3d"/>
-                        <!-- East marker -->
-                        <polyline points="117,63  117,67  110,65" fill="#2d5a3d"/>
-                        <!-- South marker -->
-                        <polyline points="63,117  67,117  65,110" fill="#2d5a3d"/>
-                        <!-- West marker -->
-                        <polyline points="13,63  13,67  20,65" fill="#2d5a3d"/>
-                        <!-- Cardinal labels -->
-                        <text x="65" y="8" font-size="12" text-anchor="middle" fill="#2d5a3d" font-weight="bold">N</text>
-                        <text x="123" y="69" font-size="12" text-anchor="middle" fill="#2d5a3d" font-weight="bold">E</text>
-                        <text x="65" y="126" font-size="12" text-anchor="middle" fill="#2d5a3d" font-weight="bold">S</text>
-                        <text x="7" y="69" font-size="12" text-anchor="middle" fill="#2d5a3d" font-weight="bold">W</text>
-                        <!-- Kaaba icon positioned at Qibla direction -->
-                        <g id="kabah" transform="translate(50, 10)">
-                            <rect x="0" y="5" width="30" height="20" fill="#d4af37" rx="2"/>
-                            <rect x="2" y="7" width="26" height="16" fill="#b8941f" rx="1"/>
-                            <circle cx="15" cy="15" r="3" fill="#2d5a3d"/>
-                            <text x="15" y="32" font-size="8" text-anchor="middle" fill="#2d5a3d" font-weight="bold">KAABA</text>
-                        </g>
-                    </svg>
-                </div>
-                <svg class="compass__pointer" viewBox="0 0 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                    <!-- North pointer (gold) -->
-                    <polyline points="56,65  74,65  65,19" fill="#d4af37"/>
-                    <!-- South pointer (white) -->
-                    <polyline points="56,65  74,65  65,111" fill="rgba(255, 255, 255, 0.8)"/>
-                    <!-- Center dot -->
-                    <circle cx="65" cy="65" r="5" stroke="#2d5a3d" stroke-width="2" fill="white" />
+        <div class="compass">
+            <div id="rose" class="compass__rose">
+                <svg class="compass__rose__dial" viewBox="0 0 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="65" cy="65" r="50" stroke="#2d5a3d" stroke-width="4" fill="none" />
+                    <polyline points="62,13  68,13  65,23" fill="#2d5a3d"/>
+                    <polyline points="117,63  117,67  110,65" fill="#2d5a3d"/>
+                    <polyline points="63,117  67,117  65,110" fill="#2d5a3d"/>
+                    <polyline points="13,63  13,67  20,65" fill="#2d5a3d"/>
+                    <text x="65" y="4.2" font-size="9" text-anchor="middle" fill="#2d5a3d" font-weight="bold">N</text>
+                    <text x="127" y="67" font-size="9" text-anchor="middle" fill="#2d5a3d" font-weight="bold">E</text>
+                    <text x="65" y="129" font-size="9" text-anchor="middle" fill="#2d5a3d" font-weight="bold">S</text>
+                    <text x="2.8" y="67" font-size="9" text-anchor="middle" fill="#2d5a3d" font-weight="bold">W</text>
+                    <!-- Kaaba icon (SVG version of the red diamond) -->
+                    <g id="kabah" transform="translate(50, 10)">
+                        <rect x="0" y="5" width="30" height="20" fill="#d4af37" rx="3"/>
+                        <rect x="2" y="7" width="26" height="16" fill="#b8941f" rx="2"/>
+                        <circle cx="15" cy="15" r="3" fill="#2d5a3d"/>
+                        <text x="15" y="32" font-size="7" text-anchor="middle" fill="#2d5a3d" font-weight="bold">KAABA</text>
+                    </g>
                 </svg>
             </div>
-        </div>
-
-        <div class='status'>
-            <!-- Hidden debug elements -->
-            <div id='debug-orientation-default' style="display: none;"></div>
-            <div id='debug-orientation' style="display: none;"></div>
-
-            <div class='position row'>
-                <div id='position-lab'>Detecting your location...</div>
-            </div>
-            
-            <div class='position row'>
-                <div class='column-25'>
-                    <div class='label'><i class="fas fa-compass"></i> Compass</div>
-                    <div id='position-hng'>Calibrating...</div>
-                </div>
-                <div class='column-25'>
-                    <div class='label'><i class="fas fa-kaaba"></i> Qibla</div>
-                    <div id='position-qib'>Calculating...</div>
-                </div>
-                <div class='column-25'>
-                    <div class='label'><i class="fas fa-map-marker-alt"></i> Latitude</div>
-                    <div id='position-lat'>&#8943;</div>
-                </div>
-                <div class='column-25'>
-                    <div class='label'><i class="fas fa-map-marker-alt"></i> Longitude</div>
-                    <div id='position-lng'>&#8943;</div>
-                </div>
-            </div>
-
-            <div class="options">
-                <button id="btn-lock-orientation" class="btn btn--hide" type="button">
-                    <i class="fas fa-unlock btn__icon btn__icon--inactive"></i>
-                    <i class="fas fa-lock btn__icon btn__icon--active"></i>
-                    <span>Lock</span>
-                </button>
-                <button id="btn-nightmode" class="btn" type="button">
-                    <i class="fas fa-moon btn__icon btn__icon--inactive"></i>
-                    <i class="fas fa-sun btn__icon btn__icon--active"></i>
-                    <span>Night Mode</span>
-                </button>
-                <button id="btn-map" class="btn" type="button">
-                    <i class="fas fa-map btn__icon btn__icon--inactive"></i>
-                    <span>Map</span>
-                </button>
-                <button id="btn-info" class="btn btn-popup" type="button" data-name='info'>
-                    <i class="fas fa-info-circle btn__icon btn__icon--inactive"></i>
-                    <span>Info</span>
-                </button>
-            </div>
+            <svg class="compass__pointer" viewBox="0 0 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <polyline points="56,65  74,65  65,19" fill="#d4af37"/>
+                <polyline points="56,65  74,65  65,111" fill="rgba(255, 255, 255, 0.8)"/>
+                <circle cx="65" cy="65" r="5" stroke="#2d5a3d" stroke-width="0" fill="#2c3e50" />
+            </svg>
         </div>
     </div>
 
-    <!-- Popup -->
+    <div class='status'>
+        <div id='debug-orientation-default'></div>
+        <div id='debug-orientation'></div>
+
+        <div class='position row'>
+            <div id='position-lab'>Detecting your location...</div>
+        </div>
+        <div class='position row'>
+            <div class='column-20'>
+                <div class='label'><i class="fas fa-compass"></i> Compass Direction</div>
+                <div id='position-hng'>n/a</div>
+            </div>
+            <div class='column-20'>
+                <div class='label'><i class="fas fa-kaaba"></i> Qibla Direction</div>
+                <div id='position-qib'>n/a</div>
+            </div>
+            <div class='column-25'>
+                <div class='label'><i class="fas fa-map-marker-alt"></i> Latitude</div>
+                <div id='position-lat'>&#8943;</div>
+            </div>
+            <div class='column-33'>
+                <div class='label'><i class="fas fa-map-marker-alt"></i> Longitude</div>
+                <div id='position-lng'>&#8943;</div>
+            </div>
+        </div>
+
+        <div class="options row">
+            <button id="btn-lock-orientation" class="btn btn--hide options__btn column-25" type="button">
+                <i class="fas fa-unlock btn__icon btn__icon--inactive"></i>
+                <i class="fas fa-lock btn__icon btn__icon--active"></i>
+                <span>Lock</span>
+            </button>
+            <button id="btn-nightmode" class="btn options__btn column-33" type="button">
+                <i class="fas fa-moon btn__icon btn__icon--inactive"></i>
+                <i class="fas fa-sun btn__icon btn__icon--active"></i>
+                <span>Night</span>
+            </button>
+            <button id="btn-map" class="btn options__btn column-33" type="button">
+                <i class="fas fa-map-marker-alt btn__icon btn__icon--inactive"></i>
+                <span>Map</span>
+            </button>
+            <button id="btn-info" class="btn btn-popup options__btn column-33" type="button" data-name='info'>
+                <i class="fas fa-info-circle btn__icon btn__icon--inactive"></i>
+                <span>Info</span>
+            </button>
+        </div>
+    </div>
+
     <div id="popup" class="popup">
         <div id="popup-content" class="popup__content">
             <div id="popup-contents" class="popup__contents">
-                <div id="popup-inner-info" class="popup__inner">
+                <div id="popup-inner-info" class="popup__inner popup__inner--hide">
                     <h3><i class="fas fa-kaaba me-2"></i>Qibla Direction Compass</h3>
                     <p>
                         This <strong>Qibla Direction Compass</strong> shows the current qibla direction using your device's compass. The app utilizes your geographical location and device sensors to find the accurate direction to the Kaaba in Mecca.
@@ -579,14 +553,10 @@
         (function () {
             "use strict";
 
-            // Set to true for debugging output
+            //set to true for debugging output
             var debug = false;
 
-            // Kaaba coordinates
-            var KAABA_LAT = 21.422487;
-            var KAABA_LNG = 39.826206;
-
-            // Our current position
+            // our current position
             var positionCurrent = {
                 lat: null,
                 lng: null,
@@ -595,54 +565,54 @@
             
             var roundedCurlat, roundedCurlon;
 
-            // Intro text
+            // intro text
             var intro = document.getElementById("intro");
             var introtext = intro.innerHTML;
 
-            // Qibla direction var
+            // qibla direction var
             let pointDegree;
 
-            // Location info
+            // location info
             var city, state, country;
 
-            // The outer part of the compass that rotates
+            // the outer part of the compass that rotates
             var rose = document.getElementById("rose");
 
-            // Elements that output our position
+            // elements that ouput our position
             var positionLat = document.getElementById("position-lat");
             var positionLng = document.getElementById("position-lng");
             var positionHng = document.getElementById("position-hng");
             var positionQib = document.getElementById("position-qib");
             var positionLab = document.getElementById("position-lab");
 
-            // Debug outputs
+            // debug outputs
             var debugOrientation = document.getElementById("debug-orientation");
             var debugOrientationDefault = document.getElementById("debug-orientation-default");
 
-            // Info popup elements, plus buttons that open popups
+            // info popup elements, pus buttons that open popups
             var popup = document.getElementById("popup");
             var popupContents = document.getElementById("popup-contents");
             var popupInners = document.querySelectorAll(".popup__inner");
             var btnsPopup = document.querySelectorAll(".btn-popup");
 
-            // Buttons at the bottom of the screen
+            // buttons at the bottom of the screen
             var btnLockOrientation = document.getElementById("btn-lock-orientation");
             var btnNightmode = document.getElementById("btn-nightmode");
             var btnMap = document.getElementById("btn-map");
             var btnInfo = document.getElementById("btn-info");
 
-            // If we have shown the heading unavailable warning yet
+            // if we have shown the heading unavailable warning yet
             var warningHeadingShown = false;
 
-            // Switches keeping track of our current app state
+            // switches keeping track of our current app state
             var isOrientationLockable = false;
             var isOrientationLocked = false;
             var isNightMode = false;
 
-            // The orientation of the device on app load
+            // the orientation of the device on app load
             var defaultOrientation;
 
-            // Browser agnostic orientation
+            // browser agnostic orientation
             function getBrowserOrientation() {
                 var orientation;
                 if (screen.orientation && screen.orientation.type) {
@@ -655,7 +625,7 @@
                 return orientation;
             }
 
-            // Browser agnostic orientation unlock
+            // browser agnostic orientation unlock
             function browserUnlockOrientation() {
                 if (screen.orientation && screen.orientation.unlock) {
                     screen.orientation.unlock();
@@ -668,61 +638,94 @@
                 }
             }
 
-            // Called on device orientation change
+            // browser agnostic document.fullscreenElement
+            function getBrowserFullscreenElement() {
+                if (typeof document.fullscreenElement !== "undefined") {
+                    return document.fullscreenElement;
+                } else if (typeof document.webkitFullscreenElement !== "undefined") {
+                    return document.webkitFullscreenElement;
+                } else if (typeof document.mozFullScreenElement !== "undefined") {
+                    return document.mozFullScreenElement;
+                } else if (typeof document.msFullscreenElement !== "undefined") {
+                    return document.msFullscreenElement;
+                }
+            }
+
+            // browser agnostic document.documentElement.requestFullscreen
+            function browserRequestFullscreen() {
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                } else if (document.documentElement.webkitRequestFullscreen) {
+                    document.documentElement.webkitRequestFullscreen();
+                } else if (document.documentElement.mozRequestFullScreen) {
+                    document.documentElement.mozRequestFullScreen();
+                } else if (document.documentElement.msRequestFullscreen) {
+                    document.documentElement.msRequestFullscreen();
+                }
+            }
+
+            // browser agnostic document.documentElement.exitFullscreen
+            function browserExitFullscreen() {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+
+            // called on device orientation change
             function onHeadingChange(event) {
-                var heading = event.webkitCompassHeading || event.alpha;
-                
+                var heading = -1*event.webkitCompassHeading || event.alpha;
+                var alpha;
+                var orientation = getBrowserOrientation();
+
                 if (typeof heading !== "undefined" && heading !== null) {
-                    // Handle different browser implementations
-                    if (event.webkitCompassHeading !== undefined) {
-                        // iOS Safari
-                        heading = event.webkitCompassHeading;
-                    } else if (event.alpha !== null) {
-                        // Android Chrome and other browsers
-                        heading = 360 - event.alpha;
+                    // we have a browser that reports device heading and orientation
+
+                    if (debug) {
+                        debugOrientation.textContent = orientation;
                     }
 
-                    // Normalize heading to 0-360 range
-                    heading = (heading + 360) % 360;
-
-                    // Handle device orientation adjustments
-                    var orientation = getBrowserOrientation();
+                    // what adjustment we have to add to rotation to allow for current device orientation
                     var adjustment = 0;
+                    if (defaultOrientation === "landscape") {
+                        adjustment -= 90;
+                    }
 
-                    if (orientation) {
-                        if (orientation.includes('landscape')) {
-                            if (orientation.includes('secondary')) {
-                                adjustment = 90;
+                    if (typeof orientation !== "undefined") {
+                        var currentOrientation = orientation.split("-");
+
+                        if (defaultOrientation !== currentOrientation[0]) {
+                            if (defaultOrientation === "landscape") {
+                                adjustment -= 270;
                             } else {
-                                adjustment = -90;
+                                adjustment -= 90;
                             }
-                        } else if (orientation.includes('portrait-secondary')) {
-                            adjustment = 180;
+                        }
+
+                        if (currentOrientation[1] === "secondary") {
+                            adjustment -= 180;
                         }
                     }
 
-                    // Apply adjustment and normalize
-                    var finalHeading = (heading + adjustment + 360) % 360;
-                    
-                    // Store our current heading
-                    positionCurrent.hng = Math.round(finalHeading);
+                    // store our current heading
+                    positionCurrent.hng = Math.round(heading + adjustment);
 
-                    // Apply rotation to compass rose (rotate opposite to heading to keep compass correct)
-                    rose.style.transform = "rotate(" + (-finalHeading) + "deg)";
+                    // apply rotation to compass rose
+                    rose.style.transform = "rotateZ(" + (heading + adjustment) + "deg)";
 
-                    // Update heading display
+                    // update compass heading display
                     positionHng.textContent = positionCurrent.hng + "°";
 
-                    // Update Kaaba position if we have location
-                    if (pointDegree !== undefined) {
-                        updateKaabaPosition();
-                    }
-
                 } else {
-                    // Device heading not available
+                    // device heading not available
                     positionHng.textContent = "n/a";
                     
-                    // Show popup if we haven't already
+                    // show popup if we haven't already
                     if (!warningHeadingShown) {
                         warningHeadingShown = true;
                         showPopup("noorientation");
@@ -730,62 +733,42 @@
                 }
             }
 
-            // Update Kaaba position on compass
-            function updateKaabaPosition() {
-                if (pointDegree !== undefined) {
-                    var kabah = document.getElementById("kabah");
-                    if (kabah) {
-                        // Calculate Kaaba position relative to current compass orientation
-                        var kaabaAngle = pointDegree;
-                        
-                        // Position Kaaba icon around the compass circle
-                        var radius = 45; // Distance from center
-                        var centerX = 65;
-                        var centerY = 65;
-                        
-                        // Convert angle to radians and calculate position
-                        var radians = (kaabaAngle - 90) * Math.PI / 180; // -90 to start from top
-                        var x = centerX + radius * Math.cos(radians) - 15; // -15 to center the 30px wide icon
-                        var y = centerY + radius * Math.sin(radians) - 15; // -15 to center the 30px tall icon
-                        
-                        kabah.setAttribute("transform", "translate(" + x + ", " + y + ")");
-                    }
-                }
-            }
-
-            // Called on device position change
+            // called on device position change
             function onPositionChange(position) {
                 var lat = position.coords.latitude;
                 var lng = position.coords.longitude;
 
-                // Store our current position
+                // store our current position  
                 positionCurrent.lat = lat;
                 positionCurrent.lng = lng;
 
-                // Round for display
+                // round for display
                 roundedCurlat = Math.round(lat * 10000) / 10000;
                 roundedCurlon = Math.round(lng * 10000) / 10000;
 
-                // Update position display
+                // update position display
                 positionLat.textContent = roundedCurlat + "°";
                 positionLng.textContent = roundedCurlon + "°";
 
-                // Calculate qibla direction
+                // calculate qibla direction
                 pointDegree = calculateQiblaDirection(lat, lng);
                 positionQib.textContent = pointDegree + "°";
 
-                // Update status
+                // update status
                 positionLab.textContent = "Location detected - Compass ready";
 
                 // Update Kaaba position
                 updateKaabaPosition();
 
-                // Get location details using reverse geocoding
+                // get location details
                 getReverseGeocoding(lat, lng);
             }
 
             // Calculate qibla direction using spherical trigonometry
             function calculateQiblaDirection(lat, lng) {
+                var KAABA_LAT = 21.422487; // Kaaba latitude
+                var KAABA_LNG = 39.826206; // Kaaba longitude
+
                 // Convert to radians
                 var lat1 = lat * Math.PI / 180;
                 var lng1 = lng * Math.PI / 180;
@@ -804,6 +787,26 @@
                 return Math.round(bearing);
             }
 
+            // Update Kaaba position on compass based on qibla direction
+            function updateKaabaPosition() {
+                if (pointDegree !== undefined) {
+                    var kabah = document.getElementById("kabah");
+                    if (kabah) {
+                        // Calculate position on compass circle
+                        var radius = 45; // Distance from center
+                        var centerX = 65;
+                        var centerY = 65;
+                        
+                        // Convert qibla angle to radians (subtract 90 to start from top)
+                        var radians = (pointDegree - 90) * Math.PI / 180;
+                        var x = centerX + radius * Math.cos(radians) - 15; // -15 to center the icon
+                        var y = centerY + radius * Math.sin(radians) - 15;
+                        
+                        kabah.setAttribute("transform", "translate(" + x + ", " + y + ")");
+                    }
+                }
+            }
+
             // Get location details using reverse geocoding
             function getReverseGeocoding(lat, lng) {
                 fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`)
@@ -819,35 +822,35 @@
                     });
             }
 
-            // Called on device position error
+            // called on device position error
             function onPositionError(error) {
                 positionLab.textContent = "Location access denied or unavailable";
                 console.error("Position error:", error);
             }
 
-            // Show popup
+            // show a popup
             function showPopup(name) {
-                // Hide all popup inners
+                // hide all popup inners
                 popupInners.forEach(function(inner) {
                     inner.classList.add("popup__inner--hide");
                 });
 
-                // Show the requested popup inner
+                // show the requested popup inner
                 var popupInner = document.getElementById("popup-inner-" + name);
                 if (popupInner) {
                     popupInner.classList.remove("popup__inner--hide");
                 }
 
-                // Show the popup
+                // show the popup
                 popup.classList.add("popup--show");
             }
 
-            // Hide popup
+            // hide all popups
             function hidePopup() {
                 popup.classList.remove("popup--show");
             }
 
-            // Toggle night mode
+            // toggle night mode
             function toggleNightMode() {
                 isNightMode = !isNightMode;
                 if (isNightMode) {
@@ -859,7 +862,7 @@
                 }
             }
 
-            // Toggle orientation lock
+            // toggle orientation lock
             function toggleOrientationLock() {
                 if (isOrientationLocked) {
                     browserUnlockOrientation();
@@ -879,7 +882,7 @@
                 }
             }
 
-            // Open map
+            // open map
             function openMap() {
                 if (positionCurrent.lat && positionCurrent.lng) {
                     var mapUrl = `https://www.google.com/maps?q=${positionCurrent.lat},${positionCurrent.lng}&z=15`;
@@ -889,22 +892,22 @@
                 }
             }
 
-            // Event listeners
+            // event handlers
             document.addEventListener("DOMContentLoaded", function() {
-                // Store default orientation
+                // record orientation on app load
                 defaultOrientation = getBrowserOrientation() || "portrait";
 
                 if (debug) {
                     debugOrientationDefault.textContent = defaultOrientation;
                 }
 
-                // Check if orientation lock is available
+                // check if orientation lock is available
                 if (screen.orientation && screen.orientation.lock) {
                     isOrientationLockable = true;
                     btnLockOrientation.classList.add("show");
                 }
 
-                // Start watching device orientation
+                // start tracking device orientation
                 if (window.DeviceOrientationEvent) {
                     // For iOS 13+, request permission first
                     if (typeof DeviceOrientationEvent.requestPermission === 'function') {
@@ -924,7 +927,7 @@
                     }
                 }
 
-                // Start watching device position
+                // start tracking device position
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(
                         onPositionChange,
@@ -940,12 +943,12 @@
                 }
             });
 
-            // Button event listeners
+            // button event listeners
             btnNightmode.addEventListener("click", toggleNightMode);
             btnLockOrientation.addEventListener("click", toggleOrientationLock);
             btnMap.addEventListener("click", openMap);
 
-            // Popup button listeners
+            // popup button listeners
             btnsPopup.forEach(function(btn) {
                 btn.addEventListener("click", function() {
                     var popupName = this.getAttribute("data-name");
@@ -953,10 +956,10 @@
                 });
             });
 
-            // Close popup listener
+            // close popup listener
             document.getElementById("popup-close").addEventListener("click", hidePopup);
 
-            // Close popup when clicking outside
+            // close popup when clicking outside
             popup.addEventListener("click", function(e) {
                 if (e.target === popup) {
                     hidePopup();
