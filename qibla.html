@@ -5,90 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black">
-    <meta name="description" content="This web application assists finding qibla direction using your device's compass. Online Qibla Compass can find your location and current qibla direction.">
-    <title>Qibla Pointer Compass - Current Qibla Direction for Your Location</title>
+    <meta name="theme-color" content="#2d5a3d">
+    <meta name="description" content="Find accurate Qibla direction to Mecca with modern compass technology and Islamic design.">
+    <title>Qibla Finder - Islamic Prayer Direction Compass</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Islamic Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* Islamic Theme Variables */
+        :root {
+            --islamic-green: #2d5a3d;
+            --islamic-green-light: #4a8061;
+            --islamic-gold: #d4af37;
+            --islamic-gold-light: #f4d03f;
+            --text-dark: #2c3e50;
+            --text-light: #ecf0f1;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --gradient-green: linear-gradient(135deg, var(--islamic-green), var(--islamic-green-light));
+            --gradient-gold: linear-gradient(135deg, var(--islamic-gold), var(--islamic-gold-light));
+        }
+
         * {
             box-sizing: border-box;
         }
 
-        h1, h2, h3, h4 {
-            font-family: Ubuntu, Verdana, Muli, serif;
-        }
-
-        h1 {
-            font-size: 1.2rem;
-            padding-left: 1.9rem;
-            background: transparent url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48Y2lyY2xlIGN4PSI5IiBjeT0iOSIgcj0iOCIgc3Ryb2tlPSJzaWx2ZXIiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIvPjxwb2x5bGluZSBwb2ludHM9IjcsMyA4LDMgOSw2IiBmaWxsPSJzaWx2ZXIiLz48cG9seWxpbmUgcG9pbnRzPSIxNSw4IDE1LDkgMTIsOSIgZmlsbD0ic2lsdmVyIi8+PHBvbHlsaW5lIHBvaW50cz0iOCwxNSA5LDE1IDksMTIiIGZpbGw9InNpbHZlciIvPjxwb2x5bGluZSBwb2ludHM9IjMsOCAzLDkgNiw5IiBmaWxsPSJzaWx2ZXIiLz48dGV4dCB4PSI5IiB5PSIyLjIiIGZvbnQtc2l6ZT0iOSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPk48L3RleHQ+PHRleHQgeD0iMTUuOCIgeT0iOSIgZm9udC1zaXplPSI5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSI+RTwvdGV4dD48dGV4dCB4PSI5IiB5PSIxNi44IiBmb250LXNpemU9IjkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IndoaXRlIj5TPC90ZXh0Pjx0ZXh0IHg9IjIuMiIgeT0iOSIgZm9udC1zaXplPSI5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSI+VzwvdGV4dD48L3N2Zz4=') 0% 50% no-repeat;
-            background-size: 1.8rem;
-            line-height: 2.0rem;
-        }
-
-        html {
-            font-family: Ubuntu, Tahoma, Muli, sans-serif;
-            font-size: 16px;
-            background-color: black;
-            color: white;
-            background-size: cover;
-            height: 100%;
-        }
-
-        [class^="column-"] {
-            display: inline-block;
-        }
-
-        .column-33 {
-            width: 33.33333%;
-        }
-
-        .column-25 {
-            width: 25%;
-        }
-
-        .column-20 {
-            width: 20%;
-        }
-
-        .column-50 {
-            width: 50%;
-        }
-
-        .label {
-            font-size: 0.5rem;
-        }
-
         body {
-            padding: 0;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
-            height: 100%;
+            padding: 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            padding-top: 80px;
         }
 
+        .arabic-font {
+            font-family: 'Amiri', serif;
+            font-weight: 700;
+        }
+
+        /* Header Styles */
         header {
-            padding: 0.5rem;
-            background-color: rgba(0, 0, 0, 0.2);
+            background: var(--gradient-green);
+            color: white;
+            padding: 1rem;
             position: fixed;
             top: 0;
-            right: 0;
             left: 0;
-            transition: transform 0.5s ease-out 0s;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px var(--shadow-medium);
+            transition: transform 0.5s ease-out;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         header p {
-            font-size: smaller;
+            font-size: 0.9rem;
+            margin: 0.5rem 0 0 0;
+            opacity: 0.9;
+            line-height: 1.4;
         }
 
+        /* Container and Layout */
         .container {
-            padding: 5rem 1rem 8rem 1rem;
-            overflow: hidden;
-            height: 100%;
-            transition: transform 0.5s ease-out 0s;
+            padding: 2rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: calc(100vh - 160px);
+            transition: transform 0.5s ease-out;
+        }
+
+        /* Compass Styles */
+        .compass-wrapper {
+            background: white;
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: 0 15px 35px var(--shadow-light);
+            border: 1px solid rgba(45, 90, 61, 0.1);
+            margin: 2rem 0;
         }
 
         .compass {
             position: relative;
-            width: 100%;
-            height: 100%;
+            width: 320px;
+            height: 320px;
+            margin: 0 auto;
             text-align: center;
         }
 
@@ -98,11 +113,15 @@
             left: 0;
             right: 0;
             bottom: 0;
+            transition: transform 0.3s ease-out;
         }
 
         .compass__rose__dial {
             height: 100%;
             width: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, #ffffff 0%, #f8f9fa 70%, #e9ecef 100%);
+            box-shadow: inset 0 0 20px rgba(45, 90, 61, 0.1);
         }
 
         .compass__pointer {
@@ -115,22 +134,88 @@
             width: 100%;
         }
 
-        .btn {
-            border: 0;
-            color: white;
-            cursor: pointer;
-            text-align: center;
-            height: 4rem;
-            background-color: transparent;
-            background-position: 50% 50%;
-            background-repeat: no-repeat;
-            background-size: auto 50%;
-            -webkit-tap-highlight-color: transparent;
-            outline: none;
+        /* Status Display */
+        .status {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            border: 1px solid rgba(45, 90, 61, 0.1);
         }
 
-        .btn svg * {
-            transition: fill 0.5s ease-out 0s;
+        .position {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .position:last-child {
+            margin-bottom: 0;
+        }
+
+        [class^="column-"] {
+            display: inline-block;
+            vertical-align: top;
+            padding: 0 0.5rem;
+            text-align: center;
+        }
+
+        .column-33 { width: 33.33%; }
+        .column-25 { width: 25%; }
+        .column-20 { width: 20%; }
+        .column-50 { width: 50%; }
+
+        .label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--islamic-green);
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .position div:not(.label) {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        #position-lab {
+            font-size: 1rem;
+            color: var(--islamic-gold);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Button Styles */
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: 2px solid var(--islamic-green);
+            color: var(--islamic-green);
+            background: transparent;
+            cursor: pointer;
+            text-align: center;
+            padding: 0.75rem 1rem;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-width: 120px;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn:hover, .btn.active {
+            background: var(--islamic-green);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-medium);
         }
 
         .btn--hide {
@@ -141,13 +226,11 @@
             display: inline-block;
         }
 
-        .btn:active {
-            background-color: rgba(127, 127, 127, 0.5);
-        }
-
         .btn__icon {
-            height: 50%;
-            width: 100%;
+            width: 24px;
+            height: 24px;
+            margin-right: 0.5rem;
+            vertical-align: middle;
         }
 
         .btn__icon--active {
@@ -155,34 +238,18 @@
         }
 
         .btn__icon--inactive {
-            display: block;
+            display: inline-block;
         }
 
         .btn.active .btn__icon--active {
-            display: block;
+            display: inline-block;
         }
 
         .btn.active .btn__icon--inactive {
             display: none;
         }
 
-        .status {
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
-        }
-
-        .position {
-            padding-bottom: 0.5rem;
-            text-transform: uppercase;
-            text-align: center;
-        }
-
-        .options__btn {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
+        /* Popup Styles */
         .popup {
             display: none;
             position: fixed;
@@ -191,44 +258,73 @@
             bottom: 0;
             right: 0;
             background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
         }
 
         .popup.popup--show {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .popup__content {
-            max-width: 300px;
-            margin: 0 auto;
-            background-color: white;
-            color: black;
+            max-width: 500px;
+            width: 90%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
         }
 
         .popup__contents {
-            padding: 1rem;
+            padding: 2rem;
+            line-height: 1.6;
         }
 
-        .popup__inner--hide {
-            display: none;
+        .popup__contents h3 {
+            color: var(--islamic-green);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .popup__contents p {
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .popup__contents a {
+            color: var(--islamic-gold);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .popup__contents a:hover {
+            text-decoration: underline;
         }
 
         .popup__close {
             display: block;
-            padding: 1rem;
-            text-align: right;
             width: 100%;
-            border: 0;
-            background: transparent;
-            outline: none;
+            padding: 1rem 2rem;
+            background: var(--gradient-green);
+            color: white;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .popup__close:hover {
-            text-decoration: underline;
-            cursor: pointer;
+            background: var(--gradient-gold);
         }
 
+        /* Night Mode */
         html.nightmode {
-            background: black;
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+        }
+
+        html.nightmode body {
+            background: transparent;
             color: white;
         }
 
@@ -240,128 +336,253 @@
             transform: translateY(-4rem);
         }
 
-        html.nightmode .label {
-            color: rgba(127, 127, 127, 0.8);
+        html.nightmode .compass-wrapper,
+        html.nightmode .status {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
         }
 
-        html.nightmode .btn svg * {
-            fill: rgba(127, 127, 127, 0.5);
+        html.nightmode .compass__rose__dial {
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 70%, rgba(0, 0, 0, 0.1) 100%);
+        }
+
+        html.nightmode .label {
+            color: rgba(212, 175, 55, 0.8);
+        }
+
+        html.nightmode .position div:not(.label) {
+            color: white;
+        }
+
+        html.nightmode .btn {
+            border-color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        html.nightmode .btn:hover,
+        html.nightmode .btn.active {
+            background: rgba(45, 90, 61, 0.8);
+            border-color: var(--islamic-green);
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+            
+            .compass {
+                width: 280px;
+                height: 280px;
+            }
+            
+            .compass-wrapper {
+                padding: 1.5rem;
+            }
+            
+            header h1 {
+                font-size: 1.5rem;
+            }
+            
+            header p {
+                font-size: 0.8rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            [class^="column-"] {
+                margin-bottom: 1rem;
+            }
+            
+            .column-33,
+            .column-25,
+            .column-20 {
+                width: 50%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .compass {
+                width: 240px;
+                height: 240px;
+            }
+            
+            [class^="column-"] {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        /* Debug styles (hidden by default) */
+        #debug-orientation,
+        #debug-orientation-default {
+            display: none;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Qibla Compass Online</h1>
-        <p id="intro">This web app helps you find out <em>the direction of qibla using compass</em> and <strong>how to see compass' qibla direction</strong> using your device or <i>smartphone</i>. <b>Qibla Compass</b> will find your current qibla direction.</p>
+        <h1>
+            <i class="fas fa-kaaba"></i>
+            Qibla Direction Finder
+        </h1>
+        <p id="intro">Find accurate direction to Mecca using your device's compass. This Islamic compass app helps you determine the Qibla direction for prayer from your current location with precision and devotion.</p>
     </header>
+
     <div class="container">
-        <div class="compass">
-            <div id="rose" class="compass__rose">
-                <svg class="compass__rose__dial" viewBox="0 0 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="65" cy="65" r="50" stroke="silver" stroke-width="5" fill="none" />
-                    <polyline points="62,13  68,13  65,23" fill="silver"/>
-                    <polyline points="117,63  117,67  110,65" fill="silver"/>
-                    <polyline points="63,117  67,117  65,110" fill="silver"/>
-                    <polyline points="13,63  13,67  20,65" fill="silver"/>
-                    <text x="65" y="4.2" font-size="9" text-anchor="middle" fill="white">N</text>
-                    <text x="127" y="67" font-size="9" text-anchor="middle" fill="white">E</text>
-                    <text x="65" y="129" font-size="9" text-anchor="middle" fill="white">S</text>
-                    <text x="2.8" y="67" font-size="9" text-anchor="middle" fill="white">W</text>
-                    <image id="kabah" x="55" y="15" width="30" height="30" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgdmlld0JveD0iMCAwIDMwIDMwIj48cGF0aCBkPSJNMTUsMyBMMjcsMTUgTDE1LDI3IEwzLDE1IFoiIGZpbGw9IiNiNjAwMDAiLz48L3N2Zz4=" />
+        <div class="compass-wrapper">
+            <div class="compass">
+                <div id="rose" class="compass__rose">
+                    <svg class="compass__rose__dial" viewBox="0 0 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="65" cy="65" r="50" stroke="#2d5a3d" stroke-width="4" fill="none" />
+                        <!-- North marker -->
+                        <polyline points="62,13  68,13  65,23" fill="#2d5a3d"/>
+                        <!-- East marker -->
+                        <polyline points="117,63  117,67  110,65" fill="#2d5a3d"/>
+                        <!-- South marker -->
+                        <polyline points="63,117  67,117  65,110" fill="#2d5a3d"/>
+                        <!-- West marker -->
+                        <polyline points="13,63  13,67  20,65" fill="#2d5a3d"/>
+                        <!-- Cardinal labels -->
+                        <text x="65" y="8" font-size="12" text-anchor="middle" fill="#2d5a3d" font-weight="bold">N</text>
+                        <text x="123" y="69" font-size="12" text-anchor="middle" fill="#2d5a3d" font-weight="bold">E</text>
+                        <text x="65" y="126" font-size="12" text-anchor="middle" fill="#2d5a3d" font-weight="bold">S</text>
+                        <text x="7" y="69" font-size="12" text-anchor="middle" fill="#2d5a3d" font-weight="bold">W</text>
+                        <!-- Kaaba icon -->
+                        <g id="kabah" transform="translate(50, 10)">
+                            <rect x="0" y="5" width="30" height="20" fill="#d4af37" rx="2"/>
+                            <rect x="2" y="7" width="26" height="16" fill="#b8941f" rx="1"/>
+                            <circle cx="15" cy="15" r="3" fill="#2d5a3d"/>
+                            <text x="15" y="32" font-size="8" text-anchor="middle" fill="#2d5a3d" font-weight="bold">KAABA</text>
+                        </g>
+                    </svg>
+                </div>
+                <svg class="compass__pointer" viewBox="0 0 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <!-- North pointer (gold) -->
+                    <polyline points="56,65  74,65  65,19" fill="#d4af37"/>
+                    <!-- South pointer (white) -->
+                    <polyline points="56,65  74,65  65,111" fill="rgba(255, 255, 255, 0.8)"/>
+                    <!-- Center dot -->
+                    <circle cx="65" cy="65" r="5" stroke="#2d5a3d" stroke-width="2" fill="white" />
                 </svg>
             </div>
-            <svg class="compass__pointer" viewBox="0 0 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="56,65  74,65  65,19" fill="#b60000"/>
-                <polyline points="56,65  74,65  65,111" fill="white"/>
-                <circle cx="65" cy="65" r="5" stroke="#b60000" stroke-width="0" fill="black" />
-            </svg>
+        </div>
+
+        <div class='status'>
+            <!-- Hidden debug elements -->
+            <div id='debug-orientation-default' style="display: none;"></div>
+            <div id='debug-orientation' style="display: none;"></div>
+
+            <div class='position row'>
+                <div id='position-lab'>Detecting your location...</div>
+            </div>
+            
+            <div class='position row'>
+                <div class='column-25'>
+                    <div class='label'><i class="fas fa-compass"></i> Compass</div>
+                    <div id='position-hng'>Calibrating...</div>
+                </div>
+                <div class='column-25'>
+                    <div class='label'><i class="fas fa-kaaba"></i> Qibla</div>
+                    <div id='position-qib'>Calculating...</div>
+                </div>
+                <div class='column-25'>
+                    <div class='label'><i class="fas fa-map-marker-alt"></i> Latitude</div>
+                    <div id='position-lat'>&#8943;</div>
+                </div>
+                <div class='column-25'>
+                    <div class='label'><i class="fas fa-map-marker-alt"></i> Longitude</div>
+                    <div id='position-lng'>&#8943;</div>
+                </div>
+            </div>
+
+            <div class="options">
+                <button id="btn-lock-orientation" class="btn btn--hide" type="button">
+                    <i class="fas fa-unlock btn__icon btn__icon--inactive"></i>
+                    <i class="fas fa-lock btn__icon btn__icon--active"></i>
+                    <span>Lock</span>
+                </button>
+                <button id="btn-nightmode" class="btn" type="button">
+                    <i class="fas fa-moon btn__icon btn__icon--inactive"></i>
+                    <i class="fas fa-sun btn__icon btn__icon--active"></i>
+                    <span>Night Mode</span>
+                </button>
+                <button id="btn-map" class="btn" type="button">
+                    <i class="fas fa-map btn__icon btn__icon--inactive"></i>
+                    <span>Map</span>
+                </button>
+                <button id="btn-info" class="btn btn-popup" type="button" data-name='info'>
+                    <i class="fas fa-info-circle btn__icon btn__icon--inactive"></i>
+                    <span>Info</span>
+                </button>
+            </div>
         </div>
     </div>
 
-    <div class='status'>
-        <div id='debug-orientation-default'></div>
-        <div id='debug-orientation'></div>
-
-        <div class='position row'>
-            <div id='position-lab'></div>
-        </div>
-        <div class='position row'>
-            <div class='column-20'>
-                <div class='label'>Compass Direction</div>
-                <div id='position-hng'>n/a</div>
-            </div>
-            <div class='column-20'>
-                <div class='label'>Qibla Direction</div>
-                <div id='position-qib'>n/a</div>
-            </div>
-            <div class='column-25'>
-                <div class='label'>Latitude</div>
-                <div id='position-lat'>&#8943;</div>
-            </div>
-            <div class='column-33'>
-                <div class='label'>Longitude</div>
-                <div id='position-lng'>&#8943;</div>
-            </div>
-        </div>
-
-        <div class="options row">
-            <button id="btn-lock-orientation" class="btn btn--hide options__btn column-25" type="button">
-                <svg alt="lock off" class="btn__icon btn__icon--inactive" version="1.1" xmlns="http://www.w3.org/2000/svg" width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
-                    <path id="lock-15-icon" d="M256,90.001c91.74,0,166,74.243,166,166c0,91.74-74.243,165.998-166,165.998 c-91.741,0-166-74.241-166-165.998C90,164.259,164.243,90.001,256,90.001 M256,50.001c-113.771,0-206,92.229-206,206 s92.229,205.998,206,205.998c113.771,0,206-92.227,206-205.998S369.771,50.001,256,50.001L256,50.001z M358.999,242.667V347h-148 V242.667H358.999z M238.667,196.333v31.334h25v-31.334c0-30.511-24.822-55.333-55.334-55.333c-30.51,0-55.332,24.822-55.332,55.333 v31.334h25v-31.334c0-16.726,13.607-30.333,30.332-30.333C225.06,166,238.667,179.607,238.667,196.333z" fill="white" />
-                </svg>
-                <svg alt="lock on" class="btn__icon btn__icon--active" version="1.1" xmlns="http://www.w3.org/2000/svg" width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
-                    <path id="lock-13-icon" d="M256,90.001c91.74,0,166,74.243,166,166c0,91.74-74.243,165.998-166,165.998 c-91.741,0-166-74.241-166-165.998C90,164.259,164.243,90.001,256,90.001 M256,50.001c-113.771,0-206,92.229-206,206 s92.229,205.998,206,205.998c113.771,0,206-92.227,206-205.998S369.771,50.001,256,50.001L256,50.001z M201.225,227.537v-31.585 c0-30.755,25.021-55.776,55.775-55.776s55.775,25.021,55.775,55.776v31.585h-25.2v-31.585c0-16.859-13.716-30.576-30.575-30.576 s-30.575,13.717-30.575,30.576v31.585H201.225z M182.409,242.656v105.169h149.182V242.656H182.409z" fill="white" />
-                </svg>
-            </button>
-            <button id="btn-nightmode" class="btn options__btn column-33" type="button">
-                <svg class="btn__icon btn__icon--inactive" version="1.1" xmlns="http://www.w3.org/2000/svg" width="512px" height="512px" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="butt" stroke-linejoin="round" enable-background="new 0 0 512 512" xml:space="preserve">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-                <svg class="btn__icon btn__icon--active" version="1.1" xmlns="http://www.w3.org/2000/svg" width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-            </button>
-            <button id="btn-map" class="btn options__btn column-33" type="button">
-                <svg alt="map" class="btn__icon btn__icon--inactive" version="1.1" xmlns="http://www.w3.org/2000/svg" width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
-                    <path id="location-icon" d="M256,50c-72.072,0-130.5,58.427-130.5,130.5c0,72.073,57.114,155.833,130.5,281.5 c73.388-125.666,130.5-209.427,130.5-281.5C386.5,108.427,328.074,50,256,50z M256,224.133c-25.848,0-46.801-20.953-46.801-46.8 s20.953-46.8,46.801-46.8s46.801,20.953,46.801,46.8S281.848,224.133,256,224.133z" fill="white" />
-                </svg>
-            </button>
-            <button id="btn-info" class="btn btn-popup options__btn column-33" type="button" data-name='info'>
-                <svg alt="info" class="btn__icon btn__icon--inactive" version="1.1" xmlns="http://www.w3.org/2000/svg" width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
-                    <path id="info-2-icon" d="M255.998,90.001c91.74,0,166.002,74.241,166.002,165.998c0,91.741-74.245,166-166.002,166 c-91.74,0-165.998-74.243-165.998-166C90,164.259,164.243,90.001,255.998,90.001 M255.998,50.001 C142.229,50.001,50,142.229,50,255.999c0,113.771,92.229,206,205.998,206c113.771,0,206.002-92.229,206.002-206 C462,142.229,369.77,50.001,255.998,50.001L255.998,50.001z M285.822,367.567h-57.646V230.6h57.646V367.567z M257,202.268 c-17.522,0-31.729-14.206-31.729-31.73c0-17.522,14.206-31.729,31.729-31.729c17.524,0,31.728,14.206,31.728,31.729 C288.728,188.062,274.524,202.268,257,202.268z" fill="white" />
-                </svg>
-            </button>
-        </div>
-    </div>
-
+    <!-- Popup -->
     <div id="popup" class="popup">
         <div id="popup-content" class="popup__content">
             <div id="popup-contents" class="popup__contents">
-                <div id="popup-inner-info" class="popup__inner popup__inner--hide">
+                <div id="popup-inner-info" class="popup__inner">
+                    <h3><i class="fas fa-kaaba me-2"></i>Qibla Direction Compass</h3>
                     <p>
-                        <b>Qibla Direction Compass</b> shows <em>current qibla directon using compass</em>. This qibla compass app utilizes your geographical location and other location services from your device to find qibla. Therefore, the qibla direction's accuracy shown depends on your device. Compass inside your smartphone can be affected by strong <b>magnetic fields</b> around it. For best results, stay away from magnets, metals, and other devices with magnetic fields. Calibrate your compass <em>by moving the device forming number 8 shape</em> vertically and horizontally a few times.
+                        This <strong>Qibla Direction Compass</strong> shows the current qibla direction using your device's compass. The app utilizes your geographical location and device sensors to find the accurate direction to the Kaaba in Mecca.
                     </p>
                     <p>
-                        Find qibla direction for your location using <a href="https://www.al-habib.info/qibla-pointer/list-map-qibla-direction.htm" target="_blank">Qibla Direction Database</a> or use <a href="https://www.al-habib.info/qibla-pointer/interactive-qibla-pointer-map.htm" target="_blank">Interactive Qibla Pointer Map</a>.
+                        <strong>For best results:</strong>
+                    </p>
+                    <ul>
+                        <li>Stay away from magnets, metals, and electronic devices</li>
+                        <li>Calibrate your compass by moving the device in a figure-8 pattern</li>
+                        <li>Hold your device flat and parallel to the ground</li>
+                        <li>Ensure location services are enabled</li>
+                    </ul>
+                    <p class="arabic-font" style="text-align: center; font-size: 1.2rem; color: var(--islamic-green); margin: 1rem 0;">
+                        "فَوَلِّ وَجْهَكَ شَطْرَ الْمَسْجِدِ الْحَرَامِ"
+                    </p>
+                    <p style="text-align: center; font-style: italic; color: #666;">
+                        "Turn your face toward the Sacred Mosque" - Quran 2:144
                     </p>
                 </div>
                 <div id="popup-inner-noorientation" class="popup__inner popup__inner--hide">
-                    <p>Unfortunately, your device or phone does not support location service or we cannot detect its compass.</p>
-                    <p>Find your qibla direction using alternative method of using online map: <a href="https://www.al-habib.info/qibla-pointer/interactive-qibla-pointer-map.htm" target="_blank">Map-based Qibla Pointer</a> or <a href="https://www.al-habib.info/qibla-pointer/list-map-qibla-direction.htm" target="_blank">Database of Qibla Directions</a>.</p>
+                    <h3><i class="fas fa-exclamation-triangle me-2"></i>Device Not Supported</h3>
+                    <p>Unfortunately, your device does not support compass functionality or we cannot detect location services.</p>
+                    <p>
+                        <strong>Alternative methods:</strong>
+                    </p>
+                    <ul>
+                        <li>Use a smartphone or tablet with magnetometer sensors</li>
+                        <li>Enable location services in your browser</li>
+                        <li>Try refreshing the page and granting permissions</li>
+                    </ul>
                 </div>
             </div>
-            <button id="popup-close" class="popup__close" href='#'>CLOSE</button>
+            <button id="popup-close" class="popup__close">
+                <i class="fas fa-times me-2"></i>Close
+            </button>
         </div>
     </div>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
         (function () {
             "use strict";
 
-            //set to true for debugging output
+            // Set to true for debugging output
             var debug = false;
 
-            // our current position
+            // Our current position
             var positionCurrent = {
                 lat: null,
                 lng: null,
@@ -370,54 +591,54 @@
             
             var roundedCurlat, roundedCurlon;
 
-            // intro text
+            // Intro text
             var intro = document.getElementById("intro");
             var introtext = intro.innerHTML;
 
-            // qibla direction var
+            // Qibla direction var
             let pointDegree;
 
-            // location info
+            // Location info
             var city, state, country;
 
-            // the outer part of the compass that rotates
+            // The outer part of the compass that rotates
             var rose = document.getElementById("rose");
 
-            // elements that ouput our position
+            // Elements that output our position
             var positionLat = document.getElementById("position-lat");
             var positionLng = document.getElementById("position-lng");
             var positionHng = document.getElementById("position-hng");
             var positionQib = document.getElementById("position-qib");
             var positionLab = document.getElementById("position-lab");
 
-            // debug outputs
+            // Debug outputs
             var debugOrientation = document.getElementById("debug-orientation");
             var debugOrientationDefault = document.getElementById("debug-orientation-default");
 
-            // info popup elements, pus buttons that open popups
+            // Info popup elements, plus buttons that open popups
             var popup = document.getElementById("popup");
             var popupContents = document.getElementById("popup-contents");
             var popupInners = document.querySelectorAll(".popup__inner");
             var btnsPopup = document.querySelectorAll(".btn-popup");
 
-            // buttons at the bottom of the screen
+            // Buttons at the bottom of the screen
             var btnLockOrientation = document.getElementById("btn-lock-orientation");
             var btnNightmode = document.getElementById("btn-nightmode");
             var btnMap = document.getElementById("btn-map");
             var btnInfo = document.getElementById("btn-info");
 
-            // if we have shown the heading unavailable warning yet
+            // If we have shown the heading unavailable warning yet
             var warningHeadingShown = false;
 
-            // switches keeping track of our current app state
+            // Switches keeping track of our current app state
             var isOrientationLockable = false;
             var isOrientationLocked = false;
             var isNightMode = false;
 
-            // the orientation of the device on app load
+            // The orientation of the device on app load
             var defaultOrientation;
 
-            // browser agnostic orientation
+            // Browser agnostic orientation
             function getBrowserOrientation() {
                 var orientation;
                 if (screen.orientation && screen.orientation.type) {
@@ -430,7 +651,7 @@
                 return orientation;
             }
 
-            // browser agnostic orientation unlock
+            // Browser agnostic orientation unlock
             function browserUnlockOrientation() {
                 if (screen.orientation && screen.orientation.unlock) {
                     screen.orientation.unlock();
@@ -443,7 +664,7 @@
                 }
             }
 
-            // browser agnostic document.fullscreenElement
+            // Browser agnostic document.fullscreenElement
             function getBrowserFullscreenElement() {
                 if (typeof document.fullscreenElement !== "undefined") {
                     return document.fullscreenElement;
@@ -456,7 +677,7 @@
                 }
             }
 
-            // browser agnostic document.documentElement.requestFullscreen
+            // Browser agnostic document.documentElement.requestFullscreen
             function browserRequestFullscreen() {
                 if (document.documentElement.requestFullscreen) {
                     document.documentElement.requestFullscreen();
@@ -469,7 +690,7 @@
                 }
             }
 
-            // browser agnostic document.documentElement.exitFullscreen
+            // Browser agnostic document.documentElement.exitFullscreen
             function browserExitFullscreen() {
                 if (document.exitFullscreen) {
                     document.exitFullscreen();
@@ -482,20 +703,20 @@
                 }
             }
 
-            // called on device orientation change
+            // Called on device orientation change
             function onHeadingChange(event) {
                 var heading = -1*event.webkitCompassHeading || event.alpha;
                 var alpha;
                 var orientation = getBrowserOrientation();
 
                 if (typeof heading !== "undefined" && heading !== null) {
-                    // we have a browser that reports device heading and orientation
+                    // We have a browser that reports device heading and orientation
 
                     if (debug) {
                         debugOrientation.textContent = orientation;
                     }
 
-                    // what adjustment we have to add to rotation to allow for current device orientation
+                    // What adjustment we have to add to rotation to allow for current device orientation
                     var adjustment = 0;
                     if (defaultOrientation === "landscape") {
                         adjustment -= 90;
@@ -517,399 +738,223 @@
                         }
                     }
 
-                    positionCurrent.hng = heading - window.orientation;// + adjustment;
+                    // Store our current heading
+                    positionCurrent.hng = Math.round(heading + adjustment);
 
-                    var phase = positionCurrent.hng < 0 ? 360 + positionCurrent.hng : positionCurrent.hng;
-                    positionHng.textContent = (360 - phase | 0) + "°";
-                    //indicate heading near Qibla
-                    var qiboffset = Math.abs((360 - phase) - pointDegree);
-                    if(qiboffset < 15) {
-                        alpha = (15 - qiboffset) / 15;
-                        positionHng.style.background = "rgba(200,0,0,"+alpha+")";
-                        kabah.style.background = "rgba(170,0,0,"+alpha+")";
-                        intro.innerHTML = "&#128331; Qibla Direction Found &#128332;";
-                        intro.style.color = "rgba(255,255,255,"+alpha+")";
-                        intro.style.fontSize = "1.5em";
-                        intro.style.textAlign = "center";
-                    } else {
-                        intro.style.color = "white";
-                        intro.style.fontSize = "0.8em";
-                        intro.style.textAlign = "left";
-                        intro.innerHTML = introtext;
-                        positionHng.style.background = "none";
-                    }
+                    // Apply rotation to compass rose
+                    rose.style.transform = "rotateZ(" + (heading + adjustment) + "deg)";
 
-                    // apply rotation to compass rose
-                    if (typeof rose.style.transform !== "undefined") {
-                        rose.style.transform = "rotateZ(" + positionCurrent.hng + "deg)";
-                    } else if (typeof rose.style.webkitTransform !== "undefined") {
-                        rose.style.webkitTransform = "rotateZ(" + positionCurrent.hng + "deg)";
-                    }
+                    // Update heading display
+                    positionHng.textContent = positionCurrent.hng + "°";
+
                 } else {
-                    // device can't show heading
+                    // Device heading not available
                     positionHng.textContent = "n/a";
-                    showHeadingWarning();
-                }
-            }
-
-            function showHeadingWarning() {
-                if (!warningHeadingShown) {
-                    popupOpen("noorientation");
-                    warningHeadingShown = true;
-                }
-            }
-
-            function onFullscreenChange() {
-                if (isOrientationLockable && getBrowserFullscreenElement()) {
-                    if (screen.orientation && screen.orientation.lock) {
-                        screen.orientation.lock(getBrowserOrientation()).then(function () {
-                        }).catch(function () {
-                        });
+                    
+                    // Show popup if we haven't already
+                    if (!warningHeadingShown) {
+                        warningHeadingShown = true;
+                        showPopup("noorientation");
                     }
-                } else {
-                    lockOrientationRequest(false);
                 }
             }
 
-            function toggleOrientationLockable(lockable) {
-                isOrientationLockable = lockable;
+            // Called on device position change
+            function onPositionChange(position) {
+                var lat = position.coords.latitude;
+                var lng = position.coords.longitude;
 
-                if (isOrientationLockable) {
-                    btnLockOrientation.classList.remove("btn--hide");
+                // Store our current position
+                positionCurrent.lat = lat;
+                positionCurrent.lng = lng;
 
-                    btnNightmode.classList.add("column-25");
-                    btnNightmode.classList.remove("column-33");
-                    btnMap.setAttribute("title","Open map of qibla direction");
-                    btnMap.classList.add("column-25");
-                    btnMap.classList.remove("column-33");
-                    btnInfo.classList.add("column-25");
-                    btnInfo.classList.remove("column-33");
-                } else {
-                    btnLockOrientation.classList.add("btn--hide");
+                // Round for display
+                roundedCurlat = Math.round(lat * 10000) / 10000;
+                roundedCurlon = Math.round(lng * 10000) / 10000;
 
-                    btnNightmode.classList.add("column-33");
-                    btnNightmode.classList.remove("column-25");
-                    btnMap.setAttribute("title","Open map of qibla direction");
-                    btnMap.classList.add("column-33");
-                    btnMap.classList.remove("column-25");
-                    btnInfo.classList.add("column-33");
-                    btnInfo.classList.remove("column-25");
-                }
+                // Update position display
+                positionLat.textContent = roundedCurlat + "°";
+                positionLng.textContent = roundedCurlon + "°";
+
+                // Calculate qibla direction
+                pointDegree = calculateQiblaDirection(lat, lng);
+                positionQib.textContent = pointDegree + "°";
+
+                // Update status
+                positionLab.textContent = "Location detected - Compass ready";
+
+                // Get location details using reverse geocoding
+                getReverseGeocoding(lat, lng);
             }
 
-            function checkLockable() {
-                if (screen.orientation && screen.orientation.lock) {
-                    screen.orientation.lock(getBrowserOrientation()).then(function () {
-                        toggleOrientationLockable(true);
-                        browserUnlockOrientation();
-                    }).catch(function (event) {
-                        if (event.code === 18) { // The page needs to be fullscreen in order to call lockOrientation(), but is lockable
-                            toggleOrientationLockable(true);
-                            browserUnlockOrientation(); //needed as chrome was locking orientation (even if not in fullscreen, bug??)
-                        } else {  // lockOrientation() is not available on this device (or other error)
-                            toggleOrientationLockable(false);
-                        }
+            // Calculate qibla direction using spherical trigonometry
+            function calculateQiblaDirection(lat, lng) {
+                var KAABA_LAT = 21.422487; // Kaaba latitude
+                var KAABA_LNG = 39.826206; // Kaaba longitude
+
+                // Convert to radians
+                var lat1 = lat * Math.PI / 180;
+                var lng1 = lng * Math.PI / 180;
+                var lat2 = KAABA_LAT * Math.PI / 180;
+                var lng2 = KAABA_LNG * Math.PI / 180;
+
+                var dlng = lng2 - lng1;
+
+                var y = Math.sin(dlng) * Math.cos(lat2);
+                var x = (Math.cos(lat1) * Math.sin(lat2)) - (Math.sin(lat1) * Math.cos(lat2) * Math.cos(dlng));
+
+                var bearing = Math.atan2(y, x);
+                bearing = bearing * 180 / Math.PI;
+                bearing = (bearing + 360) % 360;
+
+                return Math.round(bearing);
+            }
+
+            // Get location details using reverse geocoding
+            function getReverseGeocoding(lat, lng) {
+                fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`)
+                    .then(response => response.json())
+                    .then(data => {
+                        city = data.city || data.locality || 'Unknown';
+                        country = data.countryName || 'Unknown';
+                        positionLab.textContent = `${city}, ${country}`;
+                    })
+                    .catch(error => {
+                        console.error('Error getting location details:', error);
+                        positionLab.textContent = `${roundedCurlat}°, ${roundedCurlon}°`;
                     });
-                } else {
-                    toggleOrientationLockable(false);
-                }
             }
 
-            function lockOrientationRequest(doLock) {
-                if (isOrientationLockable) {
-                    if (doLock) {
-                        browserRequestFullscreen();
-                        lockOrientation(true);
-                    } else {
-                        browserUnlockOrientation();
-                        browserExitFullscreen();
-                        lockOrientation(false);
-                    }
-                }
+            // Called on device position error
+            function onPositionError(error) {
+                positionLab.textContent = "Location access denied or unavailable";
+                console.error("Position error:", error);
             }
 
-            function lockOrientation(locked) {
-                if (locked) {
-                    btnLockOrientation.classList.add("active");
-                } else {
-                    btnLockOrientation.classList.remove("active");
+            // Show popup
+            function showPopup(name) {
+                // Hide all popup inners
+                popupInners.forEach(function(inner) {
+                    inner.classList.add("popup__inner--hide");
+                });
+
+                // Show the requested popup inner
+                var popupInner = document.getElementById("popup-inner-" + name);
+                if (popupInner) {
+                    popupInner.classList.remove("popup__inner--hide");
                 }
 
-                isOrientationLocked = locked;
-            }
-
-            function toggleOrientationLock() {
-                if (isOrientationLockable) {
-                    lockOrientationRequest(!isOrientationLocked);
-                }
-            }
-
-            function locationNameUpdate(position) {
-                roundedCurlat = Math.round(positionCurrent.lat * 1000) / 1000;
-                roundedCurlon = Math.round(positionCurrent.lng * 1000) / 1000;
-
-                var roundedLat = Math.round(position.coords.latitude * 1000) / 1000;
-                var roundedLon = Math.round(position.coords.longitude * 1000) / 1000;
-                if (roundedCurlat == roundedLat && roundedCurlon == roundedLon) {
-                    //no change in position within about 0.1 km or 1/1000 of a degree
-                } else {
-                    // Replace these values with your actual latitude, longitude, and desired format
-                    var lat = position.coords.latitude;
-                    var lon = position.coords.longitude;
-                    var format = "json";
-
-                    var url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=${format}&zoom=15&layer=address&accept-language=id`;
-
-                    // Create a new XMLHttpRequest object
-                    var xhr = new XMLHttpRequest();
-
-                    // Configure the request
-                    xhr.open('GET', url, true);
-
-                    // Set up a callback function to handle the response
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState === 4 && xhr.status === 200) {
-                            // Parse the JSON response
-                            var data = JSON.parse(xhr.responseText);
-
-                            // Access the specific keys you need (city, state, and country)
-                            city = data.name;
-                            state = data.address.state;
-                            country = data.address.country;
-
-                            // Now, you can use these values as needed
-                            positionLab.innerText = city + ", " + state;
-                        }
-                    };
-
-                    // Send the request
-                    xhr.send();
-                }
-            }
-
-            function locationUpdate(position) {
-                locationNameUpdate(position);
-                locationHandler(position); //get qibla direction
-                positionQib.textContent = pointDegree +"°";
-
-                positionCurrent.lat = position.coords.latitude;
-                positionCurrent.lng = position.coords.longitude;
-
-                positionLat.textContent = decimalToSexagesimal(positionCurrent.lat, "lat");
-                positionLng.textContent = decimalToSexagesimal(positionCurrent.lng, "lng");
-            }
-
-            function locationUpdateFail(error) {
-                positionLat.textContent = "n/a";
-                positionLng.textContent = "n/a";
-                console.log("location fail: ", error);
-            }
-
-            function setNightmode(on) {
-                if (on) {
-                    btnNightmode.classList.add("active");
-                } else {
-                    btnNightmode.classList.remove("active");
-                }
-
-                window.setTimeout(function() {
-                    if (on) {
-                        document.documentElement.classList.add("nightmode");
-                    } else {
-                        document.documentElement.classList.remove("nightmode");
-                    }
-                }, 1);
-
-                isNightMode = on;
-            }
-
-            function toggleNightmode() {
-                setNightmode(!isNightMode);
-            }
-
-            function openMap() {
-                var label = "Unknown location";
-                if (city && state) {
-                    label = city + ", " + state;
-                }
-                label = encodeURIComponent(label);
-                window.location.assign("https://www.al-habib.info/qibla-pointer/interactive-qibla-pointer-map.htm?lat="+positionCurrent.lat+"&lon="+positionCurrent.lng+"&label="+label+"&ref=qibla+compass");
-            }
-
-            function openHome() {
-                window.location.assign("https://www.al-habib.info/qibla-pointer/");
-            }
-
-            function popupOpenFromClick(event) {
-                popupOpen(event.currentTarget.dataset.name);
-            }
-
-            function popupOpen(name) {
-                var i;
-                for (i=0; i<popupInners.length; i++) {
-                    popupInners[i].classList.add("popup__inner--hide");
-                }
-                document.getElementById("popup-inner-" + name).classList.remove("popup__inner--hide");
-
+                // Show the popup
                 popup.classList.add("popup--show");
             }
 
-            function popupClose() {
+            // Hide popup
+            function hidePopup() {
                 popup.classList.remove("popup--show");
             }
 
-            function popupContentsClick(event) {
-                event.stopPropagation();
-            }
-
-            function decimalToSexagesimal(decimal, type) {
-                var degrees = decimal | 0;
-                var fraction = Math.abs(decimal - degrees);
-                var minutes = (fraction * 60) | 0;
-                var seconds = (fraction * 3600 - minutes * 60) | 0;
-
-                var direction = "";
-                var positive = degrees > 0;
-                degrees = Math.abs(degrees);
-                switch (type) {
-                    case "lat":
-                        direction = positive ? "N" : "S";
-                        break;
-                    case "lng":
-                        direction = positive ? "E" : "W";
-                        break;
-                }
-
-                return degrees + "°" + minutes + "'" + seconds + "\" " + direction;
-            }
-
-            function requestDeviceOrientation(callback) {
-                if (window.DeviceOrientationEvent == null) {
-                    callback(new Error("DeviceOrientation is not supported."));
-                } else if (DeviceOrientationEvent.requestPermission) {
-                    DeviceOrientationEvent.requestPermission().then(function(state) {
-                        if (state == "granted") {
-                            callback(null);
-                        } else callback(new Error("Permission denied by user"));
-                    }, function(err) {
-                        callback(err);
-                    });
-                } else { // no need for permission
-                    callback(null);
+            // Toggle night mode
+            function toggleNightMode() {
+                isNightMode = !isNightMode;
+                if (isNightMode) {
+                    document.documentElement.classList.add("nightmode");
+                    btnNightmode.classList.add("active");
+                } else {
+                    document.documentElement.classList.remove("nightmode");
+                    btnNightmode.classList.remove("active");
                 }
             }
 
-            function firstClick() {
-                requestDeviceOrientation(function(err) {
-                    if (err == null) {
-                        window.removeEventListener("click", firstClick);
-                        window.removeEventListener("touchend", firstClick);
-                        window.addEventListener("devicemotion", function(e) {
-                            // access e.acceleration, etc.
+            // Toggle orientation lock
+            function toggleOrientationLock() {
+                if (isOrientationLocked) {
+                    browserUnlockOrientation();
+                    btnLockOrientation.classList.remove("active");
+                    isOrientationLocked = false;
+                } else {
+                    // Lock to current orientation
+                    var currentOrientation = getBrowserOrientation() || defaultOrientation + "-primary";
+                    if (screen.orientation && screen.orientation.lock) {
+                        screen.orientation.lock(currentOrientation).then(function() {
+                            btnLockOrientation.classList.add("active");
+                            isOrientationLocked = true;
+                        }).catch(function() {
+                            console.log("Orientation lock failed");
                         });
-                    } else {
-                        // failed; a JS error object is stored in `err`
                     }
-                });
-            }
-
-            //Calculate qibla direction
-            function locationHandler(position) {
-                const { latitude, longitude } = position.coords;
-                pointDegree = calcDegreeToPoint(latitude, longitude);
-                if (pointDegree < 0) {
-                    pointDegree = pointDegree + 360;
                 }
-                calcKabah(pointDegree);
             }
 
-            function calcDegreeToPoint(latitude, longitude) {
-                // Qibla geolocation
-                const point = {
-                    lat: 21.422487,
-                    lng: 39.826206,
-                };
+            // Open map (placeholder)
+            function openMap() {
+                if (positionCurrent.lat && positionCurrent.lng) {
+                    var mapUrl = `https://www.google.com/maps?q=${positionCurrent.lat},${positionCurrent.lng}&z=15`;
+                    window.open(mapUrl, '_blank');
+                } else {
+                    alert("Location not available. Please allow location access first.");
+                }
+            }
 
-                const phiK = (point.lat * Math.PI) / 180.0;
-                const lambdaK = (point.lng * Math.PI) / 180.0;
-                const phi = (latitude * Math.PI) / 180.0;
-                const lambda = (longitude * Math.PI) / 180.0;
-                const psi =
-                    (180.0 / Math.PI) *
-                    Math.atan2(
-                        Math.sin(lambdaK - lambda),
-                        Math.cos(phi) * Math.tan(phiK) -
-                            Math.sin(phi) * Math.cos(lambdaK - lambda)
+            // Event listeners
+            document.addEventListener("DOMContentLoaded", function() {
+                // Store default orientation
+                defaultOrientation = getBrowserOrientation() || "portrait";
+
+                if (debug) {
+                    debugOrientationDefault.textContent = defaultOrientation;
+                }
+
+                // Check if orientation lock is available
+                if (screen.orientation && screen.orientation.lock) {
+                    isOrientationLockable = true;
+                    btnLockOrientation.classList.add("show");
+                }
+
+                // Start watching device orientation
+                if (window.DeviceOrientationEvent) {
+                    window.addEventListener("deviceorientation", onHeadingChange);
+                }
+
+                // Start watching device position
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        onPositionChange,
+                        onPositionError,
+                        {
+                            enableHighAccuracy: true,
+                            timeout: 10000,
+                            maximumAge: 30000
+                        }
                     );
-                return Math.round(psi);
-            }
-
-            //calculate Kabah icon position in the rose compass
-            function calcKabah(pointDegree) {
-                let kabah = document.getElementById("kabah");
-                let circle = document.getElementsByTagName("circle")[0];
-                let svgr = parseInt(circle.getAttribute("r"));
-                let cx = parseInt(circle.getAttribute("cx"));
-                let cy = parseInt(circle.getAttribute("cy"));
-                let kw = parseInt(kabah.getAttribute("width"));
-                let kh = parseInt(kabah.getAttribute("height"));
-                let kx = Math.sin(pointDegree * Math.PI / 180) * svgr + cx - (kw / 2);
-                let ky = - Math.cos(pointDegree * Math.PI / 180) * svgr + cy - (kh / 2);
-                kabah.setAttribute("x", kx);
-                kabah.setAttribute("y", ky);
-                kabah.setAttribute("transform", "rotate(" + pointDegree +", "+ (kx + (kw/2)) +", " + (ky + (kh/2)) +")");
-            }
-
-            function D2R(degrees) {
-                var pi = Math.PI;
-                return degrees * (pi/180);
-            }
-
-            window.addEventListener("click", firstClick);
-            window.addEventListener("touchend", firstClick);
-
-            if (screen.width > screen.height) {
-                defaultOrientation = "landscape";
-            } else {
-                defaultOrientation = "portrait";
-            }
-            if (debug) {
-                debugOrientationDefault.textContent = defaultOrientation;
-            }
-
-            if ('ondeviceorientationabsolute' in window) {
-                window.addEventListener("deviceorientationabsolute", onHeadingChange, true);
-            } else {
-                window.addEventListener("deviceorientation", onHeadingChange, true);
-            }
-
-            document.addEventListener("fullscreenchange", onFullscreenChange);
-            document.addEventListener("webkitfullscreenchange", onFullscreenChange);
-            document.addEventListener("mozfullscreenchange", onFullscreenChange);
-            document.addEventListener("MSFullscreenChange", onFullscreenChange);
-
-            btnLockOrientation.addEventListener("click", toggleOrientationLock);
-            btnNightmode.addEventListener("click", openHome);
-            btnMap.addEventListener("click", openMap);
-
-            var i;
-            for (i=0; i<btnsPopup.length; i++) {
-                btnsPopup[i].addEventListener("click", popupOpenFromClick);
-            }
-
-            popup.addEventListener("click", popupClose);
-            popupContents.addEventListener("click", popupContentsClick);
-
-            navigator.geolocation.watchPosition(locationUpdate, locationUpdateFail, {
-                enableHighAccuracy: false,
-                maximumAge: 30000,
-                timeout: 27000
+                } else {
+                    positionLab.textContent = "Geolocation not supported";
+                }
             });
 
-            setNightmode(false);
-            checkLockable();
+            // Button event listeners
+            btnNightmode.addEventListener("click", toggleNightMode);
+            btnLockOrientation.addEventListener("click", toggleOrientationLock);
+            btnMap.addEventListener("click", openMap);
 
-        }());
+            // Popup button listeners
+            btnsPopup.forEach(function(btn) {
+                btn.addEventListener("click", function() {
+                    var popupName = this.getAttribute("data-name");
+                    showPopup(popupName);
+                });
+            });
+
+            // Close popup listener
+            document.getElementById("popup-close").addEventListener("click", hidePopup);
+
+            // Close popup when clicking outside
+            popup.addEventListener("click", function(e) {
+                if (e.target === popup) {
+                    hidePopup();
+                }
+            });
+
+        })();
     </script>
 </body>
 </html>
