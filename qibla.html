@@ -457,7 +457,7 @@
                         <text x="123" y="69" font-size="12" text-anchor="middle" fill="#2d5a3d" font-weight="bold">E</text>
                         <text x="65" y="126" font-size="12" text-anchor="middle" fill="#2d5a3d" font-weight="bold">S</text>
                         <text x="7" y="69" font-size="12" text-anchor="middle" fill="#2d5a3d" font-weight="bold">W</text>
-                        <!-- Kaaba icon -->
+                        <!-- Kaaba icon positioned at Qibla direction -->
                         <g id="kabah" transform="translate(50, 10)">
                             <rect x="0" y="5" width="30" height="20" fill="#d4af37" rx="2"/>
                             <rect x="2" y="7" width="26" height="16" fill="#b8941f" rx="1"/>
@@ -582,6 +582,10 @@
             // Set to true for debugging output
             var debug = false;
 
+            // Kaaba coordinates
+            var KAABA_LAT = 21.422487;
+            var KAABA_LNG = 39.826206;
+
             // Our current position
             var positionCurrent = {
                 lat: null,
@@ -664,88 +668,55 @@
                 }
             }
 
-            // Browser agnostic document.fullscreenElement
-            function getBrowserFullscreenElement() {
-                if (typeof document.fullscreenElement !== "undefined") {
-                    return document.fullscreenElement;
-                } else if (typeof document.webkitFullscreenElement !== "undefined") {
-                    return document.webkitFullscreenElement;
-                } else if (typeof document.mozFullScreenElement !== "undefined") {
-                    return document.mozFullScreenElement;
-                } else if (typeof document.msFullscreenElement !== "undefined") {
-                    return document.msFullscreenElement;
-                }
-            }
-
-            // Browser agnostic document.documentElement.requestFullscreen
-            function browserRequestFullscreen() {
-                if (document.documentElement.requestFullscreen) {
-                    document.documentElement.requestFullscreen();
-                } else if (document.documentElement.webkitRequestFullscreen) {
-                    document.documentElement.webkitRequestFullscreen();
-                } else if (document.documentElement.mozRequestFullScreen) {
-                    document.documentElement.mozRequestFullScreen();
-                } else if (document.documentElement.msRequestFullscreen) {
-                    document.documentElement.msRequestFullscreen();
-                }
-            }
-
-            // Browser agnostic document.documentElement.exitFullscreen
-            function browserExitFullscreen() {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                } else if (document.mozCancelFullScreen) {
-                    document.mozCancelFullScreen();
-                } else if (document.msExitFullscreen) {
-                    document.msExitFullscreen();
-                }
-            }
-
             // Called on device orientation change
             function onHeadingChange(event) {
-                var heading = -1*event.webkitCompassHeading || event.alpha;
-                var alpha;
-                var orientation = getBrowserOrientation();
-
+                var heading = event.webkitCompassHeading || event.alpha;
+                
                 if (typeof heading !== "undefined" && heading !== null) {
-                    // We have a browser that reports device heading and orientation
-
-                    if (debug) {
-                        debugOrientation.textContent = orientation;
+                    // Handle different browser implementations
+                    if (event.webkitCompassHeading !== undefined) {
+                        // iOS Safari
+                        heading = event.webkitCompassHeading;
+                    } else if (event.alpha !== null) {
+                        // Android Chrome and other browsers
+                        heading = 360 - event.alpha;
                     }
 
-                    // What adjustment we have to add to rotation to allow for current device orientation
+                    // Normalize heading to 0-360 range
+                    heading = (heading + 360) % 360;
+
+                    // Handle device orientation adjustments
+                    var orientation = getBrowserOrientation();
                     var adjustment = 0;
-                    if (defaultOrientation === "landscape") {
-                        adjustment -= 90;
-                    }
 
-                    if (typeof orientation !== "undefined") {
-                        var currentOrientation = orientation.split("-");
-
-                        if (defaultOrientation !== currentOrientation[0]) {
-                            if (defaultOrientation === "landscape") {
-                                adjustment -= 270;
+                    if (orientation) {
+                        if (orientation.includes('landscape')) {
+                            if (orientation.includes('secondary')) {
+                                adjustment = 90;
                             } else {
-                                adjustment -= 90;
+                                adjustment = -90;
                             }
-                        }
-
-                        if (currentOrientation[1] === "secondary") {
-                            adjustment -= 180;
+                        } else if (orientation.includes('portrait-secondary')) {
+                            adjustment = 180;
                         }
                     }
 
+                    // Apply adjustment and normalize
+                    var finalHeading = (heading + adjustment + 360) % 360;
+                    
                     // Store our current heading
-                    positionCurrent.hng = Math.round(heading + adjustment);
+                    positionCurrent.hng = Math.round(finalHeading);
 
-                    // Apply rotation to compass rose
-                    rose.style.transform = "rotateZ(" + (heading + adjustment) + "deg)";
+                    // Apply rotation to compass rose (rotate opposite to heading to keep compass correct)
+                    rose.style.transform = "rotate(" + (-finalHeading) + "deg)";
 
                     // Update heading display
                     positionHng.textContent = positionCurrent.hng + "°";
+
+                    // Update Kaaba position if we have location
+                    if (pointDegree !== undefined) {
+                        updateKaabaPosition();
+                    }
 
                 } else {
                     // Device heading not available
@@ -755,6 +726,29 @@
                     if (!warningHeadingShown) {
                         warningHeadingShown = true;
                         showPopup("noorientation");
+                    }
+                }
+            }
+
+            // Update Kaaba position on compass
+            function updateKaabaPosition() {
+                if (pointDegree !== undefined) {
+                    var kabah = document.getElementById("kabah");
+                    if (kabah) {
+                        // Calculate Kaaba position relative to current compass orientation
+                        var kaabaAngle = pointDegree;
+                        
+                        // Position Kaaba icon around the compass circle
+                        var radius = 45; // Distance from center
+                        var centerX = 65;
+                        var centerY = 65;
+                        
+                        // Convert angle to radians and calculate position
+                        var radians = (kaabaAngle - 90) * Math.PI / 180; // -90 to start from top
+                        var x = centerX + radius * Math.cos(radians) - 15; // -15 to center the 30px wide icon
+                        var y = centerY + radius * Math.sin(radians) - 15; // -15 to center the 30px tall icon
+                        
+                        kabah.setAttribute("transform", "translate(" + x + ", " + y + ")");
                     }
                 }
             }
@@ -783,15 +777,15 @@
                 // Update status
                 positionLab.textContent = "Location detected - Compass ready";
 
+                // Update Kaaba position
+                updateKaabaPosition();
+
                 // Get location details using reverse geocoding
                 getReverseGeocoding(lat, lng);
             }
 
             // Calculate qibla direction using spherical trigonometry
             function calculateQiblaDirection(lat, lng) {
-                var KAABA_LAT = 21.422487; // Kaaba latitude
-                var KAABA_LNG = 39.826206; // Kaaba longitude
-
                 // Convert to radians
                 var lat1 = lat * Math.PI / 180;
                 var lng1 = lng * Math.PI / 180;
@@ -885,7 +879,7 @@
                 }
             }
 
-            // Open map (placeholder)
+            // Open map
             function openMap() {
                 if (positionCurrent.lat && positionCurrent.lng) {
                     var mapUrl = `https://www.google.com/maps?q=${positionCurrent.lat},${positionCurrent.lng}&z=15`;
@@ -912,7 +906,22 @@
 
                 // Start watching device orientation
                 if (window.DeviceOrientationEvent) {
-                    window.addEventListener("deviceorientation", onHeadingChange);
+                    // For iOS 13+, request permission first
+                    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                        DeviceOrientationEvent.requestPermission()
+                            .then(response => {
+                                if (response === 'granted') {
+                                    window.addEventListener("deviceorientation", onHeadingChange);
+                                } else {
+                                    console.log('Device orientation permission denied');
+                                    showPopup("noorientation");
+                                }
+                            })
+                            .catch(console.error);
+                    } else {
+                        // For other browsers
+                        window.addEventListener("deviceorientation", onHeadingChange);
+                    }
                 }
 
                 // Start watching device position
@@ -922,7 +931,7 @@
                         onPositionError,
                         {
                             enableHighAccuracy: true,
-                            timeout: 10000,
+                            timeout: 15000,
                             maximumAge: 30000
                         }
                     );
