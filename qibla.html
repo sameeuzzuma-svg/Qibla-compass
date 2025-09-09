@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,32 +7,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black">
-    <meta name="description" content="This web application assists finding qibla direction using your device's compass. Online Qibla Compass can find your location and current qibla direction.">
-    <title>Qibla Pointer Compass - Current Qibla Direction for Your Location</title>
+    <meta name="theme-color" content="#2d5a3d">
+    <meta name="description" content="Find accurate Qibla direction to Mecca with modern compass technology and Islamic design.">
+    <title>Qibla Finders - Islamic Prayer Direction Compass</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Islamic Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* Islamic Theme Variables */
+        :root {
+            --islamic-green: #2d5a3d;
+            --islamic-green-light: #4a8061;
+            --islamic-gold: #d4af37;
+            --islamic-gold-light: #f4d03f;
+            --text-dark: #2c3e50;
+            --text-light: #ecf0f1;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --gradient-green: linear-gradient(135deg, var(--islamic-green), var(--islamic-green-light));
+            --gradient-gold: linear-gradient(135deg, var(--islamic-gold), var(--islamic-gold-light));
+        }
+
         * {
             box-sizing: border-box;
         }
 
-        h1, h2, h3, h4 {
-            font-family: Ubuntu, Verdana, Muli, serif;
-        }
-
-        h1 {
-            font-size: 1.2rem;
-            padding-left: 1.9rem;
-            background: transparent url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48Y2lyY2xlIGN4PSI5IiBjeT0iOSIgcj0iOCIgc3Ryb2tlPSJzaWx2ZXIiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIvPjxwb2x5bGluZSBwb2ludHM9IjcsMyA4LDMgOSw2IiBmaWxsPSJzaWx2ZXIiLz48cG9seWxpbmUgcG9pbnRzPSIxNSw4IDE1LDkgMTIsOSIgZmlsbD0ic2lsdmVyIi8+PHBvbHlsaW5lIHBvaW50cz0iOCwxNSA5LDE1IDksMTIiIGZpbGw9InNpbHZlciIvPjxwb2x5bGluZSBwb2ludHM9IjMsOCAzLDkgNiw5IiBmaWxsPSJzaWx2ZXIiLz48dGV4dCB4PSI5IiB5PSIyLjIiIGZvbnQtc2l6ZT0iOSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPk48L3RleHQ+PHRleHQgeD0iMTUuOCIgeT0iOSIgZm9udC1zaXplPSI5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSI+RTwvdGV4dD48dGV4dCB4PSI5IiB5PSIxNi44IiBmb250LXNpemU9IjkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IndoaXRlIj5TPC90ZXh0Pjx0ZXh0IHg9IjIuMiIgeT0iOSIgZm9udC1zaXplPSI5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSI+VzwvdGV4dD48L3N2Zz4=') 0% 50% no-repeat;
-            background-size: 1.8rem;
-            line-height: 2.0rem;
+        .arabic-font {
+            font-family: 'Amiri', serif;
+            font-weight: 700;
         }
 
         html {
-            font-family: Ubuntu, Tahoma, Muli, sans-serif;
+            font-family: 'Roboto', sans-serif;
             font-size: 16px;
-            background-color: black;
-            color: white;
-            background-size: cover;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: var(--text-dark);
             height: 100%;
         }
 
@@ -55,40 +71,64 @@
         }
 
         .label {
-            font-size: 0.5rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--islamic-green);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         body {
             padding: 0;
             margin: 0;
             height: 100%;
+            background: transparent;
         }
 
         header {
-            padding: 0.5rem;
-            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+            background: var(--gradient-green);
+            color: white;
             position: fixed;
             top: 0;
             right: 0;
             left: 0;
             transition: transform 0.5s ease-out 0s;
+            z-index: 1000;
+            box-shadow: 0 2px 20px var(--shadow-medium);
+        }
+
+        header h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         header p {
-            font-size: smaller;
+            font-size: 0.9rem;
+            margin: 0.5rem 0 0 0;
+            opacity: 0.9;
+            line-height: 1.4;
         }
 
         .container {
-            padding: 5rem 1rem 8rem 1rem;
+            padding: 6rem 1rem 8rem 1rem;
             overflow: hidden;
             height: 100%;
             transition: transform 0.5s ease-out 0s;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .compass {
             position: relative;
             width: 100%;
-            height: 100%;
+            height: 320px;
+            max-width: 320px;
+            margin: 2rem auto;
             text-align: center;
         }
 
@@ -98,11 +138,16 @@
             left: 0;
             right: 0;
             bottom: 0;
+            transition: transform 0.3s ease-out;
         }
 
         .compass__rose__dial {
             height: 100%;
             width: 100%;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 15px 35px var(--shadow-light);
+            border: 1px solid rgba(45, 90, 61, 0.1);
         }
 
         .compass__pointer {
@@ -116,21 +161,34 @@
         }
 
         .btn {
-            border: 0;
-            color: white;
+            border: 2px solid var(--islamic-green);
+            color: var(--islamic-green);
             cursor: pointer;
             text-align: center;
             height: 4rem;
-            background-color: transparent;
+            background: transparent;
             background-position: 50% 50%;
             background-repeat: no-repeat;
             background-size: auto 50%;
             -webkit-tap-highlight-color: transparent;
             outline: none;
+            border-radius: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 0.2rem;
+            font-size: 0.8rem;
         }
 
-        .btn svg * {
-            transition: fill 0.5s ease-out 0s;
+        .btn:hover,
+        .btn.active {
+            background: var(--islamic-green);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-medium);
         }
 
         .btn--hide {
@@ -138,16 +196,12 @@
         }
 
         .btn--hide.show {
-            display: inline-block;
-        }
-
-        .btn:active {
-            background-color: rgba(127, 127, 127, 0.5);
+            display: flex;
         }
 
         .btn__icon {
-            height: 50%;
-            width: 100%;
+            height: 24px;
+            width: 24px;
         }
 
         .btn__icon--active {
@@ -167,20 +221,31 @@
         }
 
         .status {
-            position: fixed;
+            /* position: fixed; */
             left: 0;
             right: 0;
             bottom: 0;
+            background: white;
+            border-radius: 20px 20px 0 0;
+            padding: 1.5rem;
+            box-shadow: 0 -10px 30px var(--shadow-light);
         }
 
         .position {
             padding-bottom: 0.5rem;
             text-transform: uppercase;
             text-align: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .position div:not(.label) {
+            margin-top: 0.2rem;
         }
 
         .options__btn {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(45, 90, 61, 0.1);
         }
 
         .popup {
@@ -191,21 +256,50 @@
             bottom: 0;
             right: 0;
             background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
         }
 
         .popup.popup--show {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .popup__content {
-            max-width: 300px;
+            max-width: 500px;
+            width: 90%;
             margin: 0 auto;
-            background-color: white;
-            color: black;
+            background: white;
+            color: var(--text-dark);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .popup__contents {
-            padding: 1rem;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        .popup__contents h3 {
+            color: var(--islamic-green);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .popup__contents p {
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .popup__contents a {
+            color: var(--islamic-gold);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .popup__contents a:hover {
+            text-decoration: underline;
         }
 
         .popup__inner--hide {
@@ -214,21 +308,31 @@
 
         .popup__close {
             display: block;
-            padding: 1rem;
-            text-align: right;
+            padding: 1rem 2rem;
+            text-align: center;
             width: 100%;
-            border: 0;
-            background: transparent;
-            outline: none;
+            border: none;
+            background: var(--gradient-green);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .popup__close:hover {
-            text-decoration: underline;
-            cursor: pointer;
+            background: var(--gradient-gold);
         }
 
+        #position-lab {
+            font-size: 1rem;
+            color: var(--islamic-gold);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Night Mode */
         html.nightmode {
-            background: black;
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
             color: white;
         }
 
@@ -240,20 +344,108 @@
             transform: translateY(-4rem);
         }
 
-        html.nightmode .label {
-            color: rgba(127, 127, 127, 0.8);
+        html.nightmode .status,
+        html.nightmode .compass__rose__dial {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
         }
 
-        html.nightmode .btn svg * {
-            fill: rgba(127, 127, 127, 0.5);
+        html.nightmode .label {
+            color: rgba(212, 175, 55, 0.8);
+        }
+
+        html.nightmode .position div:not(.label) {
+            color: white;
+        }
+
+        html.nightmode .btn {
+            border-color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        html.nightmode .btn:hover,
+        html.nightmode .btn.active {
+            background: rgba(45, 90, 61, 0.8);
+            border-color: var(--islamic-green);
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .compass {
+                height: 280px;
+            }
+
+            header h1 {
+                font-size: 1.4rem;
+            }
+
+            header p {
+                font-size: 0.8rem;
+            }
+
+            .container {
+                padding: 5rem 1rem 8rem 1rem;
+            }
+
+            [class^="column-"] {
+                margin-bottom: 0.5rem;
+            }
+
+            .column-33,
+            .column-25,
+            .column-20 {
+                width: 50%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .compass {
+                height: 240px;
+            }
+
+            [class^="column-"] {
+                width: 100%;
+                margin-bottom: 0.3rem;
+            }
+        }
+
+          /* Footer */
+        footer {
+            background: var(--gradient-green) !important;
+            margin-top: 3rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            margin: 0 10px;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Debug styles (hidden by default) */
+        #debug-orientation,
+        #debug-orientation-default {
+            display: none;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Qibla Compass Online</h1>
-        <p id="intro">This web app helps you find out <em>the direction of qibla using compass</em> and <strong>how to see compass' qibla direction</strong> using your device or <i>smartphone</i>. <b>Qibla Compass</b> will find your current qibla direction.</p>
+        <h1>
+            <i class="fas fa-kaaba"></i>
+            Qibla Direction Finder
+        </h1>
+        <p id="intro">Find accurate direction to Mecca using your device's compass. This Islamic compass app helps you determine the Qibla direction for prayer from your current location with precision and devotion.</p>
     </header>
+    
     <div class="container">
         <div class="compass">
             <div id="rose" class="compass__rose">
@@ -263,10 +455,10 @@
                     <polyline points="117,63  117,67  110,65" fill="silver"/>
                     <polyline points="63,117  67,117  65,110" fill="silver"/>
                     <polyline points="13,63  13,67  20,65" fill="silver"/>
-                    <text x="65" y="4.2" font-size="9" text-anchor="middle" fill="white">N</text>
-                    <text x="127" y="67" font-size="9" text-anchor="middle" fill="white">E</text>
-                    <text x="65" y="129" font-size="9" text-anchor="middle" fill="white">S</text>
-                    <text x="2.8" y="67" font-size="9" text-anchor="middle" fill="white">W</text>
+                    <text x="65" y="4.2" font-size="9" text-anchor="middle" fill="Black">N</text>
+                    <text x="127" y="67" font-size="9" text-anchor="middle" fill="Black">E</text>
+                    <text x="65" y="129" font-size="9" text-anchor="middle" fill="Black">S</text>
+                    <text x="2.8" y="67" font-size="9" text-anchor="middle" fill="Black">W</text>
                     <image id="kabah" x="55" y="15" width="30" height="30" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgdmlld0JveD0iMCAwIDMwIDMwIj48cGF0aCBkPSJNMTUsMyBMMjcsMTUgTDE1LDI3IEwzLDE1IFoiIGZpbGw9IiNiNjAwMDAiLz48L3N2Zz4=" />
                 </svg>
             </div>
@@ -277,6 +469,7 @@
             </svg>
         </div>
     </div>
+
 
     <div class='status'>
         <div id='debug-orientation-default'></div>
@@ -338,22 +531,338 @@
         <div id="popup-content" class="popup__content">
             <div id="popup-contents" class="popup__contents">
                 <div id="popup-inner-info" class="popup__inner popup__inner--hide">
+                    <h3><i class="fas fa-kaaba me-2"></i>Qibla Direction Compass</h3>
                     <p>
-                        <b>Qibla Direction Compass</b> shows <em>current qibla directon using compass</em>. This qibla compass app utilizes your geographical location and other location services from your device to find qibla. Therefore, the qibla direction's accuracy shown depends on your device. Compass inside your smartphone can be affected by strong <b>magnetic fields</b> around it. For best results, stay away from magnets, metals, and other devices with magnetic fields. Calibrate your compass <em>by moving the device forming number 8 shape</em> vertically and horizontally a few times.
+                        This <strong>Qibla Direction Compass</strong> shows the current qibla direction using your device's compass. The app utilizes your geographical location and device sensors to find the accurate direction to the Kaaba in Mecca.
                     </p>
                     <p>
-                        Find qibla direction for your location using <a href="https://www.al-habib.info/qibla-pointer/list-map-qibla-direction.htm" target="_blank">Qibla Direction Database</a> or use <a href="https://www.al-habib.info/qibla-pointer/interactive-qibla-pointer-map.htm" target="_blank">Interactive Qibla Pointer Map</a>.
+                        <strong>For best results:</strong>
+                    </p>
+                    <ul>
+                        <li>Stay away from magnets, metals, and electronic devices</li>
+                        <li>Calibrate your compass by moving the device in a figure-8 pattern</li>
+                        <li>Hold your device flat and parallel to the ground</li>
+                        <li>Ensure location services are enabled</li>
+                    </ul>
+                    <p class="arabic-font" style="text-align: center; font-size: 1.2rem; color: var(--islamic-green); margin: 1rem 0;">
+                        "فَوَلِّ وَجْهَكَ شَطْرَ الْمَسْجِدِ الْحَرَامِ"
+                    </p>
+                    <p style="text-align: center; font-style: italic; color: #666;">
+                        "Turn your face toward the Sacred Mosque" - Quran 2:144
                     </p>
                 </div>
                 <div id="popup-inner-noorientation" class="popup__inner popup__inner--hide">
-                    <p>Unfortunately, your device or phone does not support location service or we cannot detect its compass.</p>
-                    <p>Find your qibla direction using alternative method of using online map: <a href="https://www.al-habib.info/qibla-pointer/interactive-qibla-pointer-map.htm" target="_blank">Map-based Qibla Pointer</a> or <a href="https://www.al-habib.info/qibla-pointer/list-map-qibla-direction.htm" target="_blank">Database of Qibla Directions</a>.</p>
+                    <h3><i class="fas fa-exclamation-triangle me-2"></i>Device Not Supported</h3>
+                    <p>Unfortunately, your device does not support compass functionality or we cannot detect location services.</p>
+                    <p>
+                        <strong>Alternative methods:</strong>
+                    </p>
+                    <ul>
+                        <li>Use a smartphone or tablet with magnetometer sensors</li>
+                        <li>Enable location services in your browser</li>
+                        <li>Try refreshing the page and granting permissions</li>
+                    </ul>
                 </div>
             </div>
-            <button id="popup-close" class="popup__close" href='#'>CLOSE</button>
+            <button id="popup-close" class="popup__close">
+                <i class="fas fa-times me-2"></i>Close
+            </button>
         </div>
     </div>
 
+      <footer class="bg-islamic-green text-white py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 arabic-font">"وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ وَارْكَعُوا مَعَ
+                        الرَّاكِعِينَ"</p>
+                    <small class="text-light">"And establish prayer and give zakah and bow with those who bow." - Quran
+                        2:43</small>
+                </div>
+                <div class="col-md-6 text-md-end footer-links">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms of Service</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#disclaimerModal">Disclaimer</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#cookiesModal">Cookie Policy</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#contactModal">Contact Us</a>
+                    <small>&copy; 2025 Islamic Prayer Times App</small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Legal Modals -->
+    <!-- Privacy Policy Modal -->
+    <div class="modal fade legal-modal" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="privacyModalLabel"><i class="fas fa-shield-alt me-2"></i>Privacy Policy
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>1. Information We Collect</h5>
+                    <p>Our Islamic Prayer Times app collects limited information to provide you with accurate prayer
+                        times and mosque locations:</p>
+                    <ul>
+                        <li><strong>Location Data:</strong> We collect your device's geographical coordinates to
+                            calculate accurate prayer times and find nearby mosques.</li>
+                        <li><strong>Usage Data:</strong> We may collect information about how you interact with our app
+                            to improve user experience.</li>
+                        <li><strong>Device Information:</strong> We collect device type and browser information for
+                            compatibility purposes.</li>
+                    </ul>
+
+                    <h5>2. How We Use Your Information</h5>
+                    <p>We use the collected information solely for the purpose of providing and improving our services:
+                    </p>
+                    <ul>
+                        <li>To calculate accurate prayer times based on your location</li>
+                        <li>To locate mosques near your current position</li>
+                        <li>To improve app functionality and user experience</li>
+                        <li>To provide customer support</li>
+                    </ul>
+
+                    <h5>3. Data Storage and Security</h5>
+                    <p>We prioritize the security of your information:</p>
+                    <ul>
+                        <li>Location data is processed in real-time and not stored on our servers</li>
+                        <li>We implement appropriate security measures to protect your information</li>
+                        <li>We do not sell or share your personal information with third parties</li>
+                    </ul>
+
+                    <h5>4. Your Rights</h5>
+                    <p>You have the right to:</p>
+                    <ul>
+                        <li>Access the personal information we hold about you</li>
+                        <li>Request correction of inaccurate information</li>
+                        <li>Request deletion of your personal data</li>
+                        <li>Opt-out of data collection (though this may limit app functionality)</li>
+                    </ul>
+
+                    <h5>5. Changes to This Policy</h5>
+                    <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting
+                        the new Privacy Policy on this page and updating the "Last Updated" date.</p>
+
+                    <p class="mt-4"><strong>Last Updated:</strong> January 1, 2025</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Terms of Service Modal -->
+    <div class="modal fade legal-modal" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="termsModalLabel"><i class="fas fa-file-contract me-2"></i>Terms of
+                        Service</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>1. Acceptance of Terms</h5>
+                    <p>By accessing and using the Islamic Prayer Times app, you accept and agree to be bound by the
+                        terms and provision of this agreement.</p>
+
+                    <h5>2. Use License</h5>
+                    <p>Permission is granted to temporarily use the Islamic Prayer Times app for personal,
+                        non-commercial transitory viewing only.</p>
+
+                    <h5>3. Disclaimer</h5>
+                    <p>The prayer times and mosque locations are provided for informational purposes only. While we
+                        strive to provide accurate information, we cannot guarantee the absolute accuracy of prayer
+                        times or mosque locations.</p>
+
+                    <h5>4. Limitations</h5>
+                    <p>In no event shall Islamic Prayer Times or its suppliers be liable for any damages arising out of
+                        the use or inability to use the services provided by the app.</p>
+
+                    <h5>5. Accuracy of Materials</h5>
+                    <p>The materials appearing in the Islamic Prayer Times app could include technical, typographical,
+                        or photographic errors. We do not warrant that any of the materials on its app are accurate,
+                        complete or current.</p>
+
+                    <h5>6. Modifications</h5>
+                    <p>Islamic Prayer Times may revise these terms of service for its app at any time without notice. By
+                        using this app you are agreeing to be bound by the then current version of these terms of
+                        service.</p>
+
+                    <h5>7. Governing Law</h5>
+                    <p>These terms and conditions are governed by and construed in accordance with the laws and any
+                        disputes relating to these terms and conditions will be subject to the exclusive jurisdiction of
+                        the courts.</p>
+
+                    <p class="mt-4"><strong>Last Updated:</strong> January 1, 2025</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Disclaimer Modal -->
+    <div class="modal fade legal-modal" id="disclaimerModal" tabindex="-1" aria-labelledby="disclaimerModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="disclaimerModalLabel"><i
+                            class="fas fa-exclamation-circle me-2"></i>Disclaimer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>1. Prayer Times Accuracy</h5>
+                    <p>The prayer times provided by this app are calculated using established mathematical formulas and
+                        are based on your geographical location. While we strive to provide accurate prayer times,
+                        actual prayer times may vary slightly based on local customs, mosque announcements, and other
+                        factors. Users are advised to confirm prayer times with their local mosque for religious
+                        obligations.</p>
+
+                    <h5>2. Mosque Locations</h5>
+                    <p>The mosque locations are sourced from OpenStreetMap and may not be comprehensive or completely
+                        accurate. The inclusion or exclusion of any mosque does not represent an endorsement or
+                        criticism of that institution. We recommend verifying mosque information before visiting.</p>
+
+                    <h5>3. Religious Considerations</h5>
+                    <p>This app is intended as a helpful tool for Muslims but should not replace religious knowledge or
+                        guidance from qualified scholars. Users are responsible for ensuring their prayers and religious
+                        practices comply with their understanding of Islamic requirements.</p>
+
+                    <h5>4. Technical Limitations</h5>
+                    <p>The accuracy of location-based services depends on your device's capabilities and connectivity.
+                        Results may vary based on GPS accuracy, network availability, and other technical factors beyond
+                        our control.</p>
+
+                    <h5>5. No Warranty</h5>
+                    <p>The Islamic Prayer Times app is provided "as is" without any warranties, expressed or implied. We
+                        make no guarantees regarding the availability, accuracy, or reliability of the services.</p>
+
+                    <h5>6. Limitation of Liability</h5>
+                    <p>In no event shall the creators of this app be liable for any missed prayers, religious
+                        obligations, or any direct, indirect, incidental, special, or consequential damages arising from
+                        the use of or inability to use the app.</p>
+
+                    <p class="mt-4"><strong>Last Updated:</strong> January 1, 2025</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Cookie Policy Modal -->
+    <div class="modal fade legal-modal" id="cookiesModal" tabindex="-1" aria-labelledby="cookiesModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cookiesModalLabel"><i class="fas fa-cookie-bite me-2"></i>Cookie Policy
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>1. What Are Cookies</h5>
+                    <p>Cookies are small text files that are stored on your device when you visit websites or use web
+                        applications. They are widely used to make websites work efficiently and provide information to
+                        the owners of the site.</p>
+
+                    <h5>2. How We Use Cookies</h5>
+                    <p>Our Islamic Prayer Times app uses cookies for the following purposes:</p>
+                    <ul>
+                        <li><strong>Essential Cookies:</strong> These are necessary for the app to function properly.
+                            They enable core functionality such as location services and prayer time calculations.</li>
+                        <li><strong>Preference Cookies:</strong> These remember your choices such as time format
+                            preferences (12-hour or 24-hour format).</li>
+                        <li><strong>Analytical Cookies:</strong> These help us understand how users interact with our
+                            app, allowing us to improve its functionality and user experience.</li>
+                    </ul>
+
+                    <h5>3. Third-Party Cookies</h5>
+                    <p>We may use services from third parties that place cookies on your device:</p>
+                    <ul>
+                        <li><strong>Mapping Services:</strong> Our mosque finder feature uses OpenStreetMap which may
+                            place cookies for functionality.</li>
+                        <li><strong>Analytics Services:</strong> We use analytics services to understand how our app is
+                            being used and to make improvements.</li>
+                    </ul>
+
+                    <h5>4. Managing Cookies</h5>
+                    <p>You can control and manage cookies in various ways:</p>
+                    <ul>
+                        <li>Most browsers allow you to refuse cookies or delete them. You can usually find these
+                            settings in your browser's "options" or "preferences" menu.</li>
+                        <li>Please note that disabling cookies may affect the functionality of our app and many other
+                            websites that you visit.</li>
+                    </ul>
+
+                    <h5>5. Consent</h5>
+                    <p>By using our app, you consent to the use of cookies in accordance with this Cookie Policy. If you
+                        do not agree to our use of cookies, you should adjust your browser settings appropriately or
+                        discontinue use of our app.</p>
+
+                    <h5>6. Changes to This Policy</h5>
+                    <p>We may update our Cookie Policy from time to time. We will notify you of any changes by posting
+                        the new Cookie Policy on this page.</p>
+
+                    <p class="mt-4"><strong>Last Updated:</strong> January 1, 2025</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- In your contact page -->
+    <div class="modal fade legal-modal" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contactModalLabel"><i class="fas fa-envelope me-2"></i>Contact Us</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <h5>Get In Touch</h5>
+                    <p>We're here to assist you with any questions about prayer times, mosque locations, or technical
+                        support for our app.</p>
+
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-md-8"> <!-- Increased width for better centering -->
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <div class="contact-icon mb-3">
+                                        <i class="fas fa-envelope fa-2x text-primary"></i>
+                                    </div>
+                                    <h5>Email Support</h5>
+                                    <p>Send us an email for assistance with the app or prayer time calculations</p>
+                                    <a href="mailto:kindnesspath1@gmail.com" class="btn btn-primary mt-2">
+                                        <i class="fas fa-paper-plane me-2"></i>Send Email
+                                    </a>
+                                    <p class="small text-muted mt-2">
+                                        <!-- <em>Once we launch, this will be a dedicated support email</em> -->
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
         (function () {
             "use strict";
