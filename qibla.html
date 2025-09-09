@@ -1,186 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Qibla Compass</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-      color: #2c3e50;
-    }
-    header {
-      padding: 1rem;
-      background: linear-gradient(135deg, #2d5a3d, #4a8061);
-      color: white;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 1.5rem;
-    }
-    .container {
-      padding: 2rem 1rem;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    .compass {
-      position: relative;
-      width: 100%;
-      max-width: 320px;
-      height: 320px;
-      margin: 1.5rem auto;
-    }
-    .compass__rose {
-      position: absolute;
-      inset: 0;
-      transition: transform 0.3s ease-out;
-    }
-    .compass__rose__dial {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: white;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    }
-    .compass__pointer {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-    .status {
-      background: white;
-      border-radius: 15px 15px 0 0;
-      padding: 1rem;
-      box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.08);
-      margin-top: 2rem;
-    }
-    .position.row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      text-align: center;
-      margin-top: 0.5rem;
-    }
-    .position .column {
-      flex: 1;
-      min-width: 120px;
-      margin-bottom: 0.5rem;
-    }
-    .label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #2d5a3d;
-      text-transform: uppercase;
-      margin-bottom: 0.25rem;
-      display: block;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Qibla Compass</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #2c3e50;
+        }
+
+        header {
+            padding: 1rem;
+            background: linear-gradient(135deg, #2d5a3d, #4a8061);
+            color: white;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .container {
+            padding: 2rem 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .compass {
+            position: relative;
+            width: 100%;
+            max-width: 320px;
+            height: 320px;
+            margin: 1.5rem auto;
+        }
+
+        .compass__rose {
+            position: absolute;
+            inset: 0;
+            transition: transform 0.3s ease-out;
+        }
+
+        .compass__rose__dial {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .compass__pointer {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .status {
+            background: white;
+            border-radius: 15px 15px 0 0;
+            padding: 1rem;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.08);
+            margin-top: 2rem;
+        }
+
+        .position.row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .position .column {
+            flex: 1;
+            min-width: 120px;
+            margin-bottom: 0.5rem;
+        }
+
+        .label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #2d5a3d;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+            display: block;
+        }
+    </style>
 </head>
+
 <body>
-  <header>
-    <h1>Qibla Direction Finder</h1>
-    <p id="intro">Find accurate direction to Mecca using your device's compass.</p>
-  </header>
+    <header>
+        <h1>Qibla Direction Finder</h1>
+        <p id="intro">Find accurate direction to Mecca using your device's compass.</p>
+    </header>
 
-  <div class="container">
-    <div class="compass">
-      <div id="rose" class="compass__rose">
-        <svg class="compass__rose__dial" viewBox="0 0 130 130">
-          <circle cx="65" cy="65" r="50" stroke="silver" stroke-width="5" fill="none"/>
-          <text x="65" y="10" font-size="9" text-anchor="middle">N</text>
-          <text x="125" y="70" font-size="9" text-anchor="middle">E</text>
-          <text x="65" y="125" font-size="9" text-anchor="middle">S</text>
-          <text x="5" y="70" font-size="9" text-anchor="middle">W</text>
-          <image id="kabah" x="55" y="15" width="20" height="20"
-            href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAzMCAzMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIGZpbGw9ImJsYWNrIi8+PC9zdmc+" />
-        </svg>
-      </div>
-      <svg class="compass__pointer" viewBox="0 0 130 130">
-        <polyline points="56,65 74,65 65,19" fill="#b60000"/>
-        <polyline points="56,65 74,65 65,111" fill="white"/>
-        <circle cx="65" cy="65" r="5" fill="black"/>
-      </svg>
+    <div class="container">
+        <div class="compass">
+            <div id="rose" class="compass__rose">
+                <svg class="compass__rose__dial" viewBox="0 0 130 130">
+                    <circle cx="65" cy="65" r="50" stroke="silver" stroke-width="5" fill="none" />
+                    <text x="65" y="10" font-size="9" text-anchor="middle">N</text>
+                    <text x="125" y="70" font-size="9" text-anchor="middle">E</text>
+                    <text x="65" y="125" font-size="9" text-anchor="middle">S</text>
+                    <text x="5" y="70" font-size="9" text-anchor="middle">W</text>
+                    <image id="kabah" x="55" y="15" width="20" height="20"
+                        href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAzMCAzMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIGZpbGw9ImJsYWNrIi8+PC9zdmc+" />
+                </svg>
+            </div>
+            <svg class="compass__pointer" viewBox="0 0 130 130">
+                <polyline points="56,65 74,65 65,19" fill="#b60000" />
+                <polyline points="56,65 74,65 65,111" fill="white" />
+                <circle cx="65" cy="65" r="5" fill="black" />
+            </svg>
+        </div>
     </div>
-  </div>
 
-  <div class="status">
-    <div class="position row">
-      <div class="column">
-        <span class="label">Compass</span>
-        <div id="position-hng">n/a</div>
-      </div>
-      <div class="column">
-        <span class="label">Qibla</span>
-        <div id="position-qib">n/a</div>
-      </div>
-      <div class="column">
-        <span class="label">Latitude</span>
-        <div id="position-lat">--</div>
-      </div>
-      <div class="column">
-        <span class="label">Longitude</span>
-        <div id="position-lng">--</div>
-      </div>
+    <div class="status">
+        <div class="position row">
+            <div class="column">
+                <span class="label">Compass</span>
+                <div id="position-hng">n/a</div>
+            </div>
+            <div class="column">
+                <span class="label">Qibla</span>
+                <div id="position-qib">n/a</div>
+            </div>
+            <div class="column">
+                <span class="label">Latitude</span>
+                <div id="position-lat">--</div>
+            </div>
+            <div class="column">
+                <span class="label">Longitude</span>
+                <div id="position-lng">--</div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <script>
-    let pointDegree = 0;
-    const rose = document.getElementById("rose");
-    const kabah = document.getElementById("kabah");
-    const positionHng = document.getElementById("position-hng");
-    const positionQib = document.getElementById("position-qib");
-    const positionLat = document.getElementById("position-lat");
-    const positionLng = document.getElementById("position-lng");
+    <script>
+        let pointDegree = 0;
+        const rose = document.getElementById("rose");
+        const kabah = document.getElementById("kabah");
+        const positionHng = document.getElementById("position-hng");
+        const positionQib = document.getElementById("position-qib");
+        const positionLat = document.getElementById("position-lat");
+        const positionLng = document.getElementById("position-lng");
 
-    function calcQibla(lat, lon) {
-      const kaaba = { lat: 21.4225, lng: 39.8262 };
-      const phiK = kaaba.lat * Math.PI/180;
-      const lambdaK = kaaba.lng * Math.PI/180;
-      const phi = lat * Math.PI/180;
-      const lambda = lon * Math.PI/180;
-      const psi = (180/Math.PI) * Math.atan2(
-        Math.sin(lambdaK - lambda),
-        Math.cos(phi) * Math.tan(phiK) - Math.sin(phi) * Math.cos(lambdaK - lambda)
-      );
-      return Math.round((psi + 360) % 360);
-    }
+        function calcQibla(lat, lon) {
+            const kaaba = { lat: 21.4225, lng: 39.8262 };
+            const phiK = kaaba.lat * Math.PI / 180;
+            const lambdaK = kaaba.lng * Math.PI / 180;
+            const phi = lat * Math.PI / 180;
+            const lambda = lon * Math.PI / 180;
+            const psi = (180 / Math.PI) * Math.atan2(
+                Math.sin(lambdaK - lambda),
+                Math.cos(phi) * Math.tan(phiK) - Math.sin(phi) * Math.cos(lambdaK - lambda)
+            );
+            return Math.round((psi + 360) % 360);
+        }
 
-    function positionKabah(deg) {
-      const r = 50; const cx = 65; const cy = 65; const size = 20;
-      const x = Math.sin(deg * Math.PI/180) * r + cx - size/2;
-      const y = -Math.cos(deg * Math.PI/180) * r + cy - size/2;
-      kabah.setAttribute("x", x);
-      kabah.setAttribute("y", y);
-    }
+        function positionKabah(deg) {
+            const r = 50; const cx = 65; const cy = 65; const size = 20;
+            const x = Math.sin(deg * Math.PI / 180) * r + cx - size / 2;
+            const y = -Math.cos(deg * Math.PI / 180) * r + cy - size / 2;
+            kabah.setAttribute("x", x);
+            kabah.setAttribute("y", y);
+        }
 
-    function onHeadingChange(event) {
-      const heading = event.webkitCompassHeading || event.alpha;
-      if (heading == null) return;
-      positionHng.textContent = heading.toFixed(0) + "°";
-      rose.style.transform = "rotate(" + (-heading) + "deg)";
-    }
+        // function onHeadingChange(event) {
+        //     const heading = event.webkitCompassHeading || event.alpha;
+        //     if (heading == null) return;
+        //     positionHng.textContent = heading.toFixed(0) + "°";
+        //     rose.style.transform = "rotate(" + (-heading) + "deg)";
+        // }
 
-    navigator.geolocation.watchPosition(pos => {
-      const lat = pos.coords.latitude;
-      const lon = pos.coords.longitude;
-      positionLat.textContent = lat.toFixed(3);
-      positionLng.textContent = lon.toFixed(3);
-      pointDegree = calcQibla(lat, lon);
-      positionQib.textContent = pointDegree + "°";
-      positionKabah(pointDegree);
-    });
+        function onHeadingChange(event) {
+            let heading;
+            if (typeof event.webkitCompassHeading !== "undefined") {
+                // iOS
+                heading = event.webkitCompassHeading;
+            } else {
+                // Android: use alpha and adjust with screen orientation
+                heading = event.alpha;
+                if (typeof window.orientation !== "undefined") {
+                    heading += window.orientation;
+                }
+            }
 
-    if ('ondeviceorientationabsolute' in window) {
-      window.addEventListener("deviceorientationabsolute", onHeadingChange, true);
-    } else {
-      window.addEventListener("deviceorientation", onHeadingChange, true);
-    }
-  </script>
+            if (heading != null) {
+                heading = (heading + 360) % 360; // normalize
+                positionHng.textContent = heading.toFixed(0) + "°";
+                rose.style.transform = "rotate(" + (-heading) + "deg)";
+            }
+        }
+
+
+        navigator.geolocation.watchPosition(pos => {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+            positionLat.textContent = lat.toFixed(3);
+            positionLng.textContent = lon.toFixed(3);
+            pointDegree = calcQibla(lat, lon);
+            positionQib.textContent = pointDegree + "°";
+            positionKabah(pointDegree);
+        });
+
+        if ('ondeviceorientationabsolute' in window) {
+            window.addEventListener("deviceorientationabsolute", onHeadingChange, true);
+        } else {
+            window.addEventListener("deviceorientation", onHeadingChange, true);
+        }
+    </script>
 </body>
+
 </html>
