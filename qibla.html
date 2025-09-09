@@ -1,204 +1,1411 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Qibla Compass (Fixed)</title>
-<style>
-  body{font-family:system-ui,Arial,sans-serif;margin:0;padding:16px;text-align:center;background:#f6f7f8}
-  h2{margin:8px 0 4px}
-  .wrap{max-width:460px;margin:0 auto}
-  .btn{padding:10px 14px;border:0;border-radius:10px;cursor:pointer;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-  .compass{position:relative;width:min(90vw,380px);height:min(90vw,380px);margin:16px auto}
-  .rose{width:100%;height:100%;transition:transform .15s ease-out}
-  .pointer{position:absolute;inset:0;pointer-events:none}
-  .ok{color:#1a7f37}
-  .warn{color:#b54708}
-  .meta{font-size:14px;color:#444;margin-top:8px}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#2d5a3d">
+    <meta name="description" content="Find accurate Qibla direction to Mecca with modern compass technology and Islamic design.">
+    <title>Qibla Finders - Islamic Prayer Direction Compass</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Islamic Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Islamic Theme Variables */
+        :root {
+            --islamic-green: #2d5a3d;
+            --islamic-green-light: #4a8061;
+            --islamic-gold: #d4af37;
+            --islamic-gold-light: #f4d03f;
+            --text-dark: #2c3e50;
+            --text-light: #ecf0f1;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --gradient-green: linear-gradient(135deg, var(--islamic-green), var(--islamic-green-light));
+            --gradient-gold: linear-gradient(135deg, var(--islamic-gold), var(--islamic-gold-light));
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .arabic-font {
+            font-family: 'Amiri', serif;
+            font-weight: 700;
+        }
+
+        html {
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: var(--text-dark);
+            height: 100%;
+        }
+
+        [class^="column-"] {
+            display: inline-block;
+        }
+
+        .column-33 {
+            width: 33.33333%;
+        }
+
+        .column-25 {
+            width: 25%;
+        }
+
+        .column-20 {
+            width: 20%;
+        }
+
+        .column-50 {
+            width: 50%;
+        }
+
+        .label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--islamic-green);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            background: transparent;
+        }
+
+        header {
+            padding: 1rem;
+            background: var(--gradient-green);
+            color: white;
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            transition: transform 0.5s ease-out 0s;
+            z-index: 1000;
+            box-shadow: 0 2px 20px var(--shadow-medium);
+        }
+
+        header h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        header p {
+            font-size: 0.9rem;
+            margin: 0.5rem 0 0 0;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .container {
+            padding: 6rem 1rem 8rem 1rem;
+            overflow: hidden;
+            height: 100%;
+            transition: transform 0.5s ease-out 0s;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .compass {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            max-width: 320px;
+            margin: 2rem auto;
+            text-align: center;
+        }
+
+        .compass__rose {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            transition: transform 0.3s ease-out;
+        }
+
+        .compass__rose__dial {
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 15px 35px var(--shadow-light);
+            border: 1px solid rgba(45, 90, 61, 0.1);
+        }
+
+        .compass__pointer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        .btn {
+            border: 2px solid var(--islamic-green);
+            color: var(--islamic-green);
+            cursor: pointer;
+            text-align: center;
+            height: 4rem;
+            background: transparent;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: auto 50%;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            border-radius: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 0.2rem;
+            font-size: 0.8rem;
+        }
+
+        .btn:hover,
+        .btn.active {
+            background: var(--islamic-green);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-medium);
+        }
+
+        .btn--hide {
+            display: none;
+        }
+
+        .btn--hide.show {
+            display: flex;
+        }
+
+        .btn__icon {
+            height: 24px;
+            width: 24px;
+        }
+
+        .btn__icon--active {
+            display: none;
+        }
+
+        .btn__icon--inactive {
+            display: block;
+        }
+
+        .btn.active .btn__icon--active {
+            display: block;
+        }
+
+        .btn.active .btn__icon--inactive {
+            display: none;
+        }
+
+        .status {
+            /* position: fixed; */
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            border-radius: 20px 20px 0 0;
+            padding: 1.5rem;
+            box-shadow: 0 -10px 30px var(--shadow-light);
+        }
+
+        .position {
+            padding-bottom: 0.5rem;
+            text-transform: uppercase;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .position div:not(.label) {
+            margin-top: 0.2rem;
+        }
+
+        .options__btn {
+            border-top: 1px solid rgba(45, 90, 61, 0.1);
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+        }
+
+        .popup.popup--show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup__content {
+            max-width: 500px;
+            width: 90%;
+            margin: 0 auto;
+            background: white;
+            color: var(--text-dark);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .popup__contents {
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        .popup__contents h3 {
+            color: var(--islamic-green);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .popup__contents p {
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .popup__contents a {
+            color: var(--islamic-gold);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .popup__contents a:hover {
+            text-decoration: underline;
+        }
+
+        .popup__inner--hide {
+            display: none;
+        }
+
+        .popup__close {
+            display: block;
+            padding: 1rem 2rem;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: var(--gradient-green);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .popup__close:hover {
+            background: var(--gradient-gold);
+        }
+
+        #position-lab {
+            font-size: 1rem;
+            color: var(--islamic-gold);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Night Mode */
+        html.nightmode {
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+            color: white;
+        }
+
+        html.nightmode .container {
+            transform: translateY(-2rem);
+        }
+
+        html.nightmode header {
+            transform: translateY(-4rem);
+        }
+
+        html.nightmode .status,
+        html.nightmode .compass__rose__dial {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        html.nightmode .label {
+            color: rgba(212, 175, 55, 0.8);
+        }
+
+        html.nightmode .position div:not(.label) {
+            color: white;
+        }
+
+        html.nightmode .btn {
+            border-color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        html.nightmode .btn:hover,
+        html.nightmode .btn.active {
+            background: rgba(45, 90, 61, 0.8);
+            border-color: var(--islamic-green);
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .compass {
+                height: 280px;
+            }
+
+            header h1 {
+                font-size: 1.4rem;
+            }
+
+            header p {
+                font-size: 0.8rem;
+            }
+
+            .container {
+                padding: 5rem 1rem 8rem 1rem;
+            }
+
+            [class^="column-"] {
+                margin-bottom: 0.5rem;
+            }
+
+            .column-33,
+            .column-25,
+            .column-20 {
+                width: 50%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .compass {
+                height: 240px;
+            }
+
+            [class^="column-"] {
+                width: 100%;
+                margin-bottom: 0.3rem;
+            }
+        }
+
+          /* Footer */
+        footer {
+            background: var(--gradient-green) !important;
+            margin-top: 3rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            margin: 0 10px;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Debug styles (hidden by default) */
+        #debug-orientation,
+        #debug-orientation-default {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-<div class="wrap">
-  <h2>Qibla Compass</h2>
-  <p id="status" class="warn">Tap “Enable Motion” and allow location.</p>
-  <button id="enable" class="btn">Enable Motion</button>
-
-  <div class="compass">
-    <!-- Dial (rotates) -->
-    <div id="rose" class="rose">
-      <svg viewBox="0 0 130 130" width="100%" height="100%" aria-label="compass dial">
-        <circle cx="65" cy="65" r="60" stroke="#888" stroke-width="2" fill="#fff"/>
-        <text x="65" y="14" text-anchor="middle">N</text>
-        <text x="124" y="70" text-anchor="middle">E</text>
-        <text x="65" y="126" text-anchor="middle">S</text>
-        <text x="6"  y="70" text-anchor="middle">W</text>
-        <!-- Kaaba marker (positioned on the rim by script) -->
-        <circle id="kabah" cx="65" cy="5" r="8" fill="black"/>
-      </svg>
+    <header>
+        <h1>
+            <i class="fas fa-kaaba"></i>
+            Qibla Direction Finder
+        </h1>
+        <p id="intro">Find accurate direction to Mecca using your device's compass. This Islamic compass app helps you determine the Qibla direction for prayer from your current location with precision and devotion.</p>
+    </header>
+    
+    <div class="container">
+        <div class="compass">
+            <div id="rose" class="compass__rose">
+                <svg class="compass__rose__dial" viewBox="0 0 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="65" cy="65" r="50" stroke="silver" stroke-width="5" fill="none" />
+                    <polyline points="62,13  68,13  65,23" fill="silver"/>
+                    <polyline points="117,63  117,67  110,65" fill="silver"/>
+                    <polyline points="63,117  67,117  65,110" fill="silver"/>
+                    <polyline points="13,63  13,67  20,65" fill="silver"/>
+                    <text x="65" y="4.2" font-size="9" text-anchor="middle" fill="Black">N</text>
+                    <text x="127" y="67" font-size="9" text-anchor="middle" fill="Black">E</text>
+                    <text x="65" y="129" font-size="9" text-anchor="middle" fill="Black">S</text>
+                    <text x="2.8" y="67" font-size="9" text-anchor="middle" fill="Black">W</text>
+                    <image id="kabah" x="55" y="15" width="30" height="30" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgdmlld0JveD0iMCAwIDMwIDMwIj48cGF0aCBkPSJNMTUsMyBMMjcsMTUgTDE1LDI3IEwzLDE1IFoiIGZpbGw9IiNiNjAwMDAiLz48L3N2Zz4=" />
+                </svg>
+            </div>
+            <svg class="compass__pointer" viewBox="0 0 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <polyline points="56,65  74,65  65,19" fill="#b60000"/>
+                <polyline points="56,65  74,65  65,111" fill="white"/>
+                <circle cx="65" cy="65" r="5" stroke="#b60000" stroke-width="0" fill="black" />
+            </svg>
+        </div>
     </div>
-    <!-- Fixed pointer (always points up/north of screen) -->
-    <svg class="pointer" viewBox="0 0 130 130" width="100%" height="100%" aria-label="north pointer">
-      <polygon points="65,12 78,65 52,65" fill="red"/>
-      <polygon points="65,118 78,65 52,65" fill="white"/>
-    </svg>
-  </div>
 
-  <div class="meta">
-    <div>Lat/Lng: <span id="lat">--</span>, <span id="lng">--</span></div>
-    <div>Qibla: <span id="qibla">--</span>° | Heading: <span id="heading">--</span>°</div>
-  </div>
-</div>
 
-<script>
-(function(){
-  const rose = document.getElementById('rose');
-  const kabah = document.getElementById('kabah');
-  const statusEl = document.getElementById('status');
-  const qiblaEl = document.getElementById('qibla');
-  const headEl  = document.getElementById('heading');
-  const latEl   = document.getElementById('lat');
-  const lngEl   = document.getElementById('lng');
-  const enableBtn = document.getElementById('enable');
+    <div class='status'>
+        <div id='debug-orientation-default'></div>
+        <div id='debug-orientation'></div>
 
-  let qiblaDeg = 0;
-  let hasLocation = false;
+        <div class='position row'>
+            <div id='position-lab'></div>
+        </div>
+        <div class='position row'>
+            <div class='column-20'>
+                <div class='label'>Compass Direction</div>
+                <div id='position-hng'>n/a</div>
+            </div>
+            <div class='column-20'>
+                <div class='label'>Qibla Direction</div>
+                <div id='position-qib'>n/a</div>
+            </div>
+            <div class='column-25'>
+                <div class='label'>Latitude</div>
+                <div id='position-lat'>&#8943;</div>
+            </div>
+            <div class='column-33'>
+                <div class='label'>Longitude</div>
+                <div id='position-lng'>&#8943;</div>
+            </div>
+        </div>
 
-  // --- UTILITIES ---
-  const toRad = d => d * Math.PI / 180;
-  const toDeg = r => r * 180 / Math.PI;
-  const norm360 = d => (d % 360 + 360) % 360;
-  const screenAngle = () => {
-    const a = (screen.orientation && typeof screen.orientation.angle === 'number')
-      ? screen.orientation.angle
-      : (typeof window.orientation === 'number' ? window.orientation : 0);
-    return norm360(a || 0);
-  };
+        <div class="options row">
+            <button id="btn-lock-orientation" class="btn btn--hide options__btn column-25" type="button">
+                <svg alt="lock off" class="btn__icon btn__icon--inactive" version="1.1" xmlns="http://www.w3.org/2000/svg" width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+                    <path id="lock-15-icon" d="M256,90.001c91.74,0,166,74.243,166,166c0,91.74-74.243,165.998-166,165.998 c-91.741,0-166-74.241-166-165.998C90,164.259,164.243,90.001,256,90.001 M256,50.001c-113.771,0-206,92.229-206,206 s92.229,205.998,206,205.998c113.771,0,206-92.227,206-205.998S369.771,50.001,256,50.001L256,50.001z M358.999,242.667V347h-148 V242.667H358.999z M238.667,196.333v31.334h25v-31.334c0-30.511-24.822-55.333-55.334-55.333c-30.51,0-55.332,24.822-55.332,55.333 v31.334h25v-31.334c0-16.726,13.607-30.333,30.332-30.333C225.06,166,238.667,179.607,238.667,196.333z" fill="white" />
+                </svg>
+                <svg alt="lock on" class="btn__icon btn__icon--active" version="1.1" xmlns="http://www.w3.org/2000/svg" width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+                    <path id="lock-13-icon" d="M256,90.001c91.74,0,166,74.243,166,166c0,91.74-74.243,165.998-166,165.998 c-91.741,0-166-74.241-166-165.998C90,164.259,164.243,90.001,256,90.001 M256,50.001c-113.771,0-206,92.229-206,206 s92.229,205.998,206,205.998c113.771,0,206-92.227,206-205.998S369.771,50.001,256,50.001L256,50.001z M201.225,227.537v-31.585 c0-30.755,25.021-55.776,55.775-55.776s55.775,25.021,55.775,55.776v31.585h-25.2v-31.585c0-16.859-13.716-30.576-30.575-30.576 s-30.575,13.717-30.575,30.576v31.585H201.225z M182.409,242.656v105.169h149.182V242.656H182.409z" fill="white" />
+                </svg>
+            </button>
+            <button id="btn-nightmode" class="btn options__btn column-33" type="button">
+                <svg class="btn__icon btn__icon--inactive" version="1.1" xmlns="http://www.w3.org/2000/svg" width="512px" height="512px" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="butt" stroke-linejoin="round" enable-background="new 0 0 512 512" xml:space="preserve">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <svg class="btn__icon btn__icon--active" version="1.1" xmlns="http://www.w3.org/2000/svg" width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </button>
+            <button id="btn-map" class="btn options__btn column-33" type="button">
+                <svg alt="map" class="btn__icon btn__icon--inactive" version="1.1" xmlns="http://www.w3.org/2000/svg" width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+                    <path id="location-icon" d="M256,50c-72.072,0-130.5,58.427-130.5,130.5c0,72.073,57.114,155.833,130.5,281.5 c73.388-125.666,130.5-209.427,130.5-281.5C386.5,108.427,328.074,50,256,50z M256,224.133c-25.848,0-46.801-20.953-46.801-46.8 s20.953-46.8,46.801-46.8s46.801,20.953,46.801,46.8S281.848,224.133,256,224.133z" fill="white" />
+                </svg>
+            </button>
+            <button id="btn-info" class="btn btn-popup options__btn column-33" type="button" data-name='info'>
+                <svg alt="info" class="btn__icon btn__icon--inactive" version="1.1" xmlns="http://www.w3.org/2000/svg" width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+                    <path id="info-2-icon" d="M255.998,90.001c91.74,0,166.002,74.241,166.002,165.998c0,91.741-74.245,166-166.002,166 c-91.74,0-165.998-74.243-165.998-166C90,164.259,164.243,90.001,255.998,90.001 M255.998,50.001 C142.229,50.001,50,142.229,50,255.999c0,113.771,92.229,206,205.998,206c113.771,0,206.002-92.229,206.002-206 C462,142.229,369.77,50.001,255.998,50.001L255.998,50.001z M285.822,367.567h-57.646V230.6h57.646V367.567z M257,202.268 c-17.522,0-31.729-14.206-31.729-31.73c0-17.522,14.206-31.729,31.729-31.729c17.524,0,31.728,14.206,31.728,31.729 C288.728,188.062,274.524,202.268,257,202.268z" fill="white" />
+                </svg>
+            </button>
+        </div>
+    </div>
 
-  function setStatus(msg, ok=false){ statusEl.textContent = msg; statusEl.className = ok ? 'ok' : 'warn'; }
+    <div id="popup" class="popup">
+        <div id="popup-content" class="popup__content">
+            <div id="popup-contents" class="popup__contents">
+                <div id="popup-inner-info" class="popup__inner popup__inner--hide">
+                    <h3><i class="fas fa-kaaba me-2"></i>Qibla Direction Compass</h3>
+                    <p>
+                        This <strong>Qibla Direction Compass</strong> shows the current qibla direction using your device's compass. The app utilizes your geographical location and device sensors to find the accurate direction to the Kaaba in Mecca.
+                    </p>
+                    <p>
+                        <strong>For best results:</strong>
+                    </p>
+                    <ul>
+                        <li>Stay away from magnets, metals, and electronic devices</li>
+                        <li>Calibrate your compass by moving the device in a figure-8 pattern</li>
+                        <li>Hold your device flat and parallel to the ground</li>
+                        <li>Ensure location services are enabled</li>
+                    </ul>
+                    <p class="arabic-font" style="text-align: center; font-size: 1.2rem; color: var(--islamic-green); margin: 1rem 0;">
+                        "فَوَلِّ وَجْهَكَ شَطْرَ الْمَسْجِدِ الْحَرَامِ"
+                    </p>
+                    <p style="text-align: center; font-style: italic; color: #666;">
+                        "Turn your face toward the Sacred Mosque" - Quran 2:144
+                    </p>
+                </div>
+                <div id="popup-inner-noorientation" class="popup__inner popup__inner--hide">
+                    <h3><i class="fas fa-exclamation-triangle me-2"></i>Device Not Supported</h3>
+                    <p>Unfortunately, your device does not support compass functionality or we cannot detect location services.</p>
+                    <p>
+                        <strong>Alternative methods:</strong>
+                    </p>
+                    <ul>
+                        <li>Use a smartphone or tablet with magnetometer sensors</li>
+                        <li>Enable location services in your browser</li>
+                        <li>Try refreshing the page and granting permissions</li>
+                    </ul>
+                </div>
+            </div>
+            <button id="popup-close" class="popup__close">
+                <i class="fas fa-times me-2"></i>Close
+            </button>
+        </div>
+    </div>
 
-  // Place Kaaba dot on the dial rim for a given bearing
-  function positionKabah(deg){
-    const r = 60, cx = 65, cy = 65; // dial geometry matches SVG
-    const x = Math.sin(toRad(deg)) * r + cx;
-    const y = -Math.cos(toRad(deg)) * r + cy;
-    kabah.setAttribute('cx', x.toFixed(2));
-    kabah.setAttribute('cy', y.toFixed(2));
-  }
+      <footer class="bg-islamic-green text-white py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 arabic-font">"وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ وَارْكَعُوا مَعَ
+                        الرَّاكِعِينَ"</p>
+                    <small class="text-light">"And establish prayer and give zakah and bow with those who bow." - Quran
+                        2:43</small>
+                </div>
+                <div class="col-md-6 text-md-end footer-links">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms of Service</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#disclaimerModal">Disclaimer</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#cookiesModal">Cookie Policy</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#contactModal">Contact Us</a>
+                    <small>&copy; 2025 Islamic Prayer Times App</small>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-  // Compute Qibla bearing (from true north)
-  function computeQibla(lat, lon){
-    const K = { lat: 21.422487, lon: 39.826206 }; // Kaaba
-    const phi = toRad(lat), lambda = toRad(lon);
-    const phiK = toRad(K.lat), lambdaK = toRad(K.lon);
-    const y = Math.sin(lambdaK - lambda);
-    const x = Math.cos(phi) * Math.tan(phiK) - Math.sin(phi) * Math.cos(lambdaK - lambda);
-    return norm360(toDeg(Math.atan2(y, x)));
-  }
+    <!-- Legal Modals -->
+    <!-- Privacy Policy Modal -->
+    <div class="modal fade legal-modal" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="privacyModalLabel"><i class="fas fa-shield-alt me-2"></i>Privacy Policy
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>1. Information We Collect</h5>
+                    <p>Our Islamic Prayer Times app collects limited information to provide you with accurate prayer
+                        times and mosque locations:</p>
+                    <ul>
+                        <li><strong>Location Data:</strong> We collect your device's geographical coordinates to
+                            calculate accurate prayer times and find nearby mosques.</li>
+                        <li><strong>Usage Data:</strong> We may collect information about how you interact with our app
+                            to improve user experience.</li>
+                        <li><strong>Device Information:</strong> We collect device type and browser information for
+                            compatibility purposes.</li>
+                    </ul>
 
-  // Robust compass heading:
-  // 1) iOS: use webkitCompassHeading (true north).
-  // 2) Else: derive from alpha/beta/gamma (magnetic), then compensate for screen rotation.
-  function calcHeadingFromEuler(alpha, beta, gamma){
-    // Based on W3C example
-    const x = toRad(beta);
-    const y = toRad(gamma);
-    const z = toRad(alpha);
+                    <h5>2. How We Use Your Information</h5>
+                    <p>We use the collected information solely for the purpose of providing and improving our services:
+                    </p>
+                    <ul>
+                        <li>To calculate accurate prayer times based on your location</li>
+                        <li>To locate mosques near your current position</li>
+                        <li>To improve app functionality and user experience</li>
+                        <li>To provide customer support</li>
+                    </ul>
 
-    const cX = Math.cos(x), cY = Math.cos(y), cZ = Math.cos(z);
-    const sX = Math.sin(x), sY = Math.sin(y), sZ = Math.sin(z);
+                    <h5>3. Data Storage and Security</h5>
+                    <p>We prioritize the security of your information:</p>
+                    <ul>
+                        <li>Location data is processed in real-time and not stored on our servers</li>
+                        <li>We implement appropriate security measures to protect your information</li>
+                        <li>We do not sell or share your personal information with third parties</li>
+                    </ul>
 
-    const Vx = -cZ * sY - sZ * sX * cY;
-    const Vy = -sZ * sY + cZ * sX * cY;
+                    <h5>4. Your Rights</h5>
+                    <p>You have the right to:</p>
+                    <ul>
+                        <li>Access the personal information we hold about you</li>
+                        <li>Request correction of inaccurate information</li>
+                        <li>Request deletion of your personal data</li>
+                        <li>Opt-out of data collection (though this may limit app functionality)</li>
+                    </ul>
 
-    let heading = Math.atan2(Vx, Vy);
-    if (heading < 0) heading += 2 * Math.PI;
-    return toDeg(heading); // 0..360 (relative to top-of-device in portrait)
-  }
+                    <h5>5. Changes to This Policy</h5>
+                    <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting
+                        the new Privacy Policy on this page and updating the "Last Updated" date.</p>
 
-  function onOrientation(ev){
-    let heading;
-    // Prefer iOS true-heading when present
-    if (typeof ev.webkitCompassHeading === 'number' && ev.webkitCompassHeading >= 0){
-      heading = ev.webkitCompassHeading; // already 0..360 clockwise from true north
-    } else if (typeof ev.alpha === 'number' && typeof ev.beta === 'number' && typeof ev.gamma === 'number') {
-      heading = calcHeadingFromEuler(ev.alpha, ev.beta, ev.gamma);
-      // Compensate for screen rotation so "top of screen" = forward
-      heading = norm360(heading + screenAngle());
-    } else {
-      return; // no usable data
-    }
+                    <p class="mt-4"><strong>Last Updated:</strong> January 1, 2025</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Terms of Service Modal -->
+    <div class="modal fade legal-modal" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="termsModalLabel"><i class="fas fa-file-contract me-2"></i>Terms of
+                        Service</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>1. Acceptance of Terms</h5>
+                    <p>By accessing and using the Islamic Prayer Times app, you accept and agree to be bound by the
+                        terms and provision of this agreement.</p>
 
-    headEl.textContent = heading.toFixed(0);
+                    <h5>2. Use License</h5>
+                    <p>Permission is granted to temporarily use the Islamic Prayer Times app for personal,
+                        non-commercial transitory viewing only.</p>
 
-    // Rotate the dial opposite to heading so the pointer stays at North
-    rose.style.transform = `rotate(${-heading}deg)`;
+                    <h5>3. Disclaimer</h5>
+                    <p>The prayer times and mosque locations provided by this app are calculated using established mathematical formulas and are based on your geographical location. While we strive to provide accurate prayer times, actual prayer times may vary slightly based on local customs, mosque announcements, and other factors. Users are advised to confirm prayer times with their local mosque for religious obligations.</p>
 
-    // If we already know Qibla, keep the marker positioned
-    if (hasLocation) positionKabah(qiblaDeg);
-  }
+                    <h5>4. Limitations</h5>
+                    <p>In no event shall Islamic Prayer Times or its suppliers be liable for any damages arising out of the use or inability to use the services provided by the app.</p>
 
-  function attachOrientation(){
-    if ('ondeviceorientationabsolute' in window){
-      window.addEventListener('deviceorientationabsolute', onOrientation, true);
-    }
-    window.addEventListener('deviceorientation', onOrientation, true);
-    // update when device rotates between portrait/landscape
-    (screen.orientation || {}).onchange = () => {}; // just to ensure screenAngle updates
-    window.addEventListener('orientationchange', ()=>{}, {passive:true});
-  }
+                    <h5>5. Accuracy of Materials</h5>
+                    <p>The materials appearing in the Islamic Prayer Times app could include technical, typographical, or photographic errors. We do not warrant that any of the materials on its app are accurate, complete or current.</p>
 
-  // Geolocation (watch for movement)
-  function startGeo(){
-    if (!('geolocation' in navigator)){
-      setStatus('Geolocation not supported on this device.');
-      return;
-    }
-    navigator.geolocation.watchPosition(pos=>{
-      const { latitude, longitude } = pos.coords;
-      latEl.textContent = latitude.toFixed(5);
-      lngEl.textContent = longitude.toFixed(5);
-      qiblaDeg = computeQibla(latitude, longitude);
-      qiblaEl.textContent = qiblaDeg.toFixed(0);
-      positionKabah(qiblaDeg);
-      hasLocation = true;
-      setStatus('Move phone until red pointer meets the black dot (Qibla).', true);
-    }, err=>{
-      setStatus('Location error: ' + err.message);
-    }, { enableHighAccuracy: true, maximumAge: 5_000, timeout: 15_000 });
-  }
+                    <h5>6. Modifications</h5>
+                    <p>Islamic Prayer Times may revise these terms of service for its app at any time without notice. By using this app you are agreeing to be bound by the then current version of these terms of service.</p>
 
-  async function enableMotion(){
-    if (!window.isSecureContext){
-      setStatus('Needs HTTPS (or localhost) for motion & location.');
-      return;
-    }
-    // iOS 13+ needs explicit user gesture
-    try{
-      if (typeof DeviceMotionEvent !== 'undefined' &&
-          typeof DeviceMotionEvent.requestPermission === 'function'){
-        const res = await DeviceMotionEvent.requestPermission();
-        if (res !== 'granted'){ setStatus('Motion permission denied.'); return; }
-      }
-      if (typeof DeviceOrientationEvent !== 'undefined' &&
-          typeof DeviceOrientationEvent.requestPermission === 'function'){
-        // Some iOS versions gate both
-        try { await DeviceOrientationEvent.requestPermission(); } catch {}
-      }
-    } catch(e){
-      // ignore; not iOS or already allowed
-    }
-    attachOrientation();
-    startGeo();
-  }
+                    <h5>7. Governing Law</h5>
+                    <p>These terms and conditions are governed by and construed in accordance with the laws and any disputes relating to these terms and conditions will be subject to the exclusive jurisdiction of the courts.</p>
 
-  enableBtn.addEventListener('click', enableMotion);
+                    <p class="mt-4"><strong>Last Updated:</strong> January 1, 2025</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Disclaimer Modal -->
+    <div class="modal fade legal-modal" id="disclaimerModal" tabindex="-1" aria-labelledby="disclaimerModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="disclaimerModalLabel"><i
+                            class="fas fa-exclamation-circle me-2"></i>Disclaimer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>1. Prayer Times Accuracy</h5>
+                    <p>The prayer times provided by this app are calculated using established mathematical formulas and
+                        are based on your geographical location. While we strive to provide accurate prayer times,
+                        actual prayer times may vary slightly based on local customs, mosque announcements, and other
+                        factors beyond our control. Users are advised to confirm prayer times with their local mosque for religious obligations.</p>
 
-  // Auto-start on platforms that don’t require a gesture
-  if (!('requestPermission' in (window.DeviceMotionEvent ?? {})) &&
-      !('requestPermission' in (window.DeviceOrientationEvent ?? {}))){
-    enableMotion();
-  }
-})();
-</script>
+                    <h5>2. Mosque Locations</h5>
+                    <p>The mosque locations are sourced from OpenStreetMap and may not be comprehensive or completely
+                        accurate. The inclusion or exclusion of any mosque does not represent an endorsement or
+                        criticism of that institution. We recommend verifying mosque information before visiting.</p>
+
+                    <h5>3. Religious Considerations</h5>
+                    <p>This app is intended as a helpful tool for Muslims but should not replace religious knowledge or
+                        guidance from qualified scholars. Users are responsible for ensuring their prayers and religious
+                        practices comply with their understanding of Islamic requirements.</p>
+
+                    <h5>4. Technical Limitations</h5>
+                    <p>The accuracy of location-based services depends on your device's capabilities and connectivity.
+                        Results may vary based on GPS accuracy, network availability, and other technical factors beyond
+                        our control.</p>
+
+                    <h5>5. No Warranty</h5>
+                    <p>The Islamic Prayer Times app is provided "as is" without any warranties, expressed or implied. We
+                        make no guarantees regarding the availability, accuracy, or reliability of the services.</p>
+
+                    <h5>6. Limitation of Liability</h5>
+                    <p>The creators of this app are not liable for any missed prayers or any direct, indirect, incidental, special, or consequential damages arising from the use of or inability to use the app.</p>
+
+                    <p class="mt-4"><strong>Last Updated:</strong> January 1, 2025</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie Policy Modal -->
+    <div class="modal fade legal-modal" id="cookiesModal" tabindex="-1" aria-labelledby="cookiesModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cookiesModalLabel"><i class="fas fa-cookie-bite me-2"></i>Cookie Policy
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>1. What Are Cookies</h5>
+                    <p>Cookies are small text files that are stored on your device when you visit websites or use web
+                        applications. They are widely used to make websites work efficiently and provide information to
+                        the owners of the site.</p>
+
+                    <h5>2. How We Use Cookies</h5>
+                    <p>Our Islamic Prayer Times app uses cookies for the following purposes:</p>
+                    <ul>
+                        <li><strong>Essential Cookies:</strong> These are necessary for the app to function properly.
+                            They enable core functionality such as location services and prayer time calculations.</li>
+                        <li><strong>Preference Cookies:</strong> These remember your choices such as time format
+                            preferences (12-hour or 24-hour format).</li>
+                        <li><strong>Analytical Cookies:</strong> These help us understand how users interact with our
+                            app, allowing us to improve its functionality and user experience.</li>
+                    </ul>
+
+                    <h5>3. Third-Party Cookies</h5>
+                    <p>We may use services from third parties that place cookies on your device:</p>
+                    <ul>
+                        <li><strong>Mapping Services:</strong> Our mosque finder feature uses OpenStreetMap which may
+                            place cookies for functionality.</li>
+                        <li><strong>Analytics Services:</strong> We use analytics services to understand how our app is
+                            being used and to make improvements.</li>
+                    </ul>
+
+                    <h5>4. Managing Cookies</h5>
+                    <p>You can control and manage cookies in various ways:</p>
+                    <ul>
+                        <li>Most browsers allow you to refuse cookies or delete them. You can usually find these
+                            settings in your browser's "options" or "preferences" menu.</li>
+                        <li>Please note that disabling cookies may affect the functionality of our app and many other
+                            websites that you visit.</li>
+                    </ul>
+
+                    <h5>5. Consent</h5>
+                    <p>By using our app, you consent to the use of cookies in accordance with this Cookie Policy. If you
+                        do not agree to our use of cookies, you should adjust your browser settings appropriately or
+                        discontinue use of our app.</p>
+
+                    <h5>6. Changes to This Policy</h5>
+                    <p>We may update our Cookie Policy from time to time. We will notify you of any changes by posting
+                        the new Cookie Policy on this page.</p>
+
+                    <p class="mt-4"><strong>Last Updated:</strong> January 1, 2025</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- In your contact page -->
+    <div class="modal fade legal-modal" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contactModalLabel"><i class="fas fa-envelope me-2"></i>Contact Us</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <h5>Get In Touch</h5>
+                    <p>We're here to assist you with any questions about prayer times, mosque locations, or technical
+                        support for our app.</p>
+
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-md-8"> <!-- Increased width for better centering -->
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <div class="contact-icon mb-3">
+                                        <i class="fas fa-envelope fa-2x text-primary"></i>
+                                    </div>
+                                    <h5>Email Support</h5>
+                                    <p>Send us an email for assistance with the app or prayer time calculations</p>
+                                    <a href="mailto:kindnesspath1@gmail.com" class="btn btn-primary mt-2">
+                                        <i class="fas fa-paper-plane me-2"></i>Send Email
+                                    </a>
+                                    <p class="small text-muted mt-2">
+                                        <!-- <em>Once we launch, this will be a dedicated support email</em> -->
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        (function () {
+            "use strict";
+
+            //set to true for debugging output
+            var debug = false;
+
+            // our current position
+            var positionCurrent = {
+                lat: null,
+                lng: null,
+                hng: null
+            };
+            
+            var roundedCurlat, roundedCurlon;
+
+            // intro text
+            var intro = document.getElementById("intro");
+            var introtext = intro.innerHTML;
+
+            // qibla direction var
+            let pointDegree;
+
+            // location info
+            var city, state, country;
+
+            // the outer part of the compass that rotates
+            var rose = document.getElementById("rose");
+
+            // elements that ouput our position
+            var positionLat = document.getElementById("position-lat");
+            var positionLng = document.getElementById("position-lng");
+            var positionHng = document.getElementById("position-hng");
+            var positionQib = document.getElementById("position-qib");
+            var positionLab = document.getElementById("position-lab");
+
+            // debug outputs
+            var debugOrientation = document.getElementById("debug-orientation");
+            var debugOrientationDefault = document.getElementById("debug-orientation-default");
+
+            // info popup elements, pus buttons that open popups
+            var popup = document.getElementById("popup");
+            var popupContents = document.getElementById("popup-contents");
+            var popupInners = document.querySelectorAll(".popup__inner");
+            var btnsPopup = document.querySelectorAll(".btn-popup");
+
+            // buttons at the bottom of the screen
+            var btnLockOrientation = document.getElementById("btn-lock-orientation");
+            var btnNightmode = document.getElementById("btn-nightmode");
+            var btnMap = document.getElementById("btn-map");
+            var btnInfo = document.getElementById("btn-info");
+
+            // if we have shown the heading unavailable warning yet
+            var warningHeadingShown = false;
+
+            // switches keeping track of our current app state
+            var isOrientationLockable = false;
+            var isOrientationLocked = false;
+            var isNightMode = false;
+
+            // the orientation of the device on app load
+            var defaultOrientation;
+
+            // browser agnostic orientation
+            function getBrowserOrientation() {
+                var orientation;
+                if (screen.orientation && screen.orientation.type) {
+                    orientation = screen.orientation.type;
+                } else {
+                    orientation = screen.orientation ||
+                                screen.mozOrientation ||
+                                screen.msOrientation;
+                }
+                return orientation;
+            }
+
+            // browser agnostic orientation unlock
+            function browserUnlockOrientation() {
+                if (screen.orientation && screen.orientation.unlock) {
+                    screen.orientation.unlock();
+                } else if (screen.unlockOrientation) {
+                    screen.unlockOrientation();
+                } else if (screen.mozUnlockOrientation) {
+                    screen.mozUnlockOrientation();
+                } else if (screen.msUnlockOrientation) {
+                    screen.msUnlockOrientation();
+                }
+            }
+
+            // browser agnostic document.fullscreenElement
+            function getBrowserFullscreenElement() {
+                if (typeof document.fullscreenElement !== "undefined") {
+                    return document.fullscreenElement;
+                } else if (typeof document.webkitFullscreenElement !== "undefined") {
+                    return document.webkitFullscreenElement;
+                } else if (typeof document.mozFullScreenElement !== "undefined") {
+                    return document.mozFullScreenElement;
+                } else if (typeof document.msFullscreenElement !== "undefined") {
+                    return document.msFullScreenElement;
+                }
+            }
+
+            // browser agnostic document.documentElement.requestFullscreen
+            function browserRequestFullscreen() {
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                } else if (document.documentElement.webkitRequestFullscreen) {
+                    document.documentElement.webkitRequestFullscreen();
+                } else if (document.documentElement.mozRequestFullScreen) {
+                    document.documentElement.mozRequestFullScreen();
+                } else if (document.documentElement.msRequestFullscreen) {
+                    document.documentElement.msRequestFullscreen();
+                }
+            }
+
+            // browser agnostic document.documentElement.exitFullscreen
+            function browserExitFullscreen() {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+
+            // called on device orientation change
+            function onHeadingChange(event) {
+                var heading = -1*event.webkitCompassHeading || event.alpha;
+                var alpha;
+                var orientation = getBrowserOrientation();
+
+                if (typeof heading !== "undefined" && heading !== null) {
+                    // we have a browser that reports device heading and orientation
+
+                    if (debug) {
+                        debugOrientation.textContent = orientation;
+                    }
+
+                    // what adjustment we have to add to rotation to allow for current device orientation
+                    var adjustment = 0;
+                    if (defaultOrientation === "landscape") {
+                        adjustment -= 90;
+                    }
+
+                    if (typeof orientation !== "undefined") {
+                        var currentOrientation = orientation.split("-");
+
+                        if (defaultOrientation !== currentOrientation[0]) {
+                            if (defaultOrientation === "landscape") {
+                                adjustment -= 270;
+                            } else {
+                                adjustment -= 90;
+                            }
+                        }
+
+                        if (currentOrientation[1] === "secondary") {
+                            adjustment -= 180;
+                        }
+                    }
+
+                    positionCurrent.hng = heading - window.orientation;// + adjustment;
+
+                    var phase = positionCurrent.hng < 0 ? 360 + positionCurrent.hng : positionCurrent.hng;
+                    positionHng.textContent = (360 - phase | 0) + "°";
+                    //indicate heading near Qibla
+                    var qiboffset = Math.abs((360 - phase) - pointDegree);
+                    if(qiboffset < 15) {
+                        alpha = (15 - qiboffset) / 15;
+                        positionHng.style.background = "rgba(200,0,0,"+alpha+")";
+                        kabah.style.background = "rgba(170,0,0,"+alpha+")";
+                        intro.innerHTML = "&#128331; Qibla Direction Found &#128332;";
+                        intro.style.color = "rgba(255,255,255,"+alpha+")";
+                        intro.style.fontSize = "1.5em";
+                        intro.style.textAlign = "center";
+                    } else {
+                        intro.style.color = "white";
+                        intro.style.fontSize = "0.8em";
+                        intro.style.textAlign = "left";
+                        intro.innerHTML = introtext;
+                        positionHng.style.background = "none";
+                    }
+
+                    // apply rotation to compass rose
+                    if (typeof rose.style.transform !== "undefined") {
+                        rose.style.transform = "rotateZ(" + positionCurrent.hng + "deg)";
+                    } else if (typeof rose.style.webkitTransform !== "undefined") {
+                        rose.style.webkitTransform = "rotateZ(" + positionCurrent.hng + "deg)";
+                    }
+                } else {
+                    // device can't show heading
+                    positionHng.textContent = "n/a";
+                    showHeadingWarning();
+                }
+            }
+
+            function showHeadingWarning() {
+                if (!warningHeadingShown) {
+                    popupOpen("noorientation");
+                    warningHeadingShown = true;
+                }
+            }
+
+            function onFullscreenChange() {
+                if (isOrientationLockable && getBrowserFullscreenElement()) {
+                    if (screen.orientation && screen.orientation.lock) {
+                        screen.orientation.lock(getBrowserOrientation()).then(function () {
+                        }).catch(function () {
+                        });
+                    }
+                } else {
+                    lockOrientationRequest(false);
+                }
+            }
+
+            function toggleOrientationLockable(lockable) {
+                isOrientationLockable = lockable;
+
+                if (isOrientationLockable) {
+                    btnLockOrientation.classList.remove("btn--hide");
+
+                    btnNightmode.classList.add("column-25");
+                    btnNightmode.classList.remove("column-33");
+                    btnMap.setAttribute("title","Open map of qibla direction");
+                    btnMap.classList.add("column-25");
+                    btnMap.classList.remove("column-33");
+                    btnInfo.classList.add("column-25");
+                    btnInfo.classList.remove("column-33");
+                } else {
+                    btnLockOrientation.classList.add("btn--hide");
+
+                    btnNightmode.classList.add("column-33");
+                    btnNightmode.classList.remove("column-25");
+                    btnMap.setAttribute("title","Open map of qibla direction");
+                    btnMap.classList.add("column-33");
+                    btnMap.classList.remove("column-25");
+                    btnInfo.classList.add("column-33");
+                    btnInfo.classList.remove("column-25");
+                }
+            }
+
+            function checkLockable() {
+                if (screen.orientation && screen.orientation.lock) {
+                    screen.orientation.lock(getBrowserOrientation()).then(function () {
+                        toggleOrientationLockable(true);
+                        browserUnlockOrientation();
+                    }).catch(function (event) {
+                        if (event.code === 18) { // The page needs to be fullscreen in order to call lockOrientation(), but is lockable
+                            toggleOrientationLockable(true);
+                            browserUnlockOrientation(); //needed as chrome was locking orientation (even if not in fullscreen, bug??)
+                        } else {  // lockOrientation() is not available on this device (or other error)
+                            toggleOrientationLockable(false);
+                        }
+                    });
+                } else {
+                    toggleOrientationLockable(false);
+                }
+            }
+
+            function lockOrientationRequest(doLock) {
+                if (isOrientationLockable) {
+                    if (doLock) {
+                        browserRequestFullscreen();
+                        lockOrientation(true);
+                    } else {
+                        browserUnlockOrientation();
+                        browserExitFullscreen();
+                        lockOrientation(false);
+                    }
+                }
+            }
+
+            function lockOrientation(locked) {
+                if (locked) {
+                    btnLockOrientation.classList.add("active");
+                } else {
+                    btnLockOrientation.classList.remove("active");
+                }
+
+                isOrientationLocked = locked;
+            }
+
+            function toggleOrientationLock() {
+                if (isOrientationLockable) {
+                    lockOrientationRequest(!isOrientationLocked);
+                }
+            }
+
+            function locationNameUpdate(position) {
+                roundedCurlat = Math.round(positionCurrent.lat * 1000) / 1000;
+                roundedCurlon = Math.round(positionCurrent.lng * 1000) / 1000;
+
+                var roundedLat = Math.round(position.coords.latitude * 1000) / 1000;
+                var roundedLon = Math.round(position.coords.longitude * 1000) / 1000;
+                if (roundedCurlat == roundedLat && roundedCurlon == roundedLon) {
+                    //no change in position within about 0.1 km or 1/1000 of a degree
+                } else {
+                    // Replace these values with your actual latitude, longitude, and desired format
+                    var lat = position.coords.latitude;
+                    var lon = position.coords.longitude;
+                    var format = "json";
+
+                    var url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=${format}&zoom=15&layer=address&accept-language=id`;
+
+                    // Create a new XMLHttpRequest object
+                    var xhr = new XMLHttpRequest();
+
+                    // Configure the request
+                    xhr.open('GET', url, true);
+
+                    // Set up a callback function to handle the response
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            // Parse the JSON response
+                            var data = JSON.parse(xhr.responseText);
+
+                            // Access the specific keys you need (city, state, and country)
+                            city = data.name;
+                            state = data.address.state;
+                            country = data.address.country;
+
+                            // Now, you can use these values as needed
+                            positionLab.innerText = city + ", " + state;
+                        }
+                    };
+
+                    // Send the request
+                    xhr.send();
+                }
+            }
+
+            function locationUpdate(position) {
+                locationNameUpdate(position);
+                locationHandler(position); //get qibla direction
+                positionQib.textContent = pointDegree +"°";
+
+                positionCurrent.lat = position.coords.latitude;
+                positionCurrent.lng = position.coords.longitude;
+
+                positionLat.textContent = decimalToSexagesimal(positionCurrent.lat, "lat");
+                positionLng.textContent = decimalToSexagesimal(positionCurrent.lng, "lng");
+            }
+
+            function locationUpdateFail(error) {
+                positionLat.textContent = "n/a";
+                positionLng.textContent = "n/a";
+                console.log("location fail: ", error);
+            }
+
+            function setNightmode(on) {
+                if (on) {
+                    btnNightmode.classList.add("active");
+                } else {
+                    btnNightmode.classList.remove("active");
+                }
+
+                window.setTimeout(function() {
+                    if (on) {
+                        document.documentElement.classList.add("nightmode");
+                    } else {
+                        document.documentElement.classList.remove("nightmode");
+                    }
+                }, 1);
+
+                isNightMode = on;
+            }
+
+            function toggleNightmode() {
+                setNightmode(!isNightMode);
+            }
+
+            function openMap() {
+                var label = "Unknown location";
+                if (city && state) {
+                    label = city + ", " + state;
+                }
+                label = encodeURIComponent(label);
+                window.location.assign("https://www.al-habib.info/qibla-pointer/interactive-qibla-pointer-map.htm?lat="+positionCurrent.lat+"&lon="+positionCurrent.lng+"&label="+label+"&ref=qibla+compass");
+            }
+
+            function openHome() {
+                window.location.assign("https://www.al-habib.info/qibla-pointer/");
+            }
+
+            function popupOpenFromClick(event) {
+                popupOpen(event.currentTarget.dataset.name);
+            }
+
+            function popupOpen(name) {
+                var i;
+                for (i=0; i<popupInners.length; i++) {
+                    popupInners[i].classList.add("popup__inner--hide");
+                }
+                document.getElementById("popup-inner-" + name).classList.remove("popup__inner--hide");
+
+                popup.classList.add("popup--show");
+            }
+
+            function popupClose() {
+                popup.classList.remove("popup--show");
+            }
+
+            function popupContentsClick(event) {
+                event.stopPropagation();
+            }
+
+            function decimalToSexagesimal(decimal, type) {
+                var degrees = decimal | 0;
+                var fraction = Math.abs(decimal - degrees);
+                var minutes = (fraction * 60) | 0;
+                var seconds = (fraction * 3600 - minutes * 60) | 0;
+
+                var direction = "";
+                var positive = degrees > 0;
+                degrees = Math.abs(degrees);
+                switch (type) {
+                    case "lat":
+                        direction = positive ? "N" : "S";
+                        break;
+                    case "lng":
+                        direction = positive ? "E" : "W";
+                        break;
+                }
+
+                return degrees + "°" + minutes + "'" + seconds + "\" " + direction;
+            }
+
+            function requestDeviceOrientation(callback) {
+                if (window.DeviceOrientationEvent == null) {
+                    callback(new Error("DeviceOrientation is not supported."));
+                } else if (DeviceOrientationEvent.requestPermission) {
+                    DeviceOrientationEvent.requestPermission().then(function(state) {
+                        if (state == "granted") {
+                            callback(null);
+                        } else callback(new Error("Permission denied by user"));
+                    }, function(err) {
+                        callback(err);
+                    });
+                } else { // no need for permission
+                    callback(null);
+                }
+            }
+
+            function firstClick() {
+                requestDeviceOrientation(function(err) {
+                    if (err == null) {
+                        window.removeEventListener("click", firstClick);
+                        window.removeEventListener("touchend", firstClick);
+                        window.addEventListener("devicemotion", function(e) {
+                            // access e.acceleration, etc.
+                        });
+                    } else {
+                        // failed; a JS error object is stored in `err`
+                    }
+                });
+            }
+
+            //Calculate qibla direction
+            function locationHandler(position) {
+                const { latitude, longitude } = position.coords;
+                pointDegree = calcDegreeToPoint(latitude, longitude);
+                if (pointDegree < 0) {
+                    pointDegree = pointDegree + 360;
+                }
+                calcKabah(pointDegree);
+            }
+
+            function calcDegreeToPoint(latitude, longitude) {
+                // Qibla geolocation
+                const point = {
+                    lat: 21.422487,
+                    lng: 39.826206,
+                };
+
+                const phiK = (point.lat * Math.PI) / 180.0;
+                const lambdaK = (point.lng * Math.PI) / 180.0;
+                const phi = (latitude * Math.PI) / 180.0;
+                const lambda = (longitude * Math.PI) / 180.0;
+                const psi =
+                    (180.0 / Math.PI) *
+                    Math.atan2(
+                        Math.sin(lambdaK - lambda),
+                        Math.cos(phi) * Math.tan(phiK) -
+                            Math.sin(phi) * Math.cos(lambdaK - lambda)
+                    );
+                return Math.round(psi);
+            }
+
+            //calculate Kabah icon position in the rose compass
+            function calcKabah(pointDegree) {
+                let kabah = document.getElementById("kabah");
+                let circle = document.getElementsByTagName("circle")[0];
+                let svgr = parseInt(circle.getAttribute("r"));
+                let cx = parseInt(circle.getAttribute("cx"));
+                let cy = parseInt(circle.getAttribute("cy"));
+                let kw = parseInt(kabah.getAttribute("width"));
+                let kh = parseInt(kabah.getAttribute("height"));
+                let kx = Math.sin(pointDegree * Math.PI / 180) * svgr + cx - (kw / 2);
+                let ky = - Math.cos(pointDegree * Math.PI / 180) * svgr + cy - (kh / 2);
+                kabah.setAttribute("x", kx);
+                kabah.setAttribute("y", ky);
+                kabah.setAttribute("transform", "rotate(" + pointDegree +", "+ (kx + (kw/2)) +", " + (ky + (kh/2)) +")");
+            }
+
+            function D2R(degrees) {
+                var pi = Math.PI;
+                return degrees * (pi/180);
+            }
+
+            window.addEventListener("click", firstClick);
+            window.addEventListener("touchend", firstClick);
+
+            if (screen.width > screen.height) {
+                defaultOrientation = "landscape";
+            } else {
+                defaultOrientation = "portrait";
+            }
+            if (debug) {
+                debugOrientationDefault.textContent = defaultOrientation;
+            }
+
+            if ('ondeviceorientationabsolute' in window) {
+                window.addEventListener("deviceorientationabsolute", onHeadingChange, true);
+            } else {
+                window.addEventListener("deviceorientation", onHeadingChange, true);
+            }
+
+            document.addEventListener("fullscreenchange", onFullscreenChange);
+            document.addEventListener("webkitfullscreenchange", onFullscreenChange);
+            document.addEventListener("mozfullscreenchange", onFullscreenChange);
+            document.addEventListener("MSFullscreenChange", onFullscreenChange);
+
+            btnLockOrientation.addEventListener("click", toggleOrientationLock);
+            btnNightmode.addEventListener("click", openHome);
+            btnMap.addEventListener("click", openMap);
+
+            var i;
+            for (i=0; i<btnsPopup.length; i++) {
+                btnsPopup[i].addEventListener("click", popupOpenFromClick);
+            }
+
+            popup.addEventListener("click", popupClose);
+            popupContents.addEventListener("click", popupContentsClick);
+
+            navigator.geolocation.watchPosition(locationUpdate, locationUpdateFail, {
+                enableHighAccuracy: false,
+                maximumAge: 30000,
+                timeout: 27000
+            });
+
+            setNightmode(false);
+            checkLockable();
+
+        }());
+    </script>
 </body>
 </html>
