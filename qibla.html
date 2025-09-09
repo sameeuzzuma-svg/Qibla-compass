@@ -1,124 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simple Qibla Compass</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin: 0;
-      padding: 20px;
-      background: #f4f4f4;
-    }
-    h2 { color: #2d5a3d; }
-
-    .compass {
-      position: relative;
-      width: 300px;
-      height: 300px;
-      margin: 20px auto;
-    }
-    .compass__rose {
-      width: 100%;
-      height: 100%;
-      transition: transform 0.3s ease-out;
-    }
-    .compass__pointer {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Qibla Compass (Fixed)</title>
+<style>
+  body{font-family:system-ui,Arial,sans-serif;margin:0;padding:16px;text-align:center;background:#f6f7f8}
+  h2{margin:8px 0 4px}
+  .wrap{max-width:460px;margin:0 auto}
+  .btn{padding:10px 14px;border:0;border-radius:10px;cursor:pointer;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  .compass{position:relative;width:min(90vw,380px);height:min(90vw,380px);margin:16px auto}
+  .rose{width:100%;height:100%;transition:transform .15s ease-out}
+  .pointer{position:absolute;inset:0;pointer-events:none}
+  .ok{color:#1a7f37}
+  .warn{color:#b54708}
+  .meta{font-size:14px;color:#444;margin-top:8px}
+</style>
 </head>
 <body>
+<div class="wrap">
   <h2>Qibla Compass</h2>
-  <p id="status">Allow location & motion access</p>
+  <p id="status" class="warn">Tap “Enable Motion” and allow location.</p>
+  <button id="enable" class="btn">Enable Motion</button>
 
   <div class="compass">
-    <div id="rose" class="compass__rose">
-      <svg viewBox="0 0 130 130" width="100%" height="100%">
-        <circle cx="65" cy="65" r="60" stroke="gray" stroke-width="2" fill="white"/>
-        <text x="65" y="15" text-anchor="middle">N</text>
-        <text x="125" y="70" text-anchor="middle">E</text>
-        <text x="65" y="125" text-anchor="middle">S</text>
-        <text x="5"  y="70" text-anchor="middle">W</text>
-        <image id="kabah" x="55" y="5" width="20" height="20"
-          href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIiBmaWxsPSJibGFjayIvPjwvc3ZnPg=="/>
+    <!-- Dial (rotates) -->
+    <div id="rose" class="rose">
+      <svg viewBox="0 0 130 130" width="100%" height="100%" aria-label="compass dial">
+        <circle cx="65" cy="65" r="60" stroke="#888" stroke-width="2" fill="#fff"/>
+        <text x="65" y="14" text-anchor="middle">N</text>
+        <text x="124" y="70" text-anchor="middle">E</text>
+        <text x="65" y="126" text-anchor="middle">S</text>
+        <text x="6"  y="70" text-anchor="middle">W</text>
+        <!-- Kaaba marker (positioned on the rim by script) -->
+        <circle id="kabah" cx="65" cy="5" r="8" fill="black"/>
       </svg>
     </div>
-    <svg class="compass__pointer" viewBox="0 0 130 130">
-      <polyline points="65,15 75,65 55,65" fill="red"/>
-      <polyline points="65,115 75,65 55,65" fill="white"/>
+    <!-- Fixed pointer (always points up/north of screen) -->
+    <svg class="pointer" viewBox="0 0 130 130" width="100%" height="100%" aria-label="north pointer">
+      <polygon points="65,12 78,65 52,65" fill="red"/>
+      <polygon points="65,118 78,65 52,65" fill="white"/>
     </svg>
   </div>
 
-  <p><strong>Your Location:</strong> <span id="lat">...</span>, <span id="lng">...</span></p>
-  <p><strong>Qibla Direction:</strong> <span id="qibla">...</span>°</p>
+  <div class="meta">
+    <div>Lat/Lng: <span id="lat">--</span>, <span id="lng">--</span></div>
+    <div>Qibla: <span id="qibla">--</span>° | Heading: <span id="heading">--</span>°</div>
+  </div>
+</div>
 
-  <script>
-    let pointDegree = 0;
-    const rose = document.getElementById("rose");
-    const kabah = document.getElementById("kabah");
-    const latEl = document.getElementById("lat");
-    const lngEl = document.getElementById("lng");
-    const qiblaEl = document.getElementById("qibla");
-    const statusEl = document.getElementById("status");
+<script>
+(function(){
+  const rose = document.getElementById('rose');
+  const kabah = document.getElementById('kabah');
+  const statusEl = document.getElementById('status');
+  const qiblaEl = document.getElementById('qibla');
+  const headEl  = document.getElementById('heading');
+  const latEl   = document.getElementById('lat');
+  const lngEl   = document.getElementById('lng');
+  const enableBtn = document.getElementById('enable');
 
-    // Qibla calculation
-    function calcQibla(lat, lon) {
-      const kaaba = { lat: 21.4225, lng: 39.8262 };
-      const phiK = kaaba.lat * Math.PI/180;
-      const lambdaK = kaaba.lng * Math.PI/180;
-      const phi = lat * Math.PI/180;
-      const lambda = lon * Math.PI/180;
-      const psi = (180/Math.PI) * Math.atan2(
-        Math.sin(lambdaK - lambda),
-        Math.cos(phi) * Math.tan(phiK) - Math.sin(phi) * Math.cos(lambdaK - lambda)
-      );
-      return Math.round((psi + 360) % 360);
-    }
+  let qiblaDeg = 0;
+  let hasLocation = false;
 
-    // Position Kabah on compass ring
-    function positionKabah(deg) {
-      const r = 60; const cx = 65; const cy = 65; const size = 20;
-      const x = Math.sin(deg * Math.PI/180) * r + cx - size/2;
-      const y = -Math.cos(deg * Math.PI/180) * r + cy - size/2;
-      kabah.setAttribute("x", x);
-      kabah.setAttribute("y", y);
-    }
+  // --- UTILITIES ---
+  const toRad = d => d * Math.PI / 180;
+  const toDeg = r => r * 180 / Math.PI;
+  const norm360 = d => (d % 360 + 360) % 360;
+  const screenAngle = () => {
+    const a = (screen.orientation && typeof screen.orientation.angle === 'number')
+      ? screen.orientation.angle
+      : (typeof window.orientation === 'number' ? window.orientation : 0);
+    return norm360(a || 0);
+  };
 
-    // Update heading
-    function onHeadingChange(event) {
-      const heading = event.webkitCompassHeading || event.alpha;
-      if (heading == null) return;
-      rose.style.transform = "rotate(" + (-heading) + "deg)";
-    }
+  function setStatus(msg, ok=false){ statusEl.textContent = msg; statusEl.className = ok ? 'ok' : 'warn'; }
 
-    // Get location
-    navigator.geolocation.getCurrentPosition(pos => {
-      const lat = pos.coords.latitude;
-      const lon = pos.coords.longitude;
-      latEl.textContent = lat.toFixed(3);
-      lngEl.textContent = lon.toFixed(3);
-      pointDegree = calcQibla(lat, lon);
-      qiblaEl.textContent = pointDegree;
-      positionKabah(pointDegree);
-      statusEl.textContent = "Rotate your phone to align with Qibla";
-    }, err => {
-      statusEl.textContent = "Location error: " + err.message;
-    });
+  // Place Kaaba dot on the dial rim for a given bearing
+  function positionKabah(deg){
+    const r = 60, cx = 65, cy = 65; // dial geometry matches SVG
+    const x = Math.sin(toRad(deg)) * r + cx;
+    const y = -Math.cos(toRad(deg)) * r + cy;
+    kabah.setAttribute('cx', x.toFixed(2));
+    kabah.setAttribute('cy', y.toFixed(2));
+  }
 
-    // Orientation events
-    if ('ondeviceorientationabsolute' in window) {
-      window.addEventListener("deviceorientationabsolute", onHeadingChange, true);
+  // Compute Qibla bearing (from true north)
+  function computeQibla(lat, lon){
+    const K = { lat: 21.422487, lon: 39.826206 }; // Kaaba
+    const phi = toRad(lat), lambda = toRad(lon);
+    const phiK = toRad(K.lat), lambdaK = toRad(K.lon);
+    const y = Math.sin(lambdaK - lambda);
+    const x = Math.cos(phi) * Math.tan(phiK) - Math.sin(phi) * Math.cos(lambdaK - lambda);
+    return norm360(toDeg(Math.atan2(y, x)));
+  }
+
+  // Robust compass heading:
+  // 1) iOS: use webkitCompassHeading (true north).
+  // 2) Else: derive from alpha/beta/gamma (magnetic), then compensate for screen rotation.
+  function calcHeadingFromEuler(alpha, beta, gamma){
+    // Based on W3C example
+    const x = toRad(beta);
+    const y = toRad(gamma);
+    const z = toRad(alpha);
+
+    const cX = Math.cos(x), cY = Math.cos(y), cZ = Math.cos(z);
+    const sX = Math.sin(x), sY = Math.sin(y), sZ = Math.sin(z);
+
+    const Vx = -cZ * sY - sZ * sX * cY;
+    const Vy = -sZ * sY + cZ * sX * cY;
+
+    let heading = Math.atan2(Vx, Vy);
+    if (heading < 0) heading += 2 * Math.PI;
+    return toDeg(heading); // 0..360 (relative to top-of-device in portrait)
+  }
+
+  function onOrientation(ev){
+    let heading;
+    // Prefer iOS true-heading when present
+    if (typeof ev.webkitCompassHeading === 'number' && ev.webkitCompassHeading >= 0){
+      heading = ev.webkitCompassHeading; // already 0..360 clockwise from true north
+    } else if (typeof ev.alpha === 'number' && typeof ev.beta === 'number' && typeof ev.gamma === 'number') {
+      heading = calcHeadingFromEuler(ev.alpha, ev.beta, ev.gamma);
+      // Compensate for screen rotation so "top of screen" = forward
+      heading = norm360(heading + screenAngle());
     } else {
-      window.addEventListener("deviceorientation", onHeadingChange, true);
+      return; // no usable data
     }
-  </script>
+
+    headEl.textContent = heading.toFixed(0);
+
+    // Rotate the dial opposite to heading so the pointer stays at North
+    rose.style.transform = `rotate(${-heading}deg)`;
+
+    // If we already know Qibla, keep the marker positioned
+    if (hasLocation) positionKabah(qiblaDeg);
+  }
+
+  function attachOrientation(){
+    if ('ondeviceorientationabsolute' in window){
+      window.addEventListener('deviceorientationabsolute', onOrientation, true);
+    }
+    window.addEventListener('deviceorientation', onOrientation, true);
+    // update when device rotates between portrait/landscape
+    (screen.orientation || {}).onchange = () => {}; // just to ensure screenAngle updates
+    window.addEventListener('orientationchange', ()=>{}, {passive:true});
+  }
+
+  // Geolocation (watch for movement)
+  function startGeo(){
+    if (!('geolocation' in navigator)){
+      setStatus('Geolocation not supported on this device.');
+      return;
+    }
+    navigator.geolocation.watchPosition(pos=>{
+      const { latitude, longitude } = pos.coords;
+      latEl.textContent = latitude.toFixed(5);
+      lngEl.textContent = longitude.toFixed(5);
+      qiblaDeg = computeQibla(latitude, longitude);
+      qiblaEl.textContent = qiblaDeg.toFixed(0);
+      positionKabah(qiblaDeg);
+      hasLocation = true;
+      setStatus('Move phone until red pointer meets the black dot (Qibla).', true);
+    }, err=>{
+      setStatus('Location error: ' + err.message);
+    }, { enableHighAccuracy: true, maximumAge: 5_000, timeout: 15_000 });
+  }
+
+  async function enableMotion(){
+    if (!window.isSecureContext){
+      setStatus('Needs HTTPS (or localhost) for motion & location.');
+      return;
+    }
+    // iOS 13+ needs explicit user gesture
+    try{
+      if (typeof DeviceMotionEvent !== 'undefined' &&
+          typeof DeviceMotionEvent.requestPermission === 'function'){
+        const res = await DeviceMotionEvent.requestPermission();
+        if (res !== 'granted'){ setStatus('Motion permission denied.'); return; }
+      }
+      if (typeof DeviceOrientationEvent !== 'undefined' &&
+          typeof DeviceOrientationEvent.requestPermission === 'function'){
+        // Some iOS versions gate both
+        try { await DeviceOrientationEvent.requestPermission(); } catch {}
+      }
+    } catch(e){
+      // ignore; not iOS or already allowed
+    }
+    attachOrientation();
+    startGeo();
+  }
+
+  enableBtn.addEventListener('click', enableMotion);
+
+  // Auto-start on platforms that don’t require a gesture
+  if (!('requestPermission' in (window.DeviceMotionEvent ?? {})) &&
+      !('requestPermission' in (window.DeviceOrientationEvent ?? {}))){
+    enableMotion();
+  }
+})();
+</script>
 </body>
 </html>
