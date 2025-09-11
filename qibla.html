@@ -835,8 +835,26 @@
                     <text x="65" y="127" font-size="16" text-anchor="middle" font-weight="800">S</text>
                     <text x="3" y="70" font-size="16" text-anchor="middle" font-weight="800">W</text>
                     
-                    <!-- Enhanced Qibla Direction Indicator -->
-                    <image id="qibla-indicator" x="48" y="8" width="34" height="34" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNCIgaGVpZ2h0PSIzNCIgdmlld0JveD0iMCAwIDM0IDM0Ij4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icWlibGFHcmFkaWVudCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNkYWE1MjAiLz4KPHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNmNGQwM2YiLz4KPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjYzE5MjA4Ii8+CjwvbGluZWFyR3JhZGllbnQ+CjxyYWRpYWxHcmFkaWVudCBpZD0icWlibGFHbG93IiBjeD0iNTAlIiBjeT0iNTAlIiByPSI1MCUiPgo8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIiBzdG9wLW9wYWNpdHk9IjAuOCIvPgo8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkYWE1MjAiIHN0b3Atb3BhY2l0eT0iMC4yIi8+CjwvcmFkaWFsR3JhZGllbnQ+CjwvZGVmcz4KPGNpcmNsZSBjeD0iMTciIGN5PSIxNyIgcj0iMTUiIGZpbGw9InVybCgjcWlibGFHbG93KSIgc3Ryb2tlPSIjZGFhNTIwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHJlY3QgeD0iMTEiIHk9IjExIiB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIGZpbGw9IiMwMDAwMDAiIHN0cm9rZT0iI2RhYTUyMCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHJ4PSIxIi8+CjxyZWN0IHg9IjE1IiB5PSI4IiB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZGFhNTIwIiByeD0iMC41Ii8+CjxyZWN0IHg9IjEzIiB5PSIxNCIgd2lkdGg9IjgiIGhlaWdodD0iMS41IiBmaWxsPSIjZGFhNTIwIi8+CjxyZWN0IHg9IjEzIiB5PSIxNy41IiB3aWR0aD0iOCIgaGVpZ2h0PSIxLjUiIGZpbGw9IiNkYWE1MjAiLz4KPC9zdmc+" />
+                    <!-- Enhanced Qibla Direction Arrow -->
+                    <g id="qibla-indicator" transform="translate(48, 8)">
+                        <!-- Golden background circle -->
+                        <circle cx="17" cy="17" r="15" fill="url(#qiblaGlow)" stroke="#daa520" stroke-width="2"/>
+                        <!-- Qibla Direction Arrow -->
+                        <path d="M17 5 L25 17 L20 17 L20 25 L14 25 L14 17 L9 17 Z" 
+                              fill="#ffffff" 
+                              stroke="#daa520" 
+                              stroke-width="2"/>
+                        <!-- Small center dot -->
+                        <circle cx="17" cy="17" r="2" fill="#daa520"/>
+                    </g>
+                    
+                    <!-- Gradients for qibla arrow -->
+                    <defs>
+                        <radialGradient id="qiblaGlow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8"/>
+                            <stop offset="100%" stop-color="#daa520" stop-opacity="0.2"/>
+                        </radialGradient>
+                    </defs>
                 </svg>
             </div>
             
@@ -1271,13 +1289,11 @@
                 let svgr = parseInt(circle.getAttribute("r"));
                 let cx = parseInt(circle.getAttribute("cx"));
                 let cy = parseInt(circle.getAttribute("cy"));
-                let qw = parseInt(qiblaIndicator.getAttribute("width"));
-                let qh = parseInt(qiblaIndicator.getAttribute("height"));
+                let qw = parseInt(qiblaIndicator.getAttribute("width")) || 34;
+                let qh = parseInt(qiblaIndicator.getAttribute("height")) || 34;
                 let qx = Math.sin(pointDegree * Math.PI / 180) * svgr + cx - (qw / 2);
                 let qy = - Math.cos(pointDegree * Math.PI / 180) * svgr + cy - (qh / 2);
-                qiblaIndicator.setAttribute("x", qx);
-                qiblaIndicator.setAttribute("y", qy);
-                qiblaIndicator.setAttribute("transform", "rotate(" + pointDegree +", "+ (qx + (qw/2)) +", " + (qy + (qh/2)) +")");
+                qiblaIndicator.setAttribute("transform", "translate(" + qx + ", " + qy + ") rotate(" + pointDegree + ", 17, 17)");
             }
 
             // Event listeners
