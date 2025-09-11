@@ -253,10 +253,25 @@
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
         }
 
-        /* Enhanced Qibla Direction with Glowing Kaaba */
-        #kabah {
-            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.4));
+        /* Enhanced Qibla Direction Indicator */
+        #qibla-indicator {
+            filter: drop-shadow(0 8px 16px rgba(218, 165, 32, 0.6));
             transition: all 0.3s ease;
+        }
+
+        .compass.qibla-found #qibla-indicator {
+            animation: qiblaIndicatorGlow 2s infinite;
+        }
+
+        @keyframes qiblaIndicatorGlow {
+            0%, 100% { 
+                filter: drop-shadow(0 8px 16px rgba(218, 165, 32, 0.6));
+                transform: scale(1);
+            }
+            50% { 
+                filter: drop-shadow(0 12px 24px rgba(218, 165, 32, 0.9));
+                transform: scale(1.1);
+            }
         }
 
         /* Central Qibla Indicator */
@@ -784,13 +799,13 @@
             <!-- Enhanced Qibla Direction Arc -->
             <div class="qibla-arc"></div>
             
-            <!-- Enhanced Central Qibla Indicator -->
+            <!-- Enhanced Central Qibla Indicator with Kaaba Icon -->
             <div class="qibla-center-indicator">
                 <i class="fas fa-kaaba"></i>
             </div>
             
             <div id="rose" class="compass__rose">
-                <svg class="compass__rose__dial" viewBox="-2 0 135 126" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <svg class="compass__rose__dial" viewBox="0 0 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
                     <!-- Enhanced compass rings -->
                     <circle cx="65" cy="65" r="55" stroke="var(--islamic-green)" stroke-width="5" fill="none" opacity="0.4" />
                     <circle cx="65" cy="65" r="48" stroke="var(--islamic-gold)" stroke-width="3" fill="none" opacity="0.6" />
@@ -819,8 +834,8 @@
                     <text x="65" y="127" font-size="16" text-anchor="middle" font-weight="800">S</text>
                     <text x="3" y="70" font-size="16" text-anchor="middle" font-weight="800">W</text>
                     
-                    <!-- Enhanced Kaaba icon with better positioning -->
-                    <image id="kabah" x="48" y="8" width="34" height="34" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNCIgaGVpZ2h0PSIzNCIgdmlld0JveD0iMCAwIDM0IDM0Ij4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0ia2FhYmFHcmFkaWVudCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNkYWE1MjAiLz4KPHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNmNGQwM2YiLz4KPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjYzE5MjA4Ii8+CjwvbGluZWFyR3JhZGllbnQ+CjwvZGVmcz4KPHBhdGggZD0iTTE3LDMgTDMxLDE3IEwxNywzMSBMMywxNyBaIiBmaWxsPSJ1cmwoI2thYWJhR3JhZGllbnQpIiBzdHJva2U9IiNmNGQwM2YiIHN0cm9rZS13aWR0aD0iMiIvPgo8Y2lyY2xlIGN4PSIxNyIgY3k9IjE3IiByPSI0IiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjMiLz4KPC9zdmc+" />
+                    <!-- Enhanced Qibla Direction Indicator -->
+                    <image id="qibla-indicator" x="48" y="8" width="34" height="34" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNCIgaGVpZ2h0PSIzNCIgdmlld0JveD0iMCAwIDM0IDM0Ij4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icWlibGFHcmFkaWVudCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNkYWE1MjAiLz4KPHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNmNGQwM2YiLz4KPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjYzE5MjA4Ii8+CjwvbGluZWFyR3JhZGllbnQ+CjxyYWRpYWxHcmFkaWVudCBpZD0icWlibGFHbG93IiBjeD0iNTAlIiBjeT0iNTAlIiByPSI1MCUiPgo8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIiBzdG9wLW9wYWNpdHk9IjAuOCIvPgo8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkYWE1MjAiIHN0b3Atb3BhY2l0eT0iMC4yIi8+CjwvcmFkaWFsR3JhZGllbnQ+CjwvZGVmcz4KPGNpcmNsZSBjeD0iMTciIGN5PSIxNyIgcj0iMTYiIGZpbGw9InVybCgjcWlibGFHbG93KSIgb3BhY2l0eT0iMC4zIi8+CjxwYXRoIGQ9Ik0xNywzIEwzMSwxNyBMMTcsMzEgTDMsMTcgWiIgZmlsbD0idXJsKCNxaWJsYUdyYWRpZW50KSIgc3Ryb2tlPSIjZjRkMDNmIiBzdHJva2Utd2lkdGg9IjMiLz4KPGNpcmNsZSBjeD0iMTciIGN5PSIxNyIgcj0iNiIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC40Ii8+Cjx0ZXh0IHg9IjE3IiB5PSIyMiIgZm9udC1zaXplPSI4IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzAwMDAwMCI+UT4vdGV4dD4KPC9zdmc+" />
                 </svg>
             </div>
             
@@ -964,7 +979,7 @@
             var defaultOrientation = "";
 
             var rose = document.getElementById("rose");
-            var kabah = document.getElementById("kabah");
+            var qiblaIndicator = document.getElementById("qibla-indicator");
             var intro = document.getElementById("intro");
             var positionLab = document.getElementById("position-lab");
             var positionHng = document.getElementById("position-hng");
@@ -1225,7 +1240,7 @@
                 if (pointDegree < 0) {
                     pointDegree = pointDegree + 360;
                 }
-                calcKabah(pointDegree);
+                calcQiblaIndicator(pointDegree);
             }
 
             function calcDegreeToPoint(latitude, longitude) {
@@ -1248,19 +1263,20 @@
                 return Math.round(psi);
             }
 
-            function calcKabah(pointDegree) {
-                let kabah = document.getElementById("kabah");
+            function calcQiblaIndicator(pointDegree) {
+                if (!qiblaIndicator) return;
+                
                 let circle = document.getElementsByTagName("circle")[0];
                 let svgr = parseInt(circle.getAttribute("r"));
                 let cx = parseInt(circle.getAttribute("cx"));
                 let cy = parseInt(circle.getAttribute("cy"));
-                let kw = parseInt(kabah.getAttribute("width"));
-                let kh = parseInt(kabah.getAttribute("height"));
-                let kx = Math.sin(pointDegree * Math.PI / 180) * svgr + cx - (kw / 2);
-                let ky = - Math.cos(pointDegree * Math.PI / 180) * svgr + cy - (kh / 2);
-                kabah.setAttribute("x", kx);
-                kabah.setAttribute("y", ky);
-                kabah.setAttribute("transform", "rotate(" + pointDegree +", "+ (kx + (kw/2)) +", " + (ky + (kh/2)) +")");
+                let qw = parseInt(qiblaIndicator.getAttribute("width"));
+                let qh = parseInt(qiblaIndicator.getAttribute("height"));
+                let qx = Math.sin(pointDegree * Math.PI / 180) * svgr + cx - (qw / 2);
+                let qy = - Math.cos(pointDegree * Math.PI / 180) * svgr + cy - (qh / 2);
+                qiblaIndicator.setAttribute("x", qx);
+                qiblaIndicator.setAttribute("y", qy);
+                qiblaIndicator.setAttribute("transform", "rotate(" + pointDegree +", "+ (qx + (qw/2)) +", " + (qy + (qh/2)) +")");
             }
 
             // Event listeners
