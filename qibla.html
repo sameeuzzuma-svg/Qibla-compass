@@ -607,13 +607,48 @@
     </style>
 </head>
 <body>
-    <header>
+<!--     <header>
         <h1>
             <i class="fas fa-kaaba"></i>
             Qibla Direction Finder
         </h1>
         <p id="intro">Find accurate direction to Mecca using your device's compass. This Islamic compass app helps you determine the Qibla direction for prayer from your current location with precision and devotion.</p>
-    </header>
+    </header> -->
+      <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-islamic-green fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-mosque me-2"></i>
+                Islamic Prayer Times
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="prayer-times.html">Prayer Times</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="mosque-finder.html" onclick="return addLocationToLink(this)">Mosque
+                            Finder</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="qibla.html" onclick="return addLocationToLink(this)">Qibla Finder</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dhikr.html">Dhikr Counter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     
     <div class="container">
         <div class="compass">
