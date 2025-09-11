@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#0f4c3a">
-    <meta name="description" content="Find accurate Qibla direction to Mecca with modern compass technology and Islamic design.">
+    <meta name="description"
+        content="Find accurate Qibla direction to Mecca with modern compass technology and Islamic design.">
     <title>Qibla Direction Finder - Islamic Prayer Compass</title>
-    
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts - Enhanced Islamic Typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
     <style>
         /* Enhanced Islamic Theme Variables */
         :root {
@@ -146,7 +150,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
         }
 
         header p {
@@ -193,10 +197,10 @@
             height: 100%;
             width: 100%;
             border-radius: 50%;
-            background: 
-                radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), transparent 60%),
+            background:
+                radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), transparent 60%),
                 linear-gradient(145deg, #ffffff 0%, #f8fafc 50%, #e2e8f0 100%);
-            box-shadow: 
+            box-shadow:
                 0 30px 60px var(--shadow-strong),
                 inset 0 4px 8px rgba(255, 255, 255, 0.9),
                 inset 0 -4px 8px rgba(0, 0, 0, 0.1),
@@ -215,7 +219,7 @@
             right: 20px;
             bottom: 20px;
             border-radius: 50%;
-            background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.8), transparent 60%);
+            background: radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.8), transparent 60%);
             pointer-events: none;
         }
 
@@ -237,20 +241,20 @@
             stroke-width: 4;
             opacity: 0.5;
             fill: none;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
         }
 
         .compass__rose__dial text {
             fill: var(--islamic-green);
             font-weight: 800;
             font-size: 16px;
-            text-shadow: 0 2px 4px rgba(255,255,255,0.8), 0 1px 2px rgba(0,0,0,0.1);
+            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8), 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .compass__rose__dial polyline {
             fill: var(--islamic-green);
             opacity: 0.8;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
         }
 
         /* Enhanced Qibla Direction Indicator */
@@ -264,11 +268,14 @@
         }
 
         @keyframes qiblaIndicatorGlow {
-            0%, 100% { 
+
+            0%,
+            100% {
                 filter: drop-shadow(0 8px 16px rgba(218, 165, 32, 0.6));
                 transform: scale(1);
             }
-            50% { 
+
+            50% {
                 filter: drop-shadow(0 12px 24px rgba(218, 165, 32, 0.9));
                 transform: scale(1.1);
             }
@@ -288,7 +295,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 
+            box-shadow:
                 0 12px 30px rgba(218, 165, 32, 0.4),
                 inset 0 4px 8px rgba(255, 255, 255, 0.3),
                 0 0 0 4px rgba(255, 255, 255, 0.8),
@@ -300,7 +307,7 @@
         .qibla-center-indicator i {
             font-size: 32px;
             color: white;
-            text-shadow: 0 3px 6px rgba(0,0,0,0.4);
+            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
         }
 
         /* Qibla Direction Arc */
@@ -313,7 +320,7 @@
             border-radius: 50%;
             border: 4px solid transparent;
             background: linear-gradient(white, white) padding-box,
-                        linear-gradient(45deg, var(--islamic-gold), var(--islamic-gold-light)) border-box;
+                linear-gradient(45deg, var(--islamic-gold), var(--islamic-gold-light)) border-box;
             opacity: 0;
             transition: opacity 0.5s ease;
             z-index: 10;
@@ -329,28 +336,34 @@
         }
 
         @keyframes qiblaGlow {
-            0%, 100% { 
+
+            0%,
+            100% {
                 box-shadow: 0 0 25px var(--qibla-glow), 0 0 50px var(--qibla-glow);
                 transform: scale(1);
             }
-            50% { 
+
+            50% {
                 box-shadow: 0 0 50px var(--qibla-glow), 0 0 75px var(--qibla-glow);
                 transform: scale(1.03);
             }
         }
 
         @keyframes qiblaPulse {
-            0%, 100% { 
+
+            0%,
+            100% {
                 transform: scale(1) translate(-50%, -50%);
-                box-shadow: 
+                box-shadow:
                     0 12px 30px rgba(218, 165, 32, 0.4),
                     inset 0 4px 8px rgba(255, 255, 255, 0.3),
                     0 0 0 4px rgba(255, 255, 255, 0.8),
                     0 0 0 8px rgba(218, 165, 32, 0.2);
             }
-            50% { 
+
+            50% {
                 transform: scale(1.1) translate(-45.5%, -45.5%);
-                box-shadow: 
+                box-shadow:
                     0 18px 40px rgba(218, 165, 32, 0.6),
                     inset 0 4px 8px rgba(255, 255, 255, 0.4),
                     0 0 0 4px rgba(255, 255, 255, 0.9),
@@ -367,7 +380,7 @@
             bottom: 0;
             height: 100%;
             width: 100%;
-            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.3));
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
             z-index: 12;
         }
 
@@ -386,7 +399,7 @@
             fill: #1f2937;
             stroke: #dc2626;
             stroke-width: 4;
-            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4));
+            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
         }
 
         /* Enhanced Status Panel */
@@ -394,10 +407,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,250,252,0.95));
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95));
             border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
             padding: 2rem 1.5rem;
-            box-shadow: 
+            box-shadow:
                 0 -15px 45px var(--shadow-strong),
                 0 -3px 0 var(--border-light);
             backdrop-filter: blur(20px);
@@ -425,7 +438,7 @@
             background: linear-gradient(135deg, rgba(15, 76, 58, 0.08), rgba(74, 128, 97, 0.05));
             border-radius: 12px;
             border: 2px solid var(--border-light);
-            box-shadow: 
+            box-shadow:
                 0 4px 12px var(--shadow-subtle),
                 inset 0 1px 0 rgba(255, 255, 255, 0.8);
         }
@@ -464,8 +477,13 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         .popup__content {
@@ -482,11 +500,12 @@
         }
 
         @keyframes slideUp {
-            from { 
+            from {
                 opacity: 0;
                 transform: translateY(50px) scale(0.95);
             }
-            to { 
+
+            to {
                 opacity: 1;
                 transform: translateY(0) scale(1);
             }
@@ -750,6 +769,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-islamic-green fixed-top">
@@ -774,7 +794,8 @@
                             Finder</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="qibla.html" onclick="return addLocationToLink(this)">Qibla Finder</a>
+                        <a class="nav-link active" href="qibla.html" onclick="return addLocationToLink(this)">Qibla
+                            Finder</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="dhikr.html">Dhikr Counter</a>
@@ -792,88 +813,93 @@
             <i class="fas fa-kaaba"></i>
             Qibla Direction Finder
         </h1>
-        <p id="intro">Find accurate direction to Mecca using your device's compass. This Islamic compass app helps you determine the Qibla direction for prayer from your current location with precision and devotion.</p>
+        <p id="intro">Find accurate direction to Mecca using your device's compass. This Islamic compass app helps you
+            determine the Qibla direction for prayer from your current location with precision and devotion.</p>
     </header>
-    
+
     <div class="container">
         <div class="compass">
             <!-- Enhanced Qibla Direction Arc -->
             <div class="qibla-arc"></div>
-            
+
             <!-- Enhanced Central Qibla Indicator -->
             <div class="qibla-center-indicator">
                 <i class="fas fa-kaaba"></i>
             </div>
-            
+
             <div id="rose" class="compass__rose">
                 <svg class="compass__rose__dial" viewBox="0 0 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
                     <!-- Enhanced compass rings -->
-                    <circle cx="65" cy="65" r="55" stroke="var(--islamic-green)" stroke-width="5" fill="none" opacity="0.4" />
-                    <circle cx="65" cy="65" r="48" stroke="var(--islamic-gold)" stroke-width="3" fill="none" opacity="0.6" />
-                    
+                    <circle cx="65" cy="65" r="55" stroke="var(--islamic-green)" stroke-width="5" fill="none"
+                        opacity="0.4" />
+                    <circle cx="65" cy="65" r="48" stroke="var(--islamic-gold)" stroke-width="3" fill="none"
+                        opacity="0.6" />
+
                     <!-- Enhanced cardinal direction markers -->
-                    <polyline points="58,8  72,8  65,22" fill="var(--islamic-green)" opacity="0.9"/>
-                    <polyline points="122,58  122,72  108,65" fill="var(--islamic-green)" opacity="0.9"/>
-                    <polyline points="58,122  72,122  65,108" fill="var(--islamic-green)" opacity="0.9"/>
-                    <polyline points="8,58  8,72  22,65" fill="var(--islamic-green)" opacity="0.9"/>
-                    
+                    <polyline points="58,8  72,8  65,22" fill="var(--islamic-green)" opacity="0.9" />
+                    <polyline points="122,58  122,72  108,65" fill="var(--islamic-green)" opacity="0.9" />
+                    <polyline points="58,122  72,122  65,108" fill="var(--islamic-green)" opacity="0.9" />
+                    <polyline points="8,58  8,72  22,65" fill="var(--islamic-green)" opacity="0.9" />
+
                     <!-- Degree markings every 30 degrees -->
                     <g stroke="var(--islamic-green)" stroke-width="2" opacity="0.6">
-                        <line x1="65" y1="12" x2="65" y2="18" transform="rotate(30 65 65)"/>
-                        <line x1="65" y1="12" x2="65" y2="18" transform="rotate(60 65 65)"/>
-                        <line x1="65" y1="12" x2="65" y2="18" transform="rotate(120 65 65)"/>
-                        <line x1="65" y1="12" x2="65" y2="18" transform="rotate(150 65 65)"/>
-                        <line x1="65" y1="12" x2="65" y2="18" transform="rotate(210 65 65)"/>
-                        <line x1="65" y1="12" x2="65" y2="18" transform="rotate(240 65 65)"/>
-                        <line x1="65" y1="12" x2="65" y2="18" transform="rotate(300 65 65)"/>
-                        <line x1="65" y1="12" x2="65" y2="18" transform="rotate(330 65 65)"/>
+                        <line x1="65" y1="12" x2="65" y2="18" transform="rotate(30 65 65)" />
+                        <line x1="65" y1="12" x2="65" y2="18" transform="rotate(60 65 65)" />
+                        <line x1="65" y1="12" x2="65" y2="18" transform="rotate(120 65 65)" />
+                        <line x1="65" y1="12" x2="65" y2="18" transform="rotate(150 65 65)" />
+                        <line x1="65" y1="12" x2="65" y2="18" transform="rotate(210 65 65)" />
+                        <line x1="65" y1="12" x2="65" y2="18" transform="rotate(240 65 65)" />
+                        <line x1="65" y1="12" x2="65" y2="18" transform="rotate(300 65 65)" />
+                        <line x1="65" y1="12" x2="65" y2="18" transform="rotate(330 65 65)" />
                     </g>
-                    
+
                     <!-- Enhanced cardinal direction labels -->
-                    <text x="65" y="6" font-size="16" text-anchor="middle" font-weight="800">N</text>
+                    <!-- <text x="65" y="6" font-size="16" text-anchor="middle" font-weight="800">N</text>
                     <text x="127" y="70" font-size="16" text-anchor="middle" font-weight="800">E</text>
                     <text x="65" y="127" font-size="16" text-anchor="middle" font-weight="800">S</text>
-                    <text x="3" y="70" font-size="16" text-anchor="middle" font-weight="800">W</text>
-                    
+                    <text x="3" y="70" font-size="16" text-anchor="middle" font-weight="800">W</text> -->
+                    <text x="65" y="20" font-size="16" text-anchor="middle" font-weight="800">N</text>
+                    <text x="123" y="75" font-size="16" text-anchor="middle" font-weight="800">E</text>
+                    <text x="65" y="122" font-size="16" text-anchor="middle" font-weight="800">S</text>
+                    <text x="7" y="75" font-size="16" text-anchor="middle" font-weight="800">W</text>
+
                     <!-- Enhanced Qibla Direction Arrow -->
                     <g id="qibla-indicator" transform="translate(48, 8)">
                         <!-- Golden background circle -->
-                        <circle cx="17" cy="17" r="15" fill="url(#qiblaGlow)" stroke="#daa520" stroke-width="2"/>
+                        <circle cx="17" cy="17" r="15" fill="url(#qiblaGlow)" stroke="#daa520" stroke-width="2" />
                         <!-- Qibla Direction Arrow -->
-                        <path d="M17 5 L25 17 L20 17 L20 25 L14 25 L14 17 L9 17 Z" 
-                              fill="#ffffff" 
-                              stroke="#daa520" 
-                              stroke-width="2"/>
+                        <path d="M17 5 L25 17 L20 17 L20 25 L14 25 L14 17 L9 17 Z" fill="#ffffff" stroke="#daa520"
+                            stroke-width="2" />
                         <!-- Small center dot -->
-                        <circle cx="17" cy="17" r="2" fill="#daa520"/>
+                        <circle cx="17" cy="17" r="2" fill="#daa520" />
                     </g>
-                    
+
                     <!-- Gradients for qibla arrow -->
                     <defs>
                         <radialGradient id="qiblaGlow" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8"/>
-                            <stop offset="100%" stop-color="#daa520" stop-opacity="0.2"/>
+                            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8" />
+                            <stop offset="100%" stop-color="#daa520" stop-opacity="0.2" />
                         </radialGradient>
                     </defs>
                 </svg>
             </div>
-            
+
             <!-- Enhanced compass needle -->
             <svg class="compass__pointer" viewBox="0 0 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
                 <!-- Enhanced North needle (red with gradient) -->
-                <polyline points="60,65  70,65  65,15" fill="url(#redGradient)" stroke="#b91c1c" stroke-width="2"/>
+                <polyline points="60,65  70,65  65,15" fill="url(#redGradient)" stroke="#b91c1c" stroke-width="2" />
                 <!-- Enhanced South needle (white with red border) -->
-                <polyline points="60,65  70,65  65,115" fill="white" stroke="#dc2626" stroke-width="3"/>
+                <polyline points="60,65  70,65  65,115" fill="white" stroke="#dc2626" stroke-width="3" />
                 <!-- Enhanced center circle with multiple layers -->
-                <circle cx="65" cy="65" r="8" fill="#1f2937" stroke="#dc2626" stroke-width="3"/>
-                <circle cx="65" cy="65" r="4" fill="#dc2626"/>
-                <circle cx="65" cy="65" r="2" fill="white" opacity="0.8"/>
-                
+                <circle cx="65" cy="65" r="8" fill="#1f2937" stroke="#dc2626" stroke-width="3" />
+                <circle cx="65" cy="65" r="4" fill="#dc2626" />
+                <circle cx="65" cy="65" r="2" fill="white" opacity="0.8" />
+
                 <!-- Gradient definition for red needle -->
                 <defs>
                     <linearGradient id="redGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stop-color="#dc2626"/>
-                        <stop offset="100%" stop-color="#b91c1c"/>
+                        <stop offset="0%" stop-color="#dc2626" />
+                        <stop offset="100%" stop-color="#b91c1c" />
                     </linearGradient>
                 </defs>
             </svg>
@@ -914,7 +940,9 @@
                 <div id="popup-inner-info" class="popup__inner popup__inner--hide">
                     <h3><i class="fas fa-kaaba me-2"></i>Qibla Direction Compass</h3>
                     <p>
-                        This <strong>Qibla Direction Compass</strong> shows the current qibla direction using your device's compass. The app utilizes your geographical location and device sensors to find the accurate direction to the Kaaba in Mecca.
+                        This <strong>Qibla Direction Compass</strong> shows the current qibla direction using your
+                        device's compass. The app utilizes your geographical location and device sensors to find the
+                        accurate direction to the Kaaba in Mecca.
                     </p>
                     <p>
                         <strong>For best results:</strong>
@@ -925,7 +953,8 @@
                         <li>Hold your device flat and parallel to the ground</li>
                         <li>Ensure location services are enabled</li>
                     </ul>
-                    <p class="arabic-font" style="text-align: center; font-size: 1.3rem; color: var(--islamic-green); margin: 1.5rem 0;">
+                    <p class="arabic-font"
+                        style="text-align: center; font-size: 1.3rem; color: var(--islamic-green); margin: 1.5rem 0;">
                         "فَوَلِّ وَجْهَكَ شَطْرَ الْمَسْجِدِ الْحَرَامِ"
                     </p>
                     <p style="text-align: center; font-style: italic; color: var(--text-muted);">
@@ -934,7 +963,8 @@
                 </div>
                 <div id="popup-inner-noorientation" class="popup__inner popup__inner--hide">
                     <h3><i class="fas fa-exclamation-triangle me-2"></i>Compass Access Required</h3>
-                    <p>This compass requires access to your device's orientation sensor to determine the Qibla direction accurately.</p>
+                    <p>This compass requires access to your device's orientation sensor to determine the Qibla direction
+                        accurately.</p>
                     <p>
                         <strong>Please follow these steps:</strong>
                     </p>
@@ -1050,7 +1080,7 @@
             }
 
             function onHeadingChange(event) {
-                var heading = -1*event.webkitCompassHeading || event.alpha;
+                var heading = -1 * event.webkitCompassHeading || event.alpha;
                 var alpha;
                 var orientation = getBrowserOrientation();
 
@@ -1084,14 +1114,14 @@
 
                     var phase = positionCurrent.hng < 0 ? 360 + positionCurrent.hng : positionCurrent.hng;
                     positionHng.textContent = (360 - phase | 0) + "°";
-                    
+
                     var qiboffset = Math.abs((360 - phase) - pointDegree);
                     // Enhanced qibla detection with better visual feedback
-                    if(qiboffset < 25) {
+                    if (qiboffset < 25) {
                         alpha = (25 - qiboffset) / 25;
-                        positionHng.style.background = "linear-gradient(135deg, rgba(218,165,32,"+alpha+"), rgba(220,38,38,"+(alpha*0.5)+"))";
+                        positionHng.style.background = "linear-gradient(135deg, rgba(218,165,32," + alpha + "), rgba(220,38,38," + (alpha * 0.5) + "))";
                         intro.innerHTML = "🕋 Qibla Direction Found! 🌟";
-                        intro.style.color = "rgba(218,165,32,"+Math.min(1, alpha + 0.3)+")";
+                        intro.style.color = "rgba(218,165,32," + Math.min(1, alpha + 0.3) + ")";
                         intro.style.fontSize = "1.6em";
                         intro.style.textAlign = "center";
                         intro.style.fontWeight = "700";
@@ -1155,7 +1185,7 @@
                             var locationText = city;
                             if (state) locationText += ", " + state;
                             if (country && state !== country) locationText += ", " + country;
-                            
+
                             positionLab.innerText = locationText;
                         } else if (xhr.readyState === 4) {
                             positionLab.innerText = "Location found - Address lookup unavailable";
@@ -1169,7 +1199,7 @@
             function locationUpdate(position) {
                 locationNameUpdate(position);
                 locationHandler(position);
-                positionQib.textContent = pointDegree +"°";
+                positionQib.textContent = pointDegree + "°";
 
                 positionCurrent.lat = position.coords.latitude;
                 positionCurrent.lng = position.coords.longitude;
@@ -1187,7 +1217,7 @@
 
             function popupOpen(name) {
                 var i;
-                for (i=0; i<popupInners.length; i++) {
+                for (i = 0; i < popupInners.length; i++) {
                     popupInners[i].classList.add("popup__inner--hide");
                 }
                 document.getElementById("popup-inner-" + name).classList.remove("popup__inner--hide");
@@ -1228,11 +1258,11 @@
                 if (window.DeviceOrientationEvent == null) {
                     callback(new Error("DeviceOrientation is not supported."));
                 } else if (DeviceOrientationEvent.requestPermission) {
-                    DeviceOrientationEvent.requestPermission().then(function(state) {
+                    DeviceOrientationEvent.requestPermission().then(function (state) {
                         if (state == "granted") {
                             callback(null);
                         } else callback(new Error("Permission denied by user"));
-                    }, function(err) {
+                    }, function (err) {
                         callback(err);
                     });
                 } else {
@@ -1241,11 +1271,11 @@
             }
 
             function firstClick() {
-                requestDeviceOrientation(function(err) {
+                requestDeviceOrientation(function (err) {
                     if (err == null) {
                         window.removeEventListener("click", firstClick);
                         window.removeEventListener("touchend", firstClick);
-                        window.addEventListener("devicemotion", function(e) {
+                        window.addEventListener("devicemotion", function (e) {
                         });
                     } else {
                         console.log("Device orientation error:", err);
@@ -1277,14 +1307,14 @@
                     Math.atan2(
                         Math.sin(lambdaK - lambda),
                         Math.cos(phi) * Math.tan(phiK) -
-                            Math.sin(phi) * Math.cos(lambdaK - lambda)
+                        Math.sin(phi) * Math.cos(lambdaK - lambda)
                     );
                 return Math.round(psi);
             }
 
             function calcQiblaIndicator(pointDegree) {
                 if (!qiblaIndicator) return;
-                
+
                 let circle = document.getElementsByTagName("circle")[0];
                 let svgr = parseInt(circle.getAttribute("r"));
                 let cx = parseInt(circle.getAttribute("cx"));
@@ -1329,4 +1359,5 @@
         }
     </script>
 </body>
+
 </html>
