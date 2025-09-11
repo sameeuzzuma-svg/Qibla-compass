@@ -604,6 +604,30 @@
             stroke: #dc2626;
             stroke-width: 2;
         }
+         /* Navigation */
+        .bg-islamic-green {
+            background: var(--gradient-green) !important;
+            box-shadow: 0 2px 20px var(--shadow-medium);
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            border-radius: 25px;
+            padding: 0.5rem 1rem !important;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
@@ -649,6 +673,14 @@
             </div>
         </div>
     </nav>
+
+     <header>
+        <h1>
+            <i class="fas fa-kaaba"></i>
+            Qibla Direction Finder
+        </h1>
+        <p id="intro">Find accurate direction to Mecca using your device's compass. This Islamic compass app helps you determine the Qibla direction for prayer from your current location with precision and devotion.</p>
+    </header>
     
     <div class="container">
         <div class="compass">
