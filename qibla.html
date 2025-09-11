@@ -19,8 +19,8 @@
     <style>
         /* Enhanced Islamic Theme Variables */
         :root {
-            --islamic-green: #0f4c3a;
-            --islamic-green-light: #1a6b54;
+            --islamic-green: #2d5a3d;
+            --islamic-green-light: #4a8061;
             --islamic-green-accent: #2d8a6e;
             --islamic-gold: #daa520;
             --islamic-gold-light: #f4d03f;
@@ -42,6 +42,7 @@
             --border-radius: 16px;
             --border-radius-lg: 24px;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient-green: linear-gradient(135deg, var(--islamic-green), var(--islamic-green-light));
         }
 
         * {
@@ -490,39 +491,26 @@
             }
         }
 
-        /* Enhanced Footer */
-        footer {
-            background: var(--gradient-primary) !important;
-            margin-top: 4rem;
-            position: relative;
-            overflow: hidden;
-        }
+        
 
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M30 30c0-16.569 13.431-30 30-30v60c-16.569 0-30-13.431-30-30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+         /* Footer */
+        footer {
+            background: var(--gradient-green) !important;
+            margin-top: 3rem;
         }
 
         .footer-links a {
             color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
-            transition: var(--transition);
-            margin: 0 0.75rem;
+            transition: color 0.3s ease;
+            margin: 0 10px;
             font-size: 0.9rem;
-            font-weight: 500;
         }
 
         .footer-links a:hover {
             color: white;
             text-decoration: underline;
-            text-decoration-color: var(--islamic-gold-light);
         }
-
         /* Debug styles (hidden by default) */
         #debug-orientation,
         #debug-orientation-default {
