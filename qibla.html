@@ -108,7 +108,7 @@
         }
 
         /* Enhanced Header */
-        header {
+        /* header {
             padding: 1.5rem 1rem;
             background: var(--gradient-primary);
             color: white;
@@ -161,17 +161,17 @@
             position: relative;
             z-index: 2;
             font-weight: 400;
-        }
+        } */
 
         /* Enhanced Container */
-        .container {
+        /* .container {
             padding: 14rem 1.5rem 5rem 1.5rem;
             overflow: hidden;
             height: 100vh;
             transition: var(--transition);
             max-width: 640px;
             margin: 0 auto;
-        }
+        } */
 
         /* Enhanced Compass with Premium 3D Design */
         .compass {
@@ -415,7 +415,7 @@
                 0 -3px 0 var(--border-light);
             backdrop-filter: blur(20px);
             border-top: 3px solid var(--border-medium);
-            margin-top: 2rem;
+            margin-top: 5rem;
         }
 
         .position {
@@ -661,19 +661,27 @@
         }
 
         @keyframes loadingPulse {
-            0%, 100% { 
-                transform: scale(1) translate(-50%, -50%); 
+
+            0%,
+            100% {
+                transform: scale(1) translate(-50%, -50%);
                 background: linear-gradient(135deg, var(--islamic-green), var(--islamic-green-light));
             }
-            50% { 
-                transform: scale(1.05) translate(-47.5%, -47.5%); 
+
+            50% {
+                transform: scale(1.05) translate(-47.5%, -47.5%);
                 background: linear-gradient(135deg, var(--islamic-green-light), var(--islamic-green-accent));
             }
         }
 
         @keyframes loadingSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .loading-text {
@@ -712,9 +720,9 @@
                 font-size: 0.85rem;
             }
 
-            .container {
+            /* .container {
                 padding: 13rem 1rem 5rem 1rem;
-            }
+            } */
 
             [class^="column-"] {
                 margin-bottom: 0.75rem;
@@ -748,9 +756,9 @@
                 margin-bottom: 0.5rem;
             }
 
-            .container {
+            /* .container {
                 padding: 12rem 1rem 4rem 1rem;
-            }
+            } */
 
             header {
                 padding: 1.25rem 1rem;
@@ -785,7 +793,7 @@
             background: var(--islamic-green-light);
         }
 
-       /* Footer */
+        /* Footer */
         footer {
             background: var(--gradient-green) !important;
             margin-top: 3rem;
@@ -844,12 +852,22 @@
         </div>
     </nav>
 
-    <header>
+    <!-- <header>
         <h1>
             <i class="fas fa-kaaba"></i>
             Qibla Direction Finder
         </h1>
         <p id="intro">Find accurate direction to Mecca using your device's compass. This Islamic compass app helps you
+            determine the Qibla direction for prayer from your current location with precision and devotion.</p>
+    </header> -->
+
+    <header class="text-center bg-white py-4 mb-4"
+        style="border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-top: 60px;">
+        <h1 style="color: var(--islamic-green); font-weight: 700;">
+            <i class="fas fa-kaaba me-3"></i>Qibla Finder
+        </h1>
+        <p id="intro" class="lead mb-0" style="color: var(--islamic-green);">Find accurate direction to Mecca using your
+            device's compass. This Islamic compass app helps you
             determine the Qibla direction for prayer from your current location with precision and devotion.</p>
     </header>
 
@@ -935,7 +953,7 @@
                     </linearGradient>
                 </defs>
             </svg>
-            
+
             <!-- Loading text -->
             <div class="loading-text" id="loading-text">Determining your location and Qibla direction...</div>
         </div>
@@ -1512,7 +1530,7 @@
 
                 positionLat.textContent = decimalToSexagesimal(positionCurrent.lat, "lat");
                 positionLng.textContent = decimalToSexagesimal(positionCurrent.lng, "lng");
-                
+
                 // Remove loading state once location is determined
                 if (!isLocationDetermined) {
                     isLocationDetermined = true;
@@ -1525,17 +1543,17 @@
                 positionLat.textContent = "n/a";
                 positionLng.textContent = "n/a";
                 positionLab.textContent = "Location access denied or unavailable";
-                
+
                 // Still remove loading state but show error
                 compassElement.classList.remove('compass--loading');
                 loadingText.textContent = "Unable to determine location. Using default values.";
                 loadingText.style.color = "#dc2626";
-                
+
                 // Set default values (Mecca coordinates) as fallback
                 positionCurrent.lat = 21.4225;
                 positionCurrent.lng = 39.8262;
-                locationHandler({coords: {latitude: positionCurrent.lat, longitude: positionCurrent.lng}});
-                
+                locationHandler({ coords: { latitude: positionCurrent.lat, longitude: positionCurrent.lng } });
+
                 console.log("location fail: ", error);
             }
 
