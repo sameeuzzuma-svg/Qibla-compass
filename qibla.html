@@ -651,6 +651,42 @@
             transform: translateY(-2px);
         }
 
+        /* Loading State Styles */
+        .compass--loading .qibla-center-indicator {
+            animation: loadingPulse 1.5s infinite;
+        }
+
+        .compass--loading .qibla-center-indicator i {
+            animation: loadingSpin 2s infinite linear;
+        }
+
+        @keyframes loadingPulse {
+            0%, 100% { 
+                transform: scale(1) translate(-50%, -50%); 
+                background: linear-gradient(135deg, var(--islamic-green), var(--islamic-green-light));
+            }
+            50% { 
+                transform: scale(1.05) translate(-47.5%, -47.5%); 
+                background: linear-gradient(135deg, var(--islamic-green-light), var(--islamic-green-accent));
+            }
+        }
+
+        @keyframes loadingSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--islamic-green);
+            font-weight: 600;
+        }
+
         /* Enhanced Responsive Design */
         @media (max-width: 768px) {
             .compass {
@@ -818,7 +854,7 @@
     </header>
 
     <div class="container">
-        <div class="compass">
+        <div class="compass compass--loading">
             <!-- Enhanced Qibla Direction Arc -->
             <div class="qibla-arc"></div>
 
@@ -854,10 +890,6 @@
                     </g>
 
                     <!-- Enhanced cardinal direction labels -->
-                    <!-- <text x="65" y="6" font-size="16" text-anchor="middle" font-weight="800">N</text>
-                    <text x="127" y="70" font-size="16" text-anchor="middle" font-weight="800">E</text>
-                    <text x="65" y="127" font-size="16" text-anchor="middle" font-weight="800">S</text>
-                    <text x="3" y="70" font-size="16" text-anchor="middle" font-weight="800">W</text> -->
                     <text x="65" y="20" font-size="16" text-anchor="middle" font-weight="800">N</text>
                     <text x="123" y="75" font-size="16" text-anchor="middle" font-weight="800">E</text>
                     <text x="65" y="122" font-size="16" text-anchor="middle" font-weight="800">S</text>
@@ -903,6 +935,9 @@
                     </linearGradient>
                 </defs>
             </svg>
+            
+            <!-- Loading text -->
+            <div class="loading-text" id="loading-text">Determining your location and Qibla direction...</div>
         </div>
     </div>
 
@@ -1023,6 +1058,9 @@
             var country = "";
             var roundedCurlat = "";
             var roundedCurlon = "";
+            var isLocationDetermined = false;
+            var compassElement = document.querySelector('.compass');
+            var loadingText = document.getElementById('loading-text');
 
             var positionCurrent = {};
             var defaultOrientation = "";
@@ -1206,12 +1244,30 @@
 
                 positionLat.textContent = decimalToSexagesimal(positionCurrent.lat, "lat");
                 positionLng.textContent = decimalToSexagesimal(positionCurrent.lng, "lng");
+                
+                // Remove loading state once location is determined
+                if (!isLocationDetermined) {
+                    isLocationDetermined = true;
+                    compassElement.classList.remove('compass--loading');
+                    loadingText.style.display = 'none';
+                }
             }
 
             function locationUpdateFail(error) {
                 positionLat.textContent = "n/a";
                 positionLng.textContent = "n/a";
                 positionLab.textContent = "Location access denied or unavailable";
+                
+                // Still remove loading state but show error
+                compassElement.classList.remove('compass--loading');
+                loadingText.textContent = "Unable to determine location. Using default values.";
+                loadingText.style.color = "#dc2626";
+                
+                // Set default values (Mecca coordinates) as fallback
+                positionCurrent.lat = 21.4225;
+                positionCurrent.lng = 39.8262;
+                locationHandler({coords: {latitude: positionCurrent.lat, longitude: positionCurrent.lng}});
+                
                 console.log("location fail: ", error);
             }
 
@@ -1325,6 +1381,12 @@
                 let qy = - Math.cos(pointDegree * Math.PI / 180) * svgr + cy - (qh / 2);
                 qiblaIndicator.setAttribute("transform", "translate(" + qx + ", " + qy + ") rotate(" + pointDegree + ", 17, 17)");
             }
+
+            // Initialize with default values to prevent incorrect positioning
+            positionCurrent.lat = 0;
+            positionCurrent.lng = 0;
+            pointDegree = 0;
+            calcQiblaIndicator(pointDegree);
 
             // Event listeners
             window.addEventListener("click", firstClick);
