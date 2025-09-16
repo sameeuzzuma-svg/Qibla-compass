@@ -171,6 +171,21 @@
             transform: translateX(5px);
         }
 
+        .btn-primary {
+            background: var(--gradient-green);
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--gradient-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-medium);
+        }
+
         /* Footer */
         footer {
             background: var(--gradient-green) !important;
@@ -382,6 +397,7 @@
                     <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms of Service</a>
                     <a href="#" data-bs-toggle="modal" data-bs-target="#disclaimerModal">Disclaimer</a>
                     <a href="#" data-bs-toggle="modal" data-bs-target="#cookiesModal">Cookie Policy</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#contactModal">Contact Us</a>
                     <small>&copy; 2025 Islamic Prayer Times App</small>
                 </div>
             </div>
@@ -615,8 +631,49 @@
         </div>
     </div>
 
+    <!-- In your contact page -->
+    <div class="modal fade legal-modal" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contactModalLabel"><i class="fas fa-envelope me-2"></i>Contact Us</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <h5>Get In Touch</h5>
+                    <p>We're here to assist you with any questions about prayer times, mosque locations, or technical
+                        support for our app.</p>
 
-    
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-md-8"> <!-- Increased width for better centering -->
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <div class="contact-icon mb-3">
+                                        <i class="fas fa-envelope fa-2x text-primary"></i>
+                                    </div>
+                                    <h5>Email Support</h5>
+                                    <p>Send us an email for assistance with the app or prayer time calculations</p>
+                                    <a href="mailto:kindnesspath1@gmail.com" class="btn btn-primary mt-2">
+                                        <i class="fas fa-paper-plane me-2"></i>Send Email
+                                    </a>
+                                    <p class="small text-muted mt-2">
+                                        <!-- <em>Once we launch, this will be a dedicated support email</em> -->
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
