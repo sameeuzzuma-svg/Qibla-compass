@@ -6,18 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mosque Finder - SunnahWise</title>
     <meta name="description" content="Find nearby mosques with directions and contact information.">
-    <meta name="keywords" content="mosque finder, find mosque, nearby mosque, masjid near me, Islamic center, prayer location">
+       <meta name="keywords" content="mosque finder, find mosque, nearby mosque, masjid near me, Islamic center, prayer location">
     
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts - Islamic Style -->
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
     <!-- Leaflet CSS for Maps -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
-    <link rel="canonical" href="https://sunnahwise.com/mosque-finder" />
+<link rel="canonical" href="https://sunnahwise.com/mosque-finder" />
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TN0HH3WV8R"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-TN0HH3WV8R'); </script>
 
     <style>
         /* Islamic Prayer Times App - Custom Styles */
@@ -209,101 +214,130 @@
             box-shadow: 0 8px 25px var(--shadow-light);
         }
 
-        /* Enhanced Loading Animation */
-        .search-progress {
-            background: rgba(45, 90, 61, 0.1);
-            border-radius: 10px;
-            padding: 1rem;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
+     /* Footer */
+footer {
+    background: linear-gradient(135deg, #14532d, #166534);
+    margin-top: 3rem;
+    padding: 3rem 0;
+    color: #f8f9fa;
+    font-family: 'Poppins', sans-serif;
+}
 
-        .search-status {
-            font-size: 0.9rem;
-            color: var(--islamic-green);
-            margin-top: 0.5rem;
-        }
+footer .container {
+    max-width: 1200px;
+}
 
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, #14532d, #166534);
-            margin-top: 3rem;
-            padding: 3rem 0;
-            color: #f8f9fa;
-            font-family: 'Poppins', sans-serif;
-        }
+/* Section spacing */
+.footer-section {
+    margin-bottom: 2rem;
+}
 
-        footer .container {
-            max-width: 1200px;
-        }
+/* Headings */
+footer .footer-heading {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #fff;
+}
 
-        .footer-section {
-            margin-bottom: 2rem;
-        }
+/* Quran */
+footer .quran-quote {
+    font-size: 1.05rem;
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+}
 
-        footer .footer-heading {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #fff;
-        }
+footer .quran-translation {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.75);
+}
 
-        footer .quran-quote {
-            font-size: 1.05rem;
-            font-style: italic;
-            line-height: 1.6;
-            margin-bottom: 0.5rem;
-        }
+/* Links */
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
 
-        footer .quran-translation {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.75);
-        }
+.footer-links a {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    position: relative;
+    padding-bottom: 2px;
+}
 
-        .footer-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
+.footer-links a:hover {
+    color: #fff;
+}
 
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.85);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            position: relative;
-            padding-bottom: 2px;
-        }
+.footer-links a::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background: #fff;
+    left: 0;
+    bottom: 0;
+    transition: width 0.3s ease;
+}
 
-        .footer-links a:hover {
-            color: #fff;
-        }
+.footer-links a:hover::after {
+    width: 100%;
+}
 
-        .footer-links a::after {
-            content: "";
-            position: absolute;
-            width: 0%;
-            height: 2px;
-            background: #fff;
-            left: 0;
-            bottom: 0;
-            transition: width 0.3s ease;
-        }
+/* Divider */
+footer .footer-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 2rem 0;
+}
 
-        .footer-links a:hover::after {
-            width: 100%;
-        }
+/* Bottom */
+footer .footer-bottom {
+    text-align: center;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+}
 
-        footer .footer-divider {
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            margin: 2rem 0;
-        }
+/* ===========================
+   Mobile Responsive
+   =========================== */
+@media (max-width: 768px) {
+    footer {
+        text-align: center;
+    }
 
-        footer .footer-bottom {
-            text-align: center;
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
+    .footer-links {
+        justify-content: center;
+    }
+
+    .footer-section {
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    /* Remove last section border */
+    .footer-section:last-child {
+        border-bottom: none;
+    }
+
+    footer .footer-heading {
+        margin-bottom: 0.8rem;
+        font-size: 1rem;
+    }
+
+    footer .quran-quote {
+        font-size: 0.95rem;
+    }
+
+    footer .quran-translation {
+        font-size: 0.8rem;
+    }
+}
+
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -324,37 +358,6 @@
                 font-size: 0.7rem;
                 padding: 0.2rem 0.4rem;
                 width: 100%;
-            }
-
-            footer {
-                text-align: center;
-            }
-
-            .footer-links {
-                justify-content: center;
-            }
-
-            .footer-section {
-                margin-bottom: 2rem;
-                padding-bottom: 1.5rem;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-            }
-
-            .footer-section:last-child {
-                border-bottom: none;
-            }
-
-            footer .footer-heading {
-                margin-bottom: 0.8rem;
-                font-size: 1rem;
-            }
-
-            footer .quran-quote {
-                font-size: 0.95rem;
-            }
-
-            footer .quran-translation {
-                font-size: 0.8rem;
             }
         }
     </style>
@@ -377,18 +380,19 @@
                         <a class="nav-link" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="prayer-times.html">Prayer Times</a>
+                        <a class="nav-link" href="prayer-times.html" onclick="return addLocationToLink(this)">Prayer
+                            Times</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="mosque-finder.html">Mosque Finder</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="qibla.html">Qibla Finder</a>
+                        <a class="nav-link" href="qibla.html" onclick="return addLocationToLink(this)">Qibla Finder</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="dhikr.html">Dhikr Counter</a>
                     </li>
-                    <li class="nav-item">
+                       <li class="nav-item">
                         <a class="nav-link" href="zakat.html">Zakat Calculator</a>
                     </li>
                     <li class="nav-item">
@@ -407,30 +411,24 @@
                 <p class="lead">Find nearby mosques with directions and details</p>
             </div>
 
-            <!-- Enhanced Loading -->
+            <!-- Location Loading -->
             <div id="mosque-loading" class="text-center mb-4">
-                <div class="search-progress">
-                    <div class="spinner-border" role="status">
-                        <span class="visually-hidden">Searching for mosques...</span>
-                    </div>
-                    <p class="mt-2 mb-1">Searching for mosques in your area...</p>
-                    <div class="search-status" id="search-status">Getting your location...</div>
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Searching for mosques...</span>
                 </div>
+                <p class="mt-2">Searching for mosques in your area...</p>
             </div>
 
             <!-- Location Error -->
             <div id="mosque-error" class="alert alert-warning text-center d-none" role="alert">
                 <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Location Required</h5>
-                <p class="mb-3">Please allow location access to find nearby mosques.</p>
-                <button class="btn btn-primary" onclick="retryLocationSearch()">
-                    <i class="fas fa-redo me-2"></i>Try Again
-                </button>
+                <p class="mb-0">Please allow location access to find nearby mosques.</p>
             </div>
 
             <!-- Filter Controls -->
             <div id="filter-controls" class="filter-controls d-none">
                 <div class="row g-3">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="radiusSelect" class="form-label">Search Radius</label>
                         <select class="form-select" id="radiusSelect">
                             <option value="1000">1 km</option>
@@ -438,10 +436,9 @@
                             <option value="5000" selected>5 km</option>
                             <option value="10000">10 km</option>
                             <option value="20000">20 km</option>
-                            <option value="50000">50 km</option>
                         </select>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="sortSelect" class="form-label">Sort By</label>
                         <select class="form-select" id="sortSelect">
                             <option value="distance" selected>Distance</option>
@@ -449,19 +446,13 @@
                             <option value="name">Name</option>
                         </select>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="filterSelect" class="form-label">Filter</label>
                         <select class="form-select" id="filterSelect">
                             <option value="all" selected>All Mosques</option>
-                            <option value="with-contact">With Contact Info</option>
-                            <option value="recent">Recently Added</option>
+                            <option value="open">Open Now</option>
+                            <option value="rated">Highly Rated</option>
                         </select>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label">&nbsp;</label>
-                        <button class="btn btn-primary w-100" onclick="refreshSearch()">
-                            <i class="fas fa-search me-2"></i>Refresh Search
-                        </button>
                     </div>
                 </div>
             </div>
@@ -493,314 +484,183 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <!-- Quran Quote -->
-                <div class="col-md-4 col-12 footer-section">
-                    <h5 class="footer-heading">Quran</h5>
-                    <p class="quran-quote">
-                        "Indeed, prayer has been decreed upon the believers a decree of specified times."
-                    </p>
-                    <p class="quran-translation">— Surah An-Nisa 4:103</p>
-                </div>
+  
+ <!--footer-->
+<footer>
+  <div class="container">
+    <div class="row">
+      
+      <!-- Quran Quote -->
+      <div class="col-md-4 col-12 footer-section">
+        <h5 class="footer-heading">Quran</h5>
+        <p class="quran-quote">
+          "Indeed, prayer has been decreed upon the believers a decree of specified times." 
+        </p>
+        <p class="quran-translation">— Surah An-Nisa 4:103</p>
+      </div>
 
-                <!-- Quick Links -->
-                <div class="col-md-4 col-12 footer-section">
-                    <h5 class="footer-heading">Quick Links</h5>
-                    <div class="footer-links">
-                        <a href="index.html">Home</a>
-                        <a href="prayer-times.html">Prayer Times</a>
-                        <a href="mosque-finder.html">Mosque Finder</a>
-                        <a href="qibla.html">Qibla Finder</a>
-                        <a href="dhikr.html">Dhikr Counter</a>
-                        <a href="zakat.html">Zakat Calculator</a>
-                        <a href="about.html">About</a>
-                    </div>
-                </div>
-
-                <!-- Privacy & Legal -->
-                <div class="col-md-4 col-12 footer-section">
-                    <h5 class="footer-heading">Legal</h5>
-                    <div class="footer-links">
-                        <a href="privacy.html">Privacy Policy</a>
-                        <a href="terms.html">Terms of Service</a>
-                        <a href="disclaimer.html">Disclaimer</a>
-                        <a href="cookies.html">Cookie Policy</a>
-                        <a href="contact.html">Contact Us</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Bottom -->
-            <div class="footer-bottom">
-                <p>© 2025 SunnahWise. All rights reserved.</p>
-                <p class="small">Made with ❤️ for the Ummah</p>
-            </div>
+      <!-- Quick Links -->
+      <div class="col-md-4 col-12 footer-section">
+        <h5 class="footer-heading">Quick Links</h5>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="prayer-times.html">Prayer Times</a>
+          <a href="mosque-finder.html">Mosque Finder</a>
+          <a href="qibla.html">Qibla Finder</a>
+          <a href="dhikr.html">Dhikr Counter</a>
+          <a href="zakat.html">Zakat Calculator</a>
+          <a href="about.html">About</a>
         </div>
-    </footer>
+      </div>
+
+      <!-- Privacy & Legal -->
+       <div class="col-md-6 text-md-end footer-links">
+           <h5 class="footer-heading">Legal</h5>
+           <div class="footer-links">
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html" >Terms of Service</a>
+                    <a href="disclaimer.html" >Disclaimer</a>
+                    <a href="cookies.html" >Cookie Policy</a>
+                    <a href="contact.html" >Contact Us</a>
+                    </div>
+                   
+                </div>
+    </div>
+
+    <!-- Divider -->
+    <!--<div class="footer-divider"></div>-->
+
+    <!-- Bottom -->
+    <div class="footer-bottom">
+      <p>© 2025 SunnahWise. All rights reserved.</p>
+      <p class="small">Made with ❤️ for the Ummah</p>
+    </div>
+  </div>
+</footer>
+
+
 
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- Leaflet JS for Maps -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+    <!-- Location Manager -->
+    <script src="location-manager.js"></script>
+
     <script>
-        // Enhanced Mosque Finder with multiple data sources
+        // Mosque Finder page functionality
         let map = null;
         let mosqueMarkers = [];
         let mosqueData = [];
-        let userLocation = null;
-
-        // Search status messages
-        const searchMessages = [
-            "Getting your location...",
-            "Searching OpenStreetMap data...",
-            "Looking for Islamic centers...",
-            "Checking for masjids...",
-            "Finding prayer locations...",
-            "Compiling results..."
-        ];
 
         document.addEventListener('DOMContentLoaded', function () {
-            initializeApp();
+            // Update navigation active state
+            // const currentPage = window.location.pathname.split('/').pop() || 'mosque-finder.html';
+            // document.querySelectorAll('.nav-link').forEach(link => {
+            //     link.classList.remove('active');
+            //     if (link.getAttribute('href') === currentPage) {
+            //         link.classList.add('active');
+            //     }
+            // });
+
+            // Initialize location and load mosques
+            window.locationManager.getLocation().then(() => {
+                loadMosques();
+            }).catch((error) => {
+                document.getElementById('mosque-loading').classList.add('d-none');
+                document.getElementById('mosque-error').classList.remove('d-none');
+            });
+
+            // Setup event listeners
             setupEventListeners();
         });
 
         function setupEventListeners() {
-            document.getElementById('radiusSelect')?.addEventListener('change', () => refreshSearch());
+            // Filter controls
+            document.getElementById('radiusSelect')?.addEventListener('change', () => filterMosques());
             document.getElementById('sortSelect')?.addEventListener('change', () => sortAndDisplayMosques());
             document.getElementById('filterSelect')?.addEventListener('change', () => filterMosques());
         }
 
-        async function initializeApp() {
-            try {
-                updateSearchStatus(0);
-                userLocation = await getCurrentLocation();
-                await loadMosques();
-            } catch (error) {
-                console.error('Error initializing app:', error);
-                showError('Failed to get your location. Please allow location access and try again.');
-            }
-        }
-
-        function updateSearchStatus(index) {
-            const statusElement = document.getElementById('search-status');
-            if (statusElement && index < searchMessages.length) {
-                statusElement.textContent = searchMessages[index];
-            }
-        }
-
-        function getCurrentLocation() {
-            return new Promise((resolve, reject) => {
-                if (!navigator.geolocation) {
-                    reject(new Error('Geolocation is not supported by this browser'));
-                    return;
-                }
-
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        resolve({
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude
-                        });
-                    },
-                    (error) => {
-                        let errorMessage = 'Unable to retrieve location';
-                        switch (error.code) {
-                            case error.PERMISSION_DENIED:
-                                errorMessage = 'Location access denied by user';
-                                break;
-                            case error.POSITION_UNAVAILABLE:
-                                errorMessage = 'Location information unavailable';
-                                break;
-                            case error.TIMEOUT:
-                                errorMessage = 'Location request timed out';
-                                break;
-                        }
-                        reject(new Error(errorMessage));
-                    },
-                    {
-                        enableHighAccuracy: true,
-                        timeout: 15000,
-                        maximumAge: 300000
-                    }
-                );
-            });
-        }
-
         async function loadMosques() {
-            if (!userLocation) return;
+            const location = window.locationManager.userLocation;
+            if (!location) return;
 
             try {
-                updateSearchStatus(1);
-                
-                // Initialize map first
-                initializeMap(userLocation);
+                // Show loading, hide error
+                document.getElementById('mosque-loading').classList.remove('d-none');
+                document.getElementById('mosque-error').classList.add('d-none');
 
+                // Initialize map
+                initializeMap(location);
+
+                // Use a more comprehensive search for mosques
                 const radius = document.getElementById('radiusSelect')?.value || 5000;
+                const queries = ['mosque', 'masjid', 'islamic center', 'جامع'];
+
                 let allMosques = [];
 
-                // Multiple enhanced search strategies
-                updateSearchStatus(2);
-                const overpassMosques = await searchOverpassAPI(userLocation, radius);
-                allMosques.push(...overpassMosques);
+                for (const query of queries) {
+                    try {
+                        // Using Overpass API for OpenStreetMap data
+                        const overpassUrl = `https://overpass-api.de/api/interpreter?data=[out:json];(node["amenity"="place_of_worship"]["religion"="muslim"](around:${radius},${location.lat},${location.lng});way["amenity"="place_of_worship"]["religion"="muslim"](around:${radius},${location.lat},${location.lng}););out center;`;
 
-                updateSearchStatus(3);
-                const nominatimMosques = await searchNominatimAPI(userLocation, radius);
-                allMosques.push(...nominatimMosques);
+                        const response = await fetch(overpassUrl);
+                        const data = await response.json();
 
-                updateSearchStatus(4);
-                // Add mock data if no results found (for demonstration)
-                if (allMosques.length === 0) {
-                    updateSearchStatus(5);
-                    allMosques = getMockMosques(userLocation);
+                        if (data.elements) {
+                            data.elements.forEach(element => {
+                                const lat = element.lat || element.center?.lat;
+                                const lng = element.lon || element.center?.lon;
+
+                                if (lat && lng) {
+                                    const mosque = {
+                                        id: element.id,
+                                        name: element.tags?.name || 'Mosque',
+                                        lat: lat,
+                                        lng: lng,
+                                        address: element.tags?.['addr:full'] || element.tags?.['addr:street'] || 'Address not available',
+                                        distance: calculateDistance(location.lat, location.lng, lat, lng)
+                                    };
+
+                                    // Avoid duplicates
+                                    if (!allMosques.some(m => Math.abs(m.lat - lat) < 0.001 && Math.abs(m.lng - lng) < 0.001)) {
+                                        allMosques.push(mosque);
+                                    }
+                                }
+                            });
+                        }
+                    } catch (error) {
+                        console.error(`Error searching for ${query}:`, error);
+                    }
                 }
 
-                // Remove duplicates and sort by distance
-                mosqueData = removeDuplicates(allMosques).sort((a, b) => a.distance - b.distance);
-                
-                displayResults();
+                // If no results from Overpass, try a fallback with mock data
+                if (allMosques.length === 0) {
+                    // allMosques = getMockMosques(location);
+                }
+
+                mosqueData = allMosques.sort((a, b) => a.distance - b.distance);
+                displayMosques();
+                addMosquesToMap();
+
+                // Show results, hide loading
+                document.getElementById('mosque-loading').classList.add('d-none');
+                document.getElementById('filter-controls').classList.remove('d-none');
+                document.getElementById('mosque-results').classList.remove('d-none');
 
             } catch (error) {
                 console.error('Error loading mosques:', error);
-                showError('Error searching for mosques. Showing sample data.');
-                mosqueData = getMockMosques(userLocation);
-                displayResults();
+                document.getElementById('mosque-loading').classList.add('d-none');
+                document.getElementById('mosque-error').classList.remove('d-none');
             }
         }
 
-        async function searchOverpassAPI(location, radius) {
-            try {
-                // Enhanced Overpass query with multiple search criteria
-                const query = `
-                    [out:json][timeout:25];
-                    (
-                        node["amenity"="place_of_worship"]["religion"="muslim"](around:${radius},${location.lat},${location.lng});
-                        way["amenity"="place_of_worship"]["religion"="muslim"](around:${radius},${location.lat},${location.lng});
-                        relation["amenity"="place_of_worship"]["religion"="muslim"](around:${radius},${location.lat},${location.lng});
-                        node["building"="mosque"](around:${radius},${location.lat},${location.lng});
-                        way["building"="mosque"](around:${radius},${location.lat},${location.lng});
-                        node["name"~"mosque|masjid|جامع|مسجد|islamic center|islamic centre"i](around:${radius},${location.lat},${location.lng});
-                        way["name"~"mosque|masjid|جامع|مسجد|islamic center|islamic centre"i](around:${radius},${location.lat},${location.lng});
-                    );
-                    out center meta;
-                `;
-
-                const response = await fetch('https://overpass-api.de/api/interpreter', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: `data=${encodeURIComponent(query)}`
-                });
-
-                const data = await response.json();
-                const mosques = [];
-
-                if (data.elements) {
-                    data.elements.forEach(element => {
-                        const lat = element.lat || element.center?.lat;
-                        const lng = element.lon || element.center?.lon;
-
-                        if (lat && lng) {
-                            const distance = calculateDistance(location.lat, location.lng, lat, lng);
-                            
-                            if (distance <= radius / 1000) {
-                                mosques.push({
-                                    id: `overpass-${element.id}`,
-                                    name: element.tags?.name || 
-                                          element.tags?.['name:en'] || 
-                                          element.tags?.['name:ar'] || 
-                                          'Mosque',
-                                    address: formatAddress(element.tags),
-                                    lat,
-                                    lng,
-                                    distance,
-                                    phone: element.tags?.phone || element.tags?.['contact:phone'],
-                                    website: element.tags?.website || element.tags?.['contact:website'],
-                                    source: 'OpenStreetMap'
-                                });
-                            }
-                        }
-                    });
-                }
-
-                return mosques;
-            } catch (error) {
-                console.error('Overpass API error:', error);
-                return [];
-            }
-        }
-
-        async function searchNominatimAPI(location, radius) {
-            try {
-                const searches = ['mosque', 'masjid', 'islamic center', 'islamic centre'];
-                const mosques = [];
-
-                for (const term of searches) {
-                    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(term)}&lat=${location.lat}&lon=${location.lng}&bounded=1&viewbox=${location.lng-0.1},${location.lat-0.1},${location.lng+0.1},${location.lat+0.1}&limit=20`;
-                    
-                    const response = await fetch(url, {
-                        headers: { 'User-Agent': 'SunnahWise-MosqueFinder/1.0' }
-                    });
-                    
-                    const data = await response.json();
-                    
-                    data.forEach(place => {
-                        const distance = calculateDistance(location.lat, location.lng, parseFloat(place.lat), parseFloat(place.lon));
-                        
-                        if (distance <= radius / 1000) {
-                            mosques.push({
-                                id: `nominatim-${place.place_id}`,
-                                name: place.display_name.split(',')[0],
-                                address: place.display_name,
-                                lat: parseFloat(place.lat),
-                                lng: parseFloat(place.lon),
-                                distance,
-                                source: 'Nominatim'
-                            });
-                        }
-                    });
-                }
-
-                return mosques;
-            } catch (error) {
-                console.error('Nominatim API error:', error);
-                return [];
-            }
-        }
-
-        function formatAddress(tags) {
-            if (!tags) return 'Address not available';
-            
-            const parts = [];
-            if (tags['addr:housenumber']) parts.push(tags['addr:housenumber']);
-            if (tags['addr:street']) parts.push(tags['addr:street']);
-            if (tags['addr:suburb']) parts.push(tags['addr:suburb']);
-            if (tags['addr:city']) parts.push(tags['addr:city']);
-            if (tags['addr:state']) parts.push(tags['addr:state']);
-            
-            return parts.length > 0 ? parts.join(', ') : (tags['addr:full'] || 'Address not available');
-        }
-
-        function removeDuplicates(mosques) {
-            const unique = [];
-            
-            for (const mosque of mosques) {
-                const isDuplicate = unique.some(existing => 
-                    calculateDistance(mosque.lat, mosque.lng, existing.lat, existing.lng) < 0.1
-                );
-                
-                if (!isDuplicate) {
-                    unique.push(mosque);
-                }
-            }
-            
-            return unique;
-        }
-
+        
         function calculateDistance(lat1, lng1, lat2, lng2) {
-            const R = 6371;
+            const R = 6371; // Radius of the Earth in km
             const dLat = (lat2 - lat1) * Math.PI / 180;
             const dLng = (lng2 - lng1) * Math.PI / 180;
             const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
@@ -810,34 +670,6 @@
             return R * c;
         }
 
-        function getMockMosques(location) {
-            const mockMosques = [
-                { name: 'Central Grand Mosque', lat: 0.01, lng: 0.01, phone: '+1-555-0123' },
-                { name: 'Islamic Center of Peace', lat: -0.01, lng: 0.01, phone: '+1-555-0124' },
-                { name: 'Masjid Al-Noor', lat: 0.01, lng: -0.01, website: 'https://example.com' },
-                { name: 'Community Islamic Center', lat: -0.005, lng: -0.005, phone: '+1-555-0125' },
-                { name: 'Masjid Al-Rahma', lat: 0.015, lng: 0.005, website: 'https://example.com' },
-                { name: 'Downtown Mosque', lat: -0.008, lng: 0.012, phone: '+1-555-0126' }
-            ];
-            
-            return mockMosques.map((mock, index) => ({
-                id: `mock-${index}`,
-                name: mock.name,
-                address: 'Sample address for demonstration',
-                lat: location.lat + mock.lat,
-                lng: location.lng + mock.lng,
-                distance: calculateDistance(
-                    location.lat, 
-                    location.lng, 
-                    location.lat + mock.lat, 
-                    location.lng + mock.lng
-                ),
-                phone: mock.phone,
-                website: mock.website,
-                source: 'Demo Data'
-            }));
-        }
-
         function initializeMap(location) {
             if (!map) {
                 map = L.map('mosque-map').setView([location.lat, location.lng], 13);
@@ -845,31 +677,12 @@
                     attribution: '© OpenStreetMap contributors'
                 }).addTo(map);
 
-                // User location marker with custom icon
-                const userIcon = L.divIcon({
-                    html: '<div style="background: #d4af37; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3);"></div>',
-                    iconSize: [20, 20],
-                    className: 'user-location-marker'
-                });
-
-                L.marker([location.lat, location.lng], { icon: userIcon })
+                // Add user location marker
+                L.marker([location.lat, location.lng])
                     .addTo(map)
-                    .bindPopup('<strong>Your Location</strong>')
+                    .bindPopup('Your Location')
                     .openPopup();
             }
-        }
-
-        function displayResults() {
-            updateSearchStatus(5);
-            
-            setTimeout(() => {
-                document.getElementById('mosque-loading').classList.add('d-none');
-                document.getElementById('filter-controls').classList.remove('d-none');
-                document.getElementById('mosque-results').classList.remove('d-none');
-                
-                displayMosques();
-                addMosquesToMap();
-            }, 1000);
         }
 
         function displayMosques() {
@@ -879,12 +692,13 @@
             if (!mosqueList) return;
 
             mosqueList.innerHTML = '';
-            mosqueCount.textContent = mosqueData.length;
 
             if (mosqueData.length === 0) {
-                mosqueList.innerHTML = '<p class="text-center text-muted">No mosques found in your area. Try expanding your search radius.</p>';
+                mosqueList.innerHTML = '<p class="text-center text-muted">No mosques found in your area.</p>';
                 return;
             }
+
+            mosqueCount.textContent = mosqueData.length;
 
             mosqueData.forEach(mosque => {
                 displayMosque(mosque);
@@ -897,29 +711,25 @@
 
             const mosqueElement = document.createElement('div');
             mosqueElement.className = 'mosque-item';
-            const distanceText = `${mosque.distance.toFixed(1)} km`;
+            const distanceText = typeof mosque.distance === 'number' ? `${mosque.distance.toFixed(1)} km` : mosque.distance;
 
             mosqueElement.innerHTML = `
                 <div class="d-flex justify-content-between align-items-start">
                     <div class="flex-grow-1">
                         <div class="mosque-name">${mosque.name}</div>
                         <div class="mosque-address mb-2">${mosque.address}</div>
-                        ${mosque.phone ? `<div class="text-muted small mb-1"><i class="fas fa-phone me-1"></i>${mosque.phone}</div>` : ''}
-                        ${mosque.website ? `<div class="text-muted small mb-2"><i class="fas fa-globe me-1"></i><a href="${mosque.website}" target="_blank">Website</a></div>` : ''}
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="distance-badge">${distanceText}</span>
-                            <small class="text-muted">Source: ${mosque.source}</small>
+                            <div class="mosque-actions">
+                                <button class="btn btn-sm btn-primary me-2" onclick="getDirections(${mosque.lat}, ${mosque.lng}, '${mosque.name.replace(/'/g, "\\'")}')">
+                                    <i class="fas fa-directions me-1"></i>Directions
+                                </button>
+                                <button class="btn btn-sm btn-outline-primary" onclick="focusOnMap(${mosque.lat}, ${mosque.lng})">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Show on Map
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="mosque-actions mt-3">
-                    <button class="btn btn-sm btn-primary me-2" onclick="getDirections(${mosque.lat}, ${mosque.lng}, '${mosque.name.replace(/'/g, "\\'")}')">
-                        <i class="fas fa-directions me-1"></i>Directions
-                    </button>
-                    <button class="btn btn-sm btn-outline-primary me-2" onclick="focusOnMap(${mosque.lat}, ${mosque.lng})">
-                        <i class="fas fa-map-marker-alt me-1"></i>Show on Map
-                    </button>
-                    ${mosque.phone ? `<button class="btn btn-sm btn-outline-success" onclick="callMosque('${mosque.phone}')"><i class="fas fa-phone me-1"></i>Call</button>` : ''}
                 </div>
             `;
 
@@ -933,131 +743,61 @@
             mosqueMarkers.forEach(marker => map.removeLayer(marker));
             mosqueMarkers = [];
 
-            // Custom mosque icon
-            const mosqueIcon = L.divIcon({
-                html: '<div style="background: #2d5a3d; width: 24px; height: 24px; border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.3);"><i class="fas fa-mosque" style="color: white; font-size: 10px;"></i></div>',
-                iconSize: [24, 24],
-                className: 'mosque-marker'
-            });
-
             // Add mosque markers
             mosqueData.forEach(mosque => {
-                const marker = L.marker([mosque.lat, mosque.lng], { icon: mosqueIcon })
+                const marker = L.marker([mosque.lat, mosque.lng])
                     .addTo(map)
                     .bindPopup(`
-                        <div style="min-width: 200px;">
-                            <strong>${mosque.name}</strong><br>
-                            <small class="text-muted">${mosque.address}</small><br>
-                            <small><strong>Distance:</strong> ${mosque.distance.toFixed(1)} km</small><br>
-                            ${mosque.phone ? `<small><strong>Phone:</strong> ${mosque.phone}</small><br>` : ''}
-                            <div class="mt-2">
-                                <button class="btn btn-sm btn-primary" onclick="getDirections(${mosque.lat}, ${mosque.lng}, '${mosque.name.replace(/'/g, "\\'")}')">
-                                    <i class="fas fa-directions me-1"></i>Get Directions
-                                </button>
-                            </div>
-                        </div>
+                        <strong>${mosque.name}</strong><br>
+                        ${mosque.address}<br>
+                        <small>${typeof mosque.distance === 'number' ? mosque.distance.toFixed(1) + ' km away' : mosque.distance}</small>
                     `);
 
                 mosqueMarkers.push(marker);
             });
-
-            // Fit map to show all markers
-            if (mosqueMarkers.length > 0) {
-                const group = new L.featureGroup(mosqueMarkers);
-                map.fitBounds(group.getBounds().pad(0.1));
-            }
         }
 
         function filterMosques() {
-            const filter = document.getElementById('filterSelect')?.value || 'all';
-            let filtered = [...mosqueData];
-
-            switch (filter) {
-                case 'with-contact':
-                    filtered = filtered.filter(mosque => mosque.phone || mosque.website);
-                    break;
-                case 'recent':
-                    // For demo purposes, show first half as "recent"
-                    filtered = filtered.slice(0, Math.ceil(filtered.length / 2));
-                    break;
-            }
-
-            // Update display with filtered results
-            const mosqueList = document.getElementById('mosque-list');
-            const mosqueCount = document.getElementById('mosque-count');
-            
-            mosqueList.innerHTML = '';
-            mosqueCount.textContent = filtered.length;
-
-            filtered.forEach(mosque => {
-                displayMosque(mosque);
-            });
+            // Implementation for filtering mosques
+            displayMosques();
+            addMosquesToMap();
         }
 
         function sortAndDisplayMosques() {
             const sortBy = document.getElementById('sortSelect')?.value || 'distance';
 
-            switch (sortBy) {
-                case 'distance':
-                    mosqueData.sort((a, b) => a.distance - b.distance);
-                    break;
-                case 'rating':
-                    mosqueData.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-                    break;
-                case 'name':
-                    mosqueData.sort((a, b) => a.name.localeCompare(b.name));
-                    break;
+            if (sortBy === 'distance') {
+                mosqueData.sort((a, b) => a.distance - b.distance);
+            } else if (sortBy === 'name') {
+                mosqueData.sort((a, b) => a.name.localeCompare(b.name));
             }
 
             displayMosques();
         }
 
         function getDirections(lat, lng, name) {
-            if (!userLocation) {
+            const location = window.locationManager.userLocation;
+            if (!location) {
                 alert('Unable to get directions. Location not available.');
                 return;
             }
 
-            const directionsUrl = `https://www.google.com/maps/dir/${userLocation.lat},${userLocation.lng}/${lat},${lng}`;
+            // Open Google Maps with directions
+            const directionsUrl = `https://www.google.com/maps/dir/${location.lat},${location.lng}/${lat},${lng}`;
             window.open(directionsUrl, '_blank');
         }
 
         function focusOnMap(lat, lng) {
             if (map) {
                 map.setView([lat, lng], 16);
-                
+
+                // Find and highlight the marker
                 mosqueMarkers.forEach(marker => {
-                    if (Math.abs(marker.getLatLng().lat - lat) < 0.0001 && 
-                        Math.abs(marker.getLatLng().lng - lng) < 0.0001) {
+                    if (Math.abs(marker.getLatLng().lat - lat) < 0.0001 && Math.abs(marker.getLatLng().lng - lng) < 0.0001) {
                         marker.openPopup();
                     }
                 });
             }
-        }
-
-        function callMosque(phone) {
-            window.location.href = `tel:${phone}`;
-        }
-
-        function refreshSearch() {
-            document.getElementById('mosque-results').classList.add('d-none');
-            document.getElementById('filter-controls').classList.add('d-none');
-            document.getElementById('mosque-loading').classList.remove('d-none');
-            
-            loadMosques();
-        }
-
-        function retryLocationSearch() {
-            document.getElementById('mosque-error').classList.add('d-none');
-            document.getElementById('mosque-loading').classList.remove('d-none');
-            
-            initializeApp();
-        }
-
-        function showError(message) {
-            document.getElementById('mosque-loading').classList.add('d-none');
-            document.getElementById('mosque-error').classList.remove('d-none');
-            document.querySelector('#mosque-error p').textContent = message;
         }
     </script>
 </body>
