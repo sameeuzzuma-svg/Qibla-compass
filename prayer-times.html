@@ -35,15 +35,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap"
         rel="stylesheet">
-        
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TN0HH3WV8R"></script>
-    <script> 
-        window.dataLayer = window.dataLayer || []; 
-        function gtag(){dataLayer.push(arguments);} 
-        gtag('js', new Date()); 
-        gtag('config', 'G-TN0HH3WV8R'); 
-    </script>
 
     <style>
         /* Islamic Prayer Times App - Custom Styles */
@@ -361,6 +352,15 @@
             color: var(--text-dark);
         }
 
+        /* Manual Location Input */
+        .manual-location {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 25px var(--shadow-light);
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             body {
@@ -492,14 +492,39 @@
                 <div class="spinner-border" role="status">
                     <span class="visually-hidden">Loading prayer times...</span>
                 </div>
-                <p class="mt-2">Loading prayer times for your location...</p>
+                <p class="mt-2">Detecting your location and loading prayer times...</p>
             </div>
 
             <!-- Location Error -->
             <div id="prayer-error" class="alert alert-warning text-center d-none" role="alert">
-                <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Unable to get your location</h5>
-                <p class="mb-0">Please allow location access to view accurate prayer times for your area.</p>
-                <button class="btn btn-primary mt-2" onclick="retryLocation()">Retry Location Detection</button>
+                <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Unable to get your location automatically</h5>
+                <p class="mb-3">Please allow location access or enter your location manually below.</p>
+                <button class="btn btn-primary mt-2" onclick="retryLocation()">Retry Auto-Detection</button>
+            </div>
+
+            <!-- Manual Location Input -->
+            <div id="manual-location" class="manual-location d-none">
+                <h5><i class="fas fa-map-marker-alt me-2"></i>Enter Your Location Manually</h5>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label for="cityInput" class="form-label">City</label>
+                        <input type="text" class="form-control" id="cityInput" placeholder="Enter city name">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="countryInput" class="form-label">Country</label>
+                        <input type="text" class="form-control" id="countryInput" placeholder="Enter country name">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">&nbsp;</label>
+                        <button class="btn btn-primary w-100" onclick="useManualLocation()">Use This Location</button>
+                    </div>
+                </div>
+                <p class="text-muted small mt-2">You can also try these sample locations: 
+                    <a href="#" onclick="setSampleLocation('London', 'UK')">London, UK</a> | 
+                    <a href="#" onclick="setSampleLocation('Dubai', 'UAE')">Dubai, UAE</a> | 
+                    <a href="#" onclick="setSampleLocation('New York', 'USA')">New York, USA</a> | 
+                    <a href="#" onclick="setSampleLocation('Istanbul', 'Turkey')">Istanbul, Turkey</a>
+                </p>
             </div>
 
             <!-- Prayer Calculation Method -->
@@ -815,18 +840,153 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+        // Location Manager Implementation
+        window.locationManager = {
+            userLocation: null,
+            
+            getLocation: function() {
+                return new Promise((resolve, reject) => {
+                    // Try to get from localStorage first
+                    const savedLocation = localStorage.getItem('userLocation');
+                    if (savedLocation) {
+                        this.userLocation = JSON.parse(savedLocation);
+                        resolve(this.userLocation);
+                        return;
+                    }
+                    
+                    // Try HTML5 Geolocation API
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(
+                            (position) => {
+                                const lat = position.coords.latitude;
+                                const lng = position.coords.longitude;
+                                
+                                // Use a geocoding service to get city/country name
+                                this.geocodeLocation(lat, lng)
+                                    .then(locationData => {
+                                        this.userLocation = {
+                                            lat: lat,
+                                            lng: lng,
+                                            city: locationData.city,
+                                            country: locationData.country
+                                        };
+                                        
+                                        localStorage.setItem('userLocation', JSON.stringify(this.userLocation));
+                                        resolve(this.userLocation);
+                                    })
+                                    .catch(error => {
+                                        // If geocoding fails, still use the coordinates
+                                        this.userLocation = {
+                                            lat: lat,
+                                            lng: lng,
+                                            city: 'Unknown',
+                                            country: 'Unknown'
+                                        };
+                                        resolve(this.userLocation);
+                                    });
+                            },
+                            (error) => {
+                                console.error('Geolocation error:', error);
+                                reject(error);
+                            },
+                            {
+                                enableHighAccuracy: true,
+                                timeout: 10000,
+                                maximumAge: 60000
+                            }
+                        );
+                    } else {
+                        reject(new Error('Geolocation is not supported by this browser.'));
+                    }
+                });
+            },
+            
+            geocodeLocation: function(lat, lng) {
+                return new Promise((resolve, reject) => {
+                    // Use OpenStreetMap Nominatim API for geocoding
+                    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data && data.address) {
+                                const city = data.address.city || data.address.town || data.address.village || data.address.county || 'Unknown';
+                                const country = data.address.country || 'Unknown';
+                                resolve({ city, country });
+                            } else {
+                                reject(new Error('Could not geocode location'));
+                            }
+                        })
+                        .catch(error => {
+                            reject(error);
+                        });
+                });
+            },
+            
+            setManualLocation: function(city, country) {
+                return new Promise((resolve) => {
+                    // Use a geocoding service to get coordinates from city/country
+                    this.geocodeCityCountry(city, country)
+                        .then(coords => {
+                            this.userLocation = {
+                                lat: coords.lat,
+                                lng: coords.lng,
+                                city: city,
+                                country: country
+                            };
+                            
+                            localStorage.setItem('userLocation', JSON.stringify(this.userLocation));
+                            resolve(this.userLocation);
+                        })
+                        .catch(error => {
+                            // If geocoding fails, use a default location
+                            this.userLocation = {
+                                lat: 51.5074, // London default
+                                lng: -0.1278,
+                                city: city,
+                                country: country
+                            };
+                            resolve(this.userLocation);
+                        });
+                });
+            },
+            
+            geocodeCityCountry: function(city, country) {
+                return new Promise((resolve, reject) => {
+                    const query = encodeURIComponent(`${city}, ${country}`);
+                    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data && data.length > 0) {
+                                resolve({
+                                    lat: parseFloat(data[0].lat),
+                                    lng: parseFloat(data[0].lon)
+                                });
+                            } else {
+                                reject(new Error('Location not found'));
+                            }
+                        })
+                        .catch(error => {
+                            reject(error);
+                        });
+                });
+            }
+        };
+
         // Prayer Times page functionality
         document.addEventListener('DOMContentLoaded', function () {
             // First, setup event listeners
             setupEventListeners();
             
             // Then get location and load prayer times
-            window.locationManager.getLocation().then(() => {
-                loadPrayerTimes();
-            }).catch((error) => {
-                document.getElementById('prayer-loading').classList.add('d-none');
-                document.getElementById('prayer-error').classList.remove('d-none');
-            });
+            window.locationManager.getLocation()
+                .then(() => {
+                    loadPrayerTimes();
+                })
+                .catch((error) => {
+                    console.error('Location error:', error);
+                    document.getElementById('prayer-loading').classList.add('d-none');
+                    document.getElementById('prayer-error').classList.remove('d-none');
+                    document.getElementById('manual-location').classList.remove('d-none');
+                });
             
             // Request notification permission on page load
             requestNotificationPermission();
@@ -1095,12 +1255,17 @@
 
         async function loadPrayerTimes() {
             const location = window.locationManager.userLocation;
-            if (!location) return;
+            if (!location) {
+                document.getElementById('prayer-loading').classList.add('d-none');
+                document.getElementById('prayer-error').classList.remove('d-none');
+                document.getElementById('manual-location').classList.remove('d-none');
+                return;
+            }
 
             try {
                 const method = document.getElementById('methodSelect').value || '2';
                 const response = await fetch(
-                    `https://api.aladhan.com/v1/timings/date-string?latitude=${location.lat}&longitude=${location.lng}&method=${method}`
+                    `https://api.aladhan.com/v1/timings?latitude=${location.lat}&longitude=${location.lng}&method=${method}`
                 );
                 const data = await response.json();
 
@@ -1116,6 +1281,8 @@
                     document.getElementById('calculation-method').classList.remove('d-none');
                     document.getElementById('prayer-notifications').classList.remove('d-none');
                     document.getElementById('next-prayer-info').classList.remove('d-none');
+                    document.getElementById('manual-location').classList.add('d-none');
+                    document.getElementById('prayer-error').classList.add('d-none');
 
                     // Update location info
                     document.getElementById('prayer-city').textContent = location.city || 'Unknown';
@@ -1137,6 +1304,7 @@
                 console.error('Error loading prayer times:', error);
                 document.getElementById('prayer-loading').classList.add('d-none');
                 document.getElementById('prayer-error').classList.remove('d-none');
+                document.getElementById('manual-location').classList.remove('d-none');
             }
         }
 
@@ -1271,13 +1439,46 @@
         function retryLocation() {
             document.getElementById('prayer-error').classList.add('d-none');
             document.getElementById('prayer-loading').classList.remove('d-none');
+            document.getElementById('manual-location').classList.add('d-none');
             
-            window.locationManager.getLocation().then(() => {
-                loadPrayerTimes();
-            }).catch((error) => {
-                document.getElementById('prayer-loading').classList.add('d-none');
-                document.getElementById('prayer-error').classList.remove('d-none');
-            });
+            window.locationManager.getLocation()
+                .then(() => {
+                    loadPrayerTimes();
+                })
+                .catch((error) => {
+                    document.getElementById('prayer-loading').classList.add('d-none');
+                    document.getElementById('prayer-error').classList.remove('d-none');
+                    document.getElementById('manual-location').classList.remove('d-none');
+                });
+        }
+        
+        function useManualLocation() {
+            const city = document.getElementById('cityInput').value.trim();
+            const country = document.getElementById('countryInput').value.trim();
+            
+            if (!city || !country) {
+                alert('Please enter both city and country');
+                return;
+            }
+            
+            document.getElementById('prayer-loading').classList.remove('d-none');
+            document.getElementById('prayer-error').classList.add('d-none');
+            document.getElementById('manual-location').classList.add('d-none');
+            
+            window.locationManager.setManualLocation(city, country)
+                .then(() => {
+                    loadPrayerTimes();
+                })
+                .catch((error) => {
+                    document.getElementById('prayer-loading').classList.add('d-none');
+                    document.getElementById('prayer-error').classList.remove('d-none');
+                    document.getElementById('manual-location').classList.remove('d-none');
+                });
+        }
+        
+        function setSampleLocation(city, country) {
+            document.getElementById('cityInput').value = city;
+            document.getElementById('countryInput').value = country;
         }
 
         // Clear any location data that might have come from URL parameters
