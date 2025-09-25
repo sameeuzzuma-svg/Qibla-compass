@@ -582,11 +582,10 @@
                         <a class="nav-link active" href="prayer-times.html">Prayer Times</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mosque-finder.html" onclick="return addLocationToLink(this)">Mosque
-                            Finder</a>
+                        <a class="nav-link" href="mosque-finder.html">Mosque Finder</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="qibla.html" onclick="return addLocationToLink(this)">Qibla Finder</a>
+                        <a class="nav-link" href="qibla.html">Qibla Finder</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="dhikr.html">Dhikr Counter</a>
@@ -1126,12 +1125,185 @@
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Location Manager (Original) -->
-    <script src="location-manager.js"></script>
-
-    <!-- Enhanced Prayer Times Script -->
+    <!-- Enhanced Location Manager and Prayer Times Script -->
     <script>
-        // Enhanced Prayer Times functionality with all new features
+        // Enhanced Location Manager
+        class LocationManager {
+            constructor() {
+                this.userLocation = null;
+                this.STORAGE_KEY = 'userLocationData';
+                this.MAX_AGE = 30 * 60 * 1000; // 30 minutes
+                this.isInitialized = false;
+            }
+
+            async initialize() {
+                if (this.isInitialized) return;
+                
+                try {
+                    // 1. Check sessionStorage for recent location
+                    const stored = this.getStoredLocation();
+                    if (stored) {
+                        this.userLocation = stored;
+                        
+                        // If we don't have city/country info, try to get it
+                        if (!this.userLocation.city || !this.userLocation.country) {
+                            await this.getReverseGeocoding();
+                        }
+                        
+                        this.isInitialized = true;
+                        return this.userLocation;
+                    }
+
+                    // 2. Get fresh location
+                    return await this.detectFreshLocation();
+                } catch (error) {
+                    console.error('Location manager initialization failed:', error);
+                    throw error;
+                }
+            }
+
+            async getLocation(forceRefresh = false) {
+                if (forceRefresh) {
+                    this.clearLocation();
+                }
+                
+                if (!this.isInitialized) {
+                    return await this.initialize();
+                }
+                
+                return this.userLocation;
+            }
+
+            async detectFreshLocation() {
+                return new Promise((resolve, reject) => {
+                    if (!navigator.geolocation) {
+                        reject(new Error('Geolocation not supported by browser'));
+                        return;
+                    }
+
+                    navigator.geolocation.getCurrentPosition(
+                        async (position) => {
+                            try {
+                                this.userLocation = {
+                                    latitude: position.coords.latitude,
+                                    longitude: position.coords.longitude,
+                                    timestamp: Date.now(),
+                                    city: null,
+                                    country: null
+                                };
+                                
+                                // Get city/country information
+                                await this.getReverseGeocoding();
+                                
+                                this.saveLocation();
+                                this.isInitialized = true;
+                                resolve(this.userLocation);
+                            } catch (error) {
+                                reject(error);
+                            }
+                        },
+                        (error) => {
+                            const errorMessage = this.getGeolocationError(error);
+                            reject(new Error(errorMessage));
+                        },
+                        {
+                            enableHighAccuracy: true,
+                            timeout: 15000,
+                            maximumAge: this.MAX_AGE
+                        }
+                    );
+                });
+            }
+
+            getGeolocationError(error) {
+                switch (error.code) {
+                    case error.PERMISSION_DENIED:
+                        return "Location access denied. Please enable location permissions in your browser settings.";
+                    case error.POSITION_UNAVAILABLE:
+                        return "Location information is unavailable.";
+                    case error.TIMEOUT:
+                        return "Location request timed out. Please try again.";
+                    default:
+                        return "An unknown error occurred while getting your location.";
+                }
+            }
+
+            async getReverseGeocoding() {
+                if (!this.userLocation) return;
+                
+                try {
+                    const response = await fetch(
+                        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${this.userLocation.latitude}&longitude=${this.userLocation.longitude}&localityLanguage=en`
+                    );
+                    
+                    if (!response.ok) {
+                        throw new Error(`Geocoding API error: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+
+                    this.userLocation.city = data.city || data.locality || 'Unknown City';
+                    this.userLocation.country = data.countryName || 'Unknown Country';
+                    
+                    this.saveLocation();
+                } catch (error) {
+                    console.warn('Reverse geocoding failed:', error);
+                    // Set default values but don't fail completely
+                    this.userLocation.city = 'Unknown City';
+                    this.userLocation.country = 'Unknown Country';
+                }
+            }
+
+            getStoredLocation() {
+                try {
+                    const stored = sessionStorage.getItem(this.STORAGE_KEY);
+                    if (!stored) return null;
+
+                    const data = JSON.parse(stored);
+                    const isFresh = Date.now() - data.timestamp < this.MAX_AGE;
+                    
+                    return isFresh ? data : null;
+                } catch (error) {
+                    console.warn('Error reading stored location:', error);
+                    return null;
+                }
+            }
+
+            saveLocation() {
+                if (this.userLocation) {
+                    try {
+                        sessionStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.userLocation));
+                    } catch (error) {
+                        console.warn('Error saving location to storage:', error);
+                    }
+                }
+            }
+
+            clearLocation() {
+                try {
+                    sessionStorage.removeItem(this.STORAGE_KEY);
+                } catch (error) {
+                    console.warn('Error clearing location storage:', error);
+                }
+                this.userLocation = null;
+                this.isInitialized = false;
+            }
+
+            // Helper method to check if location is available
+            hasLocation() {
+                return this.isInitialized && this.userLocation !== null;
+            }
+
+            // Get location data for display
+            getLocationData() {
+                return this.userLocation ? { ...this.userLocation } : null;
+            }
+        }
+
+        // Initialize global instance
+        window.locationManager = new LocationManager();
+
+        // Enhanced Prayer Times functionality
         document.addEventListener('DOMContentLoaded', function () {
             // Prayer analytics storage
             let prayerAnalytics = JSON.parse(localStorage.getItem('prayerAnalytics')) || {
@@ -1148,22 +1320,41 @@
             setInterval(updateCurrentTime, 1000);
 
             // Initialize location and load prayer times
-            window.locationManager.getLocation().then((locationData) => {
-                // Store in global scope for prayer times script (convert to expected format)
-                window.locationData = {
-                    latitude: locationData.lat,
-                    longitude: locationData.lng,
-                    city: locationData.city,
-                    country: locationData.country
-                };
-                updateLocationDisplay();
-                loadPrayerTimes();
-                showAllElements();
-            }).catch((error) => {
-                document.getElementById('prayer-loading').classList.add('d-none');
-                document.getElementById('prayer-error').classList.remove('d-none');
-                showLocationError(error.message);
-            });
+            const initializeApp = async () => {
+                try {
+                    // Show loading state
+                    document.getElementById('prayer-loading').classList.remove('d-none');
+                    
+                    // Get location
+                    const location = await window.locationManager.getLocation();
+                    
+                    // Update location display
+                    document.getElementById('prayer-city').textContent = location.city;
+                    document.getElementById('prayer-country').textContent = location.country;
+                    document.getElementById('prayer-coordinates').textContent = 
+                        `${location.latitude.toFixed(4)}, ${location.longitude.toFixed(4)}`;
+                    
+                    // If we get here, location was successful
+                    loadPrayerTimes();
+                    showAllElements();
+                    
+                } catch (error) {
+                    console.error('Failed to get location:', error);
+                    document.getElementById('prayer-loading').classList.add('d-none');
+                    document.getElementById('prayer-error').classList.remove('d-none');
+                    
+                    // Show error details to user
+                    const errorElement = document.getElementById('prayer-error');
+                    errorElement.innerHTML = `
+                        <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Location Access Required</h5>
+                        <p>${error.message || 'Please allow location access to view accurate prayer times for your area.'}</p>
+                        <button class="btn btn-sm btn-warning mt-2" onclick="window.location.reload()">Try Again</button>
+                    `;
+                }
+            };
+
+            // Start the app
+            initializeApp();
 
             // Setup enhanced event listeners
             setupEnhancedEventListeners();
@@ -1414,7 +1605,7 @@
 
             // Original prayer times loading function with enhancements
             async function loadPrayerTimes() {
-                if (!window.locationData) return;
+                if (!window.locationManager.hasLocation()) return;
 
                 const method = document.getElementById('methodSelect').value || '2';
                 const is24Hour = document.getElementById('timeFormatSwitch').checked;
@@ -1423,7 +1614,8 @@
                     const date = new Date();
                     const dateString = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
                     
-                    const url = `http://api.aladhan.com/v1/timings/${dateString}?latitude=${window.locationData.latitude}&longitude=${window.locationData.longitude}&method=${method}`;
+                    const location = window.locationManager.getLocationData();
+                    const url = `https://api.aladhan.com/v1/timings/${dateString}?latitude=${location.latitude}&longitude=${location.longitude}&method=${method}`;
                     
                     const response = await fetch(url);
                     const data = await response.json();
@@ -1607,6 +1799,31 @@
                 return `${hour12}:${minutes} ${ampm}`;
             }
 
+            // Global function for location refresh
+            window.getCurrentLocation = function() {
+                document.getElementById('prayer-loading').classList.remove('d-none');
+                document.getElementById('prayer-error').classList.add('d-none');
+                
+                window.locationManager.getLocation(true).then(() => {
+                    const location = window.locationManager.getLocationData();
+                    document.getElementById('prayer-city').textContent = location.city;
+                    document.getElementById('prayer-country').textContent = location.country;
+                    document.getElementById('prayer-coordinates').textContent = 
+                        `${location.latitude.toFixed(4)}, ${location.longitude.toFixed(4)}`;
+                    
+                    loadPrayerTimes();
+                }).catch((error) => {
+                    document.getElementById('prayer-loading').classList.add('d-none');
+                    document.getElementById('prayer-error').classList.remove('d-none');
+                    
+                    const errorElement = document.getElementById('prayer-error');
+                    errorElement.innerHTML = `
+                        <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Location Access Required</h5>
+                        <p>${error.message || 'Please allow location access to view accurate prayer times for your area.'}</p>
+                        <button class="btn btn-sm btn-warning mt-2" onclick="getCurrentLocation()">Try Again</button>
+                    `;
+                });
+            };
         });
     </script>
 </body>
