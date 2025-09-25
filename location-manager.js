@@ -1,264 +1,116 @@
-// Location Manager for Prayer Times Application
-// Handles geolocation, reverse geocoding, and location data management
+// location-manager.js - Revised secure version
+class LocationManager {
+    constructor() {
+        this.userLocation = null;
+        this.STORAGE_KEY = 'userLocationData';
+        this.MAX_AGE = 30 * 60 * 1000; // 30 minutes
+    }
 
-window.locationManager = (function() {
-    let currentLocationData = null;
-    
-    // Configuration
-    const GEOLOCATION_OPTIONS = {
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 300000 // 5 minutes
-    };
+    // Get location - now only uses local storage or geolocation
+    async getLocation() {
+        // 1. Check sessionStorage for recent location (never from URL params)
+        const stored = this.getStoredLocation();
+        if (stored) {
+            this.userLocation = stored;
+            
+            // If we don't have city/country info, try to get it
+            if (!this.userLocation.city || !this.userLocation.country) {
+                await this.getReverseGeocoding();
+            }
+            
+            return this.userLocation;
+        }
 
-    // Get current location using browser geolocation API
-    function getCurrentPosition() {
+        // 2. Get fresh location (no URL parameter fallback)
+        return await this.detectFreshLocation();
+    }
+
+    async detectFreshLocation() {
         return new Promise((resolve, reject) => {
             if (!navigator.geolocation) {
-                reject(new Error('Geolocation is not supported by this browser.'));
+                reject(new Error('Geolocation not supported'));
                 return;
             }
 
             navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    resolve({
-                        latitude: position.coords.latitude,
-                        longitude: position.coords.longitude,
-                        accuracy: position.coords.accuracy
-                    });
+                async (position) => {
+                    this.userLocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                        timestamp: Date.now(),
+                        city: null,
+                        country: null
+                    };
+                    
+                    // Get city/country information
+                    await this.getReverseGeocoding();
+                    
+                    this.saveLocation();
+                    resolve(this.userLocation);
                 },
                 (error) => {
-                    let errorMessage = '';
-                    switch(error.code) {
-                        case error.PERMISSION_DENIED:
-                            errorMessage = 'Location access denied by user.';
-                            break;
-                        case error.POSITION_UNAVAILABLE:
-                            errorMessage = 'Location information is unavailable.';
-                            break;
-                        case error.TIMEOUT:
-                            errorMessage = 'Location request timed out.';
-                            break;
-                        default:
-                            errorMessage = 'An unknown error occurred while retrieving location.';
-                            break;
-                    }
-                    reject(new Error(errorMessage));
+                    reject(error);
                 },
-                GEOLOCATION_OPTIONS
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: this.MAX_AGE
+                }
             );
         });
     }
 
-    // Reverse geocoding to get location details
-    async function reverseGeocode(latitude, longitude) {
+    async getReverseGeocoding() {
+        if (!this.userLocation) return;
+        
         try {
-            // Using OpenStreetMap Nominatim API for reverse geocoding
             const response = await fetch(
-                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&addressdetails=1`
+                `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${this.userLocation.lat}&longitude=${this.userLocation.lng}&localityLanguage=en`
             );
-            
-            if (!response.ok) {
-                throw new Error('Failed to fetch location details');
-            }
-            
             const data = await response.json();
+
+            this.userLocation.city = data.city || data.locality || 'Unknown';
+            this.userLocation.country = data.countryName || 'Unknown';
             
-            return {
-                city: data.address?.city || 
-                      data.address?.town || 
-                      data.address?.village || 
-                      data.address?.county || 
-                      'Unknown City',
-                country: data.address?.country || 'Unknown Country',
-                state: data.address?.state || '',
-                postcode: data.address?.postcode || '',
-                displayName: data.display_name || 'Unknown Location'
-            };
+            // Update storage with new info
+            this.saveLocation();
         } catch (error) {
-            console.error('Reverse geocoding failed:', error);
-            // Return fallback data
-            return {
-                city: 'Unknown City',
-                country: 'Unknown Country',
-                state: '',
-                postcode: '',
-                displayName: 'Unknown Location'
-            };
+            console.error('Error getting location details:', error);
+            this.userLocation.city = 'Unknown';
+            this.userLocation.country = 'Unknown';
         }
     }
 
-    // Get location with full details
-    async function getLocation(forceRefresh = false) {
+    getStoredLocation() {
         try {
-            // Check if we have cached location data and don't need to refresh
-            if (currentLocationData && !forceRefresh) {
-                return currentLocationData;
-            }
+            const stored = sessionStorage.getItem(this.STORAGE_KEY);
+            if (!stored) return null;
 
-            // Show loading state
-            updateLoadingState(true);
-
-            // Get coordinates
-            const coordinates = await getCurrentPosition();
+            const data = JSON.parse(stored);
+            const isFresh = Date.now() - data.timestamp < this.MAX_AGE;
             
-            // Get location details
-            const locationDetails = await reverseGeocode(coordinates.latitude, coordinates.longitude);
-            
-            // Combine data
-            currentLocationData = {
-                latitude: coordinates.latitude,
-                longitude: coordinates.longitude,
-                accuracy: coordinates.accuracy,
-                city: locationDetails.city,
-                country: locationDetails.country,
-                state: locationDetails.state,
-                postcode: locationDetails.postcode,
-                displayName: locationDetails.displayName,
-                timestamp: new Date().toISOString()
-            };
-
-            // Store in global scope for prayer times script
-            window.locationData = currentLocationData;
-
-            // Update UI
-            updateLocationDisplay();
-            updateLoadingState(false);
-            
-            return currentLocationData;
-            
-        } catch (error) {
-            console.error('Location error:', error);
-            updateLoadingState(false);
-            throw error;
+            return isFresh ? data : null;
+        } catch {
+            return null;
         }
     }
 
-    // Update loading state in UI
-    function updateLoadingState(isLoading) {
-        const loadingElement = document.getElementById('prayer-loading');
-        const errorElement = document.getElementById('prayer-error');
-        
-        if (isLoading) {
-            if (loadingElement) loadingElement.classList.remove('d-none');
-            if (errorElement) errorElement.classList.add('d-none');
-        } else {
-            if (loadingElement) loadingElement.classList.add('d-none');
+    saveLocation() {
+        if (this.userLocation) {
+            this.userLocation.timestamp = Date.now();
+            sessionStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.userLocation));
         }
     }
 
-    // Update location display in UI
-    function updateLocationDisplay() {
-        if (!currentLocationData) return;
-
-        // Update location card elements
-        const cityElement = document.getElementById('prayer-city');
-        const countryElement = document.getElementById('prayer-country');
-        const coordinatesElement = document.getElementById('prayer-coordinates');
-
-        if (cityElement) {
-            cityElement.textContent = currentLocationData.city;
-        }
-        
-        if (countryElement) {
-            countryElement.textContent = currentLocationData.country;
-        }
-        
-        if (coordinatesElement) {
-            coordinatesElement.textContent = 
-                `${currentLocationData.latitude.toFixed(4)}, ${currentLocationData.longitude.toFixed(4)}`;
-        }
+    clearLocation() {
+        sessionStorage.removeItem(this.STORAGE_KEY);
+        this.userLocation = null;
     }
 
-    // Request location permission with user-friendly messaging
-    function requestLocationPermission() {
-        return new Promise((resolve, reject) => {
-            if (!navigator.geolocation) {
-                reject(new Error('Geolocation is not supported by this browser.'));
-                return;
-            }
+    // REMOVED: getLocationURLParams() method entirely
+    // We don't want to pass location via URLs
+}
 
-            // Check current permission state
-            if (navigator.permissions) {
-                navigator.permissions.query({name: 'geolocation'}).then((result) => {
-                    if (result.state === 'granted') {
-                        resolve(true);
-                    } else if (result.state === 'denied') {
-                        reject(new Error('Location permission was denied. Please enable location access in your browser settings.'));
-                    } else {
-                        // Prompt user for permission
-                        getLocation().then(() => resolve(true)).catch(reject);
-                    }
-                });
-            } else {
-                // Fallback for browsers without permissions API
-                getLocation().then(() => resolve(true)).catch(reject);
-            }
-        });
-    }
+// Global instance
+window.locationManager = new LocationManager();
 
-    // Initialize location manager
-    function init() {
-        console.log('Location Manager initialized');
-        
-        // Try to get location on page load
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => {
-                getLocation().catch((error) => {
-                    console.error('Initial location fetch failed:', error);
-                    showLocationError(error.message);
-                });
-            });
-        } else {
-            getLocation().catch((error) => {
-                console.error('Initial location fetch failed:', error);
-                showLocationError(error.message);
-            });
-        }
-    }
-
-    // Show location error in UI
-    function showLocationError(message) {
-        const errorElement = document.getElementById('prayer-error');
-        if (errorElement) {
-            errorElement.classList.remove('d-none');
-            const messageElement = errorElement.querySelector('p');
-            if (messageElement) {
-                messageElement.textContent = message || 'Please allow location access to view accurate prayer times for your area.';
-            }
-        }
-    }
-
-    // Public API
-    return {
-        getLocation,
-        getCurrentPosition,
-        reverseGeocode,
-        requestLocationPermission,
-        getCurrentLocationData: () => currentLocationData,
-        init
-    };
-})();
-
-// Auto-initialize when script loads
-window.locationManager.init();
-
-// Global function for refresh button (used by HTML)
-window.getCurrentLocation = function() {
-    window.locationManager.getLocation(true).catch((error) => {
-        console.error('Location refresh failed:', error);
-        window.locationManager.showLocationError && window.locationManager.showLocationError(error.message);
-    });
-};
-
-// Global function for adding location to links (used by navbar)
-window.addLocationToLink = function(linkElement) {
-    const locationData = window.locationManager.getCurrentLocationData();
-    if (locationData && linkElement.href) {
-        const url = new URL(linkElement.href, window.location.origin);
-        url.searchParams.set('lat', locationData.latitude);
-        url.searchParams.set('lng', locationData.longitude);
-        linkElement.href = url.toString();
-    }
-    return true;
-};
