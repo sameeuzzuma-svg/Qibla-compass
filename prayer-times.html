@@ -1148,12 +1148,21 @@
             setInterval(updateCurrentTime, 1000);
 
             // Initialize location and load prayer times
-            window.locationManager.getLocation().then(() => {
+            window.locationManager.getLocation().then((locationData) => {
+                // Store in global scope for prayer times script (convert to expected format)
+                window.locationData = {
+                    latitude: locationData.lat,
+                    longitude: locationData.lng,
+                    city: locationData.city,
+                    country: locationData.country
+                };
+                updateLocationDisplay();
                 loadPrayerTimes();
                 showAllElements();
             }).catch((error) => {
                 document.getElementById('prayer-loading').classList.add('d-none');
                 document.getElementById('prayer-error').classList.remove('d-none');
+                showLocationError(error.message);
             });
 
             // Setup enhanced event listeners
@@ -1598,16 +1607,6 @@
                 return `${hour12}:${minutes} ${ampm}`;
             }
 
-            // Global function for location refresh
-            window.getCurrentLocation = function() {
-                document.getElementById('prayer-loading').classList.remove('d-none');
-                window.locationManager.getLocation(true).then(() => {
-                    loadPrayerTimes();
-                }).catch((error) => {
-                    document.getElementById('prayer-loading').classList.add('d-none');
-                    document.getElementById('prayer-error').classList.remove('d-none');
-                });
-            };
         });
     </script>
 </body>
