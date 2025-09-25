@@ -19,6 +19,11 @@
         href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap"
         rel="stylesheet">
 
+    <link rel="canonical" href="https://sunnahwise.com/prayer-times" />
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TN0HH3WV8R"></script>
+    <script> window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-TN0HH3WV8R'); </script>
+
     <style>
         /* Islamic Prayer Times App - Custom Styles */
         :root {
@@ -209,22 +214,128 @@
 
         /* Footer */
         footer {
-            background: var(--gradient-green) !important;
+            background: linear-gradient(135deg, #14532d, #166534);
             margin-top: 3rem;
+            padding: 3rem 0;
+            color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        footer .container {
+            max-width: 1200px;
+        }
+
+        /* Section spacing */
+        .footer-section {
+            margin-bottom: 2rem;
+        }
+
+        /* Headings */
+        footer .footer-heading {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        /* Quran */
+        footer .quran-quote {
+            font-size: 1.05rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        footer .quran-translation {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        /* Links */
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
         .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.85);
             text-decoration: none;
-            transition: color 0.3s ease;
-            margin: 0 10px;
+            transition: all 0.3s ease;
             font-size: 0.9rem;
+            position: relative;
+            padding-bottom: 2px;
         }
 
         .footer-links a:hover {
-            color: white;
-            text-decoration: underline;
+            color: #fff;
         }
+
+        .footer-links a::after {
+            content: "";
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            background: #fff;
+            left: 0;
+            bottom: 0;
+            transition: width 0.3s ease;
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Divider */
+        footer .footer-divider {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 2rem 0;
+        }
+
+        /* Bottom */
+        footer .footer-bottom {
+            text-align: center;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* ===========================
+   Mobile Responsive
+   =========================== */
+        @media (max-width: 768px) {
+            footer {
+                text-align: center;
+            }
+
+            .footer-links {
+                justify-content: center;
+            }
+
+            .footer-section {
+                margin-bottom: 2rem;
+                padding-bottom: 1.5rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            }
+
+            /* Remove last section border */
+            .footer-section:last-child {
+                border-bottom: none;
+            }
+
+            footer .footer-heading {
+                margin-bottom: 0.8rem;
+                font-size: 1rem;
+            }
+
+            footer .quran-quote {
+                font-size: 0.95rem;
+            }
+
+            footer .quran-translation {
+                font-size: 0.8rem;
+            }
+        }
+
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -281,6 +392,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="dhikr.html">Dhikr Counter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="zakat.html">Zakat Calculator</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="about.html">About</a>
@@ -451,294 +565,60 @@
         </div>
     </footer> -->
 
-    <footer class="bg-islamic-green text-white py-4">
+
+    <!--footer-->
+    <footer>
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="mb-0 arabic-font">"وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ وَارْكَعُوا مَعَ
-                        الرَّاكِعِينَ"</p>
-                    <small class="text-light">"And establish prayer and give zakah and bow with those who bow." - Quran
-                        2:43</small>
+            <div class="row">
+
+                <!-- Quran Quote -->
+                <div class="col-md-4 col-12 footer-section">
+                    <h5 class="footer-heading">Quran</h5>
+                    <p class="quran-quote">
+                        "Indeed, prayer has been decreed upon the believers a decree of specified times."
+                    </p>
+                    <p class="quran-translation">— Surah An-Nisa 4:103</p>
                 </div>
+
+                <!-- Quick Links -->
+                <div class="col-md-4 col-12 footer-section">
+                    <h5 class="footer-heading">Quick Links</h5>
+                    <div class="footer-links">
+                        <a href="index.html">Home</a>
+                        <a href="prayer-times.html">Prayer Times</a>
+                        <a href="mosque-finder.html">Mosque Finder</a>
+                        <a href="qibla.html">Qibla Finder</a>
+                        <a href="dhikr.html">Dhikr Counter</a>
+                        <a href="zakat.html">Zakat Calculator</a>
+                        <a href="about.html">About</a>
+                    </div>
+                </div>
+
+                <!-- Privacy & Legal -->
                 <div class="col-md-6 text-md-end footer-links">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms of Service</a>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#disclaimerModal">Disclaimer</a>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#cookiesModal">Cookie Policy</a>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#contactModal">Contact Us</a>
-                    <small>&copy; 2025 SunnahWise App</small>
+                    <h5 class="footer-heading">Legal</h5>
+                    <div class="footer-links">
+                        <a href="privacy.html">Privacy Policy</a>
+                        <a href="terms.html">Terms of Service</a>
+                        <a href="disclaimer.html">Disclaimer</a>
+                        <a href="cookies.html">Cookie Policy</a>
+                        <a href="contact.html">Contact Us</a>
+                    </div>
+
                 </div>
+            </div>
+
+            <!-- Divider -->
+            <!--<div class="footer-divider"></div>-->
+
+            <!-- Bottom -->
+            <div class="footer-bottom">
+                <p>© 2025 SunnahWise. All rights reserved.</p>
+                <p class="small">Made with ❤️ for the Ummah</p>
             </div>
         </div>
     </footer>
 
-    <!-- Legal Modals -->
-    <!-- Privacy Policy Modal -->
-    <div class="modal fade legal-modal" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="privacyModalLabel"><i class="fas fa-shield-alt me-2"></i>Privacy Policy
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h5>1. Information We Collect</h5>
-                    <p>Our SunnahWise app collects limited information to provide you with accurate prayer
-                        times and mosque locations:</p>
-                    <ul>
-                        <li><strong>Location Data:</strong> We collect your device's geographical coordinates to
-                            calculate accurate prayer times and find nearby mosques.</li>
-                        <li><strong>Usage Data:</strong> We may collect information about how you interact with our app
-                            to improve user experience.</li>
-                        <li><strong>Device Information:</strong> We collect device type and browser information for
-                            compatibility purposes.</li>
-                    </ul>
-
-                    <h5>2. How We Use Your Information</h5>
-                    <p>We use the collected information solely for the purpose of providing and improving our services:
-                    </p>
-                    <ul>
-                        <li>To calculate accurate prayer times based on your location</li>
-                        <li>To locate mosques near your current position</li>
-                        <li>To improve app functionality and user experience</li>
-                        <li>To provide customer support</li>
-                    </ul>
-
-                    <h5>3. Data Storage and Security</h5>
-                    <p>We prioritize the security of your information:</p>
-                    <ul>
-                        <li>Location data is processed in real-time and not stored on our servers</li>
-                        <li>We implement appropriate security measures to protect your information</li>
-                        <li>We do not sell or share your personal information with third parties</li>
-                    </ul>
-
-                    <h5>4. Your Rights</h5>
-                    <p>You have the right to:</p>
-                    <ul>
-                        <li>Access the personal information we hold about you</li>
-                        <li>Request correction of inaccurate information</li>
-                        <li>Request deletion of your personal data</li>
-                        <li>Opt-out of data collection (though this may limit app functionality)</li>
-                    </ul>
-
-                    <h5>5. Changes to This Policy</h5>
-                    <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting
-                        the new Privacy Policy on this page and updating the "Last Updated" date.</p>
-
-                    <p class="mt-4"><strong>Last Updated:</strong> January 1, 2025</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Terms of Service Modal -->
-    <div class="modal fade legal-modal" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="termsModalLabel"><i class="fas fa-file-contract me-2"></i>Terms of
-                        Service</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h5>1. Acceptance of Terms</h5>
-                    <p>By accessing and using the SunnahWise app, you accept and agree to be bound by the
-                        terms and provision of this agreement.</p>
-
-                    <h5>2. Use License</h5>
-                    <p>Permission is granted to temporarily use the SunnahWise app for personal,
-                        non-commercial transitory viewing only.</p>
-
-                    <h5>3. Disclaimer</h5>
-                    <p>The prayer times and mosque locations are provided for informational purposes only. While we
-                        strive to provide accurate information, we cannot guarantee the absolute accuracy of prayer
-                        times or mosque locations.</p>
-
-                    <h5>4. Limitations</h5>
-                    <p>In no event shall SunnahWise or its suppliers be liable for any damages arising out of
-                        the use or inability to use the services provided by the app.</p>
-
-                    <h5>5. Accuracy of Materials</h5>
-                    <p>The materials appearing in the SunnahWise app could include technical, typographical,
-                        or photographic errors. We do not warrant that any of the materials on its app are accurate,
-                        complete or current.</p>
-
-                    <h5>6. Modifications</h5>
-                    <p>SunnahWise may revise these terms of service for its app at any time without notice. By
-                        using this app you are agreeing to be bound by the then current version of these terms of
-                        service.</p>
-
-                    <h5>7. Governing Law</h5>
-                    <p>These terms and conditions are governed by and construed in accordance with the laws and any
-                        disputes relating to these terms and conditions will be subject to the exclusive jurisdiction of
-                        the courts.</p>
-
-                    <p class="mt-4"><strong>Last Updated:</strong> January 1, 2025</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Disclaimer Modal -->
-    <div class="modal fade legal-modal" id="disclaimerModal" tabindex="-1" aria-labelledby="disclaimerModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="disclaimerModalLabel"><i
-                            class="fas fa-exclamation-circle me-2"></i>Disclaimer</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h5>1. Prayer Times Accuracy</h5>
-                    <p>The prayer times provided by this app are calculated using established mathematical formulas and
-                        are based on your geographical location. While we strive to provide accurate prayer times,
-                        actual prayer times may vary slightly based on local customs, mosque announcements, and other
-                        factors. Users are advised to confirm prayer times with their local mosque for religious
-                        obligations.</p>
-
-                    <h5>2. Mosque Locations</h5>
-                    <p>The mosque locations are sourced from OpenStreetMap and may not be comprehensive or completely
-                        accurate. The inclusion or exclusion of any mosque does not represent an endorsement or
-                        criticism of that institution. We recommend verifying mosque information before visiting.</p>
-
-                    <h5>3. Religious Considerations</h5>
-                    <p>This app is intended as a helpful tool for Muslims but should not replace religious knowledge or
-                        guidance from qualified scholars. Users are responsible for ensuring their prayers and religious
-                        practices comply with their understanding of Islamic requirements.</p>
-
-                    <h5>4. Technical Limitations</h5>
-                    <p>The accuracy of location-based services depends on your device's capabilities and connectivity.
-                        Results may vary based on GPS accuracy, network availability, and other technical factors beyond
-                        our control.</p>
-
-                    <h5>5. No Warranty</h5>
-                    <p>The SunnahWise app is provided "as is" without any warranties, expressed or implied. We
-                        make no guarantees regarding the availability, accuracy, or reliability of the services.</p>
-
-                    <h5>6. Limitation of Liability</h5>
-                    <p>In no event shall the creators of this app be liable for any missed prayers, religious
-                        obligations, or any direct, indirect, incidental, special, or consequential damages arising from
-                        the use of or inability to use the app.</p>
-
-                    <p class="mt-4"><strong>Last Updated:</strong> January 1, 2025</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Cookie Policy Modal -->
-    <div class="modal fade legal-modal" id="cookiesModal" tabindex="-1" aria-labelledby="cookiesModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="cookiesModalLabel"><i class="fas fa-cookie-bite me-2"></i>Cookie Policy
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h5>1. What Are Cookies</h5>
-                    <p>Cookies are small text files that are stored on your device when you visit websites or use web
-                        applications. They are widely used to make websites work efficiently and provide information to
-                        the owners of the site.</p>
-
-                    <h5>2. How We Use Cookies</h5>
-                    <p>Our SunnahWise app uses cookies for the following purposes:</p>
-                    <ul>
-                        <li><strong>Essential Cookies:</strong> These are necessary for the app to function properly.
-                            They enable core functionality such as location services and prayer time calculations.</li>
-                        <li><strong>Preference Cookies:</strong> These remember your choices such as time format
-                            preferences (12-hour or 24-hour format).</li>
-                        <li><strong>Analytical Cookies:</strong> These help us understand how users interact with our
-                            app, allowing us to improve its functionality and user experience.</li>
-                    </ul>
-
-                    <h5>3. Third-Party Cookies</h5>
-                    <p>We may use services from third parties that place cookies on your device:</p>
-                    <ul>
-                        <li><strong>Mapping Services:</strong> Our mosque finder feature uses OpenStreetMap which may
-                            place cookies for functionality.</li>
-                        <li><strong>Analytics Services:</strong> We use analytics services to understand how our app is
-                            being used and to make improvements.</li>
-                    </ul>
-
-                    <h5>4. Managing Cookies</h5>
-                    <p>You can control and manage cookies in various ways:</p>
-                    <ul>
-                        <li>Most browsers allow you to refuse cookies or delete them. You can usually find these
-                            settings in your browser's "options" or "preferences" menu.</li>
-                        <li>Please note that disabling cookies may affect the functionality of our app and many other
-                            websites that you visit.</li>
-                    </ul>
-
-                    <h5>5. Consent</h5>
-                    <p>By using our app, you consent to the use of cookies in accordance with this Cookie Policy. If you
-                        do not agree to our use of cookies, you should adjust your browser settings appropriately or
-                        discontinue use of our app.</p>
-
-                    <h5>6. Changes to This Policy</h5>
-                    <p>We may update our Cookie Policy from time to time. We will notify you of any changes by posting
-                        the new Cookie Policy on this page.</p>
-
-                    <p class="mt-4"><strong>Last Updated:</strong> January 1, 2025</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- In your contact page -->
-    <div class="modal fade legal-modal" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="contactModalLabel"><i class="fas fa-envelope me-2"></i>Contact Us</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <h5>Get In Touch</h5>
-                    <p>We're here to assist you with any questions about prayer times, mosque locations, or technical
-                        support for our app.</p>
-
-                    <div class="row justify-content-center mt-4">
-                        <div class="col-md-8"> <!-- Increased width for better centering -->
-                            <div class="card h-100">
-                                <div class="card-body text-center">
-                                    <div class="contact-icon mb-3">
-                                        <i class="fas fa-envelope fa-2x text-primary"></i>
-                                    </div>
-                                    <h5>Email Support</h5>
-                                    <p>Send us an email for assistance with the app or prayer time calculations</p>
-                                    <a href="mailto:kindnesspath1@gmail.com" class="btn btn-primary mt-2">
-                                        <i class="fas fa-paper-plane me-2"></i>Send Email
-                                    </a>
-                                    <p class="small text-muted mt-2">
-                                        <!-- <em>Once we launch, this will be a dedicated support email</em> -->
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
     <!-- Bootstrap 5 JS -->
@@ -749,16 +629,8 @@
 
     <script>
         // Prayer Times page functionality
+        // Prayer Times page functionality
         document.addEventListener('DOMContentLoaded', function () {
-            // Update navigation active state
-            const currentPage = window.location.pathname.split('/').pop() || 'prayer-times.html';
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === currentPage) {
-                    link.classList.add('active');
-                }
-            });
-
             // Initialize location and load prayer times
             window.locationManager.getLocation().then(() => {
                 loadPrayerTimes();
@@ -769,41 +641,10 @@
 
             // Setup event listeners
             setupEventListeners();
+
+            // Request notification permission on page load
+            requestNotificationPermission();
         });
-
-        // document.addEventListener('DOMContentLoaded', async function () {
-        //     // Update navigation active state
-        //     const currentPage = window.location.pathname.split('/').pop() || 'prayer-times.html';
-        //     document.querySelectorAll('.nav-link').forEach(link => {
-        //         link.classList.remove('active');
-        //         if (link.getAttribute('href') === currentPage) {
-        //             link.classList.add('active');
-        //         }
-        //     });
-
-        //     try {
-        //         // Get location - no URL parameters involved
-        //         const loc = await window.locationManager.getLocation();
-        //         console.log("✅ Location for prayer times:", loc);
-
-        //         if (loc) {
-        //             // Update location info immediately
-        //             updateLocationInfo(loc);
-
-        //             // Then load prayer times
-        //             loadPrayerTimes();
-        //         } else {
-        //             throw new Error("No location available");
-        //         }
-        //     } catch (error) {
-        //         console.error("⚠️ Location error:", error.message);
-        //         document.getElementById('prayer-loading').classList.add('d-none');
-        //         document.getElementById('prayer-error').classList.remove('d-none');
-        //     }
-
-        //     // Setup event listeners
-        //     setupEventListeners();
-        // });
 
         function setupEventListeners() {
             // Time format toggle
@@ -841,11 +682,167 @@
             if (notificationSwitch) {
                 notificationSwitch.checked = localStorage.getItem('notificationsEnabled') === 'true';
                 notificationSwitch.addEventListener('change', (e) => {
-                    localStorage.setItem('notificationsEnabled', e.target.checked);
+                    const enabled = e.target.checked;
+                    localStorage.setItem('notificationsEnabled', enabled);
+
+                    if (enabled) {
+                        enableNotifications();
+                    } else {
+                        disableNotifications();
+                    }
                 });
             }
         }
 
+        // Notification Functions
+        function requestNotificationPermission() {
+            if (!("Notification" in window)) {
+                console.log("This browser does not support notifications");
+                return;
+            }
+
+            if (Notification.permission === "default") {
+                Notification.requestPermission().then(permission => {
+                    if (permission === "granted") {
+                        console.log("Notification permission granted");
+                    }
+                });
+            }
+        }
+
+        function enableNotifications() {
+            if (!("Notification" in window)) {
+                alert("Your browser doesn't support notifications");
+                document.getElementById('notificationSwitch').checked = false;
+                return;
+            }
+
+            if (Notification.permission === "denied") {
+                alert("Notifications are blocked. Please enable them in your browser settings.");
+                document.getElementById('notificationSwitch').checked = false;
+                localStorage.setItem('notificationsEnabled', 'false');
+                return;
+            }
+
+            if (Notification.permission === "default") {
+                Notification.requestPermission().then(permission => {
+                    if (permission === "granted") {
+                        schedulePrayerNotifications();
+                        showNotification("Prayer Time Notifications", "Notifications enabled successfully!");
+                    } else {
+                        document.getElementById('notificationSwitch').checked = false;
+                        localStorage.setItem('notificationsEnabled', 'false');
+                    }
+                });
+            } else if (Notification.permission === "granted") {
+                schedulePrayerNotifications();
+            }
+        }
+
+        function disableNotifications() {
+            // Clear any scheduled notifications
+            if (window.notificationTimeouts) {
+                window.notificationTimeouts.forEach(timeout => {
+                    clearTimeout(timeout);
+                });
+                window.notificationTimeouts = [];
+            }
+            showNotification("Prayer Time Notifications", "Notifications have been disabled.");
+        }
+
+        function schedulePrayerNotifications() {
+            if (!window.prayerTimes) return;
+
+            // Clear existing timeouts
+            if (window.notificationTimeouts) {
+                window.notificationTimeouts.forEach(timeout => {
+                    clearTimeout(timeout);
+                });
+            }
+
+            window.notificationTimeouts = [];
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+
+            const prayers = [
+                { name: 'Fajr', time: window.prayerTimes.Fajr, icon: '🌅' },
+                { name: 'Dhuhr', time: window.prayerTimes.Dhuhr, icon: '☀️' },
+                { name: 'Asr', time: window.prayerTimes.Asr, icon: '⛅' },
+                { name: 'Maghrib', time: window.prayerTimes.Maghrib, icon: '🌇' },
+                { name: 'Isha', time: window.prayerTimes.Isha, icon: '🌙' }
+            ];
+
+            prayers.forEach(prayer => {
+                const [hours, minutes] = prayer.time.split(':');
+                const prayerTime = parseInt(hours) * 60 + parseInt(minutes);
+
+                // Schedule notification 5 minutes before prayer time
+                const notificationTime = prayerTime - 5;
+
+                let timeUntilNotification = notificationTime - currentTime;
+
+                // If notification time has already passed today, schedule for tomorrow
+                if (timeUntilNotification < 0) {
+                    timeUntilNotification += 24 * 60;
+                }
+
+                const timeout = setTimeout(() => {
+                    showPrayerNotification(prayer.name, prayer.time, prayer.icon);
+                }, timeUntilNotification * 60 * 1000);
+
+                window.notificationTimeouts.push(timeout);
+            });
+        }
+
+        function showPrayerNotification(prayerName, prayerTime, icon) {
+            const title = `${icon} ${prayerName} Prayer Time`;
+            const body = `It's time for ${prayerName} prayer. Scheduled at ${prayerTime}`;
+            const options = {
+                body: body,
+                icon: '/favicon.ico', // Add your app icon
+                badge: '/favicon.ico',
+                tag: 'prayer-time',
+                requireInteraction: true,
+                actions: [
+                    {
+                        action: 'snooze',
+                        title: 'Remind in 5 min'
+                    },
+                    {
+                        action: 'dismiss',
+                        title: 'Dismiss'
+                    }
+                ]
+            };
+
+            showNotification(title, body, options);
+        }
+
+        function showNotification(title, body, options = {}) {
+            if (!("Notification" in window)) return;
+
+            if (Notification.permission === "granted") {
+                const notification = new Notification(title, {
+                    body: body,
+                    icon: options.icon || '/favicon.ico',
+                    ...options
+                });
+
+                notification.onclick = function () {
+                    window.focus();
+                    notification.close();
+                };
+
+                // Auto-close after 10 seconds
+                setTimeout(() => {
+                    notification.close();
+                }, 10000);
+
+                return notification;
+            }
+        }
+
+        // Existing functions (keep these as they are)
         function updateTimeFormatLabel(is24HourFormat) {
             const label = document.getElementById('timeFormatLabel');
             if (label) {
@@ -881,6 +878,11 @@
                     document.getElementById('prayer-country').textContent = location.country || 'Unknown';
                     document.getElementById('prayer-coordinates').textContent =
                         `${location.lat.toFixed(4)}, ${location.lng.toFixed(4)}`;
+
+                    // Schedule notifications if enabled
+                    if (localStorage.getItem('notificationsEnabled') === 'true') {
+                        schedulePrayerNotifications();
+                    }
                 } else {
                     throw new Error('Failed to load prayer times');
                 }
@@ -966,9 +968,7 @@
         }
 
         // Clear any location data that might have come from URL parameters
-        // when the page loads
         window.addEventListener('load', function () {
-            // Clear URL parameters without reloading
             if (window.location.search) {
                 window.history.replaceState({}, document.title, window.location.pathname);
             }
