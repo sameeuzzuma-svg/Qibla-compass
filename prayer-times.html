@@ -4,34 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- Enhanced SEO Meta Tags -->
     <title>Islamic Prayer Times Today | Accurate Salah Schedule & Qibla Direction - SunnahWise</title>
     <meta name="description"
         content="Get precise Islamic prayer times (Fajr, Dhuhr, Asr, Maghrib, Isha) for your location. Features prayer countdown, Islamic calendar, Qibla direction, and notification reminders. Trusted by Muslims worldwide.">
     <meta name="keywords"
         content="prayer times, salah times, daily prayer, today's prayer times, Islamic prayer schedule, namaz times, Muslim prayer, Fajr time, Dhuhr time, Asr time, Maghrib time, Isha time, prayer countdown, Islamic calendar, Hijri date, prayer tracker, prayer analytics, prayer notifications, Qibla direction, mosque finder">
-    
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2d5a3d">
+
     <!-- Enhanced Open Graph tags -->
     <meta property="og:title" content="Islamic Prayer Times Today | Accurate Salah Schedule - SunnahWise">
-    <meta property="og:description" content="Get precise Islamic prayer times for your location with countdown timers, Islamic calendar, and prayer tracking. Never miss your daily prayers.">
+    <meta property="og:description"
+        content="Get precise Islamic prayer times for your location with countdown timers, Islamic calendar, and prayer tracking. Never miss your daily prayers.">
     <meta property="og:image" content="https://sunnahwise.com/images/prayer-times-og.jpg">
     <meta property="og:url" content="https://sunnahwise.com/prayer-times">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="SunnahWise">
-    
+
     <!-- Twitter Card tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Islamic Prayer Times Today | SunnahWise">
-    <meta name="twitter:description" content="Accurate Islamic prayer times with countdown timers and Islamic calendar integration.">
+    <meta name="twitter:description"
+        content="Accurate Islamic prayer times with countdown timers and Islamic calendar integration.">
     <meta name="twitter:image" content="https://sunnahwise.com/images/prayer-times-twitter.jpg">
-    
+
     <!-- Additional SEO tags -->
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta name="author" content="SunnahWise">
-    <meta name="theme-color" content="#2d5a3d">
     <link rel="canonical" href="https://sunnahwise.com/prayer-times" />
-    
+
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
     {
@@ -51,7 +56,7 @@
             "Accurate prayer times calculation",
             "Prayer countdown timers",
             "Islamic calendar integration",
-            "Prayer tracking and analytics",
+            "Next prayer countdown",
             "Multiple calculation methods",
             "Prayer notifications",
             "Qibla direction finder"
@@ -67,11 +72,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap"
         rel="stylesheet">
-    <!-- Chart.js for Analytics -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TN0HH3WV8R"></script>
-    <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-TN0HH3WV8R'); </script>
+    <script> window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-TN0HH3WV8R'); </script>
 
     <style>
         /* Islamic Prayer Times App - Enhanced Custom Styles */
@@ -240,22 +243,21 @@
             background: linear-gradient(135deg, #fff 0%, #fef7e0 100%);
         }
 
-        /* Progress Ring for Countdown */
-        .progress-ring {
-            width: 60px;
-            height: 60px;
-            position: absolute;
-            top: 10px;
-            right: 10px;
+        /* Custom Notification Styles */
+        .custom-notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 9999;
+            max-width: 300px;
+            animation: slideIn 0.5s ease;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        .progress-ring__circle {
-            stroke: var(--islamic-gold);
-            stroke-linecap: round;
-            stroke-width: 4;
-            fill: transparent;
-            transform: rotate(-90deg);
-            transform-origin: 50% 50%;
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
         /* Islamic Calendar Widget */
@@ -267,6 +269,16 @@
             margin-bottom: 2rem;
         }
 
+        /* Islamic Calendar */
+        .islamic-date {
+            background: var(--gradient-green);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
         .hijri-date {
             text-align: center;
             padding: 1rem;
@@ -276,8 +288,36 @@
             margin-bottom: 1rem;
         }
 
-        /* Prayer Analytics */
-        .analytics-card {
+        /* Next Prayer Countdown Banner */
+        .next-prayer-banner {
+            background: linear-gradient(135deg, var(--islamic-green), var(--islamic-green-light));
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 25px var(--shadow-light);
+            text-align: center;
+        }
+
+        .next-prayer-banner h3 {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .next-prayer-countdown {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: 'Roboto', monospace;
+            margin: 1rem 0;
+        }
+
+        .next-prayer-info {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Monthly Prayer Calendar */
+        .monthly-calendar {
             background: white;
             border-radius: 15px;
             box-shadow: 0 8px 25px var(--shadow-light);
@@ -285,18 +325,52 @@
             margin-bottom: 2rem;
         }
 
-        .stat-box {
-            text-align: center;
-            padding: 1rem;
-            background: #f8f9fa;
-            border-radius: 10px;
-            margin: 0.5rem;
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
         }
 
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--islamic-green);
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 1rem;
+        }
+
+        .calendar-day {
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-day:hover {
+            background: var(--islamic-green-light);
+            color: white;
+        }
+
+        .calendar-day.current {
+            background: var(--islamic-green);
+            color: white;
+        }
+
+        .calendar-day-header {
+            font-weight: 600;
+            background: #f8f9fa;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* Prayer Notifications Settings */
+        .notification-settings {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px var(--shadow-light);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         /* SEO Content Sections */
@@ -383,9 +457,31 @@
 
         /* Animations */
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes countdownPulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
 
         .fade-in {
@@ -393,8 +489,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Feature Highlights */
@@ -509,6 +612,27 @@
                 margin-bottom: 1rem;
             }
 
+            .next-prayer-countdown {
+                font-size: 2rem;
+            }
+
+            .calendar-grid {
+                grid-template-columns: repeat(7, 1fr);
+                gap: 3px;
+            }
+
+            .calendar-day {
+                padding: 5px;
+                font-size: 0.8rem;
+            }
+
+            .custom-notification {
+                top: 80px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+
             footer {
                 text-align: center;
             }
@@ -554,9 +678,8 @@
                 font-size: 1.2rem;
             }
 
-            .progress-ring {
-                width: 40px;
-                height: 40px;
+            .next-prayer-countdown {
+                font-size: 1.8rem;
             }
         }
     </style>
@@ -611,7 +734,7 @@
                 <div class="d-flex justify-content-center gap-3 mt-3">
                     <span class="badge bg-success"><i class="fas fa-clock me-1"></i>Real-time Countdown</span>
                     <span class="badge bg-info"><i class="fas fa-calendar-islamic me-1"></i>Hijri Calendar</span>
-                    <span class="badge bg-warning"><i class="fas fa-chart-line me-1"></i>Prayer Analytics</span>
+                    <span class="badge bg-warning"><i class="fas fa-bell me-1"></i>Smart Notifications</span>
                 </div>
             </div>
 
@@ -625,29 +748,42 @@
 
             <!-- Location Error -->
             <div id="prayer-error" class="alert alert-warning text-center d-none" role="alert">
-                <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Unable to get your location</h5>
+                <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Unable to get your location
+                </h5>
                 <p class="mb-0">Please allow location access to view accurate prayer times for your area.</p>
+            </div>
+
+            <!-- Next Prayer Countdown Banner -->
+            <div id="next-prayer-banner" class="next-prayer-banner d-none">
+                <h3><i class="fas fa-clock me-2"></i>Next Prayer</h3>
+                <div class="next-prayer-countdown" id="next-prayer-timer">--:--:--</div>
+                <div class="next-prayer-info" id="next-prayer-info">Loading next prayer information...</div>
             </div>
 
             <!-- Islamic Calendar Widget -->
             <div id="islamic-calendar" class="islamic-calendar d-none">
                 <div class="row align-items-center">
                     <div class="col-md-6">
-                        <div class="hijri-date">
-                            <h4><i class="fas fa-calendar-islamic me-2"></i>Today's Islamic Date</h4>
-                            <p class="mb-0 arabic-font" id="hijri-date-arabic">Loading...</p>
-                            <small id="hijri-date-english">Loading...</small>
+                        <div class="islamic-date" id="islamic-date">
+                            <h6 class="mb-1">Today's Islamic Date</h6>
+                            <div id="hijri-date">Loading...</div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="text-center">
-                            <h5>Important Islamic Dates</h5>
-                            <div id="islamic-events" class="small">
-                                <div class="mb-1"><i class="fas fa-star text-warning me-1"></i>Ramadan starts in <span id="ramadan-countdown">-- days</span></div>
-                                <div class="mb-1"><i class="fas fa-moon text-info me-1"></i>Next Islamic holiday: <span id="next-holiday">Loading...</span></div>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+            </div>
+
+            <!-- Monthly Prayer Calendar -->
+            <div id="monthly-calendar" class="monthly-calendar d-none">
+                <h4><i class="fas fa-calendar-alt me-2"></i>Monthly Prayer Calendar</h4>
+                <div class="calendar-nav">
+                    <button class="btn btn-sm btn-outline-primary" id="prev-month"><i
+                            class="fas fa-chevron-left"></i></button>
+                    <h5 id="current-month">Loading...</h5>
+                    <button class="btn btn-sm btn-outline-primary" id="next-month"><i
+                            class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="calendar-grid" id="calendar-days">
+                    <!-- Calendar will be populated by JavaScript -->
                 </div>
             </div>
 
@@ -668,7 +804,8 @@
                             </select>
                         </div>
                         <div class="col-md-4">
-                            <button class="btn btn-outline-primary" id="method-info-btn" data-bs-toggle="modal" data-bs-target="#methodInfoModal">
+                            <button class="btn btn-outline-primary" id="method-info-btn" data-bs-toggle="modal"
+                                data-bs-target="#methodInfoModal">
                                 <i class="fas fa-info-circle me-1"></i>Learn More
                             </button>
                         </div>
@@ -704,6 +841,47 @@
                 </div>
             </div>
 
+            <!-- Notification Settings -->
+            <div id="notification-settings" class="notification-settings d-none">
+                <h4><i class="fas fa-bell me-2"></i>Prayer Notification Settings</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="notificationSwitch">
+                            <label class="form-check-label" for="notificationSwitch">
+                                Enable Prayer Notifications
+                            </label>
+                        </div>
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="advanceNotificationSwitch" checked>
+                            <label class="form-check-label" for="advanceNotificationSwitch">
+                                15-minute advance notification
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="soundNotificationSwitch">
+                            <label class="form-check-label" for="soundNotificationSwitch">
+                                Enable notification sound
+                            </label>
+                        </div>
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="vibrationSwitch">
+                            <label class="form-check-label" for="vibrationSwitch">
+                                Enable vibration (mobile)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <button class="btn btn-sm btn-outline-primary" id="test-notification-btn">
+                        <i class="fas fa-bell me-1"></i>Test Notification
+                    </button>
+                    <small class="text-muted ms-2">Check if notifications are working</small>
+                </div>
+            </div>
+
             <!-- Time Format Toggle -->
             <div id="prayer-format-toggle" class="text-center mb-4 d-none">
                 <div class="form-check form-switch d-inline-block me-3">
@@ -713,182 +891,80 @@
                     </label>
                 </div>
                 <div class="form-check form-switch d-inline-block">
-                    <input class="form-check-input" type="checkbox" id="notificationSwitch">
-                    <label class="form-check-label" for="notificationSwitch">
-                        <i class="fas fa-bell me-1"></i>Prayer Notifications
+                    <input class="form-check-input" type="checkbox" id="autoRefreshSwitch" checked>
+                    <label class="form-check-label" for="autoRefreshSwitch">
+                        <i class="fas fa-sync-alt me-1"></i>Auto-refresh (5 min)
                     </label>
                 </div>
             </div>
 
             <!-- Enhanced Prayer Times Grid -->
             <div id="prayer-times-grid" class="row g-4 d-none">
-                <div class="col-lg-4 col-md-6">
-                    <div class="prayer-card" id="fajr-card">
-                        <svg class="progress-ring" width="60" height="60">
-                            <circle class="progress-ring__circle" stroke-width="4" fill="transparent" r="26" cx="30" cy="30"/>
-                        </svg>
-                        <div class="prayer-icon">
-                            <i class="fas fa-sun"></i>
-                        </div>
-                        <div class="prayer-name">Fajr</div>
-                        <div class="prayer-arabic">صلاة الفجر</div>
-                        <div class="prayer-time" id="fajr-time">--:--</div>
-                        <div class="countdown-timer" id="fajr-countdown"></div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="prayer-card" id="sunrise-card">
-                        <svg class="progress-ring" width="60" height="60">
-                            <circle class="progress-ring__circle" stroke-width="4" fill="transparent" r="26" cx="30" cy="30"/>
-                        </svg>
-                        <div class="prayer-icon">
-                            <i class="fas fa-sun"></i>
-                        </div>
-                        <div class="prayer-name">Sunrise</div>
-                        <div class="prayer-arabic">الشروق</div>
-                        <div class="prayer-time" id="sunrise-time">--:--</div>
-                        <div class="countdown-timer" id="sunrise-countdown"></div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="prayer-card" id="dhuhr-card">
-                        <svg class="progress-ring" width="60" height="60">
-                            <circle class="progress-ring__circle" stroke-width="4" fill="transparent" r="26" cx="30" cy="30"/>
-                        </svg>
-                        <div class="prayer-icon">
-                            <i class="fas fa-sun"></i>
-                        </div>
-                        <div class="prayer-name">Dhuhr</div>
-                        <div class="prayer-arabic">صلاة الظهر</div>
-                        <div class="prayer-time" id="dhuhr-time">--:--</div>
-                        <div class="countdown-timer" id="dhuhr-countdown"></div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="prayer-card" id="asr-card">
-                        <svg class="progress-ring" width="60" height="60">
-                            <circle class="progress-ring__circle" stroke-width="4" fill="transparent" r="26" cx="30" cy="30"/>
-                        </svg>
-                        <div class="prayer-icon">
-                            <i class="fas fa-cloud-sun"></i>
-                        </div>
-                        <div class="prayer-name">Asr</div>
-                        <div class="prayer-arabic">صلاة العصر</div>
-                        <div class="prayer-time" id="asr-time">--:--</div>
-                        <div class="countdown-timer" id="asr-countdown"></div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="prayer-card" id="maghrib-card">
-                        <svg class="progress-ring" width="60" height="60">
-                            <circle class="progress-ring__circle" stroke-width="4" fill="transparent" r="26" cx="30" cy="30"/>
-                        </svg>
-                        <div class="prayer-icon">
-                            <i class="fas fa-moon"></i>
-                        </div>
-                        <div class="prayer-name">Maghrib</div>
-                        <div class="prayer-arabic">صلاة المغرب</div>
-                        <div class="prayer-time" id="maghrib-time">--:--</div>
-                        <div class="countdown-timer" id="maghrib-countdown"></div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="prayer-card" id="isha-card">
-                        <svg class="progress-ring" width="60" height="60">
-                            <circle class="progress-ring__circle" stroke-width="4" fill="transparent" r="26" cx="30" cy="30"/>
-                        </svg>
-                        <div class="prayer-icon">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div class="prayer-name">Isha</div>
-                        <div class="prayer-arabic">صلاة العشاء</div>
-                        <div class="prayer-time" id="isha-time">--:--</div>
-                        <div class="countdown-timer" id="isha-countdown"></div>
-                    </div>
-                </div>
+                <!-- Prayer cards will be populated by JavaScript -->
             </div>
 
-            <!-- Prayer Analytics Dashboard -->
-            <div id="prayer-analytics" class="analytics-card d-none">
-                <h3><i class="fas fa-chart-line me-2"></i>Your Prayer Analytics</h3>
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="stat-box">
-                            <div class="stat-number" id="prayers-today">0</div>
-                            <div class="text-muted">Prayers Today</div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="stat-box">
-                            <div class="stat-number" id="current-streak">0</div>
-                            <div class="text-muted">Day Streak</div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="stat-box">
-                            <div class="stat-number" id="weekly-percentage">0%</div>
-                            <div class="text-muted">This Week</div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="stat-box">
-                            <div class="stat-number" id="monthly-percentage">0%</div>
-                            <div class="text-muted">This Month</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-3">
-                    <canvas id="prayerChart" height="100"></canvas>
-                </div>
-            </div>
-
-            <!-- SEO Content: Prayer Times Guide -->
+            <!-- SEO Content Sections -->
             <div class="seo-content">
                 <h2>Complete Guide to Islamic Prayer Times</h2>
-                <p>Understanding and observing the five daily prayers (Salah) is one of the fundamental pillars of Islam. Our accurate prayer time calculator helps Muslims worldwide stay connected with their faith by providing precise prayer schedules based on your geographical location.</p>
-                
+                <p>Understanding and observing the five daily prayers (Salah) is one of the fundamental pillars of
+                    Islam. Our accurate prayer time calculator helps Muslims worldwide stay connected with their faith
+                    by providing precise prayer schedules based on your geographical location.</p>
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="prayer-guide">
                             <h4><i class="fas fa-sun text-warning me-2"></i>Fajr Prayer (Dawn)</h4>
                             <p><strong>Arabic:</strong> صلاة الفجر</p>
                             <p><strong>Time:</strong> From dawn until sunrise</p>
-                            <p>The Fajr prayer is performed in the early morning before sunrise. It consists of 2 Rak'ahs (units) and is one of the most spiritually rewarding prayers, as mentioned in the Quran: "And recite the Qur'an at dawn. Indeed, the recitation of dawn is ever witnessed."</p>
+                            <p>The Fajr prayer is performed in the early morning before sunrise. It consists of 2
+                                Rak'ahs (units) and is one of the most spiritually rewarding prayers, as mentioned in
+                                the Quran: "And recite the Qur'an at dawn. Indeed, the recitation of dawn is ever
+                                witnessed."</p>
                         </div>
-                        
+
                         <div class="prayer-guide">
                             <h4><i class="fas fa-sun text-info me-2"></i>Dhuhr Prayer (Midday)</h4>
                             <p><strong>Arabic:</strong> صلاة الظهر</p>
                             <p><strong>Time:</strong> After the sun crosses the meridian until Asr</p>
-                            <p>Dhuhr is the midday prayer performed after the sun crosses the meridian. It consists of 4 Rak'ahs and serves as a spiritual break during the busy day, reminding Muslims to pause and remember Allah.</p>
+                            <p>Dhuhr is the midday prayer performed after the sun crosses the meridian. It consists of 4
+                                Rak'ahs and serves as a spiritual break during the busy day, reminding Muslims to pause
+                                and remember Allah.</p>
                         </div>
 
                         <div class="prayer-guide">
                             <h4><i class="fas fa-cloud-sun text-primary me-2"></i>Asr Prayer (Afternoon)</h4>
                             <p><strong>Arabic:</strong> صلاة العصر</p>
                             <p><strong>Time:</strong> Late afternoon until sunset</p>
-                            <p>The Asr prayer is performed in the late afternoon and consists of 4 Rak'ahs. The Prophet Muhammad (peace be upon him) emphasized its importance, stating that whoever abandons the Asr prayer will have their deeds nullified.</p>
+                            <p>The Asr prayer is performed in the late afternoon and consists of 4 Rak'ahs. The Prophet
+                                Muhammad (peace be upon him) emphasized its importance, stating that whoever abandons
+                                the Asr prayer will have their deeds nullified.</p>
                         </div>
                     </div>
-                    
+
                     <div class="col-md-6">
                         <div class="prayer-guide">
                             <h4><i class="fas fa-moon text-danger me-2"></i>Maghrib Prayer (Sunset)</h4>
                             <p><strong>Arabic:</strong> صلاة المغرب</p>
                             <p><strong>Time:</strong> Just after sunset until twilight disappears</p>
-                            <p>Maghrib is performed immediately after sunset and consists of 3 Rak'ahs. It's traditionally the time when Muslim families gather to break their fast during Ramadan and share the evening meal.</p>
+                            <p>Maghrib is performed immediately after sunset and consists of 3 Rak'ahs. It's
+                                traditionally the time when Muslim families gather to break their fast during Ramadan
+                                and share the evening meal.</p>
                         </div>
 
                         <div class="prayer-guide">
                             <h4><i class="fas fa-star text-dark me-2"></i>Isha Prayer (Night)</h4>
                             <p><strong>Arabic:</strong> صلاة العشاء</p>
                             <p><strong>Time:</strong> After twilight until dawn</p>
-                            <p>The Isha prayer is the final prayer of the day, consisting of 4 Rak'ahs. It's performed after the twilight has completely disappeared and serves as a spiritual conclusion to the day.</p>
+                            <p>The Isha prayer is the final prayer of the day, consisting of 4 Rak'ahs. It's performed
+                                after the twilight has completely disappeared and serves as a spiritual conclusion to
+                                the day.</p>
                         </div>
 
                         <div class="alert alert-info">
                             <h5><i class="fas fa-info-circle me-2"></i>Did You Know?</h5>
-                            <p class="mb-0">The timing of Islamic prayers is based on the position of the sun, making them naturally aligned with the Earth's rotation. This ensures that Muslims around the world are constantly in prayer throughout the 24-hour cycle.</p>
+                            <p class="mb-0">The timing of Islamic prayers is based on the position of the sun, making
+                                them naturally aligned with the Earth's rotation. This ensures that Muslims around the
+                                world are constantly in prayer throughout the 24-hour cycle.</p>
                         </div>
                     </div>
                 </div>
@@ -897,21 +973,27 @@
             <!-- SEO Content: Calculation Methods -->
             <div class="seo-content">
                 <h2>Prayer Time Calculation Methods Explained</h2>
-                <p>Different Islamic organizations have developed various methods for calculating prayer times based on astronomical observations and scholarly consensus. Our calculator supports multiple methods to ensure accuracy across different regions.</p>
-                
+                <p>Different Islamic organizations have developed various methods for calculating prayer times based on
+                    astronomical observations and scholarly consensus. Our calculator supports multiple methods to
+                    ensure accuracy across different regions.</p>
+
                 <div class="row">
                     <div class="col-md-6">
                         <h4>Popular Calculation Methods:</h4>
                         <ul>
-                            <li><strong>Islamic Society of North America (ISNA):</strong> Widely used in North America (Fajr: 15°, Isha: 15°)</li>
+                            <li><strong>Islamic Society of North America (ISNA):</strong> Widely used in North America
+                                (Fajr: 15°, Isha: 15°)</li>
                             <li><strong>Muslim World League:</strong> Global standard method (Fajr: 18°, Isha: 17°)</li>
-                            <li><strong>University of Islamic Sciences, Karachi:</strong> Common in South Asia (Fajr: 18°, Isha: 18°)</li>
-                            <li><strong>Umm Al-Qura University, Makkah:</strong> Used in Saudi Arabia (Fajr: 18.5°, Isha: 90 min after Maghrib)</li>
+                            <li><strong>University of Islamic Sciences, Karachi:</strong> Common in South Asia (Fajr:
+                                18°, Isha: 18°)</li>
+                            <li><strong>Umm Al-Qura University, Makkah:</strong> Used in Saudi Arabia (Fajr: 18.5°,
+                                Isha: 90 min after Maghrib)</li>
                         </ul>
                     </div>
                     <div class="col-md-6">
                         <h4>Why Different Methods?</h4>
-                        <p>The variation in calculation methods stems from different interpretations of when true dawn (for Fajr) and when true night (for Isha) begins. These differences are based on:</p>
+                        <p>The variation in calculation methods stems from different interpretations of when true dawn
+                            (for Fajr) and when true night (for Isha) begins. These differences are based on:</p>
                         <ul>
                             <li>Geographical location and latitude</li>
                             <li>Local astronomical observations</li>
@@ -932,7 +1014,8 @@
                                 <i class="fas fa-clock"></i>
                             </div>
                             <h4>Real-time Countdown</h4>
-                            <p>Never miss a prayer with our real-time countdown timers that show exactly how much time remains until the next prayer.</p>
+                            <p>Never miss a prayer with our real-time countdown timers that show exactly how much time
+                                remains until the next prayer.</p>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -941,16 +1024,18 @@
                                 <i class="fas fa-calendar-islamic"></i>
                             </div>
                             <h4>Islamic Calendar</h4>
-                            <p>Stay connected with Islamic dates, including Hijri calendar integration and notifications for important Islamic events.</p>
+                            <p>Stay connected with Islamic dates, including Hijri calendar integration and notifications
+                                for important Islamic events.</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="feature-box">
                             <div class="feature-icon">
-                                <i class="fas fa-chart-line"></i>
+                                <i class="fas fa-bell"></i>
                             </div>
-                            <h4>Prayer Analytics</h4>
-                            <p>Track your prayer consistency with detailed analytics, streaks, and progress charts to strengthen your spiritual journey.</p>
+                            <h4>Smart Notifications</h4>
+                            <p>Customizable prayer notifications with advance alerts, sound options, and vibration
+                                features for mobile devices.</p>
                         </div>
                     </div>
                 </div>
@@ -962,49 +1047,62 @@
                 <div class="accordion" id="prayerFAQ">
                     <div class="accordion-item">
                         <h3 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#faq1">
                                 How accurate are the prayer times calculated on this website?
                             </button>
                         </h3>
                         <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#prayerFAQ">
                             <div class="accordion-body">
-                                Our prayer times are calculated using internationally recognized astronomical algorithms and are accurate to within minutes. We use your precise geographical coordinates and multiple calculation methods approved by Islamic authorities worldwide.
+                                Our prayer times are calculated using internationally recognized astronomical algorithms
+                                and are accurate to within minutes. We use your precise geographical coordinates and
+                                multiple calculation methods approved by Islamic authorities worldwide.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <h3 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#faq2">
                                 Can I use these prayer times when traveling?
                             </button>
                         </h3>
                         <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#prayerFAQ">
                             <div class="accordion-body">
-                                Yes! Our prayer time calculator automatically detects your current location, making it perfect for travelers. The times will update based on your new geographical position and time zone.
+                                Yes! Our prayer time calculator automatically detects your current location, making it
+                                perfect for travelers. The times will update based on your new geographical position and
+                                time zone.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <h3 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#faq3">
                                 Which calculation method should I choose?
                             </button>
                         </h3>
                         <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#prayerFAQ">
                             <div class="accordion-body">
-                                The choice depends on your location and local Islamic community preferences. ISNA method is popular in North America, Muslim World League is widely accepted globally, and regional methods like Karachi University are preferred in specific areas. Consult your local mosque for guidance.
+                                The choice depends on your location and local Islamic community preferences. ISNA method
+                                is popular in North America, Muslim World League is widely accepted globally, and
+                                regional methods like Karachi University are preferred in specific areas. Consult your
+                                local mosque for guidance.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <h3 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#faq4">
                                 Do prayer times change every day?
                             </button>
                         </h3>
                         <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#prayerFAQ">
                             <div class="accordion-body">
-                                Yes, prayer times change daily based on the sun's position relative to your location. The changes are more noticeable during season transitions and are minimal near the equator. Our calculator automatically updates daily to provide accurate times.
+                                Yes, prayer times change daily based on the sun's position relative to your location.
+                                The changes are more noticeable during season transitions and are minimal near the
+                                equator. Our calculator automatically updates daily to provide accurate times.
                             </div>
                         </div>
                     </div>
@@ -1067,7 +1165,9 @@
                         </table>
                     </div>
                     <div class="alert alert-info">
-                        <strong>Note:</strong> Different calculation methods may result in variations of a few minutes. Choose the method that's most commonly used in your area or recommended by your local Islamic center.
+                        <strong>Note:</strong> Different calculation methods may result in variations of a few minutes.
+                        Choose the method that's most commonly used in your area or recommended by your local Islamic
+                        center.
                     </div>
                 </div>
             </div>
@@ -1137,20 +1237,20 @@
             }
 
             async initialize() {
-                if (this.isInitialized) return this.userLocation;
-                
+                if (this.isInitialized) return;
+
                 try {
                     // 1. Check sessionStorage for recent location
                     const stored = this.getStoredLocation();
                     if (stored) {
                         this.userLocation = stored;
                         this.isInitialized = true;
-                        
+
                         // If we don't have city/country info, try to get it
                         if (!this.userLocation.city || !this.userLocation.country) {
                             await this.getReverseGeocoding();
                         }
-                        
+
                         return this.userLocation;
                     }
 
@@ -1167,11 +1267,11 @@
                     this.clearLocation();
                     this.isInitialized = false;
                 }
-                
+
                 if (!this.isInitialized) {
                     return await this.initialize();
                 }
-                
+
                 return this.userLocation;
             }
 
@@ -1192,10 +1292,10 @@
                                     city: null,
                                     country: null
                                 };
-                                
+
                                 // Get city/country information
                                 await this.getReverseGeocoding();
-                                
+
                                 this.saveLocation();
                                 this.isInitialized = true;
                                 resolve(this.userLocation);
@@ -1231,25 +1331,24 @@
 
             async getReverseGeocoding() {
                 if (!this.userLocation) return;
-                
+
                 try {
                     const response = await fetch(
                         `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${this.userLocation.latitude}&longitude=${this.userLocation.longitude}&localityLanguage=en`
                     );
-                    
+
                     if (!response.ok) {
                         throw new Error(`Geocoding API error: ${response.status}`);
                     }
-                    
+
                     const data = await response.json();
 
                     this.userLocation.city = data.city || data.locality || 'Unknown City';
                     this.userLocation.country = data.countryName || 'Unknown Country';
-                    
+
                     this.saveLocation();
                 } catch (error) {
                     console.warn('Reverse geocoding failed:', error);
-                    // Set default values but don't fail completely
                     this.userLocation.city = this.userLocation.city || 'Unknown City';
                     this.userLocation.country = this.userLocation.country || 'Unknown Country';
                 }
@@ -1262,7 +1361,7 @@
 
                     const data = JSON.parse(stored);
                     const isFresh = Date.now() - data.timestamp < this.MAX_AGE;
-                    
+
                     return isFresh ? data : null;
                 } catch (error) {
                     console.warn('Error reading stored location:', error);
@@ -1290,12 +1389,10 @@
                 this.isInitialized = false;
             }
 
-            // Helper method to check if location is available
             hasLocation() {
                 return this.isInitialized && this.userLocation !== null;
             }
 
-            // Get location data for display
             getLocationData() {
                 return this.userLocation ? { ...this.userLocation } : null;
             }
@@ -1306,16 +1403,23 @@
 
         // Enhanced Prayer Times functionality
         document.addEventListener('DOMContentLoaded', function () {
-            // Prayer analytics storage
-            let prayerAnalytics = JSON.parse(localStorage.getItem('prayerAnalytics')) || {
-                dailyPrayers: {},
-                streak: 0,
-                totalPrayers: 0
-            };
+            let currentPrayerTimes = {};
+            let nextPrayer = null;
+            let currentPrayer = null;
+            let calendarCurrentDate = new Date();
+            let autoRefreshInterval = null;
+            let notificationSent = {};
+
+            // Register Service Worker for PWA functionality
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => console.log('Service Worker registered'))
+                    .catch(error => console.log('Service Worker registration failed: ', error));
+            }
 
             // Initialize Islamic calendar
             updateIslamicCalendar();
-            
+
             // Initialize current time display
             updateCurrentTime();
             setInterval(updateCurrentTime, 1000);
@@ -1323,34 +1427,34 @@
             // Initialize location and load prayer times
             const initializeApp = async () => {
                 try {
-                    // Show loading state
                     document.getElementById('prayer-loading').classList.remove('d-none');
-                    
-                    // Get location
+
                     const location = await window.locationManager.getLocation();
-                    
-                    // Update location display with safe property access
+
+                    // Safe property access with fallbacks
                     if (location) {
                         document.getElementById('prayer-city').textContent = location.city || 'Unknown';
                         document.getElementById('prayer-country').textContent = location.country || 'Unknown';
+
                         if (location.latitude && location.longitude) {
-                            document.getElementById('prayer-coordinates').textContent = 
+                            document.getElementById('prayer-coordinates').textContent =
                                 `${location.latitude.toFixed(4)}, ${location.longitude.toFixed(4)}`;
                         } else {
-                            document.getElementById('prayer-coordinates').textContent = 'Unknown';
+                            document.getElementById('prayer-coordinates').textContent = 'Unknown coordinates';
                         }
                     }
-                    
-                    // If we get here, location was successful
+
                     loadPrayerTimes();
                     showAllElements();
-                    
+                    initializeMonthlyCalendar();
+                    setupAutoRefresh();
+                    setupNotifications();
+
                 } catch (error) {
                     console.error('Failed to get location:', error);
                     document.getElementById('prayer-loading').classList.add('d-none');
                     document.getElementById('prayer-error').classList.remove('d-none');
-                    
-                    // Show error details to user
+
                     const errorElement = document.getElementById('prayer-error');
                     errorElement.innerHTML = `
                         <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Location Access Required</h5>
@@ -1366,44 +1470,42 @@
             // Setup enhanced event listeners
             setupEnhancedEventListeners();
 
-            // Initialize prayer analytics display
-            updatePrayerAnalytics();
-
-            // Check for prayer time notifications
-            if ('Notification' in window) {
-                setupNotifications();
-            }
-
             function updateCurrentTime() {
                 const now = new Date();
-                const timeString = now.toLocaleTimeString('en-US', { 
-                    hour12: !document.getElementById('timeFormatSwitch').checked,
-                    hour: '2-digit', 
-                    minute: '2-digit' 
+                const timeString = now.toLocaleTimeString('en-US', {
+                    hour12: !document.getElementById('timeFormatSwitch')?.checked,
+                    hour: '2-digit',
+                    minute: '2-digit'
                 });
-                document.getElementById('current-time').textContent = timeString;
+                const currentTimeElement = document.getElementById('current-time');
+                if (currentTimeElement) {
+                    currentTimeElement.textContent = timeString;
+                }
             }
 
-            function updateIslamicCalendar() {
-                // Simplified Hijri date calculation
-                const today = new Date();
-                const hijriYear = 1446;
-                const hijriMonth = "Sha'ban";
-                const hijriDay = 15;
-                
-                document.getElementById('hijri-date-arabic').textContent = `${hijriDay} ${hijriMonth} ${hijriYear}`;
-                document.getElementById('hijri-date-english').textContent = `${hijriDay} ${hijriMonth}, ${hijriYear} AH`;
-                
-                // Calculate days until Ramadan (simplified)
-                document.getElementById('ramadan-countdown').textContent = '45';
-                document.getElementById('next-holiday').textContent = 'Ramadan 1447 AH';
+            async function updateIslamicCalendar() {
+                try {
+                    const response = await fetch('https://api.aladhan.com/v1/gToH');
+                    const data = await response.json();
+
+                    if (data.code === 200) {
+                        const hijriDate = data.data.hijri;
+                        const dateString = `${hijriDate.day} ${hijriDate.month.en} ${hijriDate.year}`;
+                        document.getElementById('hijri-date').textContent = dateString;
+                        document.getElementById('islamic-date').classList.remove('d-none');
+                    }
+                } catch (error) {
+                    console.error('Error loading Islamic date:', error);
+                }
             }
 
             function showAllElements() {
-                // Show all hidden elements with fade-in animation
-                const elements = ['calculation-method', 'prayer-location-card', 'prayer-format-toggle', 
-                                'prayer-times-grid', 'islamic-calendar', 'prayer-analytics'];
-                
+                const elements = [
+                    'next-prayer-banner', 'calculation-method', 'prayer-location-card',
+                    'notification-settings', 'prayer-format-toggle', 'prayer-times-grid',
+                    'islamic-calendar', 'monthly-calendar'
+                ];
+
                 elements.forEach((id, index) => {
                     setTimeout(() => {
                         const element = document.getElementById(id);
@@ -1413,6 +1515,210 @@
                         }
                     }, index * 200);
                 });
+            }
+
+            // Auto-refresh functionality
+            function setupAutoRefresh() {
+                const autoRefreshSwitch = document.getElementById('autoRefreshSwitch');
+                
+                if (autoRefreshSwitch) {
+                    // Load saved preference
+                    autoRefreshSwitch.checked = localStorage.getItem('autoRefresh') !== 'false';
+                    
+                    autoRefreshSwitch.addEventListener('change', function() {
+                        localStorage.setItem('autoRefresh', this.checked);
+                        
+                        if (this.checked) {
+                            startAutoRefresh();
+                        } else {
+                            stopAutoRefresh();
+                        }
+                    });
+                    
+                    // Start auto-refresh if enabled
+                    if (autoRefreshSwitch.checked) {
+                        startAutoRefresh();
+                    }
+                }
+                
+                function startAutoRefresh() {
+                    // Clear existing interval
+                    if (autoRefreshInterval) {
+                        clearInterval(autoRefreshInterval);
+                    }
+                    
+                    // Refresh every 5 minutes (300000 ms)
+                    autoRefreshInterval = setInterval(() => {
+                        console.log('Auto-refreshing prayer times...');
+                        loadPrayerTimes();
+                    }, 300000); // 5 minutes
+                }
+                
+                function stopAutoRefresh() {
+                    if (autoRefreshInterval) {
+                        clearInterval(autoRefreshInterval);
+                        autoRefreshInterval = null;
+                    }
+                }
+            }
+
+            // Notification functionality
+            function setupNotifications() {
+                const notificationSwitch = document.getElementById('notificationSwitch');
+                const advanceSwitch = document.getElementById('advanceNotificationSwitch');
+                const soundSwitch = document.getElementById('soundNotificationSwitch');
+                const vibrationSwitch = document.getElementById('vibrationSwitch');
+                const testButton = document.getElementById('test-notification-btn');
+                
+                // Load saved preferences
+                notificationSwitch.checked = localStorage.getItem('notificationsEnabled') === 'true';
+                advanceSwitch.checked = localStorage.getItem('advanceNotifications') !== 'false';
+                soundSwitch.checked = localStorage.getItem('notificationSound') === 'true';
+                vibrationSwitch.checked = localStorage.getItem('notificationVibration') === 'true';
+                
+                // Add event listeners
+                notificationSwitch.addEventListener('change', function() {
+                    localStorage.setItem('notificationsEnabled', this.checked);
+                    if (this.checked) {
+                        requestNotificationPermission();
+                    }
+                });
+                
+                advanceSwitch.addEventListener('change', function() {
+                    localStorage.setItem('advanceNotifications', this.checked);
+                });
+                
+                soundSwitch.addEventListener('change', function() {
+                    localStorage.setItem('notificationSound', this.checked);
+                });
+                
+                vibrationSwitch.addEventListener('change', function() {
+                    localStorage.setItem('notificationVibration', this.checked);
+                });
+                
+                // Test notification button
+                if (testButton) {
+                    testButton.addEventListener('click', function() {
+                        showPrayerNotification('Test', '12:00 PM', false, true);
+                    });
+                }
+                
+                // Request permission if notifications are enabled
+                if (notificationSwitch.checked) {
+                    requestNotificationPermission();
+                }
+            }
+
+            function requestNotificationPermission() {
+                if (!("Notification" in window)) {
+                    console.log("This browser does not support notifications");
+                    return;
+                }
+                
+                if (Notification.permission === "default") {
+                    Notification.requestPermission().then(permission => {
+                        if (permission === "granted") {
+                            console.log("Notification permission granted");
+                        }
+                    });
+                }
+            }
+
+            function showPrayerNotification(prayerName, time, isAdvance = false, isTest = false) {
+                const notificationSwitch = document.getElementById('notificationSwitch');
+                if (!notificationSwitch || !notificationSwitch.checked) return;
+                
+                // Create a unique key for this notification to avoid duplicates
+                const notificationKey = `${prayerName}-${isAdvance ? 'advance' : 'time'}-${new Date().toDateString()}`;
+                
+                if (notificationSent[notificationKey] && !isTest) {
+                    return; // Already sent this notification today
+                }
+                
+                notificationSent[notificationKey] = true;
+                
+                if (Notification.permission === "granted") {
+                    const title = isTest ? '🕌 Test Notification' : 
+                                (isAdvance ? `🕌 ${prayerName} in 15 minutes` : `🕌 ${prayerName} Time`);
+                    const body = isTest ? 'This is a test notification from SunnahWise' :
+                                (isAdvance ? `Get ready for ${prayerName} prayer at ${time}` : `It's time for ${prayerName} prayer`);
+                    
+                    const notification = new Notification(title, {
+                        body: body,
+                        icon: '/images/mosque-icon.png',
+                        tag: 'prayer-notification',
+                        requireInteraction: true
+                    });
+                    
+                    // Add click handler to focus the tab
+                    notification.onclick = () => {
+                        window.focus();
+                        notification.close();
+                    };
+                    
+                    // Auto-close after 10 seconds (except for tests)
+                    if (!isTest) {
+                        setTimeout(() => {
+                            notification.close();
+                        }, 10000);
+                    }
+                    
+                    // Add sound if enabled
+                    const soundSwitch = document.getElementById('soundNotificationSwitch');
+                    if (soundSwitch && soundSwitch.checked) {
+                        playNotificationSound();
+                    }
+                    
+                } else if (Notification.permission === "default" && !isTest) {
+                    // Fallback to custom notification if permission not granted
+                    showFallbackNotification(prayerName, time, isAdvance);
+                } else if (Notification.permission === "denied" || isTest) {
+                    // Always show fallback for tests or when permission is denied
+                    showFallbackNotification(prayerName, time, isAdvance, isTest);
+                }
+            }
+
+            function showFallbackNotification(prayerName, time, isAdvance = false, isTest = false) {
+                // Create a custom notification element on the page
+                const notificationEl = document.createElement('div');
+                notificationEl.className = `custom-notification alert ${isTest ? 'alert-warning' : 'alert-info'}`;
+                notificationEl.innerHTML = `
+                    <strong>🕌 ${isTest ? 'Test Notification' : (prayerName + ' ' + (isAdvance ? 'in 15 minutes' : 'Time'))}</strong>
+                    <br>${isTest ? 'This is a test notification from SunnahWise' : (isAdvance ? `Get ready for ${prayerName} at ${time}` : `It's time for ${prayerName} prayer`)}
+                    <button class="btn-close float-end" onclick="this.parentElement.remove()"></button>
+                `;
+                
+                document.body.appendChild(notificationEl);
+                
+                // Auto-remove after 10 seconds
+                setTimeout(() => {
+                    if (notificationEl.parentElement) {
+                        notificationEl.remove();
+                    }
+                }, 10000);
+            }
+
+            function playNotificationSound() {
+                // Simple notification sound using Web Audio API
+                try {
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.frequency.value = 800;
+                    oscillator.type = 'sine';
+                    
+                    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+                    
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 1);
+                } catch (error) {
+                    console.log('Audio context not supported');
+                }
             }
 
             function setupEnhancedEventListeners() {
@@ -1440,222 +1746,112 @@
                     });
                 }
 
-                // Notification toggle
-                const notificationSwitch = document.getElementById('notificationSwitch');
-                if (notificationSwitch) {
-                    notificationSwitch.checked = localStorage.getItem('notifications') === 'enabled';
-                    notificationSwitch.addEventListener('change', function () {
-                        if (this.checked) {
-                            requestNotificationPermission();
-                        } else {
-                            localStorage.setItem('notifications', 'disabled');
-                        }
+                // Calendar navigation
+                const prevMonthBtn = document.getElementById('prev-month');
+                const nextMonthBtn = document.getElementById('next-month');
+
+                if (prevMonthBtn) {
+                    prevMonthBtn.addEventListener('click', () => {
+                        calendarCurrentDate.setMonth(calendarCurrentDate.getMonth() - 1);
+                        initializeMonthlyCalendar();
                     });
                 }
 
-                // Prayer card click handlers for tracking
-                const prayerCards = document.querySelectorAll('.prayer-card');
-                prayerCards.forEach(card => {
-                    card.addEventListener('click', function() {
-                        if (!this.id.includes('sunrise')) {
-                            markPrayerCompleted(this.id.replace('-card', ''));
-                        }
+                if (nextMonthBtn) {
+                    nextMonthBtn.addEventListener('click', () => {
+                        calendarCurrentDate.setMonth(calendarCurrentDate.getMonth() + 1);
+                        initializeMonthlyCalendar();
                     });
+                }
+            }
+
+            function initializeMonthlyCalendar() {
+                const monthNames = ["January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"];
+
+                const currentMonth = calendarCurrentDate.getMonth();
+                const currentYear = calendarCurrentDate.getFullYear();
+
+                const currentMonthElement = document.getElementById('current-month');
+                if (currentMonthElement) {
+                    currentMonthElement.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+                }
+
+                const firstDay = new Date(currentYear, currentMonth, 1);
+                const lastDay = new Date(currentYear, currentMonth + 1, 0);
+                const daysInMonth = lastDay.getDate();
+
+                const calendarGrid = document.getElementById('calendar-days');
+                if (!calendarGrid) return;
+
+                calendarGrid.innerHTML = '';
+
+                // Add day headers
+                const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                dayHeaders.forEach(day => {
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'calendar-day-header';
+                    dayElement.textContent = day;
+                    calendarGrid.appendChild(dayElement);
                 });
-            }
 
-            function setupNotifications() {
-                if (Notification.permission === 'default') {
-                    // Don't auto-request, wait for user action
+                // Add empty cells for days before the first day of the month
+                for (let i = 0; i < firstDay.getDay(); i++) {
+                    const emptyDay = document.createElement('div');
+                    emptyDay.className = 'calendar-day';
+                    calendarGrid.appendChild(emptyDay);
                 }
-            }
 
-            function requestNotificationPermission() {
-                Notification.requestPermission().then(permission => {
-                    if (permission === 'granted') {
-                        localStorage.setItem('notifications', 'enabled');
-                        const switchElement = document.getElementById('notificationSwitch');
-                        if (switchElement) {
-                            switchElement.checked = true;
-                        }
-                    } else {
-                        const switchElement = document.getElementById('notificationSwitch');
-                        if (switchElement) {
-                            switchElement.checked = false;
-                        }
+                // Add days of the month
+                const today = new Date();
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'calendar-day';
+                    dayElement.textContent = day;
+
+                    // Highlight current day
+                    if (day === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
+                        dayElement.classList.add('current');
                     }
-                });
-            }
 
-            function markPrayerCompleted(prayerName) {
-                const today = new Date().toDateString();
-                if (!prayerAnalytics.dailyPrayers[today]) {
-                    prayerAnalytics.dailyPrayers[today] = [];
-                }
-                
-                if (!prayerAnalytics.dailyPrayers[today].includes(prayerName)) {
-                    prayerAnalytics.dailyPrayers[today].push(prayerName);
-                    prayerAnalytics.totalPrayers++;
-                    
-                    // Show success feedback
-                    showPrayerCompletedToast(prayerName);
-                    
-                    // Update analytics
-                    updatePrayerAnalytics();
-                    localStorage.setItem('prayerAnalytics', JSON.stringify(prayerAnalytics));
+                    calendarGrid.appendChild(dayElement);
                 }
             }
 
-            function showPrayerCompletedToast(prayerName) {
-                // Create a toast notification
-                const toast = document.createElement('div');
-                toast.className = 'toast-notification';
-                toast.innerHTML = `
-                    <div class="alert alert-success alert-dismissible fade show position-fixed" style="top: 100px; right: 20px; z-index: 1060;">
-                        <i class="fas fa-check-circle me-2"></i>
-                        ${prayerName.charAt(0).toUpperCase() + prayerName.slice(1)} prayer marked as completed!
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                `;
-                document.body.appendChild(toast);
-                
-                // Auto remove after 3 seconds
-                setTimeout(() => {
-                    toast.remove();
-                }, 3000);
-            }
-
-            function updatePrayerAnalytics() {
-                const today = new Date().toDateString();
-                const todayPrayers = prayerAnalytics.dailyPrayers[today] || [];
-                
-                // Update today's prayer count
-                const todayElement = document.getElementById('prayers-today');
-                if (todayElement) todayElement.textContent = todayPrayers.length;
-                
-                // Calculate streak
-                let streak = 0;
-                const dates = Object.keys(prayerAnalytics.dailyPrayers).sort().reverse();
-                for (let date of dates) {
-                    if (prayerAnalytics.dailyPrayers[date].length >= 5) {
-                        streak++;
-                    } else {
-                        break;
-                    }
-                }
-                const streakElement = document.getElementById('current-streak');
-                if (streakElement) streakElement.textContent = streak;
-                
-                // Calculate weekly percentage
-                const weekAgo = new Date();
-                weekAgo.setDate(weekAgo.getDate() - 7);
-                let weeklyPrayers = 0;
-                let weeklyTotal = 0;
-                
-                for (let date of dates) {
-                    const dateObj = new Date(date);
-                    if (dateObj >= weekAgo) {
-                        weeklyPrayers += prayerAnalytics.dailyPrayers[date].length;
-                        weeklyTotal += 5;
-                    }
-                }
-                
-                const weeklyPercentage = weeklyTotal > 0 ? Math.round((weeklyPrayers / weeklyTotal) * 100) : 0;
-                const weeklyElement = document.getElementById('weekly-percentage');
-                if (weeklyElement) weeklyElement.textContent = weeklyPercentage + '%';
-                
-                // Calculate monthly percentage (simplified)
-                const monthlyElement = document.getElementById('monthly-percentage');
-                if (monthlyElement) monthlyElement.textContent = Math.min(weeklyPercentage + 10, 100) + '%';
-                
-                // Update chart
-                updatePrayerChart();
-            }
-
-            function updatePrayerChart() {
-                const ctx = document.getElementById('prayerChart');
-                if (!ctx) return;
-                
-                const context = ctx.getContext('2d');
-                
-                // Get last 7 days data
-                const last7Days = [];
-                const labels = [];
-                const data = [];
-                
-                for (let i = 6; i >= 0; i--) {
-                    const date = new Date();
-                    date.setDate(date.getDate() - i);
-                    const dateStr = date.toDateString();
-                    const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
-                    
-                    labels.push(dayName);
-                    data.push(prayerAnalytics.dailyPrayers[dateStr] ? prayerAnalytics.dailyPrayers[dateStr].length : 0);
-                }
-                
-                new Chart(context, {
-                    type: 'line',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Prayers Completed',
-                            data: data,
-                            borderColor: 'var(--islamic-green)',
-                            backgroundColor: 'rgba(45, 90, 61, 0.1)',
-                            tension: 0.4,
-                            fill: true
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                max: 5,
-                                ticks: {
-                                    stepSize: 1
-                                }
-                            }
-                        },
-                        plugins: {
-                            legend: {
-                                display: false
-                            }
-                        }
-                    }
-                });
-            }
-
-            // Prayer times loading function with safe property access
             async function loadPrayerTimes() {
                 if (!window.locationManager.hasLocation()) {
                     console.log('No location available for prayer times');
                     return;
                 }
 
-                const method = document.getElementById('methodSelect')?.value || '2';
-                const is24Hour = document.getElementById('timeFormatSwitch')?.checked || false;
+                const methodSelect = document.getElementById('methodSelect');
+                const timeFormatSwitch = document.getElementById('timeFormatSwitch');
+
+                if (!methodSelect || !timeFormatSwitch) return;
+
+                const method = methodSelect.value || '2';
+                const is24Hour = timeFormatSwitch.checked;
 
                 try {
                     const date = new Date();
                     const dateString = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
-                    
+
                     const location = window.locationManager.getLocationData();
                     if (!location || !location.latitude || !location.longitude) {
                         console.error('Invalid location data');
                         return;
                     }
-                    
+
                     const url = `https://api.aladhan.com/v1/timings/${dateString}?latitude=${location.latitude}&longitude=${location.longitude}&method=${method}`;
-                    
+
                     const response = await fetch(url);
                     const data = await response.json();
 
                     if (data.code === 200) {
-                        displayEnhancedPrayerTimes(data.data.timings, is24Hour);
-                        startCountdownTimers(data.data.timings);
-                        updateCurrentPrayerStatus(data.data.timings);
+                        currentPrayerTimes = data.data.timings;
+                        displayEnhancedPrayerTimes(currentPrayerTimes, is24Hour);
+                        startNextPrayerCountdown();
+                        updateCurrentPrayerStatus(currentPrayerTimes);
                     }
                 } catch (error) {
                     console.error('Error loading prayer times:', error);
@@ -1663,111 +1859,143 @@
             }
 
             function displayEnhancedPrayerTimes(timings, is24Hour) {
-                const prayers = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
-                
+                const prayers = [
+                    { key: 'Fajr', name: 'Fajr', arabic: 'صلاة الفجر', icon: 'sun' },
+                    { key: 'Sunrise', name: 'Sunrise', arabic: 'الشروق', icon: 'sun' },
+                    { key: 'Dhuhr', name: 'Dhuhr', arabic: 'صلاة الظهر', icon: 'sun' },
+                    { key: 'Asr', name: 'Asr', arabic: 'صلاة العصر', icon: 'cloud-sun' },
+                    { key: 'Maghrib', name: 'Maghrib', arabic: 'صلاة المغرب', icon: 'moon' },
+                    { key: 'Isha', name: 'Isha', arabic: 'صلاة العشاء', icon: 'star' }
+                ];
+
+                const grid = document.getElementById('prayer-times-grid');
+                if (!grid) return;
+
+                grid.innerHTML = '';
+
                 prayers.forEach(prayer => {
-                    const timeElement = document.getElementById(`${prayer}-time`);
-                    const prayerKey = prayer.charAt(0).toUpperCase() + prayer.slice(1);
-                    if (timeElement && timings[prayerKey]) {
-                        let time = timings[prayerKey];
-                        
-                        if (!is24Hour) {
-                            time = convertTo12Hour(time);
-                        }
-                        
-                        timeElement.textContent = time;
-                    }
+                    const time = timings[prayer.key];
+                    if (!time) return;
+
+                    const formattedTime = is24Hour ? time : convertTo12Hour(time);
+
+                    const col = document.createElement('div');
+                    col.className = 'col-lg-4 col-md-6';
+                    col.innerHTML = `
+                        <div class="prayer-card" id="${prayer.name.toLowerCase()}-card">
+                            
+                            <div class="prayer-icon">
+                                <i class="fas fa-${prayer.icon}"></i>
+                            </div>
+                            <div class="prayer-name">${prayer.name}</div>
+                            <div class="prayer-arabic">${prayer.arabic}</div>
+                            <div class="prayer-time" id="${prayer.name.toLowerCase()}-time">${formattedTime}</div>
+                            <div class="countdown-timer" id="${prayer.name.toLowerCase()}-countdown"></div>
+                        </div>
+                    `;
+                    grid.appendChild(col);
                 });
 
                 document.getElementById('prayer-loading').classList.add('d-none');
             }
 
-            function startCountdownTimers(timings) {
-                const prayers = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
-                
-                // Clear any existing intervals
-                if (window.countdownIntervals) {
-                    window.countdownIntervals.forEach(interval => clearInterval(interval));
+            function startNextPrayerCountdown() {
+                // Clear existing interval
+                if (window.nextPrayerInterval) {
+                    clearInterval(window.nextPrayerInterval);
                 }
-                window.countdownIntervals = [];
 
-                prayers.forEach(prayer => {
-                    const interval = setInterval(() => {
-                        updateCountdown(prayer, timings);
-                    }, 1000);
-                    
-                    window.countdownIntervals.push(interval);
-                });
+                window.nextPrayerInterval = setInterval(() => {
+                    updateNextPrayerCountdown();
+                }, 1000);
             }
 
-            function updateCountdown(prayer, timings) {
-                const prayerKey = prayer.charAt(0).toUpperCase() + prayer.slice(1);
-                const prayerTime = timings[prayerKey];
-                
-                if (!prayerTime) return;
+            function updateNextPrayerCountdown() {
+                if (!currentPrayerTimes || Object.keys(currentPrayerTimes).length === 0) return;
 
                 const now = new Date();
-                const [hours, minutes] = prayerTime.split(':').map(Number);
-                const prayerDate = new Date();
-                prayerDate.setHours(hours, minutes, 0, 0);
+                const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
 
-                if (prayerDate < now) {
-                    prayerDate.setDate(prayerDate.getDate() + 1);
+                let nextPrayerTime = null;
+                let nextPrayerName = null;
+                let nextPrayerFormattedTime = null;
+
+                // Find the next prayer
+                for (const prayer of prayers) {
+                    if (!currentPrayerTimes[prayer]) continue;
+
+                    const [hours, minutes] = currentPrayerTimes[prayer].split(':').map(Number);
+                    const prayerTime = new Date();
+                    prayerTime.setHours(hours, minutes, 0, 0);
+
+                    // If prayer time is today and in future
+                    if (prayerTime > now) {
+                        nextPrayerTime = prayerTime;
+                        nextPrayerName = prayer;
+                        nextPrayerFormattedTime = convertTo12Hour(currentPrayerTimes[prayer]);
+                        break;
+                    }
                 }
 
-                const diff = prayerDate.getTime() - now.getTime();
-                
+                // If no prayer found for today, use tomorrow's Fajr
+                if (!nextPrayerTime && currentPrayerTimes['Fajr']) {
+                    const [hours, minutes] = currentPrayerTimes['Fajr'].split(':').map(Number);
+                    nextPrayerTime = new Date();
+                    nextPrayerTime.setDate(nextPrayerTime.getDate() + 1);
+                    nextPrayerTime.setHours(hours, minutes, 0, 0);
+                    nextPrayerName = 'Fajr';
+                    nextPrayerFormattedTime = convertTo12Hour(currentPrayerTimes['Fajr']);
+                }
+
+                if (!nextPrayerTime) return;
+
+                const diff = nextPrayerTime.getTime() - now.getTime();
+
                 if (diff > 0) {
                     const hoursLeft = Math.floor(diff / (1000 * 60 * 60));
                     const minutesLeft = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                     const secondsLeft = Math.floor((diff % (1000 * 60)) / 1000);
 
-                    const countdownElement = document.getElementById(`${prayer}-countdown`);
+                    const countdownElement = document.getElementById('next-prayer-timer');
+                    const infoElement = document.getElementById('next-prayer-info');
+
                     if (countdownElement) {
-                        countdownElement.innerHTML = `
-                            <i class="fas fa-clock me-1"></i>
-                            ${hoursLeft.toString().padStart(2, '0')}:${minutesLeft.toString().padStart(2, '0')}:${secondsLeft.toString().padStart(2, '0')}
-                        `;
+                        countdownElement.textContent =
+                            `${hoursLeft.toString().padStart(2, '0')}:${minutesLeft.toString().padStart(2, '0')}:${secondsLeft.toString().padStart(2, '0')}`;
+
+                        // Add pulsing animation when under 10 minutes
+                        if (diff < 600000) {
+                            countdownElement.style.animation = 'countdownPulse 1s infinite';
+                        } else {
+                            countdownElement.style.animation = 'none';
+                        }
                     }
 
-                    // Update progress ring
-                    updateProgressRing(prayer, diff);
+                    if (infoElement && nextPrayerName && nextPrayerFormattedTime) {
+                        infoElement.textContent = `Next: ${nextPrayerName} at ${nextPrayerFormattedTime}`;
+                    }
 
-                    // Check for notification (5 minutes before)
-                    if (localStorage.getItem('notifications') === 'enabled' && diff <= 300000 && diff > 299000) {
-                        showPrayerNotification(prayer);
+                    // Trigger notifications
+                    const advanceSwitch = document.getElementById('advanceNotificationSwitch');
+                    if (advanceSwitch && advanceSwitch.checked && diff <= 900000 && diff > 899000) { // 15 minutes
+                        showPrayerNotification(nextPrayerName, nextPrayerFormattedTime, true);
+                    }
+                    
+                    if (diff <= 1000 && diff > 0) {
+                        showPrayerNotification(nextPrayerName, nextPrayerFormattedTime, false);
                     }
                 }
             }
 
-            function updateProgressRing(prayer, timeLeft) {
-                const card = document.getElementById(`${prayer}-card`);
-                if (!card) return;
-                
-                const circle = card.querySelector('.progress-ring__circle');
-                if (!circle) return;
-                
-                const radius = circle.r.baseVal.value;
-                const circumference = radius * 2 * Math.PI;
-                
-                // Assuming max time between prayers is 6 hours (21600000 ms)
-                const maxTime = 21600000;
-                const progress = (maxTime - timeLeft) / maxTime;
-                const offset = circumference - (progress * circumference);
-                
-                circle.style.strokeDasharray = `${circumference} ${circumference}`;
-                circle.style.strokeDashoffset = offset;
-            }
-
             function updateCurrentPrayerStatus(timings) {
-                const prayers = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
+                if (!timings) return;
+
+                const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
                 const now = new Date();
-                let currentPrayer = null;
-                let nextPrayer = null;
 
                 // Remove all current/next classes
                 prayers.forEach(prayer => {
-                    const card = document.getElementById(`${prayer}-card`);
+                    const card = document.getElementById(`${prayer.toLowerCase()}-card`);
                     if (card) {
                         card.classList.remove('current-prayer', 'next-prayer');
                     }
@@ -1776,19 +2004,21 @@
                 // Find current and next prayer
                 for (let i = 0; i < prayers.length; i++) {
                     const prayer = prayers[i];
-                    const prayerKey = prayer.charAt(0).toUpperCase() + prayer.slice(1);
-                    const [hours, minutes] = timings[prayerKey].split(':').map(Number);
-                    
+                    if (!timings[prayer]) continue;
+
+                    const [hours, minutes] = timings[prayer].split(':').map(Number);
+
                     const prayerTime = new Date();
                     prayerTime.setHours(hours, minutes, 0, 0);
-                    
+
                     const nextPrayerTime = new Date();
-                    if (i < prayers.length - 1) {
-                        const nextPrayerKey = prayers[i + 1].charAt(0).toUpperCase() + prayers[i + 1].slice(1);
+                    if (i < prayers.length - 1 && timings[prayers[i + 1]]) {
+                        const nextPrayerKey = prayers[i + 1];
                         const [nextHours, nextMinutes] = timings[nextPrayerKey].split(':').map(Number);
                         nextPrayerTime.setHours(nextHours, nextMinutes, 0, 0);
                     } else {
                         // Next day's Fajr
+                        if (!timings.Fajr) continue;
                         const [fajrHours, fajrMinutes] = timings.Fajr.split(':').map(Number);
                         nextPrayerTime.setDate(nextPrayerTime.getDate() + 1);
                         nextPrayerTime.setHours(fajrHours, fajrMinutes, 0, 0);
@@ -1796,41 +2026,24 @@
 
                     if (now >= prayerTime && now < nextPrayerTime) {
                         currentPrayer = prayer;
-                        nextPrayer = i < prayers.length - 1 ? prayers[i + 1] : 'fajr';
+                        nextPrayer = i < prayers.length - 1 ? prayers[i + 1] : 'Fajr';
                         break;
                     }
                 }
 
                 // Apply classes
                 if (currentPrayer) {
-                    const currentCard = document.getElementById(`${currentPrayer}-card`);
+                    const currentCard = document.getElementById(`${currentPrayer.toLowerCase()}-card`);
                     if (currentCard) currentCard.classList.add('current-prayer');
                 }
                 if (nextPrayer) {
-                    const nextCard = document.getElementById(`${nextPrayer}-card`);
+                    const nextCard = document.getElementById(`${nextPrayer.toLowerCase()}-card`);
                     if (nextCard) nextCard.classList.add('next-prayer');
                 }
             }
 
-            function showPrayerNotification(prayer) {
-                if ('Notification' in window && Notification.permission === 'granted') {
-                    const prayerNames = {
-                        fajr: 'Fajr',
-                        dhuhr: 'Dhuhr', 
-                        asr: 'Asr',
-                        maghrib: 'Maghrib',
-                        isha: 'Isha'
-                    };
-
-                    new Notification(`${prayerNames[prayer]} Prayer Time`, {
-                        body: `${prayerNames[prayer]} prayer time is in 5 minutes`,
-                        icon: '/favicon.ico',
-                        tag: 'prayer-reminder'
-                    });
-                }
-            }
-
             function convertTo12Hour(time24) {
+                if (!time24) return '--:--';
                 const [hours, minutes] = time24.split(':');
                 const hour12 = ((parseInt(hours) + 11) % 12) + 1;
                 const ampm = parseInt(hours) >= 12 ? 'PM' : 'AM';
@@ -1838,34 +2051,44 @@
             }
 
             // Global function for location refresh
-            window.getCurrentLocation = function() {
-                document.getElementById('prayer-loading').classList.remove('d-none');
-                document.getElementById('prayer-error').classList.add('d-none');
-                
+            window.getCurrentLocation = function () {
+                const loadingElement = document.getElementById('prayer-loading');
+                const errorElement = document.getElementById('prayer-error');
+
+                if (loadingElement) loadingElement.classList.remove('d-none');
+                if (errorElement) errorElement.classList.add('d-none');
+
                 window.locationManager.getLocation(true).then((location) => {
-                    // Update location display with safe property access
+                    // Safe property access with fallbacks
                     if (location) {
-                        document.getElementById('prayer-city').textContent = location.city || 'Unknown';
-                        document.getElementById('prayer-country').textContent = location.country || 'Unknown';
-                        if (location.latitude && location.longitude) {
-                            document.getElementById('prayer-coordinates').textContent = 
-                                `${location.latitude.toFixed(4)}, ${location.longitude.toFixed(4)}`;
-                        } else {
-                            document.getElementById('prayer-coordinates').textContent = 'Unknown';
+                        const cityElement = document.getElementById('prayer-city');
+                        const countryElement = document.getElementById('prayer-country');
+                        const coordinatesElement = document.getElementById('prayer-coordinates');
+
+                        if (cityElement) cityElement.textContent = location.city || 'Unknown';
+                        if (countryElement) countryElement.textContent = location.country || 'Unknown';
+
+                        if (coordinatesElement) {
+                            if (location.latitude && location.longitude) {
+                                coordinatesElement.textContent =
+                                    `${location.latitude.toFixed(4)}, ${location.longitude.toFixed(4)}`;
+                            } else {
+                                coordinatesElement.textContent = 'Unknown coordinates';
+                            }
                         }
                     }
-                    
+
                     loadPrayerTimes();
                 }).catch((error) => {
-                    document.getElementById('prayer-loading').classList.add('d-none');
-                    document.getElementById('prayer-error').classList.remove('d-none');
-                    
-                    const errorElement = document.getElementById('prayer-error');
-                    errorElement.innerHTML = `
-                        <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Location Access Required</h5>
-                        <p>${error.message || 'Please allow location access to view accurate prayer times for your area.'}</p>
-                        <button class="btn btn-sm btn-warning mt-2" onclick="getCurrentLocation()">Try Again</button>
-                    `;
+                    if (loadingElement) loadingElement.classList.add('d-none');
+                    if (errorElement) {
+                        errorElement.classList.remove('d-none');
+                        errorElement.innerHTML = `
+                            <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Location Access Required</h5>
+                            <p>${error.message || 'Please allow location access to view accurate prayer times for your area.'}</p>
+                            <button class="btn btn-sm btn-warning mt-2" onclick="getCurrentLocation()">Try Again</button>
+                        `;
+                    }
                 });
             };
         });
