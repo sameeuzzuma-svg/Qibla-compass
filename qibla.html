@@ -9,7 +9,7 @@
     <meta name="theme-color" content="#0f4c3a">
     <meta name="description"
         content="Find accurate Qibla direction to Mecca with modern compass technology and Islamic design.">
-         <meta name="keywords"
+    <meta name="keywords"
         content="qibla direction, qibla finder, mecca direction, where is my qibla">
     <title>Qibla Direction Finder - Islamic Prayer Compass</title>
 
@@ -22,10 +22,10 @@
         href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
         
-        <link rel="canonical" href="https://sunnahwise.com/qibla" />
+    <link rel="canonical" href="https://sunnahwise.com/qibla" />
         
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-TN0HH3WV8R"></script>
-        <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-TN0HH3WV8R'); </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TN0HH3WV8R"></script>
+    <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-TN0HH3WV8R'); </script>
 
     <style>
         /* Enhanced Islamic Theme Variables */
@@ -114,12 +114,12 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Enhanced Premium Compass with Islamic Geometric Patterns */
+        /* NEW COMPASS DESIGN - Modern Aesthetic */
         .compass {
             position: relative;
             width: 100%;
-            height: 450px;
-            max-width: 450px;
+            height: 400px;
+            max-width: 400px;
             margin: 2.5rem auto;
             text-align: center;
         }
@@ -130,211 +130,123 @@
             left: 0;
             right: 0;
             bottom: 0;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            filter: drop-shadow(0 20px 50px rgba(15, 76, 58, 0.25));
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 12px 30px rgba(15, 76, 58, 0.2));
         }
 
         .compass__rose__dial {
             height: 100%;
             width: 100%;
             border-radius: 50%;
-            background:
-                /* Islamic geometric pattern overlay */
-                radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), transparent 70%),
-                /* Premium metallic gradient */
-                conic-gradient(from 0deg, 
-                    #ffffff 0deg, #f8fafc 30deg, #e2e8f0 60deg, 
-                    #cbd5e1 90deg, #94a3b8 120deg, #64748b 150deg,
-                    #475569 180deg, #334155 210deg, #1e293b 240deg,
-                    #0f172a 270deg, #1e293b 300deg, #475569 330deg, #ffffff 360deg),
-                /* Inner glow */
-                radial-gradient(circle at center, rgba(255, 255, 255, 0.9) 0%, transparent 65%);
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), transparent 60%),
+                linear-gradient(145deg, #ffffff 0%, #f8fafc 50%, #e2e8f0 100%);
             box-shadow:
-                /* Outer shadow layers */
-                0 40px 80px var(--shadow-strong),
-                0 20px 40px rgba(15, 76, 58, 0.15),
-                /* Inner highlights */
-                inset 0 6px 12px rgba(255, 255, 255, 0.9),
-                inset 0 -6px 12px rgba(0, 0, 0, 0.1),
-                /* Multiple border rings */
-                0 0 0 15px rgba(255, 255, 255, 0.9),
-                0 0 0 18px var(--border-light),
-                0 0 0 25px rgba(255, 255, 255, 0.7),
-                0 0 0 28px var(--border-medium),
-                0 0 0 35px rgba(255, 255, 255, 0.5);
-            border: 8px solid var(--border-medium);
+                0 25px 50px rgba(0, 0, 0, 0.15),
+                inset 0 4px 12px rgba(255, 255, 255, 0.9),
+                inset 0 -4px 12px rgba(0, 0, 0, 0.1),
+                0 0 0 8px rgba(255, 255, 255, 0.8),
+                0 0 0 12px rgba(15, 76, 58, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.8);
             position: relative;
+            overflow: hidden;
         }
 
-        /* Islamic geometric pattern overlay */
-        .compass__rose__dial::before {
-            content: '';
+        /* Compass rings */
+        .compass-ring {
             position: absolute;
-            top: 25px;
-            left: 25px;
-            right: 25px;
-            bottom: 25px;
             border-radius: 50%;
-            background: 
-                /* Subtle Islamic star pattern */
-                radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.9), transparent 65%),
-                repeating-conic-gradient(from 0deg at center, 
-                    transparent 0deg, rgba(218, 165, 32, 0.1) 5deg, 
-                    transparent 10deg, transparent 35deg);
-            pointer-events: none;
+            border: 1px solid rgba(15, 76, 58, 0.1);
         }
 
-        /* Inner decorative ring */
-        .compass__rose__dial::after {
-            content: '';
-            position: absolute;
-            top: 40px;
-            left: 40px;
-            right: 40px;
-            bottom: 40px;
-            border-radius: 50%;
-            border: 4px solid rgba(15, 76, 58, 0.2);
-            background: 
-                radial-gradient(circle at center, 
-                    rgba(218, 165, 32, 0.05) 0%, 
-                    transparent 50%);
-            pointer-events: none;
-        }
+        .ring-1 { top: 10%; left: 10%; right: 10%; bottom: 10%; }
+        .ring-2 { top: 20%; left: 20%; right: 20%; bottom: 20%; }
+        .ring-3 { top: 30%; left: 30%; right: 30%; bottom: 30%; }
+        .ring-4 { top: 40%; left: 40%; right: 40%; bottom: 40%; }
 
-        /* Enhanced Compass Markings with Islamic Styling */
-        .compass__rose__dial circle {
-            stroke: var(--islamic-green);
-            stroke-width: 5;
-            opacity: 0.7;
-            fill: none;
-            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.15));
-        }
-
-        .compass__rose__dial text {
-            fill: var(--islamic-green);
-            font-weight: 900;
-            font-size: 18px;
-            text-shadow: 
-                0 3px 6px rgba(255, 255, 255, 0.9), 
-                0 2px 4px rgba(0, 0, 0, 0.2);
-            font-family: 'Inter', sans-serif;
-            letter-spacing: 1px;
-        }
-
-        .compass__rose__dial polyline {
-            fill: var(--islamic-green);
-            opacity: 0.9;
-            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.25));
-        }
-
-        /* Enhanced Qibla Direction Indicator with Premium Styling */
+        /* Enhanced Qibla Direction Indicator */
         #qibla-indicator {
-            filter: drop-shadow(0 12px 24px rgba(218, 165, 32, 0.7));
-            transition: all 0.4s ease;
+            filter: drop-shadow(0 8px 16px rgba(218, 165, 32, 0.6));
+            transition: all 0.3s ease;
+            z-index: 20;
         }
 
         .compass.qibla-found #qibla-indicator {
-            animation: qiblaIndicatorGlow 2.5s infinite;
+            animation: qiblaIndicatorGlow 2s infinite;
         }
 
         @keyframes qiblaIndicatorGlow {
             0%, 100% {
-                filter: drop-shadow(0 12px 24px rgba(218, 165, 32, 0.7));
+                filter: drop-shadow(0 8px 16px rgba(218, 165, 32, 0.6));
                 transform: scale(1);
             }
             50% {
-                filter: drop-shadow(0 20px 40px rgba(218, 165, 32, 1));
-                transform: scale(1.15);
+                filter: drop-shadow(0 12px 24px rgba(218, 165, 32, 0.9));
+                transform: scale(1.1);
             }
         }
 
-        /* Premium Central Qibla Indicator */
+        /* Central Qibla Indicator - NEW DESIGN */
         .qibla-center-indicator {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 100px;
-            height: 100px;
-            background: 
-                radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), transparent 70%),
-                linear-gradient(135deg, var(--islamic-gold), var(--islamic-gold-light));
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--islamic-gold), var(--islamic-gold-light));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow:
-                /* Main shadow */
-                0 20px 50px rgba(218, 165, 32, 0.5),
-                /* Inner highlights */
-                inset 0 6px 12px rgba(255, 255, 255, 0.4),
-                inset 0 -3px 6px rgba(0, 0, 0, 0.1),
-                /* Multiple border rings */
-                0 0 0 6px rgba(255, 255, 255, 0.9),
-                0 0 0 10px rgba(218, 165, 32, 0.3),
-                0 0 0 16px rgba(255, 255, 255, 0.7),
-                0 0 0 20px rgba(218, 165, 32, 0.2);
-            border: 6px solid rgba(255, 255, 255, 0.95);
+                0 10px 25px rgba(218, 165, 32, 0.4),
+                inset 0 4px 8px rgba(255, 255, 255, 0.3),
+                0 0 0 4px rgba(255, 255, 255, 0.9),
+                0 0 0 8px rgba(218, 165, 32, 0.2);
+            border: 3px solid rgba(255, 255, 255, 0.9);
             z-index: 15;
             transform: translate(-50%, -50%);
         }
 
         .qibla-center-indicator i {
-            font-size: 40px;
+            font-size: 28px;
             color: white;
-            text-shadow: 
-                0 4px 8px rgba(0, 0, 0, 0.5),
-                0 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        /* Enhanced Qibla Direction Arc with Islamic Pattern */
+        /* Qibla Direction Arc */
         .qibla-arc {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            bottom: 20px;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
             border-radius: 50%;
-            border: 6px solid transparent;
-            background: 
-                linear-gradient(white, white) padding-box,
-                conic-gradient(from 0deg, 
-                    var(--islamic-gold) 0deg, 
-                    var(--islamic-gold-light) 45deg,
-                    var(--islamic-gold) 90deg,
-                    var(--islamic-gold-accent) 135deg,
-                    var(--islamic-gold) 180deg,
-                    var(--islamic-gold-light) 225deg,
-                    var(--islamic-gold) 270deg,
-                    var(--islamic-gold-accent) 315deg,
-                    var(--islamic-gold) 360deg) border-box;
+            border: 3px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                linear-gradient(45deg, var(--islamic-gold), var(--islamic-gold-light)) border-box;
             opacity: 0;
-            transition: opacity 0.6s ease;
+            transition: opacity 0.5s ease;
             z-index: 10;
         }
 
         .compass.qibla-found .qibla-arc {
             opacity: 1;
-            animation: qiblaGlow 3s infinite;
+            animation: qiblaGlow 2s infinite;
         }
 
         .compass.qibla-found .qibla-center-indicator {
-            animation: qiblaPulse 2.5s infinite;
+            animation: qiblaPulse 2s infinite;
         }
 
         @keyframes qiblaGlow {
             0%, 100% {
-                box-shadow: 
-                    0 0 30px var(--qibla-glow), 
-                    0 0 60px var(--qibla-glow),
-                    0 0 90px rgba(218, 165, 32, 0.3);
+                box-shadow: 0 0 20px var(--qibla-glow), 0 0 40px var(--qibla-glow);
                 transform: scale(1);
             }
             50% {
-                box-shadow: 
-                    0 0 60px var(--qibla-glow), 
-                    0 0 120px var(--qibla-glow),
-                    0 0 180px rgba(218, 165, 32, 0.4);
-                transform: scale(1.02);
+                box-shadow: 0 0 40px var(--qibla-glow), 0 0 60px var(--qibla-glow);
+                transform: scale(1.03);
             }
         }
 
@@ -342,22 +254,22 @@
             0%, 100% {
                 transform: translate(-50%, -50%) scale(1);
                 box-shadow:
-                    0 20px 50px rgba(218, 165, 32, 0.5),
-                    inset 0 6px 12px rgba(255, 255, 255, 0.4),
-                    0 0 0 6px rgba(255, 255, 255, 0.9),
-                    0 0 0 10px rgba(218, 165, 32, 0.3);
+                    0 10px 25px rgba(218, 165, 32, 0.4),
+                    inset 0 4px 8px rgba(255, 255, 255, 0.3),
+                    0 0 0 4px rgba(255, 255, 255, 0.8),
+                    0 0 0 8px rgba(218, 165, 32, 0.2);
             }
             50% {
-                transform: translate(-50%, -50%) scale(1.15);
+                transform: translate(-50%, -50%) scale(1.05);
                 box-shadow:
-                    0 30px 70px rgba(218, 165, 32, 0.7),
-                    inset 0 6px 12px rgba(255, 255, 255, 0.5),
-                    0 0 0 6px rgba(255, 255, 255, 1),
-                    0 0 0 10px rgba(218, 165, 32, 0.5);
+                    0 15px 35px rgba(218, 165, 32, 0.6),
+                    inset 0 4px 8px rgba(255, 255, 255, 0.4),
+                    0 0 0 4px rgba(255, 255, 255, 0.9),
+                    0 0 0 8px rgba(218, 165, 32, 0.4);
             }
         }
 
-        /* Enhanced Premium Compass Needle */
+        /* Enhanced compass needle */
         .compass__pointer {
             position: absolute;
             top: 0;
@@ -366,104 +278,98 @@
             bottom: 0;
             height: 100%;
             width: 100%;
-            filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.4));
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
             z-index: 12;
         }
 
-        .compass__pointer polyline:first-child {
-            fill: url(#redGradientEnhanced);
-            filter: drop-shadow(0 6px 12px rgba(220, 38, 38, 0.6));
+        /* Cardinal direction markers */
+        .cardinal-marker {
+            position: absolute;
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--islamic-green);
+            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
+            z-index: 5;
         }
 
-        .compass__pointer polyline:last-child {
-            fill: white;
-            stroke: #dc2626;
-            stroke-width: 3;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        .north { top: 5%; left: 50%; transform: translateX(-50%); }
+        .east { top: 50%; right: 5%; transform: translateY(-50%); }
+        .south { bottom: 5%; left: 50%; transform: translateX(-50%); }
+        .west { top: 50%; left: 5%; transform: translateY(-50%); }
+
+        /* Degree markings */
+        .degree-mark {
+            position: absolute;
+            width: 2px;
+            height: 12px;
+            background: var(--islamic-green);
+            opacity: 0.6;
+            left: 50%;
+            top: 0;
+            transform-origin: bottom center;
         }
 
-        .compass__pointer circle {
-            fill: url(#centerGradient);
-            stroke: #dc2626;
-            stroke-width: 5;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+        .degree-mark.major {
+            height: 18px;
+            background: var(--islamic-green);
+            opacity: 0.8;
         }
 
-        /* Enhanced Status Panel with Glass Morphism */
+        /* Enhanced Status Panel */
         .status {
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
-                linear-gradient(135deg, 
-                    rgba(255, 255, 255, 0.95), 
-                    rgba(248, 250, 252, 0.9));
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95));
             border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
-            padding: 2.5rem 2rem;
+            padding: 2rem 1.5rem;
             box-shadow:
-                0 -20px 60px var(--shadow-strong),
-                0 -5px 0 var(--border-light),
-                inset 0 1px 0 rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(25px);
-            border-top: 4px solid var(--border-medium);
+                0 -15px 45px var(--shadow-strong),
+                0 -3px 0 var(--border-light);
+            backdrop-filter: blur(20px);
+            border-top: 3px solid var(--border-medium);
             margin-top: 5rem;
         }
 
         .position {
-            padding-bottom: 1.25rem;
+            padding-bottom: 1rem;
             text-transform: uppercase;
             text-align: center;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--text-dark);
-            border-bottom: 3px solid var(--border-light);
-            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border-light);
+            margin-bottom: 1.5rem;
         }
 
         .position div:not(.label) {
-            margin-top: 0.75rem;
-            font-size: 1.2rem;
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: var(--islamic-green);
-            padding: 1rem;
-            background: 
-                linear-gradient(135deg, 
-                    rgba(15, 76, 58, 0.08), 
-                    rgba(74, 128, 97, 0.05));
-            border-radius: 16px;
-            border: 3px solid var(--border-light);
+            padding: 0.75rem;
+            background: linear-gradient(135deg, rgba(15, 76, 58, 0.08), rgba(74, 128, 97, 0.05));
+            border-radius: 12px;
+            border: 2px solid var(--border-light);
             box-shadow:
-                0 6px 20px var(--shadow-subtle),
-                inset 0 2px 0 rgba(255, 255, 255, 0.9);
-            transition: var(--transition);
-        }
-
-        .position div:not(.label):hover {
-            transform: translateY(-2px);
-            box-shadow:
-                0 8px 25px var(--shadow-light),
-                inset 0 2px 0 rgba(255, 255, 255, 0.9);
+                0 4px 12px var(--shadow-subtle),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
         }
 
         #position-lab {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: var(--islamic-gold);
             font-weight: 700;
-            margin-bottom: 2rem;
-            padding: 2rem;
-            background: 
-                linear-gradient(135deg, 
-                    rgba(218, 165, 32, 0.15), 
-                    rgba(244, 208, 63, 0.1));
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(218, 165, 32, 0.15), rgba(244, 208, 63, 0.1));
             border-radius: var(--border-radius);
-            border: 3px solid rgba(218, 165, 32, 0.3);
-            box-shadow: 
-                0 8px 30px rgba(218, 165, 32, 0.2),
-                inset 0 2px 0 rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(218, 165, 32, 0.3);
+            box-shadow: 0 6px 20px rgba(218, 165, 32, 0.15);
             text-align: center;
         }
 
-        /* Enhanced Popup with Premium Styling */
+        /* Enhanced Popup */
         .popup {
             display: none;
             position: fixed;
@@ -471,16 +377,16 @@
             left: 0;
             bottom: 0;
             right: 0;
-            background-color: rgba(0, 0, 0, 0.85);
+            background-color: rgba(0, 0, 0, 0.8);
             z-index: 2000;
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(8px);
         }
 
         .popup.popup--show {
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: fadeIn 0.4s ease-out;
+            animation: fadeIn 0.3s ease-out;
         }
 
         @keyframes fadeIn {
@@ -489,24 +395,22 @@
         }
 
         .popup__content {
-            max-width: 560px;
+            max-width: 520px;
             width: 90%;
             margin: 0 auto;
             background: var(--background-primary);
             color: var(--text-dark);
             border-radius: var(--border-radius-lg);
             overflow: hidden;
-            box-shadow: 
-                0 50px 100px rgba(0, 0, 0, 0.5),
-                0 20px 40px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.4s ease-out;
-            border: 4px solid var(--border-light);
+            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.4);
+            animation: slideUp 0.3s ease-out;
+            border: 3px solid var(--border-light);
         }
 
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(60px) scale(0.9);
+                transform: translateY(50px) scale(0.95);
             }
             to {
                 opacity: 1;
@@ -515,33 +419,33 @@
         }
 
         .popup__contents {
-            padding: 3rem;
-            line-height: 1.8;
+            padding: 2.5rem;
+            line-height: 1.7;
         }
 
         .popup__contents h3 {
             color: var(--islamic-green);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             font-weight: 700;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
         }
 
         .popup__contents p {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             color: var(--text-dark);
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
         .popup__contents ul {
-            padding-left: 2rem;
-            margin-bottom: 2rem;
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .popup__contents li {
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.5rem;
             color: var(--text-muted);
         }
 
@@ -563,7 +467,7 @@
 
         .popup__close {
             display: block;
-            padding: 1.5rem 2.5rem;
+            padding: 1.25rem 2rem;
             text-align: center;
             width: 100%;
             border: none;
@@ -572,12 +476,11 @@
             font-weight: 700;
             cursor: pointer;
             transition: var(--transition);
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         .popup__close:hover {
             background: var(--gradient-gold);
-            transform: translateY(-2px);
         }
 
         /* Enhanced Night Mode */
@@ -597,11 +500,9 @@
 
         html.nightmode .status,
         html.nightmode .compass__rose__dial {
-            background: 
-                radial-gradient(circle at 30% 30%, rgba(30, 41, 59, 0.95), transparent 70%),
-                linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.9));
-            border-color: rgba(148, 163, 184, 0.4);
-            backdrop-filter: blur(30px);
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.9));
+            border-color: rgba(148, 163, 184, 0.3);
+            backdrop-filter: blur(25px);
         }
 
         html.nightmode .label {
@@ -610,17 +511,14 @@
 
         html.nightmode .position div:not(.label) {
             color: var(--text-light);
-            background: 
-                linear-gradient(135deg, 
-                    rgba(148, 163, 184, 0.2), 
-                    rgba(100, 116, 139, 0.15));
-            border-color: rgba(148, 163, 184, 0.4);
+            background: linear-gradient(135deg, rgba(148, 163, 184, 0.15), rgba(100, 116, 139, 0.1));
+            border-color: rgba(148, 163, 184, 0.3);
         }
 
         html.nightmode .popup__content {
             background: rgba(15, 23, 42, 0.95);
             color: var(--text-light);
-            border-color: rgba(148, 163, 184, 0.4);
+            border-color: rgba(148, 163, 184, 0.3);
         }
 
         html.nightmode .popup__contents h3 {
@@ -638,49 +536,45 @@
         /* Navigation */
         .bg-islamic-green {
             background: var(--gradient-green) !important;
-            box-shadow: 0 4px 30px var(--shadow-strong);
+            box-shadow: 0 3px 25px var(--shadow-strong);
         }
 
         .navbar-brand {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 700;
         }
 
         .navbar-nav .nav-link {
             font-weight: 500;
-            margin: 0 0.75rem;
+            margin: 0 0.5rem;
             transition: all 0.3s ease;
-            border-radius: 30px;
-            padding: 0.75rem 1.25rem !important;
+            border-radius: 25px;
+            padding: 0.5rem 1rem !important;
         }
 
         .navbar-nav .nav-link:hover,
         .navbar-nav .nav-link.active {
-            background-color: rgba(255, 255, 255, 0.25);
-            transform: translateY(-3px);
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         }
 
-        /* Premium Loading State */
+        /* Loading State Styles - IMPROVED */
         .compass--loading .qibla-center-indicator {
-            animation: loadingPulse 2s infinite;
+            animation: loadingPulse 1.5s infinite;
         }
 
         .compass--loading .qibla-center-indicator i {
-            animation: loadingSpin 3s infinite linear;
+            animation: loadingSpin 2s infinite linear;
         }
 
         @keyframes loadingPulse {
             0%, 100% {
                 transform: translate(-50%, -50%) scale(1);
-                background: 
-                    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), transparent 70%),
-                    linear-gradient(135deg, var(--islamic-green), var(--islamic-green-light));
+                background: linear-gradient(135deg, var(--islamic-green), var(--islamic-green-light));
             }
             50% {
-                transform: translate(-50%, -50%) scale(1.1);
-                background: 
-                    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), transparent 70%),
-                    linear-gradient(135deg, var(--islamic-green-light), var(--islamic-green-accent));
+                transform: translate(-50%, -50%) scale(1.05);
+                background: linear-gradient(135deg, var(--islamic-green-light), var(--islamic-green-accent));
             }
         }
 
@@ -691,42 +585,41 @@
 
         .loading-text {
             position: absolute;
-            bottom: -50px;
+            bottom: -40px;
             left: 0;
             right: 0;
             text-align: center;
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: var(--islamic-green);
             font-weight: 600;
-            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
         }
 
         /* Enhanced Responsive Design */
         @media (max-width: 768px) {
             .compass {
-                height: 380px;
-                max-width: 380px;
+                height: 350px;
+                max-width: 350px;
             }
 
             .qibla-center-indicator {
-                width: 80px;
-                height: 80px;
+                width: 60px;
+                height: 60px;
             }
 
             .qibla-center-indicator i {
-                font-size: 32px;
+                font-size: 24px;
             }
 
             header h1 {
-                font-size: 1.6rem;
+                font-size: 1.5rem;
             }
 
             header p {
-                font-size: 0.9rem;
+                font-size: 0.85rem;
             }
 
             [class^="column-"] {
-                margin-bottom: 1rem;
+                margin-bottom: 0.75rem;
             }
 
             .column-33,
@@ -738,30 +631,30 @@
 
         @media (max-width: 576px) {
             .compass {
-                height: 350px;
-                max-width: 350px;
+                height: 320px;
+                max-width: 320px;
             }
 
             .qibla-center-indicator {
-                width: 70px;
-                height: 70px;
+                width: 55px;
+                height: 55px;
             }
 
             .qibla-center-indicator i {
-                font-size: 28px;
+                font-size: 22px;
             }
 
             [class^="column-"] {
                 width: 100%;
-                margin-bottom: 0.75rem;
+                margin-bottom: 0.5rem;
             }
 
             header {
-                padding: 1.5rem 1rem;
+                padding: 1.25rem 1rem;
             }
 
             .status {
-                padding: 2rem 1.25rem;
+                padding: 1.5rem 1rem;
             }
         }
 
@@ -777,7 +670,7 @@
         }
 
         ::-webkit-scrollbar-track {
-            background: rgba(148, 163, 184, 0.1);
+            background: transparent;
         }
 
         ::-webkit-scrollbar-thumb {
@@ -789,80 +682,154 @@
             background: var(--islamic-green-light);
         }
 
-        /* Footer styles */
-        footer {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 3rem 0 1.5rem;
-            margin-top: 4rem;
+        /* Buttons */
+        .btn-primary {
+            background: var(--gradient-green);
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
 
+        .btn-primary:hover {
+            background: var(--gradient-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-medium);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #14532d, #166534);
+            margin-top: 3rem;
+            padding: 3rem 0;
+            color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        footer .container {
+            max-width: 1200px;
+        }
+
+        /* Section spacing */
         .footer-section {
             margin-bottom: 2rem;
         }
 
-        .footer-heading {
-            color: var(--islamic-gold-light);
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
+        /* Headings */
+        footer .footer-heading {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #fff;
         }
 
-        .quran-quote {
+        /* Quran */
+        footer .quran-quote {
+            font-size: 1.05rem;
             font-style: italic;
             line-height: 1.6;
             margin-bottom: 0.5rem;
         }
 
-        .quran-translation {
-            color: var(--islamic-gold-light);
-            font-weight: 600;
+        footer .quran-translation {
             font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.75);
         }
 
+        /* Links */
         .footer-links {
             display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
         .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.85);
             text-decoration: none;
-            transition: var(--transition);
-            padding: 0.25rem 0;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            position: relative;
+            padding-bottom: 2px;
         }
 
         .footer-links a:hover {
-            color: var(--islamic-gold-light);
-            transform: translateX(5px);
+            color: #fff;
         }
 
-        .footer-bottom {
-            border-top: 2px solid rgba(255, 255, 255, 0.2);
-            margin-top: 2rem;
-            padding-top: 1.5rem;
+        .footer-links a::after {
+            content: "";
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            background: #fff;
+            left: 0;
+            bottom: 0;
+            transition: width 0.3s ease;
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Divider */
+        footer .footer-divider {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 2rem 0;
+        }
+
+        /* Bottom */
+        footer .footer-bottom {
             text-align: center;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
         }
 
-        .footer-bottom p {
-            margin: 0.5rem 0;
-            color: rgba(255, 255, 255, 0.8);
-        }
+        /* ===========================
+           Mobile Responsive
+           =========================== */
+        @media (max-width: 768px) {
+            footer {
+                text-align: center;
+            }
 
-        .footer-bottom .small {
-            font-size: 0.9rem;
-            color: var(--islamic-gold-light);
+            .footer-links {
+                justify-content: center;
+            }
+
+            .footer-section {
+                margin-bottom: 2rem;
+                padding-bottom: 1.5rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            }
+
+            /* Remove last section border */
+            .footer-section:last-child {
+                border-bottom: none;
+            }
+
+            footer .footer-heading {
+                margin-bottom: 0.8rem;
+                font-size: 1rem;
+            }
+
+            footer .quran-quote {
+                font-size: 0.95rem;
+            }
+
+            footer .quran-translation {
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
 
 <body>
-    <!-- Header -->
-    <header class="navbar navbar-expand-lg bg-islamic-green navbar-dark sticky-top">
-        <div class="container">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-islamic-green fixed-top">
+        <div class="container-fluid">
             <a class="navbar-brand" href="index.html">
-                <i class="fas fa-kaaba me-2"></i>
+                <i class="fas fa-mosque me-2"></i>
                 SunnahWise
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -871,213 +838,117 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">
-                            <i class="fas fa-home me-1"></i>Home
-                        </a>
+                        <a class="nav-link" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="prayer-times.html">
-                            <i class="fas fa-clock me-1"></i>Prayer Times
-                        </a>
+                        <a class="nav-link" href="prayer-times.html">Prayer Times</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mosque-finder.html">
-                            <i class="fas fa-map-marker-alt me-1"></i>Mosque Finder
-                        </a>
+                        <a class="nav-link" href="mosque-finder.html" onclick="return addLocationToLink(this)">Mosque
+                            Finder</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="qibla.html">
-                            <i class="fas fa-compass me-1"></i>Qibla Finder
-                        </a>
+                        <a class="nav-link active" href="qibla.html" onclick="return addLocationToLink(this)">Qibla
+                            Finder</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="dhikr.html">
-                            <i class="fas fa-hand-holding-heart me-1"></i>Dhikr
-                        </a>
+                        <a class="nav-link" href="dhikr.html">Dhikr Counter</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="zakat.html">
-                            <i class="fas fa-coins me-1"></i>Zakat
-                        </a>
+                        <a class="nav-link" href="zakat.html">Zakat Calculator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
                     </li>
                 </ul>
             </div>
         </div>
+    </nav>
+
+    <header class="text-center bg-white py-4 mb-4"
+        style="border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-top: 60px;">
+        <h1 style="color: var(--islamic-green); font-weight: 700;">
+            <i class="fas fa-kaaba me-3"></i>Qibla Finder
+        </h1>
+        <p id="intro" class="lead mb-0" style="color: var(--islamic-green);">Find accurate direction to Mecca using your
+            device's compass. This Islamic compass app helps you
+            determine the Qibla direction for prayer from your current location with precision and devotion.</p>
     </header>
 
-    <!-- Main Content -->
-    <div class="container mt-4">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 text-center">
-                <h1 class="display-4 fw-bold text-primary mb-3">
-                    <i class="fas fa-compass me-3"></i>
-                    Qibla Direction Finder
-                </h1>
-                <p class="lead text-muted mb-4" id="intro">
-                    Point your device towards the direction shown by the golden indicator to face the Kaaba in Mecca for your prayers.
-                </p>
-            </div>
-        </div>
-    </div>
+    <div class="container">
+        <div class="compass compass--loading">
+            <!-- Enhanced Qibla Direction Arc -->
+            <div class="qibla-arc"></div>
 
-    <!-- Enhanced Popup -->
-    <div id="popup" class="popup" onclick="popupClose()">
-        <div class="popup__content" onclick="popupContentsClick(event)">
-            <div id="popup-inner-noorientation" class="popup__inner">
-                <div class="popup__contents">
-                    <h3>
-                        <i class="fas fa-compass"></i>
-                        Compass Not Available
-                    </h3>
-                    <p>Your device's compass functionality is not available or not supported.</p>
-                    <p>To use the Qibla finder:</p>
-                    <ul>
-                        <li>Use a device with compass/magnetometer capabilities</li>
-                        <li>Enable location services in your browser</li>
-                        <li>Allow compass access when prompted</li>
-                        <li>Ensure you're not near magnetic interference</li>
-                    </ul>
-                    <p>You can still view your coordinates and Qibla direction below.</p>
-                </div>
-            </div>
-            <button class="popup__close" onclick="popupClose()">
-                <i class="fas fa-check me-2"></i>
-                Continue
-            </button>
-        </div>
-    </div>
-
-    <div class='container'>
-        <!-- Enhanced Premium Compass -->
-        <div class='compass compass--loading' id='compass'>
-            <!-- Premium Golden Qibla Center Indicator -->
+            <!-- Enhanced Central Qibla Indicator -->
             <div class="qibla-center-indicator">
                 <i class="fas fa-kaaba"></i>
             </div>
 
-            <!-- Premium Qibla Arc -->
-            <div class="qibla-arc"></div>
+            <!-- Compass rings -->
+            <div class="compass-ring ring-1"></div>
+            <div class="compass-ring ring-2"></div>
+            <div class="compass-ring ring-3"></div>
+            <div class="compass-ring ring-4"></div>
 
-            <!-- Enhanced Compass Rose -->
-            <div class='compass__rose' id='rose'>
-                <svg class='compass__rose__dial' viewBox='0 0 130 130' version='1.1' xmlns='http://www.w3.org/2000/svg'>
-                    <!-- Outer ring with premium styling -->
-                    <circle cx='65' cy='65' r='57' stroke='url(#ringGradient)' stroke-width='2' fill='none' opacity='0.6'></circle>
-                    <!-- Inner ring -->
-                    <circle cx='65' cy='65' r='50' stroke='url(#ringGradient)' stroke-width='1.5' fill='none' opacity='0.4'></circle>
-                    
-                    <!-- Enhanced compass markings -->
-                    <g stroke='var(--islamic-green)' stroke-width='2' opacity='0.8'>
-                        <!-- Major cardinal directions -->
-                        <line x1='65' y1='8' x2='65' y2='18' stroke-width='4'></line>  <!-- N -->
-                        <line x1='122' y1='65' x2='112' y2='65' stroke-width='4'></line>  <!-- E -->
-                        <line x1='65' y1='122' x2='65' y2='112' stroke-width='4'></line>  <!-- S -->
-                        <line x1='8' y1='65' x2='18' y2='65' stroke-width='4'></line>  <!-- W -->
-                        
-                        <!-- Intermediate directions -->
-                        <line x1='106.5' y1='23.5' x2='101.5' y2='28.5' stroke-width='3'></line>  <!-- NE -->
-                        <line x1='106.5' y1='106.5' x2='101.5' y2='101.5' stroke-width='3'></line>  <!-- SE -->
-                        <line x1='23.5' y1='106.5' x2='28.5' y2='101.5' stroke-width='3'></line>  <!-- SW -->
-                        <line x1='23.5' y1='23.5' x2='28.5' y2='28.5' stroke-width='3'></line>  <!-- NW -->
-                        
-                        <!-- Minor markings -->
-                        <g stroke-width='1.5' opacity='0.6'>
-                            <line x1='65' y1='8' x2='65' y2='12'></line>
-                            <line x1='78.3' y1='10.1' x2='76.8' y2='13.6'></line>
-                            <line x1='90.7' y1='15.8' x2='88.1' y2='18.9'></line>
-                            <line x1='101.5' y1='24.5' x2='98.1' y2='27.1'></line>
-                            <line x1='110.2' y1='35.3' x2='106.4' y2='37.2'></line>
-                            <line x1='116.8' y1='47.7' x2='112.7' y2='49.1'></line>
-                            <line x1='121.4' y1='61' x2='117.1' y2='61.8'></line>
-                        </g>
+            <!-- Cardinal directions -->
+            <div class="cardinal-marker north">N</div>
+            <div class="cardinal-marker east">E</div>
+            <div class="cardinal-marker south">S</div>
+            <div class="cardinal-marker west">W</div>
+
+            <!-- Degree markings -->
+            <div id="degree-marks"></div>
+
+            <div id="rose" class="compass__rose">
+                <svg class="compass__rose__dial" viewBox="0 0 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Enhanced Qibla Direction Arrow -->
+                    <g id="qibla-indicator" transform="translate(48, 8)">
+                        <!-- Golden background circle -->
+                        <circle cx="17" cy="17" r="15" fill="url(#qiblaGlow)" stroke="#daa520" stroke-width="2" />
+                        <!-- Qibla Direction Arrow -->
+                        <path d="M17 5 L25 17 L20 17 L20 25 L14 25 L14 17 L9 17 Z" fill="#ffffff" stroke="#daa520"
+                            stroke-width="2" />
+                        <!-- Small center dot -->
+                        <circle cx="17" cy="17" r="2" fill="#daa520" />
                     </g>
 
-                    <!-- Enhanced directional labels -->
-                    <text x='65' y='20' text-anchor='middle' fill='var(--islamic-green)' font-size='14' font-weight='900'>N</text>
-                    <text x='110' y='70' text-anchor='middle' fill='var(--islamic-green)' font-size='14' font-weight='900'>E</text>
-                    <text x='65' y='118' text-anchor='middle' fill='var(--islamic-green)' font-size='14' font-weight='900'>S</text>
-                    <text x='20' y='70' text-anchor='middle' fill='var(--islamic-green)' font-size='14' font-weight='900'>W</text>
-
-                    <!-- Premium Qibla Direction Indicator -->
-                    <g id='qibla-indicator' transform='translate(48, 31)'>
-                        <!-- Enhanced Qibla arrow with premium styling -->
-                        <path d='M 17 0 L 25 8 L 21 8 L 21 16 L 13 16 L 13 8 L 9 8 Z' 
-                              fill='url(#qiblaGradient)' 
-                              stroke='var(--islamic-gold-accent)' 
-                              stroke-width='2'
-                              filter='url(#qiblaShadow)'></path>
-                        <!-- Golden highlight -->
-                        <path d='M 17 2 L 23 7 L 20 7 L 20 14 L 14 14 L 14 7 L 11 7 Z' 
-                              fill='url(#qiblaGlow)' 
-                              opacity='0.7'></path>
-                    </g>
-
-                    <!-- Enhanced gradients and filters -->
+                    <!-- Gradients for qibla arrow -->
                     <defs>
-                        <!-- Ring gradient -->
-                        <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="var(--islamic-green)" />
-                            <stop offset="50%" stop-color="var(--islamic-green-light)" />
-                            <stop offset="100%" stop-color="var(--islamic-green-accent)" />
-                        </linearGradient>
-                        
-                        <!-- Qibla gradient -->
-                        <linearGradient id="qiblaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" stop-color="var(--islamic-gold-light)" />
-                            <stop offset="50%" stop-color="var(--islamic-gold)" />
-                            <stop offset="100%" stop-color="var(--islamic-gold-accent)" />
-                        </linearGradient>
-                        
-                        <!-- Qibla glow -->
                         <radialGradient id="qiblaGlow" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
-                            <stop offset="100%" stop-color="var(--islamic-gold)" stop-opacity="0.3" />
+                            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8" />
+                            <stop offset="100%" stop-color="#daa520" stop-opacity="0.2" />
                         </radialGradient>
-                        
-                        <!-- Qibla shadow filter -->
-                        <filter id="qiblaShadow" x="-50%" y="-50%" width="200%" height="200%">
-                            <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="rgba(218,165,32,0.8)"/>
-                        </filter>
                     </defs>
                 </svg>
             </div>
 
-            <!-- Enhanced compass needle with premium gradients -->
+            <!-- Enhanced compass needle -->
             <svg class="compass__pointer" viewBox="0 0 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                <!-- Enhanced North needle (red with premium gradient) -->
-                <polyline points="60,65  70,65  65,15" fill="url(#redGradientEnhanced)" stroke="#b91c1c" stroke-width="2" />
+                <!-- Enhanced North needle (red with gradient) -->
+                <polyline points="60,65  70,65  65,15" fill="url(#redGradient)" stroke="#b91c1c" stroke-width="2" />
                 <!-- Enhanced South needle (white with red border) -->
                 <polyline points="60,65  70,65  65,115" fill="white" stroke="#dc2626" stroke-width="3" />
                 <!-- Enhanced center circle with multiple layers -->
-                <circle cx="65" cy="65" r="10" fill="url(#centerGradient)" stroke="#dc2626" stroke-width="4" />
-                <circle cx="65" cy="65" r="6" fill="#dc2626" />
-                <circle cx="65" cy="65" r="3" fill="white" opacity="0.9" />
+                <circle cx="65" cy="65" r="8" fill="#1f2937" stroke="#dc2626" stroke-width="3" />
+                <circle cx="65" cy="65" r="4" fill="#dc2626" />
+                <circle cx="65" cy="65" r="2" fill="white" opacity="0.8" />
 
-                <!-- Enhanced gradient definitions -->
+                <!-- Gradient definition for red needle -->
                 <defs>
-                    <!-- Enhanced red gradient for needle -->
-                    <linearGradient id="redGradientEnhanced" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stop-color="#ef4444" />
-                        <stop offset="50%" stop-color="#dc2626" />
+                    <linearGradient id="redGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#dc2626" />
                         <stop offset="100%" stop-color="#b91c1c" />
                     </linearGradient>
-                    
-                    <!-- Center gradient -->
-                    <radialGradient id="centerGradient" cx="30%" cy="30%" r="70%">
-                        <stop offset="0%" stop-color="#374151" />
-                        <stop offset="100%" stop-color="#1f2937" />
-                    </radialGradient>
                 </defs>
             </svg>
 
-            <!-- Enhanced loading text -->
-            <div class="loading-text" id="loading-text">
-                Determining your location and Qibla direction...
+            <!-- Loading text -->
+            <div class="loading-text" id="loading-text">Determining your location and Qibla direction...please wait...
             </div>
         </div>
     </div>
 
-    <!-- Enhanced Status Panel -->
     <div class='status'>
         <div id='debug-orientation-default'></div>
         <div id='debug-orientation'></div>
@@ -1134,16 +1005,17 @@
           </div>
 
           <!-- Privacy & Legal -->
-           <div class="col-md-4 col-12 footer-section">
+           <div class="col-md-6 text-md-end footer-links">
                <h5 class="footer-heading">Legal</h5>
                <div class="footer-links">
-                   <a href="privacy.html">Privacy Policy</a>
-                   <a href="terms.html" >Terms of Service</a>
-                   <a href="disclaimer.html" >Disclaimer</a>
-                   <a href="cookies.html" >Cookie Policy</a>
-                   <a href="contact.html" >Contact Us</a>
-               </div>
-           </div>
+                           <a href="privacy.html">Privacy Policy</a>
+                        <a href="terms.html" >Terms of Service</a>
+                        <a href="disclaimer.html" >Disclaimer</a>
+                        <a href="cookies.html" >Cookie Policy</a>
+                        <a href="contact.html" >Contact Us</a>
+                        </div>
+                       
+                    </div>
         </div>
 
         <!-- Bottom -->
@@ -1195,6 +1067,22 @@
             var debugOrientationDefault = document.getElementById("debug-orientation-default");
 
             introtext = intro.innerHTML;
+
+            // Create degree markings
+            function createDegreeMarks() {
+                const marksContainer = document.getElementById('degree-marks');
+                marksContainer.innerHTML = '';
+                
+                for (let i = 0; i < 360; i += 30) {
+                    const mark = document.createElement('div');
+                    mark.className = 'degree-mark';
+                    if (i % 90 === 0) {
+                        mark.classList.add('major');
+                    }
+                    mark.style.transform = `rotate(${i}deg)`;
+                    marksContainer.appendChild(mark);
+                }
+            }
 
             function getBrowserOrientation() {
                 var orientation;
@@ -1275,15 +1163,15 @@
                         positionHng.style.background = "linear-gradient(135deg, rgba(218,165,32," + alpha + "), rgba(220,38,38," + (alpha * 0.5) + "))";
                         intro.innerHTML = "🕋 Qibla Direction Found! 🌟";
                         intro.style.color = "rgba(218,165,32," + Math.min(1, alpha + 0.3) + ")";
-                        intro.style.fontSize = "1.8em";
+                        intro.style.fontSize = "1.6em";
                         intro.style.textAlign = "center";
                         intro.style.fontWeight = "700";
-                        intro.style.textShadow = "0 4px 8px rgba(0,0,0,0.3)";
+                        intro.style.textShadow = "0 3px 6px rgba(0,0,0,0.3)";
                         document.querySelector('.compass').classList.add('qibla-found');
                     } else {
-                        intro.style.color = "var(--text-muted)";
-                        intro.style.fontSize = "1.1rem";
-                        intro.style.textAlign = "center";
+                        intro.style.color = "white";
+                        intro.style.fontSize = "0.95rem";
+                        intro.style.textAlign = "left";
                         intro.style.fontWeight = "400";
                         intro.style.textShadow = "none";
                         intro.innerHTML = introtext;
@@ -1487,10 +1375,10 @@
                 if (!qiblaIndicator) return;
 
                 // Use the main compass circle instead of the first circle element
-                const compassCircle = document.querySelector('.compass__rose__dial circle:first-of-type');
-                const svgr = parseInt(compassCircle.getAttribute("r"));
-                const cx = parseInt(compassCircle.getAttribute("cx"));
-                const cy = parseInt(compassCircle.getAttribute("cy"));
+                const compassCircle = document.querySelector('.compass__rose__dial');
+                const svgr = 55; // Radius of the compass
+                const cx = 65; // Center x
+                const cy = 65; // Center y
 
                 // Use fixed dimensions for the qibla indicator
                 const qw = 34; // Width of the qibla indicator
@@ -1508,6 +1396,9 @@
             positionCurrent.lng = 0;
             pointDegree = 0;
             calcQiblaIndicator(pointDegree);
+
+            // Create degree markings on load
+            window.addEventListener('load', createDegreeMarks);
 
             // Event listeners
             window.addEventListener("click", firstClick);
@@ -1535,15 +1426,6 @@
             });
 
         }());
-
-        // Make functions globally accessible
-        window.popupClose = function() {
-            document.getElementById("popup").classList.remove("popup--show");
-        };
-
-        window.popupContentsClick = function(event) {
-            event.stopPropagation();
-        };
 
         // Add location to link function (for navbar compatibility)
         function addLocationToLink(element) {
