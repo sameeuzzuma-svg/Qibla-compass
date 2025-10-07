@@ -7,10 +7,39 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#0f4c3a">
-    <meta name="description"
-        content="Find accurate Qibla direction to Mecca with modern compass technology and Islamic design.">
-    <meta name="keywords" content="qibla direction, qibla finder, mecca direction, where is my qibla">
-    <title>Qibla Direction Finder - Islamic Prayer Compass</title>
+    
+    <!-- SEO OPTIMIZED META TAGS -->
+    <meta name="description" 
+          content="Find accurate Qibla direction to Mecca with our Islamic compass. Get precise prayer direction using your device's GPS and compass technology. Locate Kaaba direction for salah from anywhere in the world.">
+    <meta name="keywords" 
+          content="qibla direction, qibla finder, mecca direction, islamic compass, prayer direction, find qibla, qibla compass, kaaba direction, muslim prayer, salat direction, qibla angle, qibla location, online qibla, digital qibla finder">
+    
+    <!-- ENHANCED TITLE WITH PRIMARY KEYWORDS -->
+    <title>Qibla Direction Finder - Accurate Mecca Compass for Islamic Prayer | SunnahWise</title>
+
+    <!-- CANONICAL URL -->
+    <link rel="canonical" href="https://sunnahwise.com/qibla" />
+
+    <!-- OPEN GRAPH TAGS FOR SOCIAL SHARING -->
+    <meta property="og:title" content="Qibla Direction Finder - Accurate Mecca Compass for Islamic Prayer">
+    <meta property="og:description" content="Find the precise Qibla direction to Mecca with our accurate Islamic compass. Get real-time prayer direction for your location.">
+    <meta property="og:url" content="https://sunnahwise.com/qibla">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="SunnahWise">
+
+    <!-- STRUCTURED DATA FOR SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Qibla Direction Finder",
+      "description": "Accurate Qibla direction finder using device compass to locate Mecca for Islamic prayers",
+      "url": "https://sunnahwise.com/qibla",
+      "applicationCategory": "NavigationApplication",
+      "operatingSystem": "Any",
+      "permissions": "geolocation, device orientation"
+    }
+    </script>
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -21,13 +50,11 @@
         href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <link rel="canonical" href="https://sunnahwise.com/qibla" />
-
-    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-TN0HH3WV8R"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TN0HH3WV8R"></script>
     <script> window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-TN0HH3WV8R'); </script>
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5293451050266377"
-        crossorigin="anonymous"></script> -->
+        crossorigin="anonymous"></script>
 
 
 
@@ -1049,6 +1076,49 @@
                 font-size: 0.8rem;
             }
         }
+
+        /* NEW SEO CONTENT STYLES - ADDED WITHOUT CHANGING EXISTING DESIGN */
+        .seo-content-section {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            margin: 2rem auto;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            border: 1px solid var(--border-light);
+        }
+
+        .seo-content-section h2 {
+            color: var(--islamic-green);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid var(--islamic-gold);
+            padding-bottom: 0.5rem;
+        }
+
+        .seo-content-section h3 {
+            color: var(--islamic-green-light);
+            font-weight: 600;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            color: var(--islamic-green);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
     </style>
 </head>
 
@@ -1114,11 +1184,10 @@
             <div class="text-center bg-white py-4 mb-4">
                 <h1 style="color: var(--islamic-green); font-weight: 700;">
                     <i class="fas fa-compass me-3"></i>
-                    Qibla Direction Finder
+                    Qibla Direction Finder - Accurate Mecca Compass
                 </h1>
                 <p class="lead text-muted mb-4" id="intro">
-                    Point your device towards the direction shown by the golden indicator to face the Kaaba in Mecca for
-                    your prayers.
+                    Find the precise Qibla direction to Mecca with our accurate Islamic compass. Point your device towards the direction shown by the golden indicator to face the Kaaba for your prayers. Our Qibla finder uses GPS and compass technology to provide real-time prayer direction from anywhere in the world.
                 </p>
             </div>
         </div>
@@ -1280,6 +1349,114 @@
             <!-- Enhanced loading text -->
             <div class="loading-text" id="loading-text">
                 Determining your location and Qibla direction...
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW SEO CONTENT SECTIONS -->
+    <div class="container">
+        <!-- How to Use Section -->
+        <div class="seo-content-section">
+            <h2><i class="fas fa-compass me-2"></i>How to Find Qibla Direction Using Our Online Compass</h2>
+            <p>Our Qibla finder online tool makes it easy to locate the precise direction to Mecca for your daily prayers. Here's how to use our digital Qibla compass:</p>
+            
+            <ol>
+                <li><strong>Allow Location Access:</strong> When prompted, allow the browser to access your location for accurate Qibla direction calculation</li>
+                <li><strong>Hold Device Flat:</strong> Keep your smartphone or tablet level for proper compass calibration</li>
+                <li><strong>Follow the Golden Arrow:</strong> The Qibla indicator arrow will point toward Mecca</li>
+                <li><strong>Align Yourself:</strong> Position yourself facing the direction shown by the compass</li>
+            </ol>
+
+            <h3>Key Features of Our Qibla Direction Finder</h3>
+            <ul class="feature-list">
+                <li><strong>High Accuracy:</strong> Uses your device's GPS and compass for precise Mecca direction</li>
+                <li><strong>Real-time Updates:</strong> Automatically adjusts as you move locations</li>
+                <li><strong>Worldwide Coverage:</strong> Works anywhere in the world to find Qibla from your location</li>
+                <li><strong>Islamic Design:</strong> Beautiful, faith-inspired interface with Kaaba icon</li>
+                <li><strong>No Installation Required:</strong> Use directly in your browser - no app download needed</li>
+            </ul>
+        </div>
+
+        <!-- Importance of Qibla Section -->
+        <div class="seo-content-section">
+            <h2><i class="fas fa-mosque me-2"></i>Why Finding the Correct Qibla Direction Matters</h2>
+            <p>Facing the Qibla direction during prayer (Salah) is a fundamental requirement in Islam. The Quran states:</p>
+            
+            <blockquote class="blockquote text-center my-4 p-3" style="background: rgba(15, 76, 58, 0.1); border-left: 4px solid var(--islamic-green);">
+                <p class="mb-0">"Turn your face toward the Sacred Mosque. Wherever you are, turn your faces toward it."</p>
+                <footer class="blockquote-footer mt-2">Quran, Surah Al-Baqarah (2:144)</footer>
+            </blockquote>
+
+            <p>Our online Qibla finder helps Muslims fulfill this religious obligation with accuracy and ease, whether at home, work, or traveling to new locations.</p>
+
+            <h3>Common Questions About Qibla Direction</h3>
+            
+            <div class="accordion" id="qiblaFAQ">
+                <div class="accordion-item">
+                    <h4 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                            How accurate is this Qibla direction finder?
+                        </button>
+                    </h4>
+                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#qiblaFAQ">
+                        <div class="accordion-body">
+                            Our Qibla compass uses your device's built-in sensors and GPS for high precision. The accuracy typically ranges within 1-2 degrees when properly calibrated and used in areas without magnetic interference.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <h4 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                            Does it work without internet connection?
+                        </button>
+                    </h4>
+                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#qiblaFAQ">
+                        <div class="accordion-body">
+                            An initial internet connection is required to determine your location and calculate the Qibla direction. Once loaded, the compass functionality works offline, though you'll need to reconnect if you change locations significantly.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <h4 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                            Can I use this Qibla finder worldwide?
+                        </button>
+                    </h4>
+                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#qiblaFAQ">
+                        <div class="accordion-body">
+                            Yes! Our Qibla direction finder works anywhere in the world. It automatically calculates the great circle route from your current location to Mecca, providing the most direct path for prayer direction regardless of where you are.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Tools Section -->
+        <div class="seo-content-section">
+            <h2><i class="fas fa-tools me-2"></i>More Islamic Tools from SunnahWise</h2>
+            <p>Explore our complete suite of Islamic applications designed to support your spiritual journey:</p>
+            
+            <div class="row mt-4">
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-clock me-2"></i>Prayer Times</h5>
+                            <p class="card-text">Get accurate daily prayer schedules based on your location with multiple calculation methods.</p>
+                            <a href="prayer-times.html" class="btn btn-primary">Check Prayer Times</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-mosque me-2"></i>Mosque Finder</h5>
+                            <p class="card-text">Locate nearby mosques and Islamic centers wherever you travel.</p>
+                            <a href="mosque-finder.html" class="btn btn-primary">Find Mosques</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
