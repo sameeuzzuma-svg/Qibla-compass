@@ -23,7 +23,13 @@
 
     <link rel="canonical" href="https://sunnahwise.com/qibla" />
 
-    
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-TN0HH3WV8R"></script>
+    <script> window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-TN0HH3WV8R'); </script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5293451050266377"
+        crossorigin="anonymous"></script> -->
+
+
 
     <style>
         /* Enhanced Islamic Theme Variables */
@@ -679,6 +685,110 @@
             transform: translateY(-3px);
         }
 
+          /* Desktop Navigation Layout */
+        @media (min-width: 992px) {
+            .navbar-nav {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .navbar-nav .nav-item {
+                position: relative;
+            }
+
+            .navbar-nav .nav-link {
+                font-weight: 500;
+                padding: 0.6rem 1.2rem !important;
+                border-radius: 25px;
+                transition: all 0.3s ease;
+                white-space: nowrap;
+                font-size: 0.95rem;
+            }
+
+
+
+            /* FIXED: Dropdown Styles - No extra space when closed */
+            .navbar-nav .dropdown-menu {
+                background: var(--gradient-green);
+                border: none;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px var(--shadow-medium);
+                opacity: 0;
+                transform: translateY(-10px);
+                transition: all 0.3s ease;
+                display: block;
+                visibility: hidden;
+                pointer-events: none;
+                position: absolute;
+            }
+
+            .navbar-nav .dropdown-menu.show {
+                opacity: 1;
+                transform: translateY(0);
+                visibility: visible;
+                pointer-events: all;
+            }
+
+            .dropdown-item {
+                color: var(--text-light) !important;
+                padding: 0.75rem 1.5rem !important;
+                transition: all 0.3s ease;
+                border-radius: 8px;
+                margin: 0.2rem 0.5rem;
+                width: auto;
+            }
+
+            .dropdown-item:hover {
+                background-color: rgba(255, 255, 255, 0.2) !important;
+                transform: translateX(5px);
+                color: white !important;
+            }
+
+            /* Dropdown toggle arrow transition */
+            .nav-link.dropdown-toggle::after {
+                transition: transform 0.3s ease;
+            }
+
+            .nav-link.dropdown-toggle.show::after {
+                transform: rotate(-180deg);
+            }
+
+            /* Ensure dropdown doesn't affect layout when closed */
+            .nav-item.dropdown {
+                position: relative;
+            }
+
+            .dropdown-menu {
+                margin-top: 0;
+            }
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 991.98px) {
+            .navbar-nav .nav-link {
+                /* padding: 0.75rem 1rem !important;
+                border-radius: 8px;
+                margin: 0.1rem 0; */
+                font-weight: 500;
+                margin: 0 0.5rem;
+                transition: all 0.3s ease;
+                border-radius: 25px;
+                padding: 0.5rem 1rem !important;
+            }
+
+            .dropdown-menu {
+                background: rgba(255, 255, 255, 0.1);
+                border: none;
+                margin: 0.5rem 0;
+            }
+
+            .dropdown-item {
+                color: var(--text-light) !important;
+                padding: 0.75rem 1.5rem !important;
+            }
+        }
+
         /* Premium Loading State */
         .compass--loading .qibla-center-indicator {
             animation: loadingPulse 2s infinite;
@@ -816,7 +926,7 @@
             background: var(--islamic-green-light);
         }
 
-        /* Footer Enhanced */
+        /* Footer */
         footer {
             background: linear-gradient(135deg, #14532d, #166534);
             margin-top: 3rem;
@@ -829,10 +939,12 @@
             max-width: 1200px;
         }
 
+        /* Section spacing */
         .footer-section {
             margin-bottom: 2rem;
         }
 
+        /* Headings */
         footer .footer-heading {
             font-size: 1rem;
             font-weight: 600;
@@ -840,6 +952,7 @@
             color: #fff;
         }
 
+        /* Quran */
         footer .quran-quote {
             font-size: 1.05rem;
             font-style: italic;
@@ -852,6 +965,7 @@
             color: rgba(255, 255, 255, 0.75);
         }
 
+        /* Links */
         .footer-links {
             display: flex;
             flex-wrap: wrap;
@@ -886,25 +1000,64 @@
             width: 100%;
         }
 
+        /* Divider */
         footer .footer-divider {
             border-top: 1px solid rgba(255, 255, 255, 0.2);
             margin: 2rem 0;
         }
 
+        /* Bottom */
         footer .footer-bottom {
             text-align: center;
             font-size: 0.85rem;
             color: rgba(255, 255, 255, 0.7);
         }
+
+        /* ===========================
+   Mobile Responsive
+   =========================== */
+        @media (max-width: 768px) {
+            footer {
+                text-align: center;
+            }
+
+            .footer-links {
+                justify-content: center;
+            }
+
+            .footer-section {
+                margin-bottom: 2rem;
+                padding-bottom: 1.5rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            }
+
+            /* Remove last section border */
+            .footer-section:last-child {
+                border-bottom: none;
+            }
+
+            footer .footer-heading {
+                margin-bottom: 0.8rem;
+                font-size: 1rem;
+            }
+
+            footer .quran-quote {
+                font-size: 0.95rem;
+            }
+
+            footer .quran-translation {
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <!-- Header -->
-    <header class="navbar navbar-expand-lg bg-islamic-green navbar-dark sticky-top">
-        <div class="container">
+     <!-- Navigation - UNCHANGED -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-islamic-green fixed-top">
+        <div class="container-fluid">
             <a class="navbar-brand" href="index.html">
-                <i class="fas fa-kaaba me-2"></i>
+                <i class="fas fa-mosque me-2"></i>
                 SunnahWise
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -913,39 +1066,47 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">
-                            Home
-                        </a>
+                        <a class="nav-link" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="prayer-times.html">
-                            Prayer Times
-                        </a>
+                        <a class="nav-link" href="prayer-times.html">Prayer Times</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mosque-finder.html">
-                            Mosque Finder
-                        </a>
+                        <a class="nav-link" href="mosque-finder.html" onclick="return addLocationToLink(this)">Mosque
+                            Finder</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="qibla.html">
-                            Qibla Finder
-                        </a>
+                        <a class="nav-link active" href="qibla.html" onclick="return addLocationToLink(this)">Qibla
+                            Finder</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="dhikr.html">
-                            Dhikr
-                        </a>
+                        <a class="nav-link" href="dhikr.html">Dhikr Counter</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="zakat.html">
-                            Zakat
+                        <a class="nav-link" href="zakat.html">Zakat Calculator</a>
+                    </li>
+                    <!-- Blog Dropdown - FIXED -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="blogDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Islamic Deeds
                         </a>
+                        <ul class="dropdown-menu" aria-labelledby="blogDropdown">
+                            <li><a class="dropdown-item" href="spiritual-benefits/islamic-remedies.html">
+                                    <i class="fas fa-heart me-2"></i>Islamic Remedies
+                                </a></li>
+                            <li><a class="dropdown-item" href="spiritual-benefits/virtues-of-good-deeds.html">
+                                    <i class="fas fa-hands-helping me-2"></i>Benefits of Good Deeds
+                                </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
                     </li>
                 </ul>
             </div>
         </div>
-    </header>
+    </nav>
 
     <!-- Main Content -->
     <div class="container mt-4">
@@ -1152,6 +1313,7 @@
     </div>
 
     <!-- Footer -->
+    <!-- Footer - UNCHANGED -->
     <footer>
         <div class="container">
             <div class="row">
@@ -1175,12 +1337,14 @@
                         <a href="qibla.html">Qibla Finder</a>
                         <a href="dhikr.html">Dhikr Counter</a>
                         <a href="zakat.html">Zakat Calculator</a>
+                        <a href="spiritual-benefits/islamic-remedies.html">Islamic Remedies</a>
+                        <a href="spiritual-benefits/virtues-of-good-deeds.html">Benefits of Good Deeds</a>
                         <a href="about.html">About</a>
                     </div>
                 </div>
 
                 <!-- Privacy & Legal -->
-                <div class="col-md-4 col-12 footer-section">
+                <div class="col-md-6 text-md-end footer-links">
                     <h5 class="footer-heading">Legal</h5>
                     <div class="footer-links">
                         <a href="privacy.html">Privacy Policy</a>
@@ -1189,6 +1353,7 @@
                         <a href="cookies.html">Cookie Policy</a>
                         <a href="contact.html">Contact Us</a>
                     </div>
+
                 </div>
             </div>
 
